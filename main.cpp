@@ -4,6 +4,7 @@
 
 enum token {
     KEYWORD,
+    RET,
     INT_LIT,
     IDENT,
     LPAREN,
@@ -14,7 +15,7 @@ enum token {
 
 enum token int_lit (std::string);
 enum token ident (std::string);
-bool iskeyword(void);
+// enum token iskeywordorret(std::string);
 
 int main (void) {
     std::string str;
@@ -70,9 +71,13 @@ enum token int_lit (std::string str) {
 }
 
 enum token ident (std::string str) {
-    if (str == "funky" || str == "return") {
+    if (str == "funky") {
         std::cout << "KEYWORD ";
         return KEYWORD;
+    }
+    else if (str == "return") {
+        std::cout << "RET ";
+        return RET;
     }
     for (char c : str) {
         if (isalnum(c)) {
@@ -86,6 +91,13 @@ enum token ident (std::string str) {
     return IDENT;
 }
 
-bool iskeyword(void) {
-    return false;
-}
+// enum token iskeywordorret(std::string str) {
+//     if (str == "funky") {
+//         std::cout << "KEYWORD ";
+//         return KEYWORD;
+//     }
+//     else if (str == "return") {
+//         std::cout << "RET";
+//         return RET;
+//     }
+// }
