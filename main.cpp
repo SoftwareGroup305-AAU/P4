@@ -3,10 +3,13 @@
 #include <string>
 
 enum token {
+    KEYWORD,
     INT_LIT,
     IDENT,
     LPAREN,
-    RPAREN
+    RPAREN,
+    COLON,
+    EQ
 };
 
 enum token int_lit (std::string);
@@ -33,29 +36,22 @@ int main (void) {
             }
             else if (c == '(') {
                 std::cout << "LPAREN ";
-                break;
+                continue;
             }
             else if (c == ')') {
                 std::cout << "RPAREN ";
-                break;
+                continue;
+            }
+            else if (c == ':') {
+                std::cout << "COLON ";
+                continue;
+            }
+            else if (c == '=') {
+                std::cout << "EQ ";
+                continue;
             }
         }
-        // char character = file.get();
     }
-
-    // while (getline(file, str)) {
-    //     for (char c : str) {
-    //         std::string s(1, c);
-    //         std::cout << s;
-    //         if (isdigit(c)) {
-    //             return int_lit();
-    //         }
-    //         else {
-    //             continue;
-    //         }
-    //     }
-    // }
-
     file.close();
     return 0;
 }
@@ -74,6 +70,10 @@ enum token int_lit (std::string str) {
 }
 
 enum token ident (std::string str) {
+    if (str == "funky" || str == "return") {
+        std::cout << "KEYWORD ";
+        return KEYWORD;
+    }
     for (char c : str) {
         if (isalnum(c)) {
             
