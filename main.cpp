@@ -2,7 +2,8 @@
 #include <fstream>
 
 enum token {
-    INT_LIT
+    INT_LIT,
+    IDENT
 };
 
 enum token int_lit (void) {
@@ -14,23 +15,36 @@ enum token int_lit (void) {
     return INT_LIT;
 }
 
+enum token ident () {
+    char c = getchar();
+    while (isdigit(c)) {
+        c = getchar();
+    }
+
+    return IDENT;
+}
+
 
 int main (void) {
     std::string str;
     std::ifstream file("testfile.iye");
 
-    while (getline(file, str)) {
-        for (char c : str) {
-            std::string s(1, c);
-            std::cout << s;
-            if (isdigit(c)) {
-                return int_lit();
-            }
-            else {
-                continue;
-            }
-        }
+    while (!file.eof()) {
+        
     }
+
+    // while (getline(file, str)) {
+    //     for (char c : str) {
+    //         std::string s(1, c);
+    //         std::cout << s;
+    //         if (isdigit(c)) {
+    //             return int_lit();
+    //         }
+    //         else {
+    //             continue;
+    //         }
+    //     }
+    // }
 
     return 0;
 }
