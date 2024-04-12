@@ -1,4 +1,4 @@
-namespace P4.Tests;
+namespace P4.TinyCell.Tests;
 
 public class UnitTest1
 {
