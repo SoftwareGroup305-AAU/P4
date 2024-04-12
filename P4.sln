@@ -5,8 +5,6 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P4.TinyCell", "P4.TinyCell\P4.TinyCell.csproj", "{96D5A161-AFC2-400B-9906-36F2D8668166}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P4.Tests", "P4.Tests\P4.Tests.csproj", "{7A9BA009-2697-432E-9475-F6A8E6A615E1}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "P4.TinyCell.Tests", "P4.TinyCell.Tests\P4.TinyCell.Tests.csproj", "{8D3C6014-A085-45F5-83C9-1F188C3F9EA2}"
 EndProject
 Global
