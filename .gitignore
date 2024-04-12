@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # Custom rules - Ignore all bin and obj files
 **/bin/
 **/obj/
+Antlr/
