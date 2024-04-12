@@ -1,0 +1,15 @@
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/bin/Debug/net8.0/P4.TinyCell
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/bin/Debug/net8.0/P4.TinyCell.deps.json
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/bin/Debug/net8.0/P4.TinyCell.runtimeconfig.json
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/bin/Debug/net8.0/P4.TinyCell.dll
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/bin/Debug/net8.0/P4.TinyCell.pdb
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.GeneratedMSBuildEditorConfig.editorconfig
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.AssemblyInfoInputs.cache
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.AssemblyInfo.cs
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.csproj.CoreCompileInputs.cache
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.sourcelink.json
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.dll
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/refint/P4.TinyCell.dll
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.pdb
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/P4.TinyCell.genruntimeconfig.cache
+/Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/obj/Debug/net8.0/ref/P4.TinyCell.dll
