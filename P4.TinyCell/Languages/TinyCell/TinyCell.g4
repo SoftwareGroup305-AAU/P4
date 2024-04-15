@@ -1,6 +1,6 @@
 grammar TinyCell;
 
-document : setupDefinition updateDefinition generalDeclaration;
+document : setupDefinition updateDefinition generalDeclaration*;
 
 generalDeclaration : functionDefinition
                         | declaration;
@@ -29,7 +29,7 @@ initialDeclaration : identifier
                     | identifier '=' assignmentExpression;
         
 
-compoundStatement : '{' statement '}';
+compoundStatement : '{' statement* '}';
 
 statement : ifStatement
             | loopStatement

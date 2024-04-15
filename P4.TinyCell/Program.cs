@@ -6,17 +6,26 @@ internal class Program
     {
         Console.WriteLine("Hello, World!");
 
-        using var fs = new StreamReader("Languages/TinyCell/test.tc");
+        using var fs = new StreamReader("Test.tc");
 
         AntlrInputStream antlrInputStream = new AntlrInputStream(fs);
 
-        Lexer lexer = new TinyCellLexer(antlrInputStream);
+        TinyCellLexer lexer = new TinyCellLexer(antlrInputStream);
 
         var tokenStream = new CommonTokenStream(lexer);
+        
+        TinyCellParser parser = new TinyCellParser(tokenStream);
 
-        Parser parser = new TinyCellParser(tokenStream);
+        var tree = parser.document();
 
-        var a = lexer.GetAllTokens();
-        Console.WriteLine("a");
+        Console.WriteLine(tree.ToStringTree(parser));
+
+        // var a = lexer.GetAllTokens();
+
+        // foreach (var token in a)
+        // {
+        //     Console.WriteLine(token);   
+        // }
+
     }
 }
