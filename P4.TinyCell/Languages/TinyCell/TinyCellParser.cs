@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell//Languages//TinyCell//TinyCell.g4 by ANTLR 4.13.1
+// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell//Languages//TinyCell//TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -19,7 +19,6 @@
 // Ambiguous reference in cref attribute
 #pragma warning disable 419
 
-namespace P4.TinyCell.Languges.TinyCell {
 using System;
 using System.IO;
 using System.Text;
@@ -2382,4 +2381,3 @@ public partial class TinyCellParser : Parser {
 
 
 }
-} // namespace P4.TinyCell.Languges.TinyCell
