@@ -109,6 +109,6 @@ pinVoltage : 'high'
 
 Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
 
-String : '"' ([a-zA-Z0-9_!@#\$%^&()\-+=;:'<>,.?/`~]) '"';
+String : '"' ~["]* '"';
 
 Numeral : [-]?[1-9][0-9]*(.[0-9]+)? ;
