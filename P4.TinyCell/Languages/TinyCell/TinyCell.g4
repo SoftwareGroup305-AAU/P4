@@ -109,10 +109,14 @@ pinVoltage : 'high'
 
 Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
 
-// String : '"'[a-zA-Z_0-9,.!]*'"' ;
+String : '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
 
-// String : '"' (~[\r\n\\"] | '\\' .)* '"';
-// String : '"'(.)*'"';
-String : '"' ([a-zA-Z0-9_!@#'$%^&()-+=;:'<>,.?/`~]) '"';
+Numeral : [-]?[1-9][0-9]*(.[0-9]+)? ;
 
-Numeral : [-]?[1-9][0-9]*(.[0-9]*)? ;
+Whitespace
+    : [ \t]+ -> channel(HIDDEN)
+    ;
+
+Newline
+    : ('\r' '\n'? | '\n') -> channel(HIDDEN)
+    ;
