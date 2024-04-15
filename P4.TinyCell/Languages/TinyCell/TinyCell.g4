@@ -23,7 +23,7 @@ parameterList : parameter
     
 parameter : type identifier;
 
-declaration : type initialDeclaration;
+declaration : type initialDeclaration ';';
 
 initialDeclaration : identifier
                     | identifier '=' assignmentExpression;
@@ -111,7 +111,7 @@ Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
 
 String : '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
 
-Numeral : [-]?[1-9][0-9]*(.[0-9]+)? ;
+Numeral : [-]?([0] | [1-9])[0-9]*(.[0-9]+)? ;
 
 Whitespace
     : [ \t]+ -> channel(HIDDEN)
