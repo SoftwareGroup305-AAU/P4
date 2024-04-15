@@ -1,4 +1,4 @@
-// Generated from /Users/emilpriv/Desktop/Git-Clones/P4/P4.TinyCell/Languages/C/C.g4 by ANTLR 4.13.1
+// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell//Languages//C//C.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
