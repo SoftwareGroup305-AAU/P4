@@ -1,6 +1,6 @@
 grammar TinyCell;
 
-document : setupDefinition updateDefinition generalDeclaration;
+document : setupDefinition updateDefinition generalDeclaration*;
 
 generalDeclaration : functionDefinition
                         | declaration;
@@ -23,13 +23,13 @@ parameterList : parameter
     
 parameter : type identifier;
 
-declaration : type initialDeclaration;
+declaration : type initialDeclaration ';';
 
 initialDeclaration : identifier
                     | identifier '=' assignmentExpression;
         
 
-compoundStatement : '{' statement '}';
+compoundStatement : '{' statement* '}';
 
 statement : ifStatement
             | loopStatement
@@ -111,7 +111,7 @@ Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
 
 String : '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
 
-Numeral : [-]?[1-9][0-9]*(.[0-9]+)? ;
+Numeral : [-]?([0] | [1-9])[0-9]*(.[0-9]+)? ;
 
 Whitespace
     : [ \t]+ -> channel(HIDDEN)

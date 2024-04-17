@@ -27,14 +27,25 @@ internal class Program
         //using var fs = new StreamReader("Test.tc");
         string fileContent = File.ReadAllText("Test.tc");
 
+<<<<<<< HEAD
         AntlrInputStream antlrInputStream = new AntlrInputStream(fileContent);
 
         // Create a lexer with the input stream
         var lexer = new TinyCellLexer(antlrInputStream);
+=======
+        using var fs = new StreamReader("Test.tc");
+
+        AntlrInputStream antlrInputStream = new AntlrInputStream(fs);
+
+        TinyCellLexer lexer = new TinyCellLexer(antlrInputStream);
+>>>>>>> d1448f64bda26230349d5df0a2d694f781f23149
 
         // Create a token stream from the lexer
         var tokenStream = new CommonTokenStream(lexer);
+        
+        TinyCellParser parser = new TinyCellParser(tokenStream);
 
+<<<<<<< HEAD
         // Create a parser with the token stream
         var parser = new TinyCellParser(tokenStream);
 
@@ -55,6 +66,18 @@ internal class Program
         var visitor = new PrettyPrintVisitor();
         visitor.Visit(tree);
         Console.WriteLine("=================================================\n");
+=======
+        var tree = parser.document();
+
+        Console.WriteLine(tree.ToStringTree(parser));
+
+        // var a = lexer.GetAllTokens();
+
+        // foreach (var token in a)
+        // {
+        //     Console.WriteLine(token);   
+        // }
+>>>>>>> d1448f64bda26230349d5df0a2d694f781f23149
 
     }
 }

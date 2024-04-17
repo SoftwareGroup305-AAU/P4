@@ -396,8 +396,12 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
-
+*.idea
 # Custom rules - Ignore all bin and obj files
 **/bin/
 **/obj/
 Antlr/
+
+#Project files
+Test.tc
+P4.TinyCell/Program.cs

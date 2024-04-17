@@ -1,5 +1,6 @@
 setup
 {
+<<<<<<< HEAD
     int setupNumeral = 0;
 }
 update
@@ -8,3 +9,11 @@ update
 }
 
 void
+=======
+}
+update
+{
+}
+int i = 0;
+int ass = 13;
+>>>>>>> d1448f64bda26230349d5df0a2d694f781f23149
