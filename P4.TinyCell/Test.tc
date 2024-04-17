@@ -1,0 +1,10 @@
+setup
+{
+    int setupNumeral = 0;
+}
+update
+{
+    int updateNumeral = 1;
+}
+
+void
