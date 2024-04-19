@@ -1,5 +1,5 @@
 ﻿using Antlr4.Runtime;
-using System.IO;
+using Utilities;
 
 internal class Program
 {
@@ -22,16 +22,16 @@ internal class Program
         // Parse the input (assuming "document" is the name of the start rule)
         var tree = parser.document();
 
-        Console.WriteLine("=================================================\n");
-        Console.WriteLine("Tokens: \n");
+        Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Tokens:");
 
         foreach (var token in tokenStream.GetTokens())
         {
             Console.WriteLine(token);
         }
 
-        Console.WriteLine("=================================================\n");
-
-        Console.WriteLine("Parse Tree: \n" + tree.ToStringTree(parser));
+        Console.WriteLine("\n=================================================\n");
+        var ParserHelper = new ParserHelper();
+        ParserHelper.PrintTree(tree);
     }
 }

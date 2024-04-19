@@ -1,8 +1,0 @@
-setup
-{
-    int updateNumeral = 1;
-}
-update
-{
-}
-int i = 0;
