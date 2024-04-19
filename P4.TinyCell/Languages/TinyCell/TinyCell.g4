@@ -1,122 +1,120 @@
 grammar TinyCell;
 
-document : setupDefinition updateDefinition generalDeclaration*;
+document: setupDefinition updateDefinition generalDeclaration*;
 
-generalDeclaration : functionDefinition
-                        | declaration;
+generalDeclaration: functionDefinition | declaration;
 
-setupDefinition : 'setup' compoundStatement;
+setupDefinition: 'setup' compoundStatement;
 
-updateDefinition : 'update' compoundStatement;
+updateDefinition: 'update' compoundStatement;
 
-functionDefinition : type identifier '('parameterList')' compoundStatement;
+functionDefinition:
+	type identifier '(' parameterList ')' compoundStatement;
 
-type : 'void'
-            | 'char'
-            | 'int'
-            | 'float'
-            | 'bool'
-            | 'pin';
+type: 'void' | 'char' | 'int' | 'float' | 'bool' | 'pin';
 
-parameterList : parameter
-                    | parameterList ',' parameter;
-    
-parameter : type identifier;
+parameterList: parameter | parameterList ',' parameter;
 
-declaration : type initialDeclaration ';';
+parameter: type identifier;
 
-initialDeclaration : identifier
-                    | identifier '=' assignmentExpression;
-        
+declaration: type initialDeclaration ';';
 
-compoundStatement : '{' statement* '}';
+initialDeclaration:
+	identifier
+	| identifier '=' assignmentExpression;
 
-statement : ifStatement
-            | loopStatement
-            | jumpStatement
-            | declaration
-            | expression;
+compoundStatement: '{' statement* '}';
 
-ifStatement : 'if' '(' expression ')' compoundStatement
-            | 'if' '(' expression ')' compoundStatement 'else' compoundStatement;
+statement:
+	ifStatement
+	| loopStatement
+	| jumpStatement
+	| expression
+	| declaration;
 
-loopStatement : 'while' '(' expression ')' compoundStatement
-                | 'for' '(' expression ';' expression ';' expression ')' compoundStatement;
+ifStatement:
+	'if' '(' expression ')' compoundStatement
+	| 'if' '(' expression ')' compoundStatement 'else' compoundStatement;
 
-jumpStatement : 'continue' ';'
-                | 'break' ';'
-                | 'return' expression ';'; 
+loopStatement:
+	'while' '(' expression ')' compoundStatement
+	| 'for' '(' expression ';' expression ';' expression ')' compoundStatement;
 
-expression : assignmentExpression;
+jumpStatement:
+	'continue' ';'
+	| 'break' ';'
+	| 'return' expression ';';
 
-assignmentExpression : ternaryExpression
-                        | pinExpression
-                        | unaryExpression assignmentOperator assignmentExpression;
+expression:
+	assignmentExpression
+	| pinExpression
+	| ternaryExpression;
 
-ternaryExpression : orExpression
-                    | orExpression '?' expression ':' expression;
+assignmentExpression:
+	ternaryExpression
+	| (unaryExpression | identifier) assignmentOperator assignmentExpression;
 
-orExpression : andExpression
-                | orExpression '||' andExpression;
+ternaryExpression:
+	orExpression
+	| orExpression '?' expression ':' expression;
 
-andExpression : equalityExpression
-                | andExpression '&&' equalityExpression;
+orExpression: andExpression | orExpression '||' andExpression;
 
-equalityExpression : comparisonExpression
-                | equalityExpression '==' comparisonExpression
-                | equalityExpression '!=' comparisonExpression;
+andExpression:
+	equalityExpression
+	| andExpression '&&' equalityExpression;
 
-comparisonExpression : bitshiftExpression
-                        | comparisonExpression '<' bitshiftExpression
-                        | comparisonExpression '>' bitshiftExpression
-                        | comparisonExpression '<=' bitshiftExpression
-                        | comparisonExpression '>=' bitshiftExpression;
+equalityExpression:
+	comparisonExpression
+	| equalityExpression '==' comparisonExpression
+	| equalityExpression '!=' comparisonExpression;
 
-bitshiftExpression : additiveExpression
-                    | bitshiftExpression '<<' additiveExpression
-                    | bitshiftExpression '>>' additiveExpression;
+comparisonExpression:
+	bitshiftExpression
+	| comparisonExpression '<' bitshiftExpression
+	| comparisonExpression '>' bitshiftExpression
+	| comparisonExpression '<=' bitshiftExpression
+	| comparisonExpression '>=' bitshiftExpression;
 
-additiveExpression : multiplicativeExpression
-                    | additiveExpression '+' multiplicativeExpression
-                    | additiveExpression '-' multiplicativeExpression;
+bitshiftExpression:
+	additiveExpression
+	| bitshiftExpression '<<' additiveExpression
+	| bitshiftExpression '>>' additiveExpression;
 
-multiplicativeExpression : unaryExpression
-                            | multiplicativeExpression '*' unaryExpression
-                            | multiplicativeExpression '/' unaryExpression
-                            | multiplicativeExpression '%' unaryExpression;
+additiveExpression:
+	multiplicativeExpression
+	| additiveExpression '+' multiplicativeExpression
+	| additiveExpression '-' multiplicativeExpression;
 
-unaryExpression : primitiveExpression
-                | unaryExpression '++' 
-                | unaryExpression '--'
-                | '++' unaryExpression
-                | '--' unaryExpression;
+multiplicativeExpression:
+	unaryExpression
+	| multiplicativeExpression '*' unaryExpression
+	| multiplicativeExpression '/' unaryExpression
+	| multiplicativeExpression '%' unaryExpression;
 
-primitiveExpression :  Numeral | String ;
+unaryExpression:
+	primitiveExpression
+	| unaryExpression '++'
+	| unaryExpression '--'
+	| '++' unaryExpression
+	| '--' unaryExpression;
 
-pinExpression : 'set' identifier 'to' pinVoltage;
+primitiveExpression: Numeral | String;
 
-identifier : Identifier;
+pinExpression: 'set' identifier 'to' pinVoltage;
 
-assignmentOperator : '='
-                    | '*='
-                    | '/='
-                    | '%='
-                    | '+='
-                    | '-=';
+identifier: Identifier;
 
-pinVoltage : 'high'
-            | 'low';
+assignmentOperator: '=' | '*=' | '/=' | '%=' | '+=' | '-=';
 
-Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
+pinVoltage: 'high' | 'low';
 
-String : '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
+Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
-Numeral : [-]?([0] | [1-9])[0-9]*(.[0-9]+)? ;
+String: '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
 
-Whitespace
-    : [ \t]+ -> channel(HIDDEN)
-    ;
+Numeral: [-]? ([0] | [1-9]) [0-9]* (.[0-9]+)?;
 
-Newline
-    : ('\r' '\n'? | '\n') -> channel(HIDDEN)
-    ;
+Whitespace: [ \t]+ -> channel(HIDDEN);
+
+Newline: ('\r' '\n'? | '\n') -> channel(HIDDEN);
