@@ -1,31 +1,38 @@
-﻿using Antlr4.Runtime;
+﻿
+using Antlr4.Runtime;
+using Utilities;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        //using var fs = new StreamReader("Test.tc");
+        string fileContent = File.ReadAllText("Test.tc");
 
-        using var fs = new StreamReader("Test.tc");
+        var antlrInputStream = new AntlrInputStream(fileContent);
 
-        AntlrInputStream antlrInputStream = new AntlrInputStream(fs);
+        // Create a lexer with the input stream
+        var lexer = new TinyCellLexer(antlrInputStream);
 
-        TinyCellLexer lexer = new TinyCellLexer(antlrInputStream);
-
+        // Create a token stream from the lexer
         var tokenStream = new CommonTokenStream(lexer);
-        
-        TinyCellParser parser = new TinyCellParser(tokenStream);
 
+        // Create a parser with the token stream
+        var parser = new TinyCellParser(tokenStream);
+
+        // Parse the input (assuming "document" is the name of the start rule)
         var tree = parser.document();
 
-        Console.WriteLine(tree.ToStringTree(parser));
+        Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Tokens:");
 
-        // var a = lexer.GetAllTokens();
+        foreach (var token in tokenStream.GetTokens())
+        {
+            Console.WriteLine(token);
+        }
 
-        // foreach (var token in a)
-        // {
-        //     Console.WriteLine(token);   
-        // }
-
+        Console.WriteLine("\n=================================================\n");
+        var ParserHelper = new ParserHelper();
+        ParserHelper.PrintTree(tree);
     }
 }
