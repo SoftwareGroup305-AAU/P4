@@ -30,6 +30,7 @@ statement:
 	| loopStatement
 	| jumpStatement
 	| declaration
+    | functionCall
     | assignment;
 	// | expression;
 
@@ -54,6 +55,8 @@ expression:
 assignmentExpression:
 	ternaryExpression
 	| (unaryExpression | identifier) assignmentOperator assignmentExpression;
+
+functionCall: identifier LPAR parameterList* RPAR SEMI;
 
 assignment: identifier assignmentOperator expression SEMI;
 
