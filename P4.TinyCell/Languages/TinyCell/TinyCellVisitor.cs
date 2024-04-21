@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell//Languages//TinyCell//TinyCell.g4 by ANTLR 4.13.1
+// Generated from P4.TinyCell//Languages//TinyCell//TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -133,6 +133,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitAssignmentExpression([NotNull] TinyCellParser.AssignmentExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.assignment"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAssignment([NotNull] TinyCellParser.AssignmentContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
 	/// </summary>

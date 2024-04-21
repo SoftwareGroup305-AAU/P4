@@ -5,4 +5,7 @@ setup
 }
 update
 {
+    pin tester = 1;
+    tester = 2;
+    set tester to high;
 }

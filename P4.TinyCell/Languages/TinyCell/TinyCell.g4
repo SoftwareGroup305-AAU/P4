@@ -9,7 +9,7 @@ setupDefinition: SETUP compoundStatement;
 updateDefinition: UPDATE compoundStatement;
 
 functionDefinition:
-	type identifier LPAR parameterList RPAR compoundStatement;
+	type identifier LPAR parameterList* RPAR compoundStatement;
 
 type: VOID | CHAR | INT | FLOAT | BOOL | PIN;
 
@@ -21,7 +21,7 @@ declaration: type initialDeclaration SEMI;
 
 initialDeclaration:
 	identifier
-	| identifier ASSIGN assignmentExpression;
+    | identifier ASSIGN expression;
 
 compoundStatement: LCURLY statement* RCURLY;
 
@@ -29,8 +29,9 @@ statement:
 	ifStatement
 	| loopStatement
 	| jumpStatement
-	| expression
-	| declaration;
+	| declaration
+    | assignment;
+	// | expression;
 
 ifStatement:
 	IF LPAR expression RPAR compoundStatement
@@ -46,13 +47,15 @@ jumpStatement:
 	| RETURN expression SEMI;
 
 expression:
-	assignmentExpression
-	| pinExpression
-	| ternaryExpression;
+	pinExpression SEMI
+	| ternaryExpression SEMI;
 
+//unused, but dotnet cannot build without it
 assignmentExpression:
 	ternaryExpression
 	| (unaryExpression | identifier) assignmentOperator assignmentExpression;
+
+assignment: identifier assignmentOperator expression SEMI;
 
 ternaryExpression:
 	orExpression
@@ -88,16 +91,16 @@ additiveExpression:
 
 multiplicativeExpression:
 	unaryExpression
-	| multiplicativeExpression MULT unaryExpression
-	| multiplicativeExpression DIV unaryExpression
-	| multiplicativeExpression MOD unaryExpression;
+	| multiplicativeExpression MULT primitiveExpression
+	| multiplicativeExpression DIV primitiveExpression
+	| multiplicativeExpression MOD primitiveExpression;
 
 unaryExpression:
 	primitiveExpression
-	| unaryExpression UNARYPLUS
-	| unaryExpression UNARYMINUS
-	| UNARYPLUS unaryExpression
-	| UNARYMINUS unaryExpression;
+	| primitiveExpression UNARYPLUS
+	| primitiveExpression UNARYMINUS
+	| UNARYPLUS primitiveExpression
+	| UNARYMINUS primitiveExpression;
 
 primitiveExpression: Numeral | String;
 
@@ -177,7 +180,7 @@ UNARYMINUS: '--';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
-String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) QUOTE;
+String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
 
