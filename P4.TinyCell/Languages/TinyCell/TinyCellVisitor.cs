@@ -134,6 +134,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitAssignmentExpression([NotNull] TinyCellParser.AssignmentExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.functionCall"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

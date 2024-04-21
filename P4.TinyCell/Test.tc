@@ -8,4 +8,19 @@ update
     pin tester = 1;
     tester = 2;
     set tester to high;
+
+    testfunction();
+}
+
+int testfunction() {
+    bool tttt = false;
+    int number;
+    if (tttt == false) {
+        number = 1;
+    }
+    else {
+        number = 0;
+    }
+
+    return number;
 }
