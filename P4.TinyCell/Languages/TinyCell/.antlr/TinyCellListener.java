@@ -1,4 +1,4 @@
-// Generated from c://Users//Rasmus//Documents//GitHub//P4//P4.TinyCell//Languages//TinyCell//TinyCell.g4 by ANTLR 4.13.1
+// Generated from c:/Users/scarp/OneDrive - Aalborg Universitet/Documents/GitHub repositories/P4/P4.TinyCell/Languages/TinyCell/TinyCell.g4 by ANTLR 4.13.1
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -87,6 +87,26 @@ public interface TinyCellListener extends ParseTreeListener {
 	 */
 	void exitParameter(TinyCellParser.ParameterContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#argumentList}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgumentList(TinyCellParser.ArgumentListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#argumentList}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgumentList(TinyCellParser.ArgumentListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#argument}.
+	 * @param ctx the parse tree
+	 */
+	void enterArgument(TinyCellParser.ArgumentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#argument}.
+	 * @param ctx the parse tree
+	 */
+	void exitArgument(TinyCellParser.ArgumentContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TinyCellParser#declaration}.
 	 * @param ctx the parse tree
 	 */
@@ -157,115 +177,25 @@ public interface TinyCellListener extends ParseTreeListener {
 	 */
 	void exitJumpStatement(TinyCellParser.JumpStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#expression}.
+	 * Enter a parse tree produced by {@link TinyCellParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(TinyCellParser.ExpressionContext ctx);
+	void enterAssignment(TinyCellParser.AssignmentContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#expression}.
+	 * Exit a parse tree produced by {@link TinyCellParser#assignment}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(TinyCellParser.ExpressionContext ctx);
+	void exitAssignment(TinyCellParser.AssignmentContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#assignmentExpression}.
+	 * Enter a parse tree produced by {@link TinyCellParser#functionCall}.
 	 * @param ctx the parse tree
 	 */
-	void enterAssignmentExpression(TinyCellParser.AssignmentExpressionContext ctx);
+	void enterFunctionCall(TinyCellParser.FunctionCallContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#assignmentExpression}.
+	 * Exit a parse tree produced by {@link TinyCellParser#functionCall}.
 	 * @param ctx the parse tree
 	 */
-	void exitAssignmentExpression(TinyCellParser.AssignmentExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#ternaryExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterTernaryExpression(TinyCellParser.TernaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#ternaryExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitTernaryExpression(TinyCellParser.TernaryExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#orExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterOrExpression(TinyCellParser.OrExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#orExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitOrExpression(TinyCellParser.OrExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#andExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAndExpression(TinyCellParser.AndExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#andExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAndExpression(TinyCellParser.AndExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#equalityExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterEqualityExpression(TinyCellParser.EqualityExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#equalityExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitEqualityExpression(TinyCellParser.EqualityExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#comparisonExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterComparisonExpression(TinyCellParser.ComparisonExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#comparisonExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitComparisonExpression(TinyCellParser.ComparisonExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#bitshiftExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterBitshiftExpression(TinyCellParser.BitshiftExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#bitshiftExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitBitshiftExpression(TinyCellParser.BitshiftExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#additiveExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterAdditiveExpression(TinyCellParser.AdditiveExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#additiveExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitAdditiveExpression(TinyCellParser.AdditiveExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#multiplicativeExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterMultiplicativeExpression(TinyCellParser.MultiplicativeExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#multiplicativeExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitMultiplicativeExpression(TinyCellParser.MultiplicativeExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TinyCellParser#unaryExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnaryExpression(TinyCellParser.UnaryExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TinyCellParser#unaryExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnaryExpression(TinyCellParser.UnaryExpressionContext ctx);
+	void exitFunctionCall(TinyCellParser.FunctionCallContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TinyCellParser#primitiveExpression}.
 	 * @param ctx the parse tree
@@ -277,6 +207,96 @@ public interface TinyCellListener extends ParseTreeListener {
 	 */
 	void exitPrimitiveExpression(TinyCellParser.PrimitiveExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#unaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnaryExpression(TinyCellParser.UnaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#unaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnaryExpression(TinyCellParser.UnaryExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeExpression(TinyCellParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#multiplicativeExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeExpression(TinyCellParser.MultiplicativeExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveExpression(TinyCellParser.AdditiveExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#additiveExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveExpression(TinyCellParser.AdditiveExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#bitshiftExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitshiftExpression(TinyCellParser.BitshiftExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#bitshiftExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitshiftExpression(TinyCellParser.BitshiftExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#comparisonExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterComparisonExpression(TinyCellParser.ComparisonExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#comparisonExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitComparisonExpression(TinyCellParser.ComparisonExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#equalityExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityExpression(TinyCellParser.EqualityExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#equalityExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityExpression(TinyCellParser.EqualityExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#andExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAndExpression(TinyCellParser.AndExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#andExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAndExpression(TinyCellParser.AndExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#orExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterOrExpression(TinyCellParser.OrExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#orExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitOrExpression(TinyCellParser.OrExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#ternaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTernaryExpression(TinyCellParser.TernaryExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#ternaryExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTernaryExpression(TinyCellParser.TernaryExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TinyCellParser#pinExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -286,6 +306,16 @@ public interface TinyCellListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPinExpression(TinyCellParser.PinExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TinyCellParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpression(TinyCellParser.ExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TinyCellParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpression(TinyCellParser.ExpressionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TinyCellParser#identifier}.
 	 * @param ctx the parse tree
