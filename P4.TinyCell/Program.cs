@@ -13,6 +13,7 @@ internal class Program
 
         var tokenStream = new CommonTokenStream(lexer);
 
+
         var parser = new TinyCellParser(tokenStream);
 
         var tree = parser.document();

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using Xunit;
 
 namespace P4.TinyCell.Tests;
 
@@ -8,7 +9,7 @@ public class LexerUnitTests
     /// Can handle a string with only a single identifier.
     /// <example> 
     /// <code> Example input: "x" </code>
-    /// <code> Expected output: [IDENTIFIER] </code>
+    /// /// <code> Expected output: [IDENTIFIER] </code>
     /// </example>
     /// </summary>
     [Fact]
