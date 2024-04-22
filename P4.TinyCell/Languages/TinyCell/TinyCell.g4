@@ -1,5 +1,7 @@
 grammar TinyCell;
 
+Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
+
 document: setupDefinition updateDefinition generalDeclaration*;
 
 generalDeclaration: functionDefinition | declaration;
@@ -17,7 +19,7 @@ parameterList: parameter | parameterList COMMA parameter;
 
 parameter: type identifier;
 
-declaration: type initialDeclaration SEMI;
+declaration: type initialDeclaration;
 
 initialDeclaration: identifier | identifier ASSIGN expression;
 
@@ -27,10 +29,10 @@ statement:
 	ifStatement
 	| loopStatement
 	| jumpStatement
-	| declaration
-	| functionCall
-	| assignment;
-// | expression;
+	| declaration SEMI
+	| functionCall SEMI
+	| assignment SEMI
+	| expression SEMI;
 
 ifStatement:
 	IF LPAR expression RPAR compoundStatement
@@ -45,54 +47,12 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression SEMI;
 
-expression: pinExpression SEMI | ternaryExpression SEMI;
+assignment:
+	identifier assignmentOperator (expression | functionCall);
 
-//unused, but dotnet cannot build without it
-assignmentExpression:
-	ternaryExpression
-	| (unaryExpression | identifier) assignmentOperator assignmentExpression;
+functionCall: identifier LPAR parameterList* RPAR;
 
-functionCall: identifier LPAR parameterList* RPAR SEMI;
-
-assignment: identifier assignmentOperator expression SEMI;
-
-ternaryExpression:
-	orExpression
-	| orExpression QUESTION expression COLON expression;
-
-orExpression: andExpression | orExpression OR andExpression;
-
-andExpression:
-	equalityExpression
-	| andExpression AND equalityExpression;
-
-equalityExpression:
-	comparisonExpression
-	| equalityExpression EQ comparisonExpression
-	| equalityExpression NEQ comparisonExpression;
-
-comparisonExpression:
-	bitshiftExpression
-	| comparisonExpression LT bitshiftExpression
-	| comparisonExpression GT bitshiftExpression
-	| comparisonExpression LTE bitshiftExpression
-	| comparisonExpression GTE bitshiftExpression;
-
-bitshiftExpression:
-	additiveExpression
-	| bitshiftExpression BITSHIFTL additiveExpression
-	| bitshiftExpression BITSHIFTR additiveExpression;
-
-additiveExpression:
-	multiplicativeExpression
-	| additiveExpression PLUS multiplicativeExpression
-	| additiveExpression MINUS multiplicativeExpression;
-
-multiplicativeExpression:
-	unaryExpression
-	| multiplicativeExpression MULT primitiveExpression
-	| multiplicativeExpression DIV primitiveExpression
-	| multiplicativeExpression MOD primitiveExpression;
+primitiveExpression: Numeral | String | Bool;
 
 unaryExpression:
 	primitiveExpression
@@ -101,9 +61,47 @@ unaryExpression:
 	| UNARYPLUS primitiveExpression
 	| UNARYMINUS primitiveExpression;
 
-primitiveExpression: Numeral | String;
+multiplicativeExpression:
+	unaryExpression
+	| multiplicativeExpression MULT primitiveExpression
+	| multiplicativeExpression DIV primitiveExpression
+	| multiplicativeExpression MOD primitiveExpression;
 
-pinExpression: SET identifier TO pinVoltage;
+additiveExpression:
+	multiplicativeExpression
+	| additiveExpression PLUS multiplicativeExpression
+	| additiveExpression MINUS multiplicativeExpression;
+
+bitshiftExpression:
+	additiveExpression
+	| bitshiftExpression BITSHIFTL additiveExpression
+	| bitshiftExpression BITSHIFTR additiveExpression;
+
+comparisonExpression:
+	bitshiftExpression
+	| comparisonExpression LT bitshiftExpression
+	| comparisonExpression GT bitshiftExpression
+	| comparisonExpression LTE bitshiftExpression
+	| comparisonExpression GTE bitshiftExpression;
+
+equalityExpression:
+	comparisonExpression
+	| equalityExpression EQ comparisonExpression
+	| equalityExpression NEQ comparisonExpression;
+
+andExpression:
+	equalityExpression
+	| andExpression AND equalityExpression;
+
+orExpression: andExpression | orExpression OR andExpression;
+
+ternaryExpression:
+	orExpression
+	| orExpression QUESTION expression COLON expression;
+
+pinExpression: ternaryExpression | SET identifier TO pinVoltage;
+
+expression: pinExpression;
 
 identifier: Identifier;
 
@@ -151,6 +149,8 @@ SEMI: ';';
 DOT: '.';
 COMMA: ',';
 COLON: ':';
+TRUE: 'true';
+FALSE: 'false';
 NEWLINE: '\n';
 //Assignment op
 ASSIGN: '=';
@@ -189,6 +189,6 @@ String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
 
-Whitespace: [ \t]+ -> channel(HIDDEN);
+Bool: TRUE | FALSE;
 
-Newline: ('\r' '\n'? | '\n') -> channel(HIDDEN);
+Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);

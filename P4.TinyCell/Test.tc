@@ -12,15 +12,17 @@ update
     testfunction();
 }
 
-int testfunction() {
+int testfunction()
+{
     bool tttt = false;
     int number;
-    if (tttt == false) {
+    if (tttt == false)
+    {
         number = 1;
     }
-    else {
+    else
+    {
         number = 0;
     }
-
     return number;
 }

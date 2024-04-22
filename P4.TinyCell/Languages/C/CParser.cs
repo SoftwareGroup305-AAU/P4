@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell//Languages//C//C.g4 by ANTLR 4.13.1
+// Generated from /home/rasmus/Documents/GitHub/P4/P4.TinyCell/Languages/C/C.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -212,16 +212,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_primaryExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterPrimaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitPrimaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPrimaryExpression(this);
@@ -374,16 +364,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_genericSelection; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGenericSelection(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGenericSelection(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitGenericSelection(this);
@@ -439,16 +419,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_genericAssocList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGenericAssocList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGenericAssocList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -510,16 +480,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_genericAssociation; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGenericAssociation(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGenericAssociation(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -659,16 +619,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_postfixExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterPostfixExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitPostfixExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -833,16 +783,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_argumentExpressionList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterArgumentExpressionList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitArgumentExpressionList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitArgumentExpressionList(this);
@@ -924,16 +864,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_unaryExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterUnaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitUnaryExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -1060,16 +990,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_unaryOperator; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterUnaryOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitUnaryOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitUnaryOperator(this);
@@ -1125,16 +1045,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_castExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterCastExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitCastExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -1227,16 +1137,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_multiplicativeExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterMultiplicativeExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitMultiplicativeExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitMultiplicativeExpression(this);
@@ -1311,16 +1211,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_additiveExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAdditiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAdditiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAdditiveExpression(this);
@@ -1394,16 +1284,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_shiftExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterShiftExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitShiftExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -1487,16 +1367,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_relationalExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterRelationalExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitRelationalExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitRelationalExpression(this);
@@ -1571,16 +1441,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_equalityExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterEqualityExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitEqualityExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEqualityExpression(this);
@@ -1651,16 +1511,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_andExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAndExpression(this);
@@ -1723,16 +1573,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_exclusiveOrExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterExclusiveOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitExclusiveOrExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -1797,16 +1637,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_inclusiveOrExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterInclusiveOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitInclusiveOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitInclusiveOrExpression(this);
@@ -1869,16 +1699,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_logicalAndExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterLogicalAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitLogicalAndExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -1943,16 +1763,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_logicalOrExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterLogicalOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitLogicalOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitLogicalOrExpression(this);
@@ -2016,16 +1826,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_conditionalExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterConditionalExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitConditionalExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2092,16 +1892,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_assignmentExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAssignmentExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAssignmentExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2174,16 +1964,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_assignmentOperator; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAssignmentOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAssignmentOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAssignmentOperator(this);
@@ -2237,16 +2017,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_expression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2304,16 +2074,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_constantExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterConstantExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitConstantExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitConstantExpression(this);
@@ -2359,16 +2119,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclaration(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2476,16 +2226,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_declarationSpecifiers; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclarationSpecifiers(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclarationSpecifiers(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitDeclarationSpecifiers(this);
@@ -2546,16 +2286,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declarationSpecifiers2; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclarationSpecifiers2(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclarationSpecifiers2(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2620,16 +2350,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declarationSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclarationSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclarationSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2711,16 +2431,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_initDeclaratorList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterInitDeclaratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitInitDeclaratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitInitDeclaratorList(this);
@@ -2781,16 +2491,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_initDeclarator; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterInitDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitInitDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitInitDeclarator(this);
@@ -2845,16 +2545,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_storageClassSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStorageClassSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStorageClassSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -2927,16 +2617,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_typeSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTypeSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTypeSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -3145,16 +2825,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_structOrUnionSpecifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructOrUnionSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructOrUnionSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitStructOrUnionSpecifier(this);
@@ -3225,16 +2895,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_structOrUnion; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructOrUnion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructOrUnion(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitStructOrUnion(this);
@@ -3284,16 +2944,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_structDeclarationList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructDeclarationList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructDeclarationList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -3353,16 +3003,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_structDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructDeclaration(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -3435,16 +3075,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_specifierQualifierList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterSpecifierQualifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitSpecifierQualifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitSpecifierQualifierList(this);
@@ -3515,16 +3145,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_structDeclaratorList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructDeclaratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructDeclaratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitStructDeclaratorList(this);
@@ -3584,16 +3204,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_structDeclarator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStructDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStructDeclarator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -3664,16 +3274,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_enumSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterEnumSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitEnumSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -3763,16 +3363,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumeratorList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterEnumeratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitEnumeratorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEnumeratorList(this);
@@ -3835,16 +3425,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumerator; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterEnumerator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitEnumerator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEnumerator(this);
@@ -3895,16 +3475,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_enumerationConstant; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterEnumerationConstant(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitEnumerationConstant(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEnumerationConstant(this);
@@ -3946,16 +3516,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_atomicTypeSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAtomicTypeSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAtomicTypeSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4002,16 +3562,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_typeQualifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTypeQualifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTypeQualifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4064,16 +3614,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_functionSpecifier; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterFunctionSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitFunctionSpecifier(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4169,16 +3709,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_alignmentSpecifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAlignmentSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAlignmentSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAlignmentSpecifier(this);
@@ -4246,16 +3776,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declarator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclarator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4350,16 +3870,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_directDeclarator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDirectDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDirectDeclarator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4611,16 +4121,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_vcSpecificModifer; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterVcSpecificModifer(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitVcSpecificModifer(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitVcSpecificModifer(this);
@@ -4673,16 +4173,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_gccDeclaratorExtension; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGccDeclaratorExtension(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGccDeclaratorExtension(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4765,16 +4255,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_gccAttributeSpecifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGccAttributeSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGccAttributeSpecifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitGccAttributeSpecifier(this);
@@ -4830,16 +4310,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_gccAttributeList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGccAttributeList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGccAttributeList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -4922,16 +4392,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_gccAttribute; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterGccAttribute(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitGccAttribute(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitGccAttribute(this);
@@ -5011,16 +4471,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_nestedParenthesesBlock; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterNestedParenthesesBlock(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitNestedParenthesesBlock(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -5227,16 +4677,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_pointer; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterPointer(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitPointer(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPointer(this);
@@ -5309,16 +4749,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_typeQualifierList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTypeQualifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTypeQualifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTypeQualifierList(this);
@@ -5372,16 +4802,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterTypeList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterParameterTypeList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitParameterTypeList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -5441,16 +4861,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterParameterList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitParameterList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -5518,16 +4928,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterParameterDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitParameterDeclaration(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -5599,16 +4999,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_identifierList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterIdentifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitIdentifierList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIdentifierList(this);
@@ -5668,16 +5058,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_typeName; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTypeName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTypeName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTypeName(this);
@@ -5736,16 +5116,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_abstractDeclarator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterAbstractDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitAbstractDeclarator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -5847,16 +5217,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_directAbstractDeclarator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDirectAbstractDeclarator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDirectAbstractDeclarator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6189,16 +5549,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_typedefName; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTypedefName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTypedefName(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTypedefName(this);
@@ -6243,16 +5593,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_initializer; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterInitializer(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitInitializer(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6355,16 +5695,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_initializerList; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterInitializerList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitInitializerList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitInitializerList(this);
@@ -6445,16 +5775,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_designation; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDesignation(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDesignation(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitDesignation(this);
@@ -6498,16 +5818,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_designatorList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDesignatorList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDesignatorList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6564,16 +5874,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_designator; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDesignator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDesignator(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6643,16 +5943,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_staticAssertDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStaticAssertDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStaticAssertDeclaration(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6750,16 +6040,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_statement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -6944,16 +6224,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_labeledStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterLabeledStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitLabeledStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitLabeledStatement(this);
@@ -7039,16 +6309,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_compoundStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterCompoundStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitCompoundStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitCompoundStatement(this);
@@ -7103,16 +6363,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_blockItemList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterBlockItemList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitBlockItemList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7169,16 +6419,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_blockItem; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterBlockItem(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitBlockItem(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitBlockItem(this);
@@ -7231,16 +6471,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_expressionStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterExpressionStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitExpressionStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7302,16 +6532,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_selectionStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterSelectionStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitSelectionStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7406,16 +6626,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_iterationStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterIterationStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitIterationStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7519,16 +6729,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_forCondition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterForCondition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitForCondition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitForCondition(this);
@@ -7618,16 +6818,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_forDeclaration; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterForDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitForDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitForDeclaration(this);
@@ -7684,16 +6874,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_forExpression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterForExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitForExpression(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7759,16 +6939,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_jumpStatement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterJumpStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitJumpStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7859,16 +7029,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_compilationUnit; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterCompilationUnit(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitCompilationUnit(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitCompilationUnit(this);
@@ -7921,16 +7081,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_translationUnit; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterTranslationUnit(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitTranslationUnit(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -7987,16 +7137,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_externalDeclaration; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterExternalDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitExternalDeclaration(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
@@ -8066,16 +7206,6 @@ public partial class CParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_functionDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterFunctionDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitFunctionDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFunctionDefinition(this);
@@ -8140,16 +7270,6 @@ public partial class CParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_declarationList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.EnterDeclarationList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ICListener typedListener = listener as ICListener;
-			if (typedListener != null) typedListener.ExitDeclarationList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ICVisitor<TResult> typedVisitor = visitor as ICVisitor<TResult>;
