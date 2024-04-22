@@ -19,9 +19,7 @@ parameter: type identifier;
 
 declaration: type initialDeclaration SEMI;
 
-initialDeclaration:
-	identifier
-    | identifier ASSIGN expression;
+initialDeclaration: identifier | identifier ASSIGN expression;
 
 compoundStatement: LCURLY statement* RCURLY;
 
@@ -30,9 +28,9 @@ statement:
 	| loopStatement
 	| jumpStatement
 	| declaration
-    | functionCall
-    | assignment;
-	// | expression;
+	| functionCall
+	| assignment;
+// | expression;
 
 ifStatement:
 	IF LPAR expression RPAR compoundStatement
@@ -47,17 +45,7 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression SEMI;
 
-expression:
-	pinExpression
-	| ternaryExpression
-    | orExpression
-    | andExpression
-    | equalityExpression
-    | comparisonExpression
-    | bitshiftExpression
-    | additiveExpression
-    | multiplicativeExpression
-    | unaryExpression;
+expression: pinExpression SEMI | ternaryExpression SEMI;
 
 //unused, but dotnet cannot build without it
 assignmentExpression:
@@ -119,7 +107,13 @@ pinExpression: SET identifier TO pinVoltage;
 
 identifier: Identifier;
 
-assignmentOperator: ASSIGN | MULTASSIGN | DIVASSIGN | MODASSIGN | PLUSASSIGN | MINUSASSIGN;
+assignmentOperator:
+	ASSIGN
+	| MULTASSIGN
+	| DIVASSIGN
+	| MODASSIGN
+	| PLUSASSIGN
+	| MINUSASSIGN;
 
 pinVoltage: VOLHIGH | VOLLOW;
 
@@ -183,8 +177,8 @@ GTE: '>=';
 LTE: '<=';
 NOT: '!';
 //Bitwise op
-BITSHIFTL : '<<';
-BITSHIFTR : '>>';
+BITSHIFTL: '<<';
+BITSHIFTR: '>>';
 //Unary op
 UNARYPLUS: '++';
 UNARYMINUS: '--';

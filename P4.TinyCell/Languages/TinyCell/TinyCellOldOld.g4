@@ -1,4 +1,4 @@
-grammar TinyCellold;
+grammar TinyCell;
 
 document: setupDefinition updateDefinition generalDeclaration*;
 
@@ -48,8 +48,16 @@ jumpStatement:
 	| RETURN expression SEMI;
 
 expression:
-	pinExpression SEMI
-	| ternaryExpression SEMI;
+	pinExpression
+	| ternaryExpression
+    | orExpression
+    | andExpression
+    | equalityExpression
+    | comparisonExpression
+    | bitshiftExpression
+    | additiveExpression
+    | multiplicativeExpression
+    | unaryExpression;
 
 //unused, but dotnet cannot build without it
 assignmentExpression:
