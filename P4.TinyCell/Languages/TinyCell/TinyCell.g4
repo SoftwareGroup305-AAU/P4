@@ -1,5 +1,7 @@
 grammar TinyCell;
 
+Bool: ('true' | 'false');
+
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
 document: setupDefinition updateDefinition generalDeclaration*;
@@ -35,8 +37,8 @@ statement:
 	| expression SEMI;
 
 ifStatement:
-	IF LPAR expression RPAR compoundStatement
-	| IF LPAR expression RPAR compoundStatement ELSE compoundStatement;
+	IF LPAR expression RPAR compoundStatement ELSE compoundStatement
+	| IF LPAR expression RPAR compoundStatement;
 
 loopStatement:
 	WHILE LPAR expression RPAR compoundStatement
@@ -53,7 +55,7 @@ assignment:
 
 functionCall: identifier LPAR parameterList* RPAR;
 
-primitiveExpression: Numeral | String | Bool | identifier;
+primitiveExpression: Numeral | Bool | String | identifier;
 
 unaryExpression:
 	primitiveExpression
@@ -189,7 +191,5 @@ Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
-
-Bool: (TRUE | FALSE);
 
 Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);
