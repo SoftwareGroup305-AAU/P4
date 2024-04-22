@@ -28,7 +28,27 @@ setup
 }
 update
 {
-    int x = 1;
-    int y = 2;
-    int z = x + y;
+    pin tester = 1;
+    tester = 2;
+    set tester to high;
+
+    char nunununu = "c";
+
+    testfunction(tester);
+
+    int varvarvar = testfunction(tester);
+}
+int testfunction(pin par)
+{
+    bool tttt = false;
+    int number;
+    if (tttt != true)
+    {
+        number = 1;
+    }
+    else
+    {
+        number = 0;
+    }
+    return number;
 }
