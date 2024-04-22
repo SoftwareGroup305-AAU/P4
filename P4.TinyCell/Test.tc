@@ -1,5 +1,9 @@
 setup
 {
+    float ni = (2 * 3) + (1 * (2 + 1));
+
+    ni == 9 ? ni = 9 : ni = 8;
+
     int i = 0;
     i = i + 1;
 
@@ -15,7 +19,7 @@ setup
         {
             break;
         }
-        if (yesyes)
+        if (yesyes && yesyes)
         {
             continue;
         }

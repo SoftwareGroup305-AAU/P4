@@ -1,16 +1,16 @@
 grammar TinyCell;
 
-Bool: ('true' | 'false');
+Bool: (TRUE | FALSE);
 
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
 document: setupDefinition updateDefinition generalDeclaration*;
 
-generalDeclaration: functionDefinition | declaration;
-
 setupDefinition: SETUP compoundStatement;
 
 updateDefinition: UPDATE compoundStatement;
+
+generalDeclaration: functionDefinition | declaration;
 
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
@@ -61,7 +61,12 @@ assignment:
 
 functionCall: identifier LPAR argumentList* RPAR;
 
-primitiveExpression: Numeral | Bool | String | identifier;
+primitiveExpression:
+	Numeral
+	| Bool
+	| String
+	| identifier
+	| LPAR expression RPAR;
 
 unaryExpression:
 	primitiveExpression
@@ -107,11 +112,15 @@ orExpression: andExpression | orExpression OR andExpression;
 
 ternaryExpression:
 	orExpression
-	| orExpression QUESTION expression COLON expression;
+	| orExpression QUESTION (
+		expression
+		| functionCall
+		| assignment
+	) COLON (expression | functionCall | assignment);
 
 pinExpression: ternaryExpression | SET identifier TO pinVoltage;
 
-expression: pinExpression | LPAR expression RPAR;
+expression: pinExpression;
 
 identifier: Identifier;
 

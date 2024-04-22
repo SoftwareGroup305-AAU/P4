@@ -41,16 +41,6 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDocument([NotNull] TinyCellParser.DocumentContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.setupDefinition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -70,6 +60,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.functionDefinition"/>.
 	/// </summary>
