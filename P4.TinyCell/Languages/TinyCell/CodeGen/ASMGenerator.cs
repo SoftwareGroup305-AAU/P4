@@ -4,20 +4,25 @@ namespace P4.TinyCell.Languages.TinyCell.CodeGen;
 
 public class ASMGenerator
 {
+       private int labelCount = 0;
+       private int ifLabelCount = 0;
+       private int WhileLabelCount = 0;
        /// <summary>
        /// <c>AdditionASM</c> converts an addition operation to their ARM equivalant.
        /// </summary>
        /// <remarks>Currently uses hardcoded registers</remarks>
        /// <returns>a string representation of the comparison</returns>
-       public string AdditionASM()
+       public string AdditionAsm()
        {
               return "ADD{S} R0, R1, R2 \n R15{R0}";
        }
+
        /// <summary>
        /// <c>OperatorASM</c> converts operators to their ARM equivalant.
        /// </summary>
        /// <returns>a string representation of the comparison</returns>
-       public string OperatorASM(String operatorASM)
+       /// <remarks>THIS MIGHT BE WRONG DO NOT USE</remarks>
+       public string OperatorAsm(String operatorASM)
        {
               switch (operatorASM)
               {
@@ -34,16 +39,64 @@ public class ASMGenerator
                      case(">="):
                             return "GE";
                      case("&&"):
-                            return ""
-                            
+                            string label = ".LBL_" + labelCount;//Generate a label
+                            labelCount = labelCount + 1;
+                            return label;
+                     case("||"):
+                            string label1 = ".LBL_" + labelCount;//Generate a label
+                            labelCount = labelCount + 1;
+                            string label2 = ".LBL_" + labelCount;//Generate a label
+                            labelCount = labelCount + 1;
+                            return "bne "+label1+ "\n" +"b "+label2+ "\n";
               }
 
               return "";
        }
 
-       public string ifASM()
+       public string CompareAsm(String comparison)
        {
-              return "";
+              switch (comparison)
+              {
+                     case ("<"):
+                            //Check if variable or const if const -> input the const instead with "#1" for ASCII 1
+                            return "CMP ";
+                            break;
+              }
+              
+       }
+       
+       /// <summary>
+       /// <c>ifASM</c> generates an if statement in ARM.
+       /// </summary>
+       /// <returns>initialises the if statement</returns>
+       /// <remarks>Not done. Requires liveness analysis to be done, should also take in a register</remarks>
+       public string IfAsm()
+       {
+              return "LDR r0, [sp, #8]\nCMP";
+       }
+
+       public string WhileAsm()
+       {
+              string loopLabel = ".LBLWhile_" + WhileLabelCount;
+              
+              WhileLabelCount = WhileLabelCount + 1;
+              return "b " + loopLabel + "\n"+loopLabel+":\n"+IfAsm()+"OperatorAsm";
+              b       .LBB0_15 //jump to loop
+                     .LBB0_15: //loop label
+              ldr     r0, [sp, #4]
+              ldr     r1, [sp]
+              cmp     r0, r1 //compare i and p
+              bge     .LBB0_17 //jump out of loop
+              b       .LBB0_16
+                     .LBB0_16:
+              ldr     r0, .LCPI0_5 //print
+                     .LPC0_5:
+              add     r0, pc, r0
+              bl      printf
+              ldr     r0, [sp, #4] //increment i
+              add     r0, r0, #1 //increment i
+              str     r0, [sp, #4] //increment i
+              b       .LBB0_15
        }
 
 }
