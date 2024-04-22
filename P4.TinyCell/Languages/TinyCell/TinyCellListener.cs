@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell/Languages/TinyCell/TinyCell.g4 by ANTLR 4.13.1
+// Generated from Languages/TinyCell/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -111,6 +111,26 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitParameter([NotNull] TinyCellParser.ParameterContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.argumentList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArgumentList([NotNull] TinyCellParser.ArgumentListContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.argumentList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArgumentList([NotNull] TinyCellParser.ArgumentListContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.argument"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArgument([NotNull] TinyCellParser.ArgumentContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.argument"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArgument([NotNull] TinyCellParser.ArgumentContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -181,115 +201,25 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitJumpStatement([NotNull] TinyCellParser.JumpStatementContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// Enter a parse tree produced by <see cref="TinyCellParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterExpression([NotNull] TinyCellParser.ExpressionContext context);
+	void EnterAssignment([NotNull] TinyCellParser.AssignmentContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// Exit a parse tree produced by <see cref="TinyCellParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitExpression([NotNull] TinyCellParser.ExpressionContext context);
+	void ExitAssignment([NotNull] TinyCellParser.AssignmentContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.assignmentExpression"/>.
+	/// Enter a parse tree produced by <see cref="TinyCellParser.functionCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void EnterAssignmentExpression([NotNull] TinyCellParser.AssignmentExpressionContext context);
+	void EnterFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.assignmentExpression"/>.
+	/// Exit a parse tree produced by <see cref="TinyCellParser.functionCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	void ExitAssignmentExpression([NotNull] TinyCellParser.AssignmentExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
+	void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
@@ -301,6 +231,96 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitPrimitiveExpression([NotNull] TinyCellParser.PrimitiveExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.pinExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -310,6 +330,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitPinExpression([NotNull] TinyCellParser.PinExpressionContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression([NotNull] TinyCellParser.ExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression([NotNull] TinyCellParser.ExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.identifier"/>.
 	/// </summary>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell/Languages/TinyCell/TinyCell.g4 by ANTLR 4.13.1
+// Generated from Languages/TinyCell/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -80,6 +80,18 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitParameter([NotNull] TinyCellParser.ParameterContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.argumentList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgumentList([NotNull] TinyCellParser.ArgumentListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.argument"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgument([NotNull] TinyCellParser.ArgumentContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -122,71 +134,17 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitJumpStatement([NotNull] TinyCellParser.JumpStatementContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// Visit a parse tree produced by <see cref="TinyCellParser.assignment"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitExpression([NotNull] TinyCellParser.ExpressionContext context);
+	Result VisitAssignment([NotNull] TinyCellParser.AssignmentContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.assignmentExpression"/>.
+	/// Visit a parse tree produced by <see cref="TinyCellParser.functionCall"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
-	Result VisitAssignmentExpression([NotNull] TinyCellParser.AssignmentExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
+	Result VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
@@ -194,11 +152,71 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitPrimitiveExpression([NotNull] TinyCellParser.PrimitiveExpressionContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.unaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.multiplicativeExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.additiveExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.bitshiftExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.comparisonExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.equalityExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.andExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitAndExpression([NotNull] TinyCellParser.AndExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.orExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitOrExpression([NotNull] TinyCellParser.OrExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.ternaryExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.pinExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPinExpression([NotNull] TinyCellParser.PinExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitExpression([NotNull] TinyCellParser.ExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.identifier"/>.
 	/// </summary>

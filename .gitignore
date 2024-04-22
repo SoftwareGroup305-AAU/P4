@@ -403,7 +403,6 @@ FodyWeavers.xsd
 Antlr/
 
 #Project files
-Test.tc
 **/*.tokens
 **/*.java
 **/*.atn

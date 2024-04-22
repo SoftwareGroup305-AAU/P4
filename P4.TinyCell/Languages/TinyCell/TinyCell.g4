@@ -1,122 +1,202 @@
 grammar TinyCell;
 
-document : setupDefinition updateDefinition generalDeclaration*;
+Bool: ('true' | 'false');
 
-generalDeclaration : functionDefinition
-                        | declaration;
+Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
-setupDefinition : 'setup' compoundStatement;
+document: setupDefinition updateDefinition generalDeclaration*;
 
-updateDefinition : 'update' compoundStatement;
+generalDeclaration: functionDefinition | declaration;
 
-functionDefinition : type identifier '('parameterList')' compoundStatement;
+setupDefinition: SETUP compoundStatement;
 
-type : 'void'
-            | 'char'
-            | 'int'
-            | 'float'
-            | 'bool'
-            | 'pin';
+updateDefinition: UPDATE compoundStatement;
 
-parameterList : parameter
-                    | parameterList ',' parameter;
-    
-parameter : type identifier;
+functionDefinition:
+	type identifier LPAR parameterList* RPAR compoundStatement;
 
-declaration : type initialDeclaration ';';
+type: VOID | CHAR | INT | FLOAT | BOOL | PIN;
 
-initialDeclaration : identifier
-                    | identifier '=' assignmentExpression;
-        
+parameterList: parameter | parameterList COMMA parameter;
 
-compoundStatement : '{' statement* '}';
+parameter: type identifier;
 
-statement : ifStatement
-            | loopStatement
-            | jumpStatement
-            | declaration
-            | expression;
+argumentList: argument | argumentList COMMA argument;
 
-ifStatement : 'if' '(' expression ')' compoundStatement
-            | 'if' '(' expression ')' compoundStatement 'else' compoundStatement;
+argument: identifier;
 
-loopStatement : 'while' '(' expression ')' compoundStatement
-                | 'for' '(' expression ';' expression ';' expression ')' compoundStatement;
+declaration: type initialDeclaration;
 
-jumpStatement : 'continue' ';'
-                | 'break' ';'
-                | 'return' expression ';'; 
+initialDeclaration:
+	identifier
+	| identifier ASSIGN (expression | functionCall);
 
-expression : assignmentExpression;
+compoundStatement: LCURLY statement* RCURLY;
 
-assignmentExpression : ternaryExpression
-                        | pinExpression
-                        | unaryExpression assignmentOperator assignmentExpression;
+statement:
+	ifStatement
+	| loopStatement
+	| jumpStatement
+	| declaration SEMI
+	| functionCall SEMI
+	| assignment SEMI
+	| expression SEMI;
 
-ternaryExpression : orExpression
-                    | orExpression '?' expression ':' expression;
+ifStatement:
+	IF LPAR expression RPAR compoundStatement ELSE compoundStatement
+	| IF LPAR expression RPAR compoundStatement;
 
-orExpression : andExpression
-                | orExpression '||' andExpression;
+loopStatement:
+	WHILE LPAR expression RPAR compoundStatement
+	| FOR LPAR (expression | declaration) SEMI expression SEMI expression RPAR compoundStatement;
 
-andExpression : equalityExpression
-                | andExpression '&&' equalityExpression;
+jumpStatement:
+	CONTINUE SEMI
+	| BREAK SEMI
+	| RETURN expression SEMI;
 
-equalityExpression : comparisonExpression
-                | equalityExpression '==' comparisonExpression
-                | equalityExpression '!=' comparisonExpression;
+assignment:
+	identifier assignmentOperator expression
+	| identifier assignmentOperator functionCall;
 
-comparisonExpression : bitshiftExpression
-                        | comparisonExpression '<' bitshiftExpression
-                        | comparisonExpression '>' bitshiftExpression
-                        | comparisonExpression '<=' bitshiftExpression
-                        | comparisonExpression '>=' bitshiftExpression;
+functionCall: identifier LPAR argumentList* RPAR;
 
-bitshiftExpression : additiveExpression
-                    | bitshiftExpression '<<' additiveExpression
-                    | bitshiftExpression '>>' additiveExpression;
+primitiveExpression: Numeral | Bool | String | identifier;
 
-additiveExpression : multiplicativeExpression
-                    | additiveExpression '+' multiplicativeExpression
-                    | additiveExpression '-' multiplicativeExpression;
+unaryExpression:
+	primitiveExpression
+	| primitiveExpression UNARYPLUS
+	| primitiveExpression UNARYMINUS
+	| UNARYPLUS primitiveExpression
+	| UNARYMINUS primitiveExpression
+	| NOT primitiveExpression;
 
-multiplicativeExpression : unaryExpression
-                            | multiplicativeExpression '*' unaryExpression
-                            | multiplicativeExpression '/' unaryExpression
-                            | multiplicativeExpression '%' unaryExpression;
+multiplicativeExpression:
+	unaryExpression
+	| multiplicativeExpression MULT primitiveExpression
+	| multiplicativeExpression DIV primitiveExpression
+	| multiplicativeExpression MOD primitiveExpression;
 
-unaryExpression : primitiveExpression
-                | unaryExpression '++' 
-                | unaryExpression '--'
-                | '++' unaryExpression
-                | '--' unaryExpression;
+additiveExpression:
+	multiplicativeExpression
+	| additiveExpression PLUS multiplicativeExpression
+	| additiveExpression MINUS multiplicativeExpression;
 
-primitiveExpression :  Numeral | String ;
+bitshiftExpression:
+	additiveExpression
+	| bitshiftExpression BITSHIFTL additiveExpression
+	| bitshiftExpression BITSHIFTR additiveExpression;
 
-pinExpression : 'set' identifier 'to' pinVoltage;
+comparisonExpression:
+	bitshiftExpression
+	| comparisonExpression LT bitshiftExpression
+	| comparisonExpression GT bitshiftExpression
+	| comparisonExpression LTE bitshiftExpression
+	| comparisonExpression GTE bitshiftExpression;
 
-identifier : Identifier;
+equalityExpression:
+	comparisonExpression
+	| equalityExpression EQ comparisonExpression
+	| equalityExpression NEQ comparisonExpression;
 
-assignmentOperator : '='
-                    | '*='
-                    | '/='
-                    | '%='
-                    | '+='
-                    | '-=';
+andExpression:
+	equalityExpression
+	| andExpression AND equalityExpression;
 
-pinVoltage : 'high'
-            | 'low';
+orExpression: andExpression | orExpression OR andExpression;
 
-Identifier : [a-zA-Z_][a-zA-Z0-9_]* ;
+ternaryExpression:
+	orExpression
+	| orExpression QUESTION expression COLON expression;
 
-String : '"' ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~]) '"';
+pinExpression: ternaryExpression | SET identifier TO pinVoltage;
 
-Numeral : [-]?([0] | [1-9])[0-9]*(.[0-9]+)? ;
+expression: pinExpression | LPAR expression RPAR;
 
-Whitespace
-    : [ \t]+ -> channel(HIDDEN)
-    ;
+identifier: Identifier;
 
-Newline
-    : ('\r' '\n'? | '\n') -> channel(HIDDEN)
-    ;
+assignmentOperator:
+	ASSIGN
+	| MULTASSIGN
+	| DIVASSIGN
+	| MODASSIGN
+	| PLUSASSIGN
+	| MINUSASSIGN;
+
+pinVoltage: VOLHIGH | VOLLOW;
+
+//Pin op
+VOLHIGH: 'high';
+VOLLOW: 'low';
+//Types
+PIN: 'pin';
+INT: 'int';
+FLOAT: 'float';
+STRING: 'string';
+BOOL: 'bool';
+VOID: 'void';
+CHAR: 'char';
+//Keywords
+UPDATE: 'update';
+SETUP: 'setup';
+SET: 'set';
+TO: 'to';
+IF: 'if';
+ELSE: 'else';
+WHILE: 'while';
+FOR: 'for';
+CONTINUE: 'continue';
+BREAK: 'break';
+RETURN: 'return';
+QUESTION: '?';
+LPAR: '(';
+RPAR: ')';
+LCURLY: '{';
+RCURLY: '}';
+LBRACKET: '[';
+RBRACKET: ']';
+SEMI: ';';
+DOT: '.';
+COMMA: ',';
+COLON: ':';
+TRUE: 'true';
+FALSE: 'false';
+NEWLINE: '\n';
+//Assignment op
+ASSIGN: '=';
+PLUSASSIGN: '+=';
+MULTASSIGN: '*=';
+DIVASSIGN: '/=';
+MODASSIGN: '%=';
+MINUSASSIGN: '-=';
+QUOTE: '"';
+//Op
+MULT: '*';
+DIV: '/';
+PLUS: '+';
+MINUS: '-';
+MOD: '%';
+//Relational op
+AND: '&&';
+OR: '||';
+EQ: '==';
+NEQ: '!=';
+GT: '>';
+LT: '<';
+GTE: '>=';
+LTE: '<=';
+NOT: '!';
+//Bitwise op
+BITSHIFTL: '<<';
+BITSHIFTR: '>>';
+//Unary op
+UNARYPLUS: '++';
+UNARYMINUS: '--';
+
+Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
+
+String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
+
+Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
+
+Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);
