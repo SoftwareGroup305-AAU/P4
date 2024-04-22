@@ -48,11 +48,12 @@ jumpStatement:
 	| RETURN expression SEMI;
 
 assignment:
-	identifier assignmentOperator (expression | functionCall);
+	identifier assignmentOperator expression
+	| identifier assignmentOperator functionCall;
 
 functionCall: identifier LPAR parameterList* RPAR;
 
-primitiveExpression: Numeral | String | Bool;
+primitiveExpression: Numeral | String | Bool | identifier;
 
 unaryExpression:
 	primitiveExpression
@@ -101,7 +102,7 @@ ternaryExpression:
 
 pinExpression: ternaryExpression | SET identifier TO pinVoltage;
 
-expression: pinExpression;
+expression: pinExpression | LPAR expression RPAR;
 
 identifier: Identifier;
 
@@ -189,6 +190,6 @@ String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
 
-Bool: TRUE | FALSE;
+Bool: (TRUE | FALSE);
 
 Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);
