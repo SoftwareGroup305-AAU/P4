@@ -21,9 +21,15 @@ parameterList: parameter | parameterList COMMA parameter;
 
 parameter: type identifier;
 
+argumentList: argument | argumentList COMMA argument;
+
+argument: identifier;
+
 declaration: type initialDeclaration;
 
-initialDeclaration: identifier | identifier ASSIGN expression;
+initialDeclaration:
+	identifier
+	| identifier ASSIGN (expression | functionCall);
 
 compoundStatement: LCURLY statement* RCURLY;
 
@@ -42,7 +48,7 @@ ifStatement:
 
 loopStatement:
 	WHILE LPAR expression RPAR compoundStatement
-	| FOR LPAR expression SEMI expression SEMI expression RPAR compoundStatement;
+	| FOR LPAR (expression | declaration) SEMI expression SEMI expression RPAR compoundStatement;
 
 jumpStatement:
 	CONTINUE SEMI
@@ -53,7 +59,7 @@ assignment:
 	identifier assignmentOperator expression
 	| identifier assignmentOperator functionCall;
 
-functionCall: identifier LPAR parameterList* RPAR;
+functionCall: identifier LPAR argumentList* RPAR;
 
 primitiveExpression: Numeral | Bool | String | identifier;
 
@@ -62,7 +68,8 @@ unaryExpression:
 	| primitiveExpression UNARYPLUS
 	| primitiveExpression UNARYMINUS
 	| UNARYPLUS primitiveExpression
-	| UNARYMINUS primitiveExpression;
+	| UNARYMINUS primitiveExpression
+	| NOT primitiveExpression;
 
 multiplicativeExpression:
 	unaryExpression

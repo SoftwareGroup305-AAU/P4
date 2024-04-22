@@ -80,6 +80,18 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitParameter([NotNull] TinyCellParser.ParameterContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.argumentList"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgumentList([NotNull] TinyCellParser.ArgumentListContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.argument"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArgument([NotNull] TinyCellParser.ArgumentContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.declaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
