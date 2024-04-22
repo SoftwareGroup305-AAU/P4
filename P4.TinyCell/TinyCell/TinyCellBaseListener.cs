@@ -48,6 +48,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDocument([NotNull] TinyCellParser.DocumentContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.setupDefinition"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -71,18 +83,6 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.functionDefinition"/>.
 	/// <para>The default implementation does nothing.</para>

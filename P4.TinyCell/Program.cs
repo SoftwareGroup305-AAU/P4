@@ -20,7 +20,7 @@ internal class Program
 
                 // Parse the input (assuming "document" is the name of the start rule)
                 var tree = parser.document();
-                
+
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
                 ParseTreeWalker.Default.Walk(listener, tree);
                 var list = listener.instructions;
