@@ -403,4 +403,7 @@ FodyWeavers.xsd
 Antlr/
 
 #Project files
-P4.TinyCell/Program.cs
+**/*.tokens
+**/*.java
+**/*.atn
+P4.TinyCell/Languages/TinyCell/.antlr/TinyCell.tokens
