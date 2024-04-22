@@ -38,6 +38,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDocument([NotNull] TinyCellParser.DocumentContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.setupDefinition"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -49,12 +55,6 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context);
-	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.functionDefinition"/>.
 	/// </summary>

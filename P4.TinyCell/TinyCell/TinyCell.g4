@@ -4,13 +4,13 @@ Bool: (TRUE | FALSE);
 
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
-document: setupDefinition updateDefinition generalDeclaration*;
+document: generalDeclaration* setupDefinition updateDefinition;
+
+generalDeclaration: functionDefinition | declaration;
 
 setupDefinition: SETUP compoundStatement;
 
 updateDefinition: UPDATE compoundStatement;
-
-generalDeclaration: functionDefinition | declaration;
 
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
