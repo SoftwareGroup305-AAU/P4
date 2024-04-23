@@ -6,7 +6,7 @@ Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
 document: generalDeclaration* setupDefinition updateDefinition;
 
-generalDeclaration: functionDefinition | declaration;
+generalDeclaration: functionDefinition | declaration SEMI;
 
 setupDefinition: SETUP compoundStatement;
 
@@ -15,7 +15,7 @@ updateDefinition: UPDATE compoundStatement;
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
 
-type: VOID | CHAR | INT | FLOAT | BOOL | PIN;
+type: VOID | STRING | INT | FLOAT | BOOL | PIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
@@ -23,7 +23,7 @@ parameter: type identifier;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier;
+argument: identifier | functionCall | Numeral | String;
 
 declaration: type initialDeclaration;
 
@@ -66,6 +66,7 @@ primitiveExpression:
 	| Bool
 	| String
 	| identifier
+	| functionCall
 	| LPAR expression RPAR;
 
 unaryExpression:
@@ -118,9 +119,16 @@ ternaryExpression:
 		| assignment
 	) COLON (expression | functionCall | assignment);
 
-pinExpression: ternaryExpression | SET identifier TO pinVoltage;
+pinAssignmentExpression:
+	ternaryExpression
+	| WRITE (pinVoltage | identifier) TO (identifier | Numeral)
+	| READ (identifier | Numeral) TO identifier;
 
-expression: pinExpression;
+pinStatusExpression:
+	pinAssignmentExpression
+	| SET identifier TO pinStatus;
+
+expression: pinStatusExpression;
 
 identifier: Identifier;
 
@@ -134,9 +142,13 @@ assignmentOperator:
 
 pinVoltage: VOLHIGH | VOLLOW;
 
+pinStatus: PININ | PINOUT;
+
 //Pin op
-VOLHIGH: 'high';
-VOLLOW: 'low';
+VOLHIGH: 'HIGH';
+VOLLOW: 'LOW';
+PININ: 'INPUT';
+PINOUT: 'OUTPUT';
 //Types
 PIN: 'pin';
 INT: 'int';
@@ -150,6 +162,8 @@ UPDATE: 'update';
 SETUP: 'setup';
 SET: 'set';
 TO: 'to';
+READ: 'read';
+WRITE: 'write';
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';

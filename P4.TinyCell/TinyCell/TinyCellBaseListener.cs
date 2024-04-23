@@ -384,17 +384,29 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.pinExpression"/>.
+	/// Enter a parse tree produced by <see cref="TinyCellParser.pinAssignmentExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void EnterPinExpression([NotNull] TinyCellParser.PinExpressionContext context) { }
+	public virtual void EnterPinAssignmentExpression([NotNull] TinyCellParser.PinAssignmentExpressionContext context) { }
 	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.pinExpression"/>.
+	/// Exit a parse tree produced by <see cref="TinyCellParser.pinAssignmentExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
-	public virtual void ExitPinExpression([NotNull] TinyCellParser.PinExpressionContext context) { }
+	public virtual void ExitPinAssignmentExpression([NotNull] TinyCellParser.PinAssignmentExpressionContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.pinStatusExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.pinStatusExpression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -443,6 +455,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.pinStatus"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterPinStatus([NotNull] TinyCellParser.PinStatusContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.pinStatus"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitPinStatus([NotNull] TinyCellParser.PinStatusContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>
