@@ -3,17 +3,19 @@ int testfunction(pin par)
 {
     bool tttt = false;
     int number;
-    if (tttt != true)
-    {
+    if (tttt != true) {
     }
-    else
-    {
+    else {
         number = 0;
         testfunction(1);
         number = number + testfunction(dpin);
     }
     return number;
 }
+// line comment
+/* 
+block comment
+*/
 int funnyfunky(int aaa) {
     int nummm = aaa;
     return (nummm + aaa);
@@ -24,19 +26,16 @@ setup
     ni == 9 ? ni = 9 : ni = 8;
     int i = 0;
     i = i + 1;
-    while (i < 10)
-    {
+    while (i < 10) {
         i++;
     }
     bool yesyes = false;
     for (int j = 10; j > 0; j--)
     {
-        if (!yesyes)
-        {
+        if (!yesyes) {
             break;
         }
-        if (yesyes && yesyes)
-        {
+        if (yesyes && yesyes) {
         }
     }
     i += 2;

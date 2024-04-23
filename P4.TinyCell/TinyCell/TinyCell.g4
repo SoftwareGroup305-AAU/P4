@@ -222,4 +222,8 @@ String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
 
+BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
+
+LineComment: '//' ~[\r\n]* -> channel(HIDDEN);
+
 Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);

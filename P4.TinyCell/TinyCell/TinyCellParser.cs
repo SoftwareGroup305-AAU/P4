@@ -45,7 +45,7 @@ public partial class TinyCellParser : Parser {
 		MODASSIGN=45, MINUSASSIGN=46, QUOTE=47, MULT=48, DIV=49, PLUS=50, MINUS=51, 
 		MOD=52, AND=53, OR=54, EQ=55, NEQ=56, GT=57, LT=58, GTE=59, LTE=60, NOT=61, 
 		BITSHIFTL=62, BITSHIFTR=63, UNARYPLUS=64, UNARYMINUS=65, Identifier=66, 
-		String=67, Numeral=68, Newline=69;
+		String=67, Numeral=68, BlockComment=69, LineComment=70, Newline=71;
 	public const int
 		RULE_document = 0, RULE_generalDeclaration = 1, RULE_setupDefinition = 2, 
 		RULE_updateDefinition = 3, RULE_functionDefinition = 4, RULE_type = 5, 
@@ -90,7 +90,8 @@ public partial class TinyCellParser : Parser {
 		"ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN", "MINUSASSIGN", 
 		"QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND", "OR", "EQ", "NEQ", 
 		"GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR", "UNARYPLUS", 
-		"UNARYMINUS", "Identifier", "String", "Numeral", "Newline"
+		"UNARYMINUS", "Identifier", "String", "Numeral", "BlockComment", "LineComment", 
+		"Newline"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -3324,7 +3325,7 @@ public partial class TinyCellParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,69,425,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,71,425,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
