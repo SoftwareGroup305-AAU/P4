@@ -16,6 +16,7 @@ public class LexerUnitTests
     [Description("Can handle a string with only a single identifier.")]
     public void LexerIdentifierTest()
     {
+
     }
 
     /// <summary>
