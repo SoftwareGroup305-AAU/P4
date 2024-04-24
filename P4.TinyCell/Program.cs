@@ -22,6 +22,8 @@ internal class Program
 
                 var tokens = tokenStream.GetTokens();
 
+                var tree = parser.document();
+
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
                 ParseTreeWalker.Default.Walk(listener, tree);
                 var list = listener.instructions;
@@ -35,8 +37,6 @@ internal class Program
                         string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
                         Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
                 }
-
-                var tree = parser.document();
 
                 Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Parse Tree:");
