@@ -785,7 +785,7 @@ public class LexerUnitTests
     /// Can handle a string with only comments.
     /// <example>
     /// <code> Example input: "// This is a comment" </code>
-    /// <code> Expected output: [] </code>
+    /// <code> Expected output: [LineComment, EoF] </code>
     /// </example>
     /// </summary>
     [Fact]
