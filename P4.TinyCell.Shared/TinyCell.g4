@@ -1,12 +1,12 @@
 grammar TinyCell;
 
-Bool: ('true' | 'false');
+Bool: (TRUE | FALSE);
 
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
-document: setupDefinition updateDefinition generalDeclaration*;
+document: generalDeclaration* setupDefinition updateDefinition;
 
-generalDeclaration: functionDefinition | declaration;
+generalDeclaration: functionDefinition | declaration SEMI;
 
 setupDefinition: SETUP compoundStatement;
 
@@ -15,7 +15,7 @@ updateDefinition: UPDATE compoundStatement;
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
 
-type: VOID | CHAR | INT | FLOAT | BOOL | PIN;
+type: VOID | STRING | INT | FLOAT | BOOL | PIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
@@ -23,7 +23,7 @@ parameter: type identifier;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier;
+argument: identifier | functionCall | Numeral | String;
 
 declaration: type initialDeclaration;
 
@@ -61,7 +61,13 @@ assignment:
 
 functionCall: identifier LPAR argumentList* RPAR;
 
-primitiveExpression: Numeral | Bool | String | identifier;
+primitiveExpression:
+	Numeral
+	| Bool
+	| String
+	| identifier
+	| functionCall
+	| LPAR expression RPAR;
 
 unaryExpression:
 	primitiveExpression
@@ -107,11 +113,22 @@ orExpression: andExpression | orExpression OR andExpression;
 
 ternaryExpression:
 	orExpression
-	| orExpression QUESTION expression COLON expression;
+	| orExpression QUESTION (
+		expression
+		| functionCall
+		| assignment
+	) COLON (expression | functionCall | assignment);
 
-pinExpression: ternaryExpression | SET identifier TO pinVoltage;
+pinAssignmentExpression:
+	ternaryExpression
+	| WRITE (pinVoltage | identifier) TO (identifier | Numeral)
+	| READ (identifier | Numeral) TO identifier;
 
-expression: pinExpression | LPAR expression RPAR;
+pinStatusExpression:
+	pinAssignmentExpression
+	| SET identifier TO pinStatus;
+
+expression: pinStatusExpression;
 
 identifier: Identifier;
 
@@ -125,9 +142,13 @@ assignmentOperator:
 
 pinVoltage: VOLHIGH | VOLLOW;
 
+pinStatus: PININ | PINOUT;
+
 //Pin op
-VOLHIGH: 'high';
-VOLLOW: 'low';
+VOLHIGH: 'HIGH';
+VOLLOW: 'LOW';
+PININ: 'INPUT';
+PINOUT: 'OUTPUT';
 //Types
 PIN: 'pin';
 INT: 'int';
@@ -141,6 +162,8 @@ UPDATE: 'update';
 SETUP: 'setup';
 SET: 'set';
 TO: 'to';
+READ: 'read';
+WRITE: 'write';
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';
@@ -198,5 +221,9 @@ Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
+
+BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
+
+LineComment: '//' ~[\r\n]* -> channel(HIDDEN);
 
 Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);
