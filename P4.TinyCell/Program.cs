@@ -1,5 +1,7 @@
 ﻿
 using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
+using P4.TinyCell.Languages.TinyCell;
 using Utilities;
 
 internal class Program
@@ -19,6 +21,10 @@ internal class Program
                 tokenStream.Fill();
 
                 var tokens = tokenStream.GetTokens();
+
+                LivenessAnalysisListener listener = new LivenessAnalysisListener();
+                ParseTreeWalker.Default.Walk(listener, tree);
+                var list = listener.instructions;
 
                 Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Tokens:");
