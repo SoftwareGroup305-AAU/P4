@@ -84,35 +84,35 @@ multiplicativeExpression:
 
 additiveExpression:
 	multiplicativeExpression
-	| additiveExpression PLUS multiplicativeExpression
-	| additiveExpression MINUS multiplicativeExpression;
+	| additiveExpression PLUS additiveExpression
+	| additiveExpression MINUS additiveExpression;
 
 bitshiftExpression:
 	additiveExpression
-	| bitshiftExpression BITSHIFTL additiveExpression
-	| bitshiftExpression BITSHIFTR additiveExpression;
+	| bitshiftExpression BITSHIFTL bitshiftExpression
+	| bitshiftExpression BITSHIFTR bitshiftExpression;
 
 comparisonExpression:
 	bitshiftExpression
-	| comparisonExpression LT bitshiftExpression
-	| comparisonExpression GT bitshiftExpression
-	| comparisonExpression LTE bitshiftExpression
-	| comparisonExpression GTE bitshiftExpression;
+	| comparisonExpression LT comparisonExpression
+	| comparisonExpression GT comparisonExpression
+	| comparisonExpression LTE comparisonExpression
+	| comparisonExpression GTE comparisonExpression;
 
 equalityExpression:
 	comparisonExpression
-	| equalityExpression EQ comparisonExpression
-	| equalityExpression NEQ comparisonExpression;
+	| equalityExpression EQ equalityExpression
+	| equalityExpression NEQ equalityExpression;
 
 andExpression:
 	equalityExpression
-	| andExpression AND equalityExpression;
+	| andExpression AND andExpression;
 
-orExpression: andExpression | orExpression OR andExpression;
+orExpression: andExpression | orExpression OR orExpression;
 
 ternaryExpression:
 	orExpression
-	| orExpression QUESTION (
+	| ternaryExpression QUESTION (
 		expression
 		| functionCall
 		| assignment

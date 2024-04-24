@@ -1,20 +1,18 @@
 ﻿using Antlr4.Runtime;
+using Antlr4.Runtime.Tree;
 
 namespace P4.TinyCell.AST
 {
-    public class AstNode
+    public class AstNode : ParserRuleContext
     {
-        public List<AstNode> Children = [];
+        public AstNode()
+        {
+            children = [];
+        }
 
         public override string ToString()
         {
-            string str = $"{GetType().Name}";
-            foreach (AstNode child in Children)
-            {
-                str += $"{child.ToString(0)}";
-            }
-
-            return str;
+            return ToString(0);
         }
 
         public string ToString(int indentation)
@@ -22,10 +20,9 @@ namespace P4.TinyCell.AST
             var indent = new string(' ', indentation * 2);
             string str = $"{indent}{GetType().Name}";
 
-            foreach (AstNode child in Children)
+            foreach (AstNode child in children.Where(s => s is not null))
             {
-                str += $"{child.ToString(indentation + 1)}";
-
+                str += $"\n{child.ToString(indentation + 1)}";
             }
 
             return str;
@@ -33,7 +30,7 @@ namespace P4.TinyCell.AST
 
         public void AddChild(AstNode node)
         {
-            Children.Add(node);
+            children.Add(node);
         }
     }
 }
