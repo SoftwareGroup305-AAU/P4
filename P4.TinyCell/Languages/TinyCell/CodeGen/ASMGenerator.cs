@@ -27,17 +27,17 @@ public class ASMGenerator
               switch (operatorASM)
               {
                      case("=="):
-                            return "EQ";
+                            return "bne.n";
                      case("!="):
-                            return "NE";
+                            return "beq.n";
                      case("<"):
-                            return "LT";
+                            return "bge.n";
                      case(">"):
-                            return "GT";
+                            return "ble.n";
                      case("<="):
-                            return "LE";
+                            return "bgt.n";
                      case(">="):
-                            return "GE";
+                            return "blt.n,";
                      case("&&"):
                             string label = ".LBL_" + labelCount;//Generate a label
                             labelCount = labelCount + 1;
