@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from ./P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
+// Generated from /home/rasmus/Documents/GitHub/P4/P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -56,7 +56,7 @@ public partial class TinyCellParser : Parser {
 		RULE_unaryExpression = 20, RULE_multiplicativeExpression = 21, RULE_additiveExpression = 22, 
 		RULE_bitshiftExpression = 23, RULE_comparisonExpression = 24, RULE_equalityExpression = 25, 
 		RULE_andExpression = 26, RULE_orExpression = 27, RULE_ternaryExpression = 28, 
-		RULE_pinAssignmentExpression = 29, RULE_pinStatusExpression = 30, RULE_expression = 31, 
+		RULE_expression = 29, RULE_pinAssignmentExpression = 30, RULE_pinStatusExpression = 31, 
 		RULE_identifier = 32, RULE_assignmentOperator = 33, RULE_pinVoltage = 34, 
 		RULE_pinStatus = 35;
 	public static readonly string[] ruleNames = {
@@ -66,9 +66,9 @@ public partial class TinyCellParser : Parser {
 		"statement", "ifStatement", "loopStatement", "jumpStatement", "assignment", 
 		"functionCall", "primitiveExpression", "unaryExpression", "multiplicativeExpression", 
 		"additiveExpression", "bitshiftExpression", "comparisonExpression", "equalityExpression", 
-		"andExpression", "orExpression", "ternaryExpression", "pinAssignmentExpression", 
-		"pinStatusExpression", "expression", "identifier", "assignmentOperator", 
-		"pinVoltage", "pinStatus"
+		"andExpression", "orExpression", "ternaryExpression", "expression", "pinAssignmentExpression", 
+		"pinStatusExpression", "identifier", "assignmentOperator", "pinVoltage", 
+		"pinStatus"
 	};
 
 	private static readonly string[] _LiteralNames = {
@@ -144,16 +144,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_document; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterDocument(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitDocument(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitDocument(this);
@@ -214,16 +204,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_generalDeclaration; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterGeneralDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitGeneralDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitGeneralDeclaration(this);
@@ -279,16 +259,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_setupDefinition; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterSetupDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitSetupDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitSetupDefinition(this);
@@ -330,16 +300,6 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_updateDefinition; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterUpdateDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitUpdateDefinition(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -395,16 +355,6 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_functionDefinition; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterFunctionDefinition(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitFunctionDefinition(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -471,16 +421,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_type; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitType(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitType(this);
@@ -531,16 +471,6 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_parameterList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterParameterList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitParameterList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -621,16 +551,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_parameter; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterParameter(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitParameter(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitParameter(this);
@@ -675,16 +595,6 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_argumentList; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterArgumentList(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitArgumentList(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -761,21 +671,12 @@ public partial class TinyCellParser : Parser {
 		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Numeral() { return GetToken(TinyCellParser.Numeral, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode String() { return GetToken(TinyCellParser.String, 0); }
+		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode Bool() { return GetToken(TinyCellParser.Bool, 0); }
 		public ArgumentContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
 		}
 		public override int RuleIndex { get { return RULE_argument; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterArgument(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitArgument(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -789,7 +690,7 @@ public partial class TinyCellParser : Parser {
 		ArgumentContext _localctx = new ArgumentContext(Context, State);
 		EnterRule(_localctx, 18, RULE_argument);
 		try {
-			State = 136;
+			State = 137;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,5,Context) ) {
 			case 1:
@@ -820,6 +721,13 @@ public partial class TinyCellParser : Parser {
 				Match(String);
 				}
 				break;
+			case 5:
+				EnterOuterAlt(_localctx, 5);
+				{
+				State = 136;
+				Match(Bool);
+				}
+				break;
 			}
 		}
 		catch (RecognitionException re) {
@@ -846,16 +754,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_declaration; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitDeclaration(this);
@@ -870,9 +768,9 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 138;
-			type();
 			State = 139;
+			type();
+			State = 140;
 			initialDeclaration();
 			}
 		}
@@ -904,16 +802,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_initialDeclaration; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterInitialDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitInitialDeclaration(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitInitialDeclaration(this);
@@ -926,35 +814,35 @@ public partial class TinyCellParser : Parser {
 		InitialDeclarationContext _localctx = new InitialDeclarationContext(Context, State);
 		EnterRule(_localctx, 22, RULE_initialDeclaration);
 		try {
-			State = 148;
+			State = 149;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,7,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 141;
+				State = 142;
 				identifier();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 142;
-				identifier();
 				State = 143;
+				identifier();
+				State = 144;
 				Match(ASSIGN);
-				State = 146;
+				State = 147;
 				ErrorHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(TokenStream,6,Context) ) {
 				case 1:
 					{
-					State = 144;
+					State = 145;
 					expression();
 					}
 					break;
 				case 2:
 					{
-					State = 145;
+					State = 146;
 					functionCall();
 					}
 					break;
@@ -989,16 +877,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_compoundStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterCompoundStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitCompoundStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitCompoundStatement(this);
@@ -1014,23 +892,23 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 150;
+			State = 151;
 			Match(LCURLY);
-			State = 154;
+			State = 155;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
 			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2305843009614061442L) != 0) || ((((_la - 64)) & ~0x3f) == 0 && ((1L << (_la - 64)) & 31L) != 0)) {
 				{
 				{
-				State = 151;
+				State = 152;
 				statement();
 				}
 				}
-				State = 156;
+				State = 157;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 157;
+			State = 158;
 			Match(RCURLY);
 			}
 		}
@@ -1062,6 +940,9 @@ public partial class TinyCellParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public FunctionCallContext functionCall() {
 			return GetRuleContext<FunctionCallContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public PinStatusExpressionContext pinStatusExpression() {
+			return GetRuleContext<PinStatusExpressionContext>(0);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public AssignmentContext assignment() {
 			return GetRuleContext<AssignmentContext>(0);
 		}
@@ -1073,16 +954,6 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_statement; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitStatement(this);
-		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -1096,63 +967,72 @@ public partial class TinyCellParser : Parser {
 		StatementContext _localctx = new StatementContext(Context, State);
 		EnterRule(_localctx, 26, RULE_statement);
 		try {
-			State = 174;
+			State = 178;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,9,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 159;
+				State = 160;
 				ifStatement();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 160;
+				State = 161;
 				loopStatement();
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 161;
+				State = 162;
 				jumpStatement();
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 162;
-				declaration();
 				State = 163;
+				declaration();
+				State = 164;
 				Match(SEMI);
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 165;
-				functionCall();
 				State = 166;
+				functionCall();
+				State = 167;
 				Match(SEMI);
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 168;
-				assignment();
 				State = 169;
+				pinStatusExpression();
+				State = 170;
 				Match(SEMI);
 				}
 				break;
 			case 7:
 				EnterOuterAlt(_localctx, 7);
 				{
-				State = 171;
-				expression();
 				State = 172;
+				assignment();
+				State = 173;
+				Match(SEMI);
+				}
+				break;
+			case 8:
+				EnterOuterAlt(_localctx, 8);
+				{
+				State = 175;
+				expression();
+				State = 176;
 				Match(SEMI);
 				}
 				break;
@@ -1189,16 +1069,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_ifStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterIfStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitIfStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
@@ -1211,40 +1081,40 @@ public partial class TinyCellParser : Parser {
 		IfStatementContext _localctx = new IfStatementContext(Context, State);
 		EnterRule(_localctx, 28, RULE_ifStatement);
 		try {
-			State = 190;
+			State = 194;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,10,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 176;
-				Match(IF);
-				State = 177;
-				Match(LPAR);
-				State = 178;
-				expression();
-				State = 179;
-				Match(RPAR);
 				State = 180;
-				compoundStatement();
+				Match(IF);
 				State = 181;
-				Match(ELSE);
+				Match(LPAR);
 				State = 182;
+				expression();
+				State = 183;
+				Match(RPAR);
+				State = 184;
+				compoundStatement();
+				State = 185;
+				Match(ELSE);
+				State = 186;
 				compoundStatement();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 184;
-				Match(IF);
-				State = 185;
-				Match(LPAR);
-				State = 186;
-				expression();
-				State = 187;
-				Match(RPAR);
 				State = 188;
+				Match(IF);
+				State = 189;
+				Match(LPAR);
+				State = 190;
+				expression();
+				State = 191;
+				Match(RPAR);
+				State = 192;
 				compoundStatement();
 				}
 				break;
@@ -1288,16 +1158,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_loopStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterLoopStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitLoopStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitLoopStatement(this);
@@ -1310,38 +1170,35 @@ public partial class TinyCellParser : Parser {
 		LoopStatementContext _localctx = new LoopStatementContext(Context, State);
 		EnterRule(_localctx, 30, RULE_loopStatement);
 		try {
-			State = 211;
+			State = 215;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case WHILE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 192;
-				Match(WHILE);
-				State = 193;
-				Match(LPAR);
-				State = 194;
-				expression();
-				State = 195;
-				Match(RPAR);
 				State = 196;
+				Match(WHILE);
+				State = 197;
+				Match(LPAR);
+				State = 198;
+				expression();
+				State = 199;
+				Match(RPAR);
+				State = 200;
 				compoundStatement();
 				}
 				break;
 			case FOR:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 198;
-				Match(FOR);
-				State = 199;
-				Match(LPAR);
 				State = 202;
+				Match(FOR);
+				State = 203;
+				Match(LPAR);
+				State = 206;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case Bool:
-				case SET:
-				case READ:
-				case WRITE:
 				case LPAR:
 				case NOT:
 				case UNARYPLUS:
@@ -1350,7 +1207,7 @@ public partial class TinyCellParser : Parser {
 				case String:
 				case Numeral:
 					{
-					State = 200;
+					State = 204;
 					expression();
 					}
 					break;
@@ -1361,24 +1218,24 @@ public partial class TinyCellParser : Parser {
 				case BOOL:
 				case VOID:
 					{
-					State = 201;
+					State = 205;
 					declaration();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				State = 204;
-				Match(SEMI);
-				State = 205;
-				expression();
-				State = 206;
-				Match(SEMI);
-				State = 207;
-				expression();
 				State = 208;
-				Match(RPAR);
+				Match(SEMI);
 				State = 209;
+				expression();
+				State = 210;
+				Match(SEMI);
+				State = 211;
+				expression();
+				State = 212;
+				Match(RPAR);
+				State = 213;
 				compoundStatement();
 				}
 				break;
@@ -1411,16 +1268,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_jumpStatement; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterJumpStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitJumpStatement(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitJumpStatement(this);
@@ -1433,35 +1280,35 @@ public partial class TinyCellParser : Parser {
 		JumpStatementContext _localctx = new JumpStatementContext(Context, State);
 		EnterRule(_localctx, 32, RULE_jumpStatement);
 		try {
-			State = 221;
+			State = 225;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
 			case CONTINUE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 213;
+				State = 217;
 				Match(CONTINUE);
-				State = 214;
+				State = 218;
 				Match(SEMI);
 				}
 				break;
 			case BREAK:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 215;
+				State = 219;
 				Match(BREAK);
-				State = 216;
+				State = 220;
 				Match(SEMI);
 				}
 				break;
 			case RETURN:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 217;
+				State = 221;
 				Match(RETURN);
-				State = 218;
+				State = 222;
 				expression();
-				State = 219;
+				State = 223;
 				Match(SEMI);
 				}
 				break;
@@ -1499,16 +1346,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_assignment; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitAssignment(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAssignment(this);
@@ -1521,28 +1358,28 @@ public partial class TinyCellParser : Parser {
 		AssignmentContext _localctx = new AssignmentContext(Context, State);
 		EnterRule(_localctx, 34, RULE_assignment);
 		try {
-			State = 231;
+			State = 235;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,14,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
-				{
-				State = 223;
-				identifier();
-				State = 224;
-				assignmentOperator();
-				State = 225;
-				expression();
-				}
-				break;
-			case 2:
-				EnterOuterAlt(_localctx, 2);
 				{
 				State = 227;
 				identifier();
 				State = 228;
 				assignmentOperator();
 				State = 229;
+				expression();
+				}
+				break;
+			case 2:
+				EnterOuterAlt(_localctx, 2);
+				{
+				State = 231;
+				identifier();
+				State = 232;
+				assignmentOperator();
+				State = 233;
 				functionCall();
 				}
 				break;
@@ -1577,16 +1414,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_functionCall; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitFunctionCall(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitFunctionCall(this);
@@ -1602,25 +1429,25 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 233;
+			State = 237;
 			identifier();
-			State = 234;
-			Match(LPAR);
 			State = 238;
+			Match(LPAR);
+			State = 242;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 7L) != 0)) {
+			while (_la==Bool || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 7L) != 0)) {
 				{
 				{
-				State = 235;
+				State = 239;
 				argumentList(0);
 				}
 				}
-				State = 240;
+				State = 244;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
 			}
-			State = 241;
+			State = 245;
 			Match(RPAR);
 			}
 		}
@@ -1656,16 +1483,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_primitiveExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterPrimitiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitPrimitiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPrimitiveExpression(this);
@@ -1678,52 +1495,52 @@ public partial class TinyCellParser : Parser {
 		PrimitiveExpressionContext _localctx = new PrimitiveExpressionContext(Context, State);
 		EnterRule(_localctx, 38, RULE_primitiveExpression);
 		try {
-			State = 252;
+			State = 256;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,16,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 243;
+				State = 247;
 				Match(Numeral);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 244;
+				State = 248;
 				Match(Bool);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 245;
+				State = 249;
 				Match(String);
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 246;
+				State = 250;
 				identifier();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 247;
+				State = 251;
 				functionCall();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 248;
+				State = 252;
 				Match(LPAR);
-				State = 249;
+				State = 253;
 				expression();
-				State = 250;
+				State = 254;
 				Match(RPAR);
 				}
 				break;
@@ -1753,16 +1570,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_unaryExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterUnaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitUnaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitUnaryExpression(this);
@@ -1775,58 +1582,58 @@ public partial class TinyCellParser : Parser {
 		UnaryExpressionContext _localctx = new UnaryExpressionContext(Context, State);
 		EnterRule(_localctx, 40, RULE_unaryExpression);
 		try {
-			State = 267;
+			State = 271;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,17,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 254;
+				State = 258;
 				primitiveExpression();
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 255;
+				State = 259;
 				primitiveExpression();
-				State = 256;
+				State = 260;
 				Match(UNARYPLUS);
 				}
 				break;
 			case 3:
 				EnterOuterAlt(_localctx, 3);
 				{
-				State = 258;
+				State = 262;
 				primitiveExpression();
-				State = 259;
+				State = 263;
 				Match(UNARYMINUS);
 				}
 				break;
 			case 4:
 				EnterOuterAlt(_localctx, 4);
 				{
-				State = 261;
+				State = 265;
 				Match(UNARYPLUS);
-				State = 262;
+				State = 266;
 				primitiveExpression();
 				}
 				break;
 			case 5:
 				EnterOuterAlt(_localctx, 5);
 				{
-				State = 263;
+				State = 267;
 				Match(UNARYMINUS);
-				State = 264;
+				State = 268;
 				primitiveExpression();
 				}
 				break;
 			case 6:
 				EnterOuterAlt(_localctx, 6);
 				{
-				State = 265;
+				State = 269;
 				Match(NOT);
-				State = 266;
+				State = 270;
 				primitiveExpression();
 				}
 				break;
@@ -1862,16 +1669,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_multiplicativeExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterMultiplicativeExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitMultiplicativeExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitMultiplicativeExpression(this);
@@ -1896,11 +1693,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 270;
+			State = 274;
 			unaryExpression();
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 283;
+			State = 287;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,19,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -1909,18 +1706,18 @@ public partial class TinyCellParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 281;
+					State = 285;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,18,Context) ) {
 					case 1:
 						{
 						_localctx = new MultiplicativeExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_multiplicativeExpression);
-						State = 272;
+						State = 276;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 273;
+						State = 277;
 						Match(MULT);
-						State = 274;
+						State = 278;
 						primitiveExpression();
 						}
 						break;
@@ -1928,11 +1725,11 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new MultiplicativeExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_multiplicativeExpression);
-						State = 275;
+						State = 279;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 276;
+						State = 280;
 						Match(DIV);
-						State = 277;
+						State = 281;
 						primitiveExpression();
 						}
 						break;
@@ -1940,18 +1737,18 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new MultiplicativeExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_multiplicativeExpression);
-						State = 278;
+						State = 282;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						State = 279;
+						State = 283;
 						Match(MOD);
-						State = 280;
+						State = 284;
 						primitiveExpression();
 						}
 						break;
 					}
 					} 
 				}
-				State = 285;
+				State = 289;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,19,Context);
 			}
@@ -1983,16 +1780,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_additiveExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterAdditiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitAdditiveExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAdditiveExpression(this);
@@ -2017,11 +1804,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 287;
+			State = 291;
 			multiplicativeExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 297;
+			State = 301;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,21,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2030,18 +1817,18 @@ public partial class TinyCellParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 295;
+					State = 299;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,20,Context) ) {
 					case 1:
 						{
 						_localctx = new AdditiveExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_additiveExpression);
-						State = 289;
+						State = 293;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 290;
+						State = 294;
 						Match(PLUS);
-						State = 291;
+						State = 295;
 						multiplicativeExpression(0);
 						}
 						break;
@@ -2049,18 +1836,18 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new AdditiveExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_additiveExpression);
-						State = 292;
+						State = 296;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						State = 293;
+						State = 297;
 						Match(MINUS);
-						State = 294;
+						State = 298;
 						multiplicativeExpression(0);
 						}
 						break;
 					}
 					} 
 				}
-				State = 299;
+				State = 303;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,21,Context);
 			}
@@ -2092,16 +1879,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_bitshiftExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterBitshiftExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitBitshiftExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitBitshiftExpression(this);
@@ -2126,11 +1903,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 301;
+			State = 305;
 			additiveExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 311;
+			State = 315;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,23,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2139,18 +1916,18 @@ public partial class TinyCellParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 309;
+					State = 313;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,22,Context) ) {
 					case 1:
 						{
 						_localctx = new BitshiftExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_bitshiftExpression);
-						State = 303;
+						State = 307;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 304;
+						State = 308;
 						Match(BITSHIFTL);
-						State = 305;
+						State = 309;
 						additiveExpression(0);
 						}
 						break;
@@ -2158,18 +1935,18 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new BitshiftExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_bitshiftExpression);
-						State = 306;
+						State = 310;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						State = 307;
+						State = 311;
 						Match(BITSHIFTR);
-						State = 308;
+						State = 312;
 						additiveExpression(0);
 						}
 						break;
 					}
 					} 
 				}
-				State = 313;
+				State = 317;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,23,Context);
 			}
@@ -2203,16 +1980,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_comparisonExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterComparisonExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitComparisonExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitComparisonExpression(this);
@@ -2237,11 +2004,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 315;
+			State = 319;
 			bitshiftExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 331;
+			State = 335;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,25,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2250,18 +2017,18 @@ public partial class TinyCellParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 329;
+					State = 333;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,24,Context) ) {
 					case 1:
 						{
 						_localctx = new ComparisonExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_comparisonExpression);
-						State = 317;
+						State = 321;
 						if (!(Precpred(Context, 4))) throw new FailedPredicateException(this, "Precpred(Context, 4)");
-						State = 318;
+						State = 322;
 						Match(LT);
-						State = 319;
+						State = 323;
 						bitshiftExpression(0);
 						}
 						break;
@@ -2269,11 +2036,11 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new ComparisonExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_comparisonExpression);
-						State = 320;
+						State = 324;
 						if (!(Precpred(Context, 3))) throw new FailedPredicateException(this, "Precpred(Context, 3)");
-						State = 321;
+						State = 325;
 						Match(GT);
-						State = 322;
+						State = 326;
 						bitshiftExpression(0);
 						}
 						break;
@@ -2281,11 +2048,11 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new ComparisonExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_comparisonExpression);
-						State = 323;
+						State = 327;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 324;
+						State = 328;
 						Match(LTE);
-						State = 325;
+						State = 329;
 						bitshiftExpression(0);
 						}
 						break;
@@ -2293,18 +2060,18 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new ComparisonExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_comparisonExpression);
-						State = 326;
+						State = 330;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						State = 327;
+						State = 331;
 						Match(GTE);
-						State = 328;
+						State = 332;
 						bitshiftExpression(0);
 						}
 						break;
 					}
 					} 
 				}
-				State = 333;
+				State = 337;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,25,Context);
 			}
@@ -2336,16 +2103,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_equalityExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterEqualityExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitEqualityExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitEqualityExpression(this);
@@ -2370,11 +2127,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 335;
+			State = 339;
 			comparisonExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 345;
+			State = 349;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,27,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2383,18 +2140,18 @@ public partial class TinyCellParser : Parser {
 						TriggerExitRuleEvent();
 					_prevctx = _localctx;
 					{
-					State = 343;
+					State = 347;
 					ErrorHandler.Sync(this);
 					switch ( Interpreter.AdaptivePredict(TokenStream,26,Context) ) {
 					case 1:
 						{
 						_localctx = new EqualityExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_equalityExpression);
-						State = 337;
+						State = 341;
 						if (!(Precpred(Context, 2))) throw new FailedPredicateException(this, "Precpred(Context, 2)");
-						State = 338;
+						State = 342;
 						Match(EQ);
-						State = 339;
+						State = 343;
 						comparisonExpression(0);
 						}
 						break;
@@ -2402,18 +2159,18 @@ public partial class TinyCellParser : Parser {
 						{
 						_localctx = new EqualityExpressionContext(_parentctx, _parentState);
 						PushNewRecursionContext(_localctx, _startState, RULE_equalityExpression);
-						State = 340;
+						State = 344;
 						if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-						State = 341;
+						State = 345;
 						Match(NEQ);
-						State = 342;
+						State = 346;
 						comparisonExpression(0);
 						}
 						break;
 					}
 					} 
 				}
-				State = 347;
+				State = 351;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,27,Context);
 			}
@@ -2444,16 +2201,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_andExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitAndExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAndExpression(this);
@@ -2478,11 +2225,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 349;
+			State = 353;
 			equalityExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 356;
+			State = 360;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,28,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2494,16 +2241,16 @@ public partial class TinyCellParser : Parser {
 					{
 					_localctx = new AndExpressionContext(_parentctx, _parentState);
 					PushNewRecursionContext(_localctx, _startState, RULE_andExpression);
-					State = 351;
+					State = 355;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 352;
+					State = 356;
 					Match(AND);
-					State = 353;
+					State = 357;
 					equalityExpression(0);
 					}
 					} 
 				}
-				State = 358;
+				State = 362;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,28,Context);
 			}
@@ -2534,16 +2281,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_orExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitOrExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitOrExpression(this);
@@ -2568,11 +2305,11 @@ public partial class TinyCellParser : Parser {
 			EnterOuterAlt(_localctx, 1);
 			{
 			{
-			State = 360;
+			State = 364;
 			andExpression(0);
 			}
 			Context.Stop = TokenStream.LT(-1);
-			State = 367;
+			State = 371;
 			ErrorHandler.Sync(this);
 			_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			while ( _alt!=2 && _alt!=global::Antlr4.Runtime.Atn.ATN.INVALID_ALT_NUMBER ) {
@@ -2584,16 +2321,16 @@ public partial class TinyCellParser : Parser {
 					{
 					_localctx = new OrExpressionContext(_parentctx, _parentState);
 					PushNewRecursionContext(_localctx, _startState, RULE_orExpression);
-					State = 362;
+					State = 366;
 					if (!(Precpred(Context, 1))) throw new FailedPredicateException(this, "Precpred(Context, 1)");
-					State = 363;
+					State = 367;
 					Match(OR);
-					State = 364;
+					State = 368;
 					andExpression(0);
 					}
 					} 
 				}
-				State = 369;
+				State = 373;
 				ErrorHandler.Sync(this);
 				_alt = Interpreter.AdaptivePredict(TokenStream,29,Context);
 			}
@@ -2640,16 +2377,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_ternaryExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterTernaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitTernaryExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitTernaryExpression(this);
@@ -2662,65 +2389,65 @@ public partial class TinyCellParser : Parser {
 		TernaryExpressionContext _localctx = new TernaryExpressionContext(Context, State);
 		EnterRule(_localctx, 56, RULE_ternaryExpression);
 		try {
-			State = 384;
+			State = 388;
 			ErrorHandler.Sync(this);
 			switch ( Interpreter.AdaptivePredict(TokenStream,32,Context) ) {
 			case 1:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 370;
+				State = 374;
 				orExpression(0);
 				}
 				break;
 			case 2:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 371;
+				State = 375;
 				orExpression(0);
-				State = 372;
-				Match(QUESTION);
 				State = 376;
+				Match(QUESTION);
+				State = 380;
 				ErrorHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(TokenStream,30,Context) ) {
 				case 1:
 					{
-					State = 373;
+					State = 377;
 					expression();
 					}
 					break;
 				case 2:
 					{
-					State = 374;
+					State = 378;
 					functionCall();
 					}
 					break;
 				case 3:
 					{
-					State = 375;
+					State = 379;
 					assignment();
 					}
 					break;
 				}
-				State = 378;
-				Match(COLON);
 				State = 382;
+				Match(COLON);
+				State = 386;
 				ErrorHandler.Sync(this);
 				switch ( Interpreter.AdaptivePredict(TokenStream,31,Context) ) {
 				case 1:
 					{
-					State = 379;
+					State = 383;
 					expression();
 					}
 					break;
 				case 2:
 					{
-					State = 380;
+					State = 384;
 					functionCall();
 					}
 					break;
 				case 3:
 					{
-					State = 381;
+					State = 385;
 					assignment();
 					}
 					break;
@@ -2740,10 +2467,46 @@ public partial class TinyCellParser : Parser {
 		return _localctx;
 	}
 
-	public partial class PinAssignmentExpressionContext : ParserRuleContext {
+	public partial class ExpressionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public TernaryExpressionContext ternaryExpression() {
 			return GetRuleContext<TernaryExpressionContext>(0);
 		}
+		public ExpressionContext(ParserRuleContext parent, int invokingState)
+			: base(parent, invokingState)
+		{
+		}
+		public override int RuleIndex { get { return RULE_expression; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
+			else return visitor.VisitChildren(this);
+		}
+	}
+
+	[RuleVersion(0)]
+	public ExpressionContext expression() {
+		ExpressionContext _localctx = new ExpressionContext(Context, State);
+		EnterRule(_localctx, 58, RULE_expression);
+		try {
+			EnterOuterAlt(_localctx, 1);
+			{
+			State = 390;
+			ternaryExpression();
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			ErrorHandler.ReportError(this, re);
+			ErrorHandler.Recover(this, re);
+		}
+		finally {
+			ExitRule();
+		}
+		return _localctx;
+	}
+
+	public partial class PinAssignmentExpressionContext : ParserRuleContext {
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode WRITE() { return GetToken(TinyCellParser.WRITE, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode TO() { return GetToken(TinyCellParser.TO, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public PinVoltageContext pinVoltage() {
@@ -2763,16 +2526,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_pinAssignmentExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterPinAssignmentExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitPinAssignmentExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPinAssignmentExpression(this);
@@ -2783,76 +2536,37 @@ public partial class TinyCellParser : Parser {
 	[RuleVersion(0)]
 	public PinAssignmentExpressionContext pinAssignmentExpression() {
 		PinAssignmentExpressionContext _localctx = new PinAssignmentExpressionContext(Context, State);
-		EnterRule(_localctx, 58, RULE_pinAssignmentExpression);
+		EnterRule(_localctx, 60, RULE_pinAssignmentExpression);
 		try {
-			State = 404;
+			State = 409;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case Bool:
-			case LPAR:
-			case NOT:
-			case UNARYPLUS:
-			case UNARYMINUS:
-			case Identifier:
-			case String:
-			case Numeral:
+			case WRITE:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 386;
-				ternaryExpression();
-				}
-				break;
-			case WRITE:
-				EnterOuterAlt(_localctx, 2);
-				{
-				State = 387;
+				State = 392;
 				Match(WRITE);
-				State = 390;
+				State = 395;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
 				case VOLHIGH:
 				case VOLLOW:
 					{
-					State = 388;
+					State = 393;
 					pinVoltage();
 					}
 					break;
 				case Identifier:
 					{
-					State = 389;
-					identifier();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				State = 392;
-				Match(TO);
-				State = 395;
-				ErrorHandler.Sync(this);
-				switch (TokenStream.LA(1)) {
-				case Identifier:
-					{
-					State = 393;
-					identifier();
-					}
-					break;
-				case Numeral:
-					{
 					State = 394;
-					Match(Numeral);
+					identifier();
 					}
 					break;
 				default:
 					throw new NoViableAltException(this);
 				}
-				}
-				break;
-			case READ:
-				EnterOuterAlt(_localctx, 3);
-				{
 				State = 397;
-				Match(READ);
+				Match(TO);
 				State = 400;
 				ErrorHandler.Sync(this);
 				switch (TokenStream.LA(1)) {
@@ -2871,9 +2585,34 @@ public partial class TinyCellParser : Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
+				}
+				break;
+			case READ:
+				EnterOuterAlt(_localctx, 2);
+				{
 				State = 402;
+				Match(READ);
+				State = 405;
+				ErrorHandler.Sync(this);
+				switch (TokenStream.LA(1)) {
+				case Identifier:
+					{
+					State = 403;
+					identifier();
+					}
+					break;
+				case Numeral:
+					{
+					State = 404;
+					Match(Numeral);
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
+				}
+				State = 407;
 				Match(TO);
-				State = 403;
+				State = 408;
 				identifier();
 				}
 				break;
@@ -2910,16 +2649,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_pinStatusExpression; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterPinStatusExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitPinStatusExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPinStatusExpression(this);
@@ -2930,91 +2659,34 @@ public partial class TinyCellParser : Parser {
 	[RuleVersion(0)]
 	public PinStatusExpressionContext pinStatusExpression() {
 		PinStatusExpressionContext _localctx = new PinStatusExpressionContext(Context, State);
-		EnterRule(_localctx, 60, RULE_pinStatusExpression);
+		EnterRule(_localctx, 62, RULE_pinStatusExpression);
 		try {
-			State = 412;
+			State = 417;
 			ErrorHandler.Sync(this);
 			switch (TokenStream.LA(1)) {
-			case Bool:
 			case READ:
 			case WRITE:
-			case LPAR:
-			case NOT:
-			case UNARYPLUS:
-			case UNARYMINUS:
-			case Identifier:
-			case String:
-			case Numeral:
 				EnterOuterAlt(_localctx, 1);
 				{
-				State = 406;
+				State = 411;
 				pinAssignmentExpression();
 				}
 				break;
 			case SET:
 				EnterOuterAlt(_localctx, 2);
 				{
-				State = 407;
+				State = 412;
 				Match(SET);
-				State = 408;
+				State = 413;
 				identifier();
-				State = 409;
+				State = 414;
 				Match(TO);
-				State = 410;
+				State = 415;
 				pinStatus();
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			ErrorHandler.ReportError(this, re);
-			ErrorHandler.Recover(this, re);
-		}
-		finally {
-			ExitRule();
-		}
-		return _localctx;
-	}
-
-	public partial class ExpressionContext : ParserRuleContext {
-		[System.Diagnostics.DebuggerNonUserCode] public PinStatusExpressionContext pinStatusExpression() {
-			return GetRuleContext<PinStatusExpressionContext>(0);
-		}
-		public ExpressionContext(ParserRuleContext parent, int invokingState)
-			: base(parent, invokingState)
-		{
-		}
-		public override int RuleIndex { get { return RULE_expression; } }
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitExpression(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
-			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
-			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
-			else return visitor.VisitChildren(this);
-		}
-	}
-
-	[RuleVersion(0)]
-	public ExpressionContext expression() {
-		ExpressionContext _localctx = new ExpressionContext(Context, State);
-		EnterRule(_localctx, 62, RULE_expression);
-		try {
-			EnterOuterAlt(_localctx, 1);
-			{
-			State = 414;
-			pinStatusExpression();
 			}
 		}
 		catch (RecognitionException re) {
@@ -3036,16 +2708,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_identifier; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterIdentifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitIdentifier(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitIdentifier(this);
@@ -3060,7 +2722,7 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 416;
+			State = 419;
 			Match(Identifier);
 			}
 		}
@@ -3088,16 +2750,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_assignmentOperator; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterAssignmentOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitAssignmentOperator(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitAssignmentOperator(this);
@@ -3113,7 +2765,7 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 418;
+			State = 421;
 			_la = TokenStream.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & 138538465099776L) != 0)) ) {
 			ErrorHandler.RecoverInline(this);
@@ -3144,16 +2796,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_pinVoltage; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterPinVoltage(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitPinVoltage(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPinVoltage(this);
@@ -3169,7 +2811,7 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 420;
+			State = 423;
 			_la = TokenStream.LA(1);
 			if ( !(_la==VOLHIGH || _la==VOLLOW) ) {
 			ErrorHandler.RecoverInline(this);
@@ -3200,16 +2842,6 @@ public partial class TinyCellParser : Parser {
 		}
 		public override int RuleIndex { get { return RULE_pinStatus; } }
 		[System.Diagnostics.DebuggerNonUserCode]
-		public override void EnterRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.EnterPinStatus(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
-		public override void ExitRule(IParseTreeListener listener) {
-			ITinyCellListener typedListener = listener as ITinyCellListener;
-			if (typedListener != null) typedListener.ExitPinStatus(this);
-		}
-		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
 			if (typedVisitor != null) return typedVisitor.VisitPinStatus(this);
@@ -3225,7 +2857,7 @@ public partial class TinyCellParser : Parser {
 		try {
 			EnterOuterAlt(_localctx, 1);
 			{
-			State = 422;
+			State = 425;
 			_la = TokenStream.LA(1);
 			if ( !(_la==PININ || _la==PINOUT) ) {
 			ErrorHandler.RecoverInline(this);
@@ -3325,7 +2957,7 @@ public partial class TinyCellParser : Parser {
 	}
 
 	private static int[] _serializedATN = {
-		4,1,71,425,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
+		4,1,71,428,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,6,2,7,
 		7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,2,14,7,14,
 		2,15,7,15,2,16,7,16,2,17,7,17,2,18,7,18,2,19,7,19,2,20,7,20,2,21,7,21,
 		2,22,7,22,2,23,7,23,2,24,7,24,2,25,7,25,2,26,7,26,2,27,7,27,2,28,7,28,
@@ -3334,137 +2966,139 @@ public partial class TinyCellParser : Parser {
 		1,2,1,2,1,2,1,3,1,3,1,3,1,4,1,4,1,4,1,4,5,4,98,8,4,10,4,12,4,101,9,4,1,
 		4,1,4,1,4,1,5,1,5,1,6,1,6,1,6,1,6,1,6,1,6,5,6,114,8,6,10,6,12,6,117,9,
 		6,1,7,1,7,1,7,1,8,1,8,1,8,1,8,1,8,1,8,5,8,128,8,8,10,8,12,8,131,9,8,1,
-		9,1,9,1,9,1,9,3,9,137,8,9,1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,11,3,11,
-		147,8,11,3,11,149,8,11,1,12,1,12,5,12,153,8,12,10,12,12,12,156,9,12,1,
-		12,1,12,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,
-		13,1,13,1,13,3,13,175,8,13,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,
-		1,14,1,14,1,14,1,14,1,14,3,14,191,8,14,1,15,1,15,1,15,1,15,1,15,1,15,1,
-		15,1,15,1,15,1,15,3,15,203,8,15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,3,15,
-		212,8,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,3,16,222,8,16,1,17,1,
-		17,1,17,1,17,1,17,1,17,1,17,1,17,3,17,232,8,17,1,18,1,18,1,18,5,18,237,
-		8,18,10,18,12,18,240,9,18,1,18,1,18,1,19,1,19,1,19,1,19,1,19,1,19,1,19,
-		1,19,1,19,3,19,253,8,19,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,1,
-		20,1,20,1,20,1,20,3,20,268,8,20,1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,
-		1,21,1,21,1,21,1,21,5,21,282,8,21,10,21,12,21,285,9,21,1,22,1,22,1,22,
-		1,22,1,22,1,22,1,22,1,22,1,22,5,22,296,8,22,10,22,12,22,299,9,22,1,23,
-		1,23,1,23,1,23,1,23,1,23,1,23,1,23,1,23,5,23,310,8,23,10,23,12,23,313,
-		9,23,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,
-		1,24,1,24,5,24,330,8,24,10,24,12,24,333,9,24,1,25,1,25,1,25,1,25,1,25,
-		1,25,1,25,1,25,1,25,5,25,344,8,25,10,25,12,25,347,9,25,1,26,1,26,1,26,
-		1,26,1,26,1,26,5,26,355,8,26,10,26,12,26,358,9,26,1,27,1,27,1,27,1,27,
-		1,27,1,27,5,27,366,8,27,10,27,12,27,369,9,27,1,28,1,28,1,28,1,28,1,28,
-		1,28,3,28,377,8,28,1,28,1,28,1,28,1,28,3,28,383,8,28,3,28,385,8,28,1,29,
-		1,29,1,29,1,29,3,29,391,8,29,1,29,1,29,1,29,3,29,396,8,29,1,29,1,29,1,
-		29,3,29,401,8,29,1,29,1,29,3,29,405,8,29,1,30,1,30,1,30,1,30,1,30,1,30,
-		3,30,413,8,30,1,31,1,31,1,32,1,32,1,33,1,33,1,34,1,34,1,35,1,35,1,35,0,
-		9,12,16,42,44,46,48,50,52,54,36,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,
-		30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,0,4,1,0,
-		7,12,1,0,41,46,1,0,3,4,1,0,5,6,448,0,75,1,0,0,0,2,85,1,0,0,0,4,87,1,0,
-		0,0,6,90,1,0,0,0,8,93,1,0,0,0,10,105,1,0,0,0,12,107,1,0,0,0,14,118,1,0,
-		0,0,16,121,1,0,0,0,18,136,1,0,0,0,20,138,1,0,0,0,22,148,1,0,0,0,24,150,
-		1,0,0,0,26,174,1,0,0,0,28,190,1,0,0,0,30,211,1,0,0,0,32,221,1,0,0,0,34,
-		231,1,0,0,0,36,233,1,0,0,0,38,252,1,0,0,0,40,267,1,0,0,0,42,269,1,0,0,
-		0,44,286,1,0,0,0,46,300,1,0,0,0,48,314,1,0,0,0,50,334,1,0,0,0,52,348,1,
-		0,0,0,54,359,1,0,0,0,56,384,1,0,0,0,58,404,1,0,0,0,60,412,1,0,0,0,62,414,
-		1,0,0,0,64,416,1,0,0,0,66,418,1,0,0,0,68,420,1,0,0,0,70,422,1,0,0,0,72,
-		74,3,2,1,0,73,72,1,0,0,0,74,77,1,0,0,0,75,73,1,0,0,0,75,76,1,0,0,0,76,
-		78,1,0,0,0,77,75,1,0,0,0,78,79,3,4,2,0,79,80,3,6,3,0,80,1,1,0,0,0,81,86,
-		3,8,4,0,82,83,3,20,10,0,83,84,5,34,0,0,84,86,1,0,0,0,85,81,1,0,0,0,85,
-		82,1,0,0,0,86,3,1,0,0,0,87,88,5,15,0,0,88,89,3,24,12,0,89,5,1,0,0,0,90,
-		91,5,14,0,0,91,92,3,24,12,0,92,7,1,0,0,0,93,94,3,10,5,0,94,95,3,64,32,
-		0,95,99,5,28,0,0,96,98,3,12,6,0,97,96,1,0,0,0,98,101,1,0,0,0,99,97,1,0,
-		0,0,99,100,1,0,0,0,100,102,1,0,0,0,101,99,1,0,0,0,102,103,5,29,0,0,103,
-		104,3,24,12,0,104,9,1,0,0,0,105,106,7,0,0,0,106,11,1,0,0,0,107,108,6,6,
-		-1,0,108,109,3,14,7,0,109,115,1,0,0,0,110,111,10,1,0,0,111,112,5,36,0,
-		0,112,114,3,14,7,0,113,110,1,0,0,0,114,117,1,0,0,0,115,113,1,0,0,0,115,
-		116,1,0,0,0,116,13,1,0,0,0,117,115,1,0,0,0,118,119,3,10,5,0,119,120,3,
-		64,32,0,120,15,1,0,0,0,121,122,6,8,-1,0,122,123,3,18,9,0,123,129,1,0,0,
-		0,124,125,10,1,0,0,125,126,5,36,0,0,126,128,3,18,9,0,127,124,1,0,0,0,128,
-		131,1,0,0,0,129,127,1,0,0,0,129,130,1,0,0,0,130,17,1,0,0,0,131,129,1,0,
-		0,0,132,137,3,64,32,0,133,137,3,36,18,0,134,137,5,68,0,0,135,137,5,67,
-		0,0,136,132,1,0,0,0,136,133,1,0,0,0,136,134,1,0,0,0,136,135,1,0,0,0,137,
-		19,1,0,0,0,138,139,3,10,5,0,139,140,3,22,11,0,140,21,1,0,0,0,141,149,3,
-		64,32,0,142,143,3,64,32,0,143,146,5,41,0,0,144,147,3,62,31,0,145,147,3,
-		36,18,0,146,144,1,0,0,0,146,145,1,0,0,0,147,149,1,0,0,0,148,141,1,0,0,
-		0,148,142,1,0,0,0,149,23,1,0,0,0,150,154,5,30,0,0,151,153,3,26,13,0,152,
-		151,1,0,0,0,153,156,1,0,0,0,154,152,1,0,0,0,154,155,1,0,0,0,155,157,1,
-		0,0,0,156,154,1,0,0,0,157,158,5,31,0,0,158,25,1,0,0,0,159,175,3,28,14,
-		0,160,175,3,30,15,0,161,175,3,32,16,0,162,163,3,20,10,0,163,164,5,34,0,
-		0,164,175,1,0,0,0,165,166,3,36,18,0,166,167,5,34,0,0,167,175,1,0,0,0,168,
-		169,3,34,17,0,169,170,5,34,0,0,170,175,1,0,0,0,171,172,3,62,31,0,172,173,
-		5,34,0,0,173,175,1,0,0,0,174,159,1,0,0,0,174,160,1,0,0,0,174,161,1,0,0,
-		0,174,162,1,0,0,0,174,165,1,0,0,0,174,168,1,0,0,0,174,171,1,0,0,0,175,
-		27,1,0,0,0,176,177,5,20,0,0,177,178,5,28,0,0,178,179,3,62,31,0,179,180,
-		5,29,0,0,180,181,3,24,12,0,181,182,5,21,0,0,182,183,3,24,12,0,183,191,
-		1,0,0,0,184,185,5,20,0,0,185,186,5,28,0,0,186,187,3,62,31,0,187,188,5,
-		29,0,0,188,189,3,24,12,0,189,191,1,0,0,0,190,176,1,0,0,0,190,184,1,0,0,
-		0,191,29,1,0,0,0,192,193,5,22,0,0,193,194,5,28,0,0,194,195,3,62,31,0,195,
-		196,5,29,0,0,196,197,3,24,12,0,197,212,1,0,0,0,198,199,5,23,0,0,199,202,
-		5,28,0,0,200,203,3,62,31,0,201,203,3,20,10,0,202,200,1,0,0,0,202,201,1,
-		0,0,0,203,204,1,0,0,0,204,205,5,34,0,0,205,206,3,62,31,0,206,207,5,34,
-		0,0,207,208,3,62,31,0,208,209,5,29,0,0,209,210,3,24,12,0,210,212,1,0,0,
-		0,211,192,1,0,0,0,211,198,1,0,0,0,212,31,1,0,0,0,213,214,5,24,0,0,214,
-		222,5,34,0,0,215,216,5,25,0,0,216,222,5,34,0,0,217,218,5,26,0,0,218,219,
-		3,62,31,0,219,220,5,34,0,0,220,222,1,0,0,0,221,213,1,0,0,0,221,215,1,0,
-		0,0,221,217,1,0,0,0,222,33,1,0,0,0,223,224,3,64,32,0,224,225,3,66,33,0,
-		225,226,3,62,31,0,226,232,1,0,0,0,227,228,3,64,32,0,228,229,3,66,33,0,
-		229,230,3,36,18,0,230,232,1,0,0,0,231,223,1,0,0,0,231,227,1,0,0,0,232,
-		35,1,0,0,0,233,234,3,64,32,0,234,238,5,28,0,0,235,237,3,16,8,0,236,235,
-		1,0,0,0,237,240,1,0,0,0,238,236,1,0,0,0,238,239,1,0,0,0,239,241,1,0,0,
-		0,240,238,1,0,0,0,241,242,5,29,0,0,242,37,1,0,0,0,243,253,5,68,0,0,244,
-		253,5,1,0,0,245,253,5,67,0,0,246,253,3,64,32,0,247,253,3,36,18,0,248,249,
-		5,28,0,0,249,250,3,62,31,0,250,251,5,29,0,0,251,253,1,0,0,0,252,243,1,
-		0,0,0,252,244,1,0,0,0,252,245,1,0,0,0,252,246,1,0,0,0,252,247,1,0,0,0,
-		252,248,1,0,0,0,253,39,1,0,0,0,254,268,3,38,19,0,255,256,3,38,19,0,256,
-		257,5,64,0,0,257,268,1,0,0,0,258,259,3,38,19,0,259,260,5,65,0,0,260,268,
-		1,0,0,0,261,262,5,64,0,0,262,268,3,38,19,0,263,264,5,65,0,0,264,268,3,
-		38,19,0,265,266,5,61,0,0,266,268,3,38,19,0,267,254,1,0,0,0,267,255,1,0,
-		0,0,267,258,1,0,0,0,267,261,1,0,0,0,267,263,1,0,0,0,267,265,1,0,0,0,268,
-		41,1,0,0,0,269,270,6,21,-1,0,270,271,3,40,20,0,271,283,1,0,0,0,272,273,
-		10,3,0,0,273,274,5,48,0,0,274,282,3,38,19,0,275,276,10,2,0,0,276,277,5,
-		49,0,0,277,282,3,38,19,0,278,279,10,1,0,0,279,280,5,52,0,0,280,282,3,38,
-		19,0,281,272,1,0,0,0,281,275,1,0,0,0,281,278,1,0,0,0,282,285,1,0,0,0,283,
-		281,1,0,0,0,283,284,1,0,0,0,284,43,1,0,0,0,285,283,1,0,0,0,286,287,6,22,
-		-1,0,287,288,3,42,21,0,288,297,1,0,0,0,289,290,10,2,0,0,290,291,5,50,0,
-		0,291,296,3,42,21,0,292,293,10,1,0,0,293,294,5,51,0,0,294,296,3,42,21,
-		0,295,289,1,0,0,0,295,292,1,0,0,0,296,299,1,0,0,0,297,295,1,0,0,0,297,
-		298,1,0,0,0,298,45,1,0,0,0,299,297,1,0,0,0,300,301,6,23,-1,0,301,302,3,
-		44,22,0,302,311,1,0,0,0,303,304,10,2,0,0,304,305,5,62,0,0,305,310,3,44,
-		22,0,306,307,10,1,0,0,307,308,5,63,0,0,308,310,3,44,22,0,309,303,1,0,0,
-		0,309,306,1,0,0,0,310,313,1,0,0,0,311,309,1,0,0,0,311,312,1,0,0,0,312,
-		47,1,0,0,0,313,311,1,0,0,0,314,315,6,24,-1,0,315,316,3,46,23,0,316,331,
-		1,0,0,0,317,318,10,4,0,0,318,319,5,58,0,0,319,330,3,46,23,0,320,321,10,
-		3,0,0,321,322,5,57,0,0,322,330,3,46,23,0,323,324,10,2,0,0,324,325,5,60,
-		0,0,325,330,3,46,23,0,326,327,10,1,0,0,327,328,5,59,0,0,328,330,3,46,23,
-		0,329,317,1,0,0,0,329,320,1,0,0,0,329,323,1,0,0,0,329,326,1,0,0,0,330,
-		333,1,0,0,0,331,329,1,0,0,0,331,332,1,0,0,0,332,49,1,0,0,0,333,331,1,0,
-		0,0,334,335,6,25,-1,0,335,336,3,48,24,0,336,345,1,0,0,0,337,338,10,2,0,
-		0,338,339,5,55,0,0,339,344,3,48,24,0,340,341,10,1,0,0,341,342,5,56,0,0,
-		342,344,3,48,24,0,343,337,1,0,0,0,343,340,1,0,0,0,344,347,1,0,0,0,345,
-		343,1,0,0,0,345,346,1,0,0,0,346,51,1,0,0,0,347,345,1,0,0,0,348,349,6,26,
-		-1,0,349,350,3,50,25,0,350,356,1,0,0,0,351,352,10,1,0,0,352,353,5,53,0,
-		0,353,355,3,50,25,0,354,351,1,0,0,0,355,358,1,0,0,0,356,354,1,0,0,0,356,
-		357,1,0,0,0,357,53,1,0,0,0,358,356,1,0,0,0,359,360,6,27,-1,0,360,361,3,
-		52,26,0,361,367,1,0,0,0,362,363,10,1,0,0,363,364,5,54,0,0,364,366,3,52,
-		26,0,365,362,1,0,0,0,366,369,1,0,0,0,367,365,1,0,0,0,367,368,1,0,0,0,368,
-		55,1,0,0,0,369,367,1,0,0,0,370,385,3,54,27,0,371,372,3,54,27,0,372,376,
-		5,27,0,0,373,377,3,62,31,0,374,377,3,36,18,0,375,377,3,34,17,0,376,373,
-		1,0,0,0,376,374,1,0,0,0,376,375,1,0,0,0,377,378,1,0,0,0,378,382,5,37,0,
-		0,379,383,3,62,31,0,380,383,3,36,18,0,381,383,3,34,17,0,382,379,1,0,0,
-		0,382,380,1,0,0,0,382,381,1,0,0,0,383,385,1,0,0,0,384,370,1,0,0,0,384,
-		371,1,0,0,0,385,57,1,0,0,0,386,405,3,56,28,0,387,390,5,19,0,0,388,391,
-		3,68,34,0,389,391,3,64,32,0,390,388,1,0,0,0,390,389,1,0,0,0,391,392,1,
-		0,0,0,392,395,5,17,0,0,393,396,3,64,32,0,394,396,5,68,0,0,395,393,1,0,
-		0,0,395,394,1,0,0,0,396,405,1,0,0,0,397,400,5,18,0,0,398,401,3,64,32,0,
-		399,401,5,68,0,0,400,398,1,0,0,0,400,399,1,0,0,0,401,402,1,0,0,0,402,403,
-		5,17,0,0,403,405,3,64,32,0,404,386,1,0,0,0,404,387,1,0,0,0,404,397,1,0,
-		0,0,405,59,1,0,0,0,406,413,3,58,29,0,407,408,5,16,0,0,408,409,3,64,32,
-		0,409,410,5,17,0,0,410,411,3,70,35,0,411,413,1,0,0,0,412,406,1,0,0,0,412,
-		407,1,0,0,0,413,61,1,0,0,0,414,415,3,60,30,0,415,63,1,0,0,0,416,417,5,
-		66,0,0,417,65,1,0,0,0,418,419,7,1,0,0,419,67,1,0,0,0,420,421,7,2,0,0,421,
-		69,1,0,0,0,422,423,7,3,0,0,423,71,1,0,0,0,38,75,85,99,115,129,136,146,
-		148,154,174,190,202,211,221,231,238,252,267,281,283,295,297,309,311,329,
-		331,343,345,356,367,376,382,384,390,395,400,404,412
+		9,1,9,1,9,1,9,1,9,3,9,138,8,9,1,10,1,10,1,10,1,11,1,11,1,11,1,11,1,11,
+		3,11,148,8,11,3,11,150,8,11,1,12,1,12,5,12,154,8,12,10,12,12,12,157,9,
+		12,1,12,1,12,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,13,1,
+		13,1,13,1,13,1,13,1,13,1,13,1,13,3,13,179,8,13,1,14,1,14,1,14,1,14,1,14,
+		1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,1,14,3,14,195,8,14,1,15,1,15,1,
+		15,1,15,1,15,1,15,1,15,1,15,1,15,1,15,3,15,207,8,15,1,15,1,15,1,15,1,15,
+		1,15,1,15,1,15,3,15,216,8,15,1,16,1,16,1,16,1,16,1,16,1,16,1,16,1,16,3,
+		16,226,8,16,1,17,1,17,1,17,1,17,1,17,1,17,1,17,1,17,3,17,236,8,17,1,18,
+		1,18,1,18,5,18,241,8,18,10,18,12,18,244,9,18,1,18,1,18,1,19,1,19,1,19,
+		1,19,1,19,1,19,1,19,1,19,1,19,3,19,257,8,19,1,20,1,20,1,20,1,20,1,20,1,
+		20,1,20,1,20,1,20,1,20,1,20,1,20,1,20,3,20,272,8,20,1,21,1,21,1,21,1,21,
+		1,21,1,21,1,21,1,21,1,21,1,21,1,21,1,21,5,21,286,8,21,10,21,12,21,289,
+		9,21,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,1,22,5,22,300,8,22,10,22,
+		12,22,303,9,22,1,23,1,23,1,23,1,23,1,23,1,23,1,23,1,23,1,23,5,23,314,8,
+		23,10,23,12,23,317,9,23,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,24,1,
+		24,1,24,1,24,1,24,1,24,1,24,5,24,334,8,24,10,24,12,24,337,9,24,1,25,1,
+		25,1,25,1,25,1,25,1,25,1,25,1,25,1,25,5,25,348,8,25,10,25,12,25,351,9,
+		25,1,26,1,26,1,26,1,26,1,26,1,26,5,26,359,8,26,10,26,12,26,362,9,26,1,
+		27,1,27,1,27,1,27,1,27,1,27,5,27,370,8,27,10,27,12,27,373,9,27,1,28,1,
+		28,1,28,1,28,1,28,1,28,3,28,381,8,28,1,28,1,28,1,28,1,28,3,28,387,8,28,
+		3,28,389,8,28,1,29,1,29,1,30,1,30,1,30,3,30,396,8,30,1,30,1,30,1,30,3,
+		30,401,8,30,1,30,1,30,1,30,3,30,406,8,30,1,30,1,30,3,30,410,8,30,1,31,
+		1,31,1,31,1,31,1,31,1,31,3,31,418,8,31,1,32,1,32,1,33,1,33,1,34,1,34,1,
+		35,1,35,1,35,0,9,12,16,42,44,46,48,50,52,54,36,0,2,4,6,8,10,12,14,16,18,
+		20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,
+		68,70,0,4,1,0,7,12,1,0,41,46,1,0,3,4,1,0,5,6,452,0,75,1,0,0,0,2,85,1,0,
+		0,0,4,87,1,0,0,0,6,90,1,0,0,0,8,93,1,0,0,0,10,105,1,0,0,0,12,107,1,0,0,
+		0,14,118,1,0,0,0,16,121,1,0,0,0,18,137,1,0,0,0,20,139,1,0,0,0,22,149,1,
+		0,0,0,24,151,1,0,0,0,26,178,1,0,0,0,28,194,1,0,0,0,30,215,1,0,0,0,32,225,
+		1,0,0,0,34,235,1,0,0,0,36,237,1,0,0,0,38,256,1,0,0,0,40,271,1,0,0,0,42,
+		273,1,0,0,0,44,290,1,0,0,0,46,304,1,0,0,0,48,318,1,0,0,0,50,338,1,0,0,
+		0,52,352,1,0,0,0,54,363,1,0,0,0,56,388,1,0,0,0,58,390,1,0,0,0,60,409,1,
+		0,0,0,62,417,1,0,0,0,64,419,1,0,0,0,66,421,1,0,0,0,68,423,1,0,0,0,70,425,
+		1,0,0,0,72,74,3,2,1,0,73,72,1,0,0,0,74,77,1,0,0,0,75,73,1,0,0,0,75,76,
+		1,0,0,0,76,78,1,0,0,0,77,75,1,0,0,0,78,79,3,4,2,0,79,80,3,6,3,0,80,1,1,
+		0,0,0,81,86,3,8,4,0,82,83,3,20,10,0,83,84,5,34,0,0,84,86,1,0,0,0,85,81,
+		1,0,0,0,85,82,1,0,0,0,86,3,1,0,0,0,87,88,5,15,0,0,88,89,3,24,12,0,89,5,
+		1,0,0,0,90,91,5,14,0,0,91,92,3,24,12,0,92,7,1,0,0,0,93,94,3,10,5,0,94,
+		95,3,64,32,0,95,99,5,28,0,0,96,98,3,12,6,0,97,96,1,0,0,0,98,101,1,0,0,
+		0,99,97,1,0,0,0,99,100,1,0,0,0,100,102,1,0,0,0,101,99,1,0,0,0,102,103,
+		5,29,0,0,103,104,3,24,12,0,104,9,1,0,0,0,105,106,7,0,0,0,106,11,1,0,0,
+		0,107,108,6,6,-1,0,108,109,3,14,7,0,109,115,1,0,0,0,110,111,10,1,0,0,111,
+		112,5,36,0,0,112,114,3,14,7,0,113,110,1,0,0,0,114,117,1,0,0,0,115,113,
+		1,0,0,0,115,116,1,0,0,0,116,13,1,0,0,0,117,115,1,0,0,0,118,119,3,10,5,
+		0,119,120,3,64,32,0,120,15,1,0,0,0,121,122,6,8,-1,0,122,123,3,18,9,0,123,
+		129,1,0,0,0,124,125,10,1,0,0,125,126,5,36,0,0,126,128,3,18,9,0,127,124,
+		1,0,0,0,128,131,1,0,0,0,129,127,1,0,0,0,129,130,1,0,0,0,130,17,1,0,0,0,
+		131,129,1,0,0,0,132,138,3,64,32,0,133,138,3,36,18,0,134,138,5,68,0,0,135,
+		138,5,67,0,0,136,138,5,1,0,0,137,132,1,0,0,0,137,133,1,0,0,0,137,134,1,
+		0,0,0,137,135,1,0,0,0,137,136,1,0,0,0,138,19,1,0,0,0,139,140,3,10,5,0,
+		140,141,3,22,11,0,141,21,1,0,0,0,142,150,3,64,32,0,143,144,3,64,32,0,144,
+		147,5,41,0,0,145,148,3,58,29,0,146,148,3,36,18,0,147,145,1,0,0,0,147,146,
+		1,0,0,0,148,150,1,0,0,0,149,142,1,0,0,0,149,143,1,0,0,0,150,23,1,0,0,0,
+		151,155,5,30,0,0,152,154,3,26,13,0,153,152,1,0,0,0,154,157,1,0,0,0,155,
+		153,1,0,0,0,155,156,1,0,0,0,156,158,1,0,0,0,157,155,1,0,0,0,158,159,5,
+		31,0,0,159,25,1,0,0,0,160,179,3,28,14,0,161,179,3,30,15,0,162,179,3,32,
+		16,0,163,164,3,20,10,0,164,165,5,34,0,0,165,179,1,0,0,0,166,167,3,36,18,
+		0,167,168,5,34,0,0,168,179,1,0,0,0,169,170,3,62,31,0,170,171,5,34,0,0,
+		171,179,1,0,0,0,172,173,3,34,17,0,173,174,5,34,0,0,174,179,1,0,0,0,175,
+		176,3,58,29,0,176,177,5,34,0,0,177,179,1,0,0,0,178,160,1,0,0,0,178,161,
+		1,0,0,0,178,162,1,0,0,0,178,163,1,0,0,0,178,166,1,0,0,0,178,169,1,0,0,
+		0,178,172,1,0,0,0,178,175,1,0,0,0,179,27,1,0,0,0,180,181,5,20,0,0,181,
+		182,5,28,0,0,182,183,3,58,29,0,183,184,5,29,0,0,184,185,3,24,12,0,185,
+		186,5,21,0,0,186,187,3,24,12,0,187,195,1,0,0,0,188,189,5,20,0,0,189,190,
+		5,28,0,0,190,191,3,58,29,0,191,192,5,29,0,0,192,193,3,24,12,0,193,195,
+		1,0,0,0,194,180,1,0,0,0,194,188,1,0,0,0,195,29,1,0,0,0,196,197,5,22,0,
+		0,197,198,5,28,0,0,198,199,3,58,29,0,199,200,5,29,0,0,200,201,3,24,12,
+		0,201,216,1,0,0,0,202,203,5,23,0,0,203,206,5,28,0,0,204,207,3,58,29,0,
+		205,207,3,20,10,0,206,204,1,0,0,0,206,205,1,0,0,0,207,208,1,0,0,0,208,
+		209,5,34,0,0,209,210,3,58,29,0,210,211,5,34,0,0,211,212,3,58,29,0,212,
+		213,5,29,0,0,213,214,3,24,12,0,214,216,1,0,0,0,215,196,1,0,0,0,215,202,
+		1,0,0,0,216,31,1,0,0,0,217,218,5,24,0,0,218,226,5,34,0,0,219,220,5,25,
+		0,0,220,226,5,34,0,0,221,222,5,26,0,0,222,223,3,58,29,0,223,224,5,34,0,
+		0,224,226,1,0,0,0,225,217,1,0,0,0,225,219,1,0,0,0,225,221,1,0,0,0,226,
+		33,1,0,0,0,227,228,3,64,32,0,228,229,3,66,33,0,229,230,3,58,29,0,230,236,
+		1,0,0,0,231,232,3,64,32,0,232,233,3,66,33,0,233,234,3,36,18,0,234,236,
+		1,0,0,0,235,227,1,0,0,0,235,231,1,0,0,0,236,35,1,0,0,0,237,238,3,64,32,
+		0,238,242,5,28,0,0,239,241,3,16,8,0,240,239,1,0,0,0,241,244,1,0,0,0,242,
+		240,1,0,0,0,242,243,1,0,0,0,243,245,1,0,0,0,244,242,1,0,0,0,245,246,5,
+		29,0,0,246,37,1,0,0,0,247,257,5,68,0,0,248,257,5,1,0,0,249,257,5,67,0,
+		0,250,257,3,64,32,0,251,257,3,36,18,0,252,253,5,28,0,0,253,254,3,58,29,
+		0,254,255,5,29,0,0,255,257,1,0,0,0,256,247,1,0,0,0,256,248,1,0,0,0,256,
+		249,1,0,0,0,256,250,1,0,0,0,256,251,1,0,0,0,256,252,1,0,0,0,257,39,1,0,
+		0,0,258,272,3,38,19,0,259,260,3,38,19,0,260,261,5,64,0,0,261,272,1,0,0,
+		0,262,263,3,38,19,0,263,264,5,65,0,0,264,272,1,0,0,0,265,266,5,64,0,0,
+		266,272,3,38,19,0,267,268,5,65,0,0,268,272,3,38,19,0,269,270,5,61,0,0,
+		270,272,3,38,19,0,271,258,1,0,0,0,271,259,1,0,0,0,271,262,1,0,0,0,271,
+		265,1,0,0,0,271,267,1,0,0,0,271,269,1,0,0,0,272,41,1,0,0,0,273,274,6,21,
+		-1,0,274,275,3,40,20,0,275,287,1,0,0,0,276,277,10,3,0,0,277,278,5,48,0,
+		0,278,286,3,38,19,0,279,280,10,2,0,0,280,281,5,49,0,0,281,286,3,38,19,
+		0,282,283,10,1,0,0,283,284,5,52,0,0,284,286,3,38,19,0,285,276,1,0,0,0,
+		285,279,1,0,0,0,285,282,1,0,0,0,286,289,1,0,0,0,287,285,1,0,0,0,287,288,
+		1,0,0,0,288,43,1,0,0,0,289,287,1,0,0,0,290,291,6,22,-1,0,291,292,3,42,
+		21,0,292,301,1,0,0,0,293,294,10,2,0,0,294,295,5,50,0,0,295,300,3,42,21,
+		0,296,297,10,1,0,0,297,298,5,51,0,0,298,300,3,42,21,0,299,293,1,0,0,0,
+		299,296,1,0,0,0,300,303,1,0,0,0,301,299,1,0,0,0,301,302,1,0,0,0,302,45,
+		1,0,0,0,303,301,1,0,0,0,304,305,6,23,-1,0,305,306,3,44,22,0,306,315,1,
+		0,0,0,307,308,10,2,0,0,308,309,5,62,0,0,309,314,3,44,22,0,310,311,10,1,
+		0,0,311,312,5,63,0,0,312,314,3,44,22,0,313,307,1,0,0,0,313,310,1,0,0,0,
+		314,317,1,0,0,0,315,313,1,0,0,0,315,316,1,0,0,0,316,47,1,0,0,0,317,315,
+		1,0,0,0,318,319,6,24,-1,0,319,320,3,46,23,0,320,335,1,0,0,0,321,322,10,
+		4,0,0,322,323,5,58,0,0,323,334,3,46,23,0,324,325,10,3,0,0,325,326,5,57,
+		0,0,326,334,3,46,23,0,327,328,10,2,0,0,328,329,5,60,0,0,329,334,3,46,23,
+		0,330,331,10,1,0,0,331,332,5,59,0,0,332,334,3,46,23,0,333,321,1,0,0,0,
+		333,324,1,0,0,0,333,327,1,0,0,0,333,330,1,0,0,0,334,337,1,0,0,0,335,333,
+		1,0,0,0,335,336,1,0,0,0,336,49,1,0,0,0,337,335,1,0,0,0,338,339,6,25,-1,
+		0,339,340,3,48,24,0,340,349,1,0,0,0,341,342,10,2,0,0,342,343,5,55,0,0,
+		343,348,3,48,24,0,344,345,10,1,0,0,345,346,5,56,0,0,346,348,3,48,24,0,
+		347,341,1,0,0,0,347,344,1,0,0,0,348,351,1,0,0,0,349,347,1,0,0,0,349,350,
+		1,0,0,0,350,51,1,0,0,0,351,349,1,0,0,0,352,353,6,26,-1,0,353,354,3,50,
+		25,0,354,360,1,0,0,0,355,356,10,1,0,0,356,357,5,53,0,0,357,359,3,50,25,
+		0,358,355,1,0,0,0,359,362,1,0,0,0,360,358,1,0,0,0,360,361,1,0,0,0,361,
+		53,1,0,0,0,362,360,1,0,0,0,363,364,6,27,-1,0,364,365,3,52,26,0,365,371,
+		1,0,0,0,366,367,10,1,0,0,367,368,5,54,0,0,368,370,3,52,26,0,369,366,1,
+		0,0,0,370,373,1,0,0,0,371,369,1,0,0,0,371,372,1,0,0,0,372,55,1,0,0,0,373,
+		371,1,0,0,0,374,389,3,54,27,0,375,376,3,54,27,0,376,380,5,27,0,0,377,381,
+		3,58,29,0,378,381,3,36,18,0,379,381,3,34,17,0,380,377,1,0,0,0,380,378,
+		1,0,0,0,380,379,1,0,0,0,381,382,1,0,0,0,382,386,5,37,0,0,383,387,3,58,
+		29,0,384,387,3,36,18,0,385,387,3,34,17,0,386,383,1,0,0,0,386,384,1,0,0,
+		0,386,385,1,0,0,0,387,389,1,0,0,0,388,374,1,0,0,0,388,375,1,0,0,0,389,
+		57,1,0,0,0,390,391,3,56,28,0,391,59,1,0,0,0,392,395,5,19,0,0,393,396,3,
+		68,34,0,394,396,3,64,32,0,395,393,1,0,0,0,395,394,1,0,0,0,396,397,1,0,
+		0,0,397,400,5,17,0,0,398,401,3,64,32,0,399,401,5,68,0,0,400,398,1,0,0,
+		0,400,399,1,0,0,0,401,410,1,0,0,0,402,405,5,18,0,0,403,406,3,64,32,0,404,
+		406,5,68,0,0,405,403,1,0,0,0,405,404,1,0,0,0,406,407,1,0,0,0,407,408,5,
+		17,0,0,408,410,3,64,32,0,409,392,1,0,0,0,409,402,1,0,0,0,410,61,1,0,0,
+		0,411,418,3,60,30,0,412,413,5,16,0,0,413,414,3,64,32,0,414,415,5,17,0,
+		0,415,416,3,70,35,0,416,418,1,0,0,0,417,411,1,0,0,0,417,412,1,0,0,0,418,
+		63,1,0,0,0,419,420,5,66,0,0,420,65,1,0,0,0,421,422,7,1,0,0,422,67,1,0,
+		0,0,423,424,7,2,0,0,424,69,1,0,0,0,425,426,7,3,0,0,426,71,1,0,0,0,38,75,
+		85,99,115,129,137,147,149,155,178,194,206,215,225,235,242,256,271,285,
+		287,299,301,313,315,333,335,347,349,360,371,380,386,388,395,400,405,409,
+		417
 	};
 
 	public static readonly ATN _ATN =
