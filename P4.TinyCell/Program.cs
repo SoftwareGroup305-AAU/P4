@@ -23,8 +23,8 @@ internal class Program
 
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
                 ParseTreeWalker.Default.Walk(listener, tree);
-  
-                var list = listener.instructions;
+                var instructions = listener.Instructions;
+ 
 
                 Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Tokens:");

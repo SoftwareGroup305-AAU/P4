@@ -1,25 +1,21 @@
 
-int faggot (int hello; int maybe) {
-	int may = 22;
-}
-
-int hellou (int bitch) {
-	int maybe = 2;
-}
-
 setup {
-  int x = 2;
-  int y = hellou(x);
+  while (x) {
+	int x = 1;
+	if (25) {
+		int x = a + b || c ;
+	}
+	else {
+		int x = 3;
+		while (2) {
+		int x = 4;
+		}
+	}
+  }
 }
 
 update {
-	int he = 22 
-	if (he) {
-		if (2) {
-		int hello = 2;
-		}
-	}
-	else {
-		return;
-	}
+
+
+	
 }

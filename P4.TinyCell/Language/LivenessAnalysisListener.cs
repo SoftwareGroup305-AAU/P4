@@ -1,118 +1,133 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using static P4.TinyCell.Languages.TinyCell.LivenessAnalysisListener;
 
 
 namespace P4.TinyCell.Languages.TinyCell
 {
     internal class LivenessAnalysisListener : TinyCellBaseListener
-    {
-        /// <summary>
-        /// List of instructions
-        /// </summary>
-        public List<IInstruction>? instructions;
+    {   
 
-        public Stack<IInstruction>? branchParents;
-        /// <summary>
-        /// Gets or sets the current instruction in the tree walk
-        /// </summary>
-        private IInstruction? currentInstruction;
+        public List<IInstruction> Instructions;
 
-        private Dictionary<string, IInstruction> FTable;
+        private Stack<ParentStructure> parentStructureStack;
 
-        /// <summary>
-        /// Keeps track of whether the variables seen in the current context are assigned (Right-hand side) or not
-        /// </summary>
+        private List<IInstruction> prevInstructions;
+
+        private Dictionary<string, IInstruction> funcLabelTable;
+
         private bool isAssigned;
-        /// <summary>
-        /// Keeps of whether the next instruction is the first in a function definition
-        /// </summary>
-        private bool isFirstInstruction;
-        /// <summary>
-        /// Stores the <see cref="string"></see> name of the current function identifier
-        /// </summary>
-        private string? currentFunctionIdentifier;
-        public LivenessAnalysisListener()
-        {
-            instructions = [];
-            branchParents = [];
-            FTable = new Dictionary<string, IInstruction>();
-        }
-
-        public override void EnterDeclaration([NotNull] TinyCellParser.DeclarationContext context)
-        {
-
-            Instruction<TinyCellParser.DeclarationContext> instruction = new Instruction<TinyCellParser.DeclarationContext>(context);
-            if (currentFunctionIdentifier != null)
-            {
-                FTable.Add(currentFunctionIdentifier, instruction);
-                isFirstInstruction = false;
-                currentFunctionIdentifier = null;
-                return;
-            }
-            if (currentInstruction != null )
-            {
-                if (isFirstInstruction)
-                {
-                    branchParents.Last().addSucc(instruction);
-                } else
-                {
-                    currentInstruction.addSucc(instruction);
-                }
-            }
-            currentInstruction = instruction;
-            instructions.Add(instruction);
+       
+        public LivenessAnalysisListener() 
+        { 
+            parentStructureStack = new Stack<ParentStructure>();
+            prevInstructions = new List<IInstruction>();
+            funcLabelTable = new Dictionary<string, IInstruction>();
+            Instructions = new List<IInstruction>();
             
         }
-        //public override void EnterPinExpression([NotNull] TinyCellParser.PinExpressionContext context)
-        //{
-        //    Instruction<TinyCellParser.PinExpressionContext> instruction = new Instruction<TinyCellParser.PinExpressionContext>(context);
-        //    currentInstruction = instruction;
-        //    instructions.Add(instruction);
-        //}
 
-        public override void EnterFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
+        public override void EnterDocument([NotNull] TinyCellParser.DocumentContext context)
         {
-            IInstruction nextInstruction;
-            FTable.TryGetValue(context.identifier().GetText(), out nextInstruction);
-            currentInstruction.addSucc(nextInstruction);
-            isAssigned = true;
+            parentStructureStack.Push(new ParentStructure());
+            parentStructureStack.First().scopeStack.Push(new Scope());
         }
 
-        public override void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
+        public override void EnterSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
         {
-            isAssigned = false;
+            var parentStructure = new ParentStructure();
+            parentStructure.scopeStack.Push(new Scope());
+            parentStructureStack.Push(parentStructure);
         }
 
         public override void EnterCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
         {
-            isFirstInstruction = true;
-            if (currentInstruction != null)
+            if (context.children.Count != 0)
             {
-                branchParents.Push(currentInstruction);
+                parentStructureStack.First().scopeStack.Push(new Scope());
+            }  
+        }
+
+        public override void ExitCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
+        {
+            if (prevInstructions.Count != 0)
+            {
+                parentStructureStack.First().scopeStack.First().lastInstruction = prevInstructions.First();
             }
-        }
-
-
-        public override void EnterFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
-        {
-            
-        }
-
-        public override void ExitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
-        {
-            currentInstruction = null;
-            isFirstInstruction = false;
+            prevInstructions.Clear();
         }
 
         public override void EnterIfStatement([NotNull] TinyCellParser.IfStatementContext context)
         {
-            Instruction<TinyCellParser.IfStatementContext> instruction = new Instruction<TinyCellParser.IfStatementContext>(context);
-            currentInstruction = instruction;
+            var instruction = new Instruction<TinyCellParser.IfStatementContext>(context);
+            Instructions.Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            if (parentStructureStack.First().scopeStack.First().firstInstruction == null)
+            {
+                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+            }
+            var parentStructure = new ParentStructure();
+            parentStructure.Instruction = instruction;
+            parentStructureStack.Push(parentStructure);
         }
 
         public override void ExitIfStatement([NotNull] TinyCellParser.IfStatementContext context)
         {
-            branchParents.Pop();
+                var parentStructure = parentStructureStack.First();
+                foreach (var scope in parentStructure.scopeStack)
+                {
+                    parentStructure.Instruction.addSucc(scope.firstInstruction);
+                    prevInstructions.Add(scope.lastInstruction);
+                }
+                if (parentStructure.scopeStack.Count <= 1)
+                {
+                prevInstructions.Add(parentStructure.Instruction);
+                }
+                parentStructureStack.Pop();
+        }
+
+        public override void EnterLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
+        {
+            var instruction = new Instruction<TinyCellParser.LoopStatementContext>(context);
+            Instructions.Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            if (parentStructureStack.First().scopeStack.First().firstInstruction == null)
+            {
+                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+            }
+            var parentStructure = new ParentStructure();
+            parentStructure.Instruction = instruction;
+            parentStructureStack.Push(parentStructure);
+        }
+
+        public override void ExitLoopStatement ([NotNull] TinyCellParser.LoopStatementContext context)
+        {
+            var parentStructure = parentStructureStack.First();
+            foreach (var scope in parentStructure.scopeStack)
+            {
+                parentStructure.Instruction.addSucc(scope.firstInstruction);
+                prevInstructions.Add(scope.lastInstruction);
+            }
+            if (parentStructure.scopeStack.Count <= 1)
+            {
+                prevInstructions.Add(parentStructure.Instruction);
+            }
+            parentStructureStack.Pop();
+        }
+
+        public override void EnterDeclaration([NotNull] TinyCellParser.DeclarationContext context)
+        {
+            var instruction = new Instruction<TinyCellParser.DeclarationContext>(context);
+            Instructions.Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            prevInstructions.Add(instruction);
+            if (parentStructureStack.First().scopeStack.First().firstInstruction == null) 
+            {
+                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+            }
         }
 
         public override void EnterExpression([NotNull] TinyCellParser.ExpressionContext context)
@@ -127,19 +142,67 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void EnterIdentifier([NotNull] TinyCellParser.IdentifierContext context)
         {
-            if (context.Parent is TinyCellParser.FunctionDefinitionContext)
-            {
-                currentFunctionIdentifier = context.GetText();
-            }
             if (isAssigned)
             {
-                currentInstruction.addGen(context);
+                Instructions.Last().addGen(context);
+
             }
             else
             {
-                currentInstruction.addKill(context);
+                Instructions.Last().addKill(context);
             }
         }
+
+
+
+
+
+
+        private class ParentStructure
+        {
+            public IInstruction? Instruction;
+            public Stack<Scope> scopeStack { get; set; }
+
+            public ParentStructure()
+            {
+                scopeStack = new Stack<Scope>();
+            }
+        }
+
+        public void LivenessGraph()
+        {
+            if (Instructions.Count == 0)
+            {
+                return;
+            }
+            List<IInstruction> instructionsCopy;
+            do
+            {
+                instructionsCopy = Instructions.ToList();
+                foreach (var instruction in Instructions)
+                {
+                    Update(instruction);
+                }
+            } while (instructionsCopy != Instructions);
+            
+        }
+
+        private void Update(IInstruction instruction)
+        {
+            UpdateOuts(instruction);
+        }
+
+        private void UpdateOuts(IInstruction instruction)
+        {
+            instruction.getSucc();
+        }
+
+        private class Scope
+        {
+            public IInstruction? firstInstruction { get; set; }
+            public IInstruction? lastInstruction { get; set; }
+        }
+
         /// <summary>
         /// Represents an instruction in the liveliness analysis./// </summary>
         /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
@@ -173,7 +236,7 @@ namespace P4.TinyCell.Languages.TinyCell
             /// <summary>
             /// Gets or sets the set of succeeding instructions
             /// </summary>
-            public List<IInstruction>? succ { get; set; }
+            public HashSet<IInstruction>? succ { get; set; }
 
             public HashSet<string>? outs { get; set; }
 
@@ -194,6 +257,11 @@ namespace P4.TinyCell.Languages.TinyCell
                 succ.Add(instruction);
                
             }
+
+            public HashSet<IInstruction> getSucc()
+            {
+                return succ;
+            }
         }
         /// <summary>
         /// Interface to generalize instruction to generic
@@ -205,6 +273,8 @@ namespace P4.TinyCell.Languages.TinyCell
             public void addKill(TinyCellParser.IdentifierContext context);
 
             public void addSucc(IInstruction instruction);
+
+            public HashSet<IInstruction> getSucc();
         }
     }
 }
