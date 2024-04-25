@@ -23,7 +23,7 @@ parameter: type identifier;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier | functionCall | Numeral | String;
+argument: identifier | functionCall | Numeral | String | Bool;
 
 declaration: type initialDeclaration;
 
@@ -39,6 +39,7 @@ statement:
 	| jumpStatement
 	| declaration SEMI
 	| functionCall SEMI
+	| pinStatusExpression SEMI
 	| assignment SEMI
 	| expression SEMI;
 
@@ -119,16 +120,15 @@ ternaryExpression:
 		| assignment
 	) COLON (expression | functionCall | assignment);
 
+expression: ternaryExpression;
+
 pinAssignmentExpression:
-	ternaryExpression
-	| WRITE (pinVoltage | identifier) TO (identifier | Numeral)
+	WRITE (pinVoltage | identifier) TO (identifier | Numeral)
 	| READ (identifier | Numeral) TO identifier;
 
 pinStatusExpression:
 	pinAssignmentExpression
 	| SET identifier TO pinStatus;
-
-expression: pinStatusExpression;
 
 identifier: Identifier;
 
@@ -218,7 +218,7 @@ UNARYMINUS: '--';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
-String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
+String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
 
