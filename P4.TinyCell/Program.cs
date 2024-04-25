@@ -18,7 +18,10 @@ internal class Program
 
                 var parser = new TinyCellParser(tokenStream);
 
-                // Parse the input (assuming "document" is the name of the start rule)
+                tokenStream.Fill();
+
+                var tokens = tokenStream.GetTokens();
+
                 var tree = parser.document();
 
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
@@ -28,9 +31,11 @@ internal class Program
                 Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Tokens:");
 
-                foreach (var token in tokenStream.GetTokens())
+                foreach (var token in tokens)
                 {
-                        Console.WriteLine(token);
+                        int tokenType = token.Type - 1;
+                        string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
+                        Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
                 }
 
                 Console.WriteLine("\n=================================================\n");
