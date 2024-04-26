@@ -1,17 +1,21 @@
 
 setup {
-  while (x) {
-	int x = 1;
-	if (25) {
-		int x = a + b || c ;
-	}
-	else {
-		int x = 3;
-		while (2) {
-		int x = 4;
-		}
-	}
+  int a = 0;
+  int b = 1; 
+  int z = 0;
+  while (true) {
+	if (n == z) {
+	return;
   }
+  else {
+	int t = a+b;
+	int a = b;
+	int b = t;
+	int n = n-1;
+	int z = 0;
+  }
+ }
+
 }
 
 update {

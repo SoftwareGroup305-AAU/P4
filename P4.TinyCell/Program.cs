@@ -24,6 +24,7 @@ internal class Program
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
                 ParseTreeWalker.Default.Walk(listener, tree);
                 var instructions = listener.Instructions;
+        listener.LivenessGraph();
  
 
                 Console.WriteLine("\n=================================================\n");

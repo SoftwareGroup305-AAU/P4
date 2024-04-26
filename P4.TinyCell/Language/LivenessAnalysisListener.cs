@@ -175,26 +175,92 @@ namespace P4.TinyCell.Languages.TinyCell
             {
                 return;
             }
+            inizializeFirstOut();
             List<IInstruction> instructionsCopy;
             do
             {
-                instructionsCopy = Instructions.ToList();
-                foreach (var instruction in Instructions)
+                instructionsCopy = Instructions.Select(instruction => (IInstruction) instruction.Clone()).ToList();
+                for (int i = Instructions.Count - 1; i >= 0; i--)
                 {
+                    var instruction = Instructions[i];
                     Update(instruction);
                 }
-            } while (instructionsCopy != Instructions);
+            } while (!isListEqual(instructionsCopy, Instructions));
             
+        }
+
+        public void inizializeFirstOut()
+        {
+            for (int i = Instructions.Count - 1; i >= 0; i--)
+            {
+                if (Instructions[i].getGen().Count != 0)
+                {
+                    var lastInstructionIns = Instructions[i].getIns();
+                    var lastInstructionGen = Instructions[i].getGen();
+                    lastInstructionIns = lastInstructionIns.Union(lastInstructionGen).ToHashSet();
+                    Instructions[i].setIns(lastInstructionIns);
+                    break;
+                }
+            }
+            
+        }
+
+        private bool isListEqual(List<IInstruction> list1, List<IInstruction> list2)
+        {
+            for (int i = 0; i < list1.Count; i++)
+            {
+                var instruction1 = list1[i];
+                var instruction2 = list2[i];
+
+                // Compare properties of the instructions
+                if (!areInstructionsEqual(instruction1, instruction2))
+                {
+                    return false;
+                }
+            }
+            return true;    
+
+
+        }
+
+        private bool areInstructionsEqual(IInstruction instruction1, IInstruction instruction2)
+        {
+            if (!instruction1.getIns().SetEquals(instruction2.getIns()))
+            {
+                return false;
+            }
+            if (!instruction1.getOuts().SetEquals(instruction2.getOuts()))
+            {
+                return false;
+            }
+            return true;
         }
 
         private void Update(IInstruction instruction)
         {
             UpdateOuts(instruction);
+            UpdateIns(instruction);
         }
 
         private void UpdateOuts(IInstruction instruction)
         {
-            instruction.getSucc();
+            var instructionOuts = instruction.getOuts();
+            foreach (var succ in instruction.getSucc())
+            {
+                instructionOuts.UnionWith(succ.getIns());
+            }
+            instruction.setOuts(instructionOuts);
+        }
+
+        private void UpdateIns(IInstruction instruction)
+        {
+            var gen = instruction.getGen();
+            var outs = instruction.getOuts();
+            var kill = instruction.getKill();
+            var outsMinusKill = new HashSet<string>(outs);
+            outsMinusKill.ExceptWith(kill);
+            var newIns = gen.Union(outsMinusKill).ToHashSet();
+            instruction.setIns(newIns);
         }
 
         private class Scope
@@ -206,7 +272,7 @@ namespace P4.TinyCell.Languages.TinyCell
         /// <summary>
         /// Represents an instruction in the liveliness analysis./// </summary>
         /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
-        private class Instruction<T> : IInstruction where T : ParserRuleContext
+        private class Instruction<T> : IInstruction, ICloneable where T : ParserRuleContext
         {
             /// <summary>
             /// Gets or sets the instruction.
@@ -219,8 +285,8 @@ namespace P4.TinyCell.Languages.TinyCell
                 gen = [];
                 kill = [];
                 succ = [];
-                outs = [];
-                ins = [];
+                outs = new HashSet<string>();
+                ins = new HashSet<string>();
             }
 
             /// <summary>
@@ -262,11 +328,55 @@ namespace P4.TinyCell.Languages.TinyCell
             {
                 return succ;
             }
+
+            public HashSet<string> getIns()
+            {
+                return ins;
+            }
+
+            public HashSet<string> getGen()
+            {
+                return gen;
+            }
+
+            public HashSet<string> getOuts()
+            {
+                return outs;
+            }
+
+            public HashSet<string> getKill()
+            {
+                return kill;
+            }
+
+            public void setIns(HashSet<string> newIns)
+            {
+                ins = newIns;
+            }
+
+            public void setOuts(HashSet<string> newOuts)
+            {
+                outs = newOuts;
+            }
+
+            public object Clone()
+            {
+                Instruction<T> clone = new Instruction<T>(this.baseInstruction);
+
+                clone.gen = new HashSet<string>(this.gen);
+                clone.kill = new HashSet<string>(this.kill);
+                clone.succ = new HashSet<IInstruction>(this.succ);
+                clone.outs = new HashSet<string>(this.outs);
+                clone.ins = new HashSet<string>(this.ins);
+
+                return clone;
+            }
+
         }
         /// <summary>
         /// Interface to generalize instruction to generic
         /// </summary>
-        public interface IInstruction
+        public interface IInstruction : ICloneable
         {
             public void addGen(TinyCellParser.IdentifierContext context);
 
@@ -275,6 +385,17 @@ namespace P4.TinyCell.Languages.TinyCell
             public void addSucc(IInstruction instruction);
 
             public HashSet<IInstruction> getSucc();
+
+            public HashSet<string> getIns();
+
+            public HashSet<string> getGen();
+
+            public HashSet<string> getOuts();
+
+            public HashSet<string> getKill();
+
+            public void setIns(HashSet<string> newSet);
+            public void setOuts(HashSet<string> newOuts);
         }
     }
 }
