@@ -56,9 +56,7 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression SEMI;
 
-assignment:
-	identifier assignmentOperator expression
-	| identifier assignmentOperator functionCall;
+assignment: identifier assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
