@@ -1,10 +1,9 @@
 ﻿using static P4.TinyCell.Tests.Utility;
 using System.ComponentModel;
 
-
 namespace P4.TinyCell.Tests;
 
-public class LexerUnitTests
+public class LexerTokens
 {
     // Eof
     [Fact]
@@ -28,6 +27,23 @@ public class LexerUnitTests
         var expectedTokenTypes = new List<int>
         {
             TinyCellLexer.Whitespace,
+            TinyCellLexer.Eof
+        };
+
+        Assert.Equal(expectedTokenTypes, tokenTypes);
+    }
+
+    // LineComment
+    [Fact]
+    [Description("Can handle a string with only comments.")]
+    public void LexerCommentTest()
+    {
+        var input = "// This is a comment";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        var expectedTokenTypes = new List<int>
+        {
+            TinyCellLexer.LineComment,
             TinyCellLexer.Eof
         };
 
@@ -452,31 +468,6 @@ public class LexerUnitTests
         Assert.Equal(TinyCellLexer.COLON, tokenTypes[0]);
     }
 
-    // TRUE
-    [Fact]
-    [Description("Can detect the correct token type for a TRUE in an if statement.")]
-    public void LexerIfTrueTest()
-    {
-        var input = "bool yes=true;";
-        var tokenTypes = GetTokenTypesFromInput(input);
-
-        // Check if the list of token types contains a TRUE
-        Assert.Contains(TinyCellLexer.TRUE, tokenTypes);
-    }
-
-    // FALSE
-    [Fact]
-    [Description("Can detect the correct token type for a FALSE in an if statement.")]
-    public void LexerIfFalseTest()
-    {
-        var input = "bool no=false;";
-        var tokenTypes = GetTokenTypesFromInput(input);
-
-        // Check if the list of token types contains a FALSE
-        Assert.Contains(TinyCellLexer.FALSE, tokenTypes);
-    }
-
-
     // ASSIGN
     [Fact]
     [Description("Can detect the correct token type for an ASSIGN.")]
@@ -750,57 +741,5 @@ public class LexerUnitTests
         var tokenTypes = GetTokenTypesFromInput(input);
 
         Assert.Equal(TinyCellLexer.UNARYMINUS, tokenTypes[0]);
-    }
-
-
-    /// <summary>
-    /// Can convert a string to a list of tokens.
-    /// <example> 
-    /// <code> Example input: "x = 5" </code>
-    /// <code> Expected output: [IDENTIFIER, WS, ASSIGN, WS, NUMBER] </code>
-    /// </example>
-    /// </summary>
-    [Fact]
-    [Description("Can convert a string to a list of tokens.")]
-    public void LexerTokenizerTest()
-    {
-        var input = "x = 5";
-        var tokenTypes = GetTokenTypesFromInput(input);
-
-        // Include the whitespace tokens in the expected output
-        var expectedTokenTypes = new List<int>
-        {
-            TinyCellLexer.Identifier,
-            TinyCellLexer.Whitespace,
-            TinyCellLexer.ASSIGN,
-            TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
-            TinyCellLexer.Eof
-        };
-
-        Assert.Equal(expectedTokenTypes, tokenTypes);
-    }
-
-    /// <summary>
-    /// Can handle a string with only comments.
-    /// <example>
-    /// <code> Example input: "// This is a comment" </code>
-    /// <code> Expected output: [LineComment, EoF] </code>
-    /// </example>
-    /// </summary>
-    [Fact]
-    [Description("Can handle a string with only comments.")]
-    public void LexerCommentTest()
-    {
-        var input = "// This is a comment";
-        var tokenTypes = GetTokenTypesFromInput(input);
-
-        var expectedTokenTypes = new List<int>
-        {
-            TinyCellLexer.LineComment,
-            TinyCellLexer.Eof
-        };
-
-        Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 }
