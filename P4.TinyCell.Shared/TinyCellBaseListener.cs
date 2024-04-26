@@ -384,6 +384,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterExpression([NotNull] TinyCellParser.ExpressionContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitExpression([NotNull] TinyCellParser.ExpressionContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.pinAssignmentExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -407,18 +419,6 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterExpression([NotNull] TinyCellParser.ExpressionContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitExpression([NotNull] TinyCellParser.ExpressionContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.identifier"/>.
 	/// <para>The default implementation does nothing.</para>
