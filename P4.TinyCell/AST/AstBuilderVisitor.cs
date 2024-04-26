@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Tree;
 using P4.TinyCell.AST.NumExpr;
 using P4.TinyCell.AST.Primitive;
+using P4.TinyCell.AST.Statement;
 using P4.TinyCell.AST.StatementExpr;
 using P4.TinyCell.AST.UnaryExpr;
 using System.Globalization;
@@ -35,13 +36,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         if (context.multiplicativeExpression() is not null)
         {
             return Visit(context.multiplicativeExpression());
@@ -51,13 +45,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitAndExpression([NotNull] TinyCellParser.AndExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         if (context.equalityExpression() is not null)
         {
             return Visit(context.equalityExpression());
@@ -67,61 +54,26 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitArgument([NotNull] TinyCellParser.ArgumentContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitArgument(context);
     }
 
     public override AstNode VisitArgumentList([NotNull] TinyCellParser.ArgumentListContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitArgumentList(context);
     }
 
     public override AstNode VisitAssignment([NotNull] TinyCellParser.AssignmentContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitAssignment(context);
     }
 
     public override AstNode VisitAssignmentOperator([NotNull] TinyCellParser.AssignmentOperatorContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitAssignmentOperator(context);
     }
 
     public override AstNode VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         if (context.additiveExpression() is not null)
         {
             return Visit(context.additiveExpression());
@@ -136,13 +88,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         if (context.bitshiftExpression() is not null)
         {
             return Visit(context.bitshiftExpression());
@@ -153,25 +98,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitCompoundStatement(context);
     }
 
     public override AstNode VisitDeclaration([NotNull] TinyCellParser.DeclarationContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitDeclaration(context);
     }
 
@@ -188,13 +119,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         if (context.comparisonExpression() is not null)
         {
             return Visit(context.comparisonExpression());
@@ -209,49 +133,22 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitExpression([NotNull] TinyCellParser.ExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return Visit(context.pinExpression());
     }
 
     public override AstNode VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
+
         return base.VisitFunctionCall(context);
     }
 
     public override AstNode VisitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitFunctionDefinition(context);
     }
 
     public override AstNode VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitGeneralDeclaration(context);
     }
 
@@ -262,49 +159,35 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitIfStatement([NotNull] TinyCellParser.IfStatementContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
+
         return base.VisitIfStatement(context);
     }
 
     public override AstNode VisitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
         return base.VisitInitialDeclaration(context);
     }
 
     public override AstNode VisitJumpStatement([NotNull] TinyCellParser.JumpStatementContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
+        if (context.CONTINUE() is not null)
         {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
+            return new ContinueNode();
         }
-        return node;
-        return base.VisitJumpStatement(context);
+        if (context.BREAK() is not null)
+        {
+            return new BreakNode();
+        }
+        return new ReturnNode(Visit(context.expression()));
     }
 
     public override AstNode VisitLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
+        if (context.WHILE() is not null)
         {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
+            return new WhileStatementNode(Visit(context.expression().First()), Visit(context.compoundStatement()));
         }
-        return node;
+
         return base.VisitLoopStatement(context);
     }
 
@@ -330,42 +213,31 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitOrExpression([NotNull] TinyCellParser.OrExpressionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
+        if (context.OR() is not null)
         {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
+            return new OrExprNode(Visit(context.orExpression().First()), Visit(context.orExpression().Last()));
         }
-        return node;
-        if (context.andExpression() is not null)
-        {
-            return Visit(context.andExpression());
-        }
-        return base.VisitOrExpression(context);
+        return Visit(context.andExpression());
     }
 
     public override AstNode VisitParameter([NotNull] TinyCellParser.ParameterContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
-        return base.VisitParameter(context);
+        return new ParameterNode(Visit(context.type()), Visit(context.identifier()));
     }
 
     public override AstNode VisitParameterList([NotNull] TinyCellParser.ParameterListContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
+        var parameters = new List<AstNode>();
+
+        if (context.parameterList() != null)
         {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
+            var parameterListNode = Visit(context.parameterList()) as ParameterListNode;
+            parameters.AddRange(parameterListNode.Parameters);
         }
-        return node;
-        return base.VisitParameterList(context);
+
+        parameters.Add(Visit(context.parameter()));
+
+        return new ParameterListNode(parameters);
     }
 
     public override AstNode VisitPinExpression([NotNull] TinyCellParser.PinExpressionContext context)
@@ -411,8 +283,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
             return new StringNode(s);
         }
-
-        return base.VisitPrimitiveExpression(context);
+        throw new InvalidOperationException();
     }
 
     public override AstNode VisitSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
