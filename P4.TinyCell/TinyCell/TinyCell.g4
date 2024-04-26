@@ -6,7 +6,7 @@ Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
 document: generalDeclaration* setupDefinition updateDefinition;
 
-generalDeclaration: functionDefinition | declaration;
+generalDeclaration: functionDefinition | declaration SEMI;
 
 setupDefinition: SETUP compoundStatement;
 
@@ -15,7 +15,7 @@ updateDefinition: UPDATE compoundStatement;
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
 
-type: VOID | CHAR | INT | FLOAT | BOOL | PIN;
+type: VOID | STRING | INT | FLOAT | BOOL | PIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
@@ -23,7 +23,7 @@ parameter: type identifier;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier;
+argument: identifier | functionCall | Numeral | String | Bool;
 
 declaration: type initialDeclaration;
 
@@ -39,6 +39,7 @@ statement:
 	| jumpStatement
 	| declaration SEMI
 	| functionCall SEMI
+	| pinStatusExpression SEMI
 	| assignment SEMI
 	| expression SEMI;
 
@@ -55,9 +56,7 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression SEMI;
 
-assignment:
-	identifier assignmentOperator expression
-	| identifier assignmentOperator functionCall;
+assignment: identifier assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
@@ -66,6 +65,7 @@ primitiveExpression:
 	| Bool
 	| String
 	| identifier
+	| functionCall
 	| LPAR expression RPAR;
 
 unaryExpression:
@@ -78,9 +78,9 @@ unaryExpression:
 
 multiplicativeExpression:
 	unaryExpression
-	| multiplicativeExpression MULT primitiveExpression
-	| multiplicativeExpression DIV primitiveExpression
-	| multiplicativeExpression MOD primitiveExpression;
+	| multiplicativeExpression MULT multiplicativeExpression
+	| multiplicativeExpression DIV multiplicativeExpression
+	| multiplicativeExpression MOD multiplicativeExpression;
 
 additiveExpression:
 	multiplicativeExpression
@@ -118,9 +118,15 @@ ternaryExpression:
 		| assignment
 	) COLON (expression | functionCall | assignment);
 
-pinExpression: ternaryExpression | SET identifier TO pinVoltage;
+expression: ternaryExpression;
 
-expression: pinExpression;
+pinAssignmentExpression:
+	WRITE (pinVoltage | identifier) TO (identifier | Numeral)
+	| READ (identifier | Numeral) TO identifier;
+
+pinStatusExpression:
+	pinAssignmentExpression
+	| SET identifier TO pinStatus;
 
 identifier: Identifier;
 
@@ -134,9 +140,13 @@ assignmentOperator:
 
 pinVoltage: VOLHIGH | VOLLOW;
 
+pinStatus: PININ | PINOUT;
+
 //Pin op
-VOLHIGH: 'high';
-VOLLOW: 'low';
+VOLHIGH: 'HIGH';
+VOLLOW: 'LOW';
+PININ: 'INPUT';
+PINOUT: 'OUTPUT';
 //Types
 PIN: 'pin';
 INT: 'int';
@@ -150,6 +160,8 @@ UPDATE: 'update';
 SETUP: 'setup';
 SET: 'set';
 TO: 'to';
+READ: 'read';
+WRITE: 'write';
 IF: 'if';
 ELSE: 'else';
 WHILE: 'while';
@@ -170,7 +182,6 @@ COMMA: ',';
 COLON: ':';
 TRUE: 'true';
 FALSE: 'false';
-NEWLINE: '\n';
 //Assignment op
 ASSIGN: '=';
 PLUSASSIGN: '+=';
@@ -194,18 +205,22 @@ GT: '>';
 LT: '<';
 GTE: '>=';
 LTE: '<=';
-NOT: '!';
 //Bitwise op
 BITSHIFTL: '<<';
 BITSHIFTR: '>>';
 //Unary op
 UNARYPLUS: '++';
 UNARYMINUS: '--';
+NOT: '!';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
-String: QUOTE ([a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
+String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
+
+BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
+
+LineComment: '//' ~[\r\n]* -> channel(HIDDEN);
 
 Newline: ('\r' '\n'? | '\n' | '\\n') -> channel(HIDDEN);

@@ -1,20 +1,51 @@
+pin dpin = 10;
+pin apin = a1;
+int testfunction(pin par, pin b, pin c, int a, int b)
+{
+    bool tttt = false;
+    int number;
+    if (tttt != true) {
+    }
+    else {
+        number = 0;
+        testfunction(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        number = number + testfunction(dpin);
+    }
+    return number;
+}
+// line comment
+/* 
+block comment
+*/
+int funnyfunky(int aaa) {
+    int nummm = aaa;
+    return (nummm + aaa);
+}
 setup
 {
-    while (8 < 9)
-    {
-        b += 3;
+    /*float ni = (2 * 3) + (1 * (2 + 1));
+    ni == 9 ? ni = 9 : ni = 8;
+    int i = 0;
+    i = i + 1;*/
+    while (i < 10) {
     }
-    int b = 2 < 3 ? abc() : 22
-    35
-    48 / 3
-    22 * 3
-    pin tester = 1;
-    tester = 2;
+    bool yesyes = false;
+    for (int j = 10; j > 0; j--)
+    {
+        if (!yesyes && yesyes) {
+            break;
+        }
+    }
+    i += 2;
 }
 update
 {
     pin tester = 1;
-    tester = 2;
-    abcd 3123
-    43552
+    int threeisamagicnumber;
+    write HIGH to tester;
+    set tester to INPUT;
+    read tester to threeisamagicnumber;
+    string nunununu = "c, hello!";
+    testfunction(tester);
+    int varvarvar = testfunction(tester);
 }

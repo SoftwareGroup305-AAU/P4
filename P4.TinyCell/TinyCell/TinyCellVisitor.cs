@@ -206,17 +206,23 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.pinExpression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitPinExpression([NotNull] TinyCellParser.PinExpressionContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.expression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitExpression([NotNull] TinyCellParser.ExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.pinAssignmentExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPinAssignmentExpression([NotNull] TinyCellParser.PinAssignmentExpressionContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.pinStatusExpression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.identifier"/>.
 	/// </summary>
@@ -235,4 +241,10 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.pinStatus"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context);
 }

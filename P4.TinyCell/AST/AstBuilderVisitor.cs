@@ -1,9 +1,13 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using P4.TinyCell.AST.BitwiseExpr;
+using P4.TinyCell.AST.CompExpr;
+using P4.TinyCell.AST.Function;
 using P4.TinyCell.AST.NumExpr;
 using P4.TinyCell.AST.Primitive;
 using P4.TinyCell.AST.Statement;
 using P4.TinyCell.AST.StatementExpr;
+using P4.TinyCell.AST.Types;
 using P4.TinyCell.AST.UnaryExpr;
 using System.Globalization;
 using System.Reflection.Metadata;
@@ -36,30 +40,48 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context)
     {
-        if (context.multiplicativeExpression() is not null)
+        if (context.PLUS() is not null)
         {
-            return Visit(context.multiplicativeExpression());
+            return new AddExprNode(Visit(context.additiveExpression().First()), Visit(context.additiveExpression().Last()));
         }
-        return new AddExprNode(new AstNode(), new AstNode());
+        if (context.MINUS() is not null)
+        {
+            return new SubExprNode(Visit(context.additiveExpression().First()), Visit(context.additiveExpression().Last()));
+        }
+        return Visit(context.multiplicativeExpression());
     }
 
     public override AstNode VisitAndExpression([NotNull] TinyCellParser.AndExpressionContext context)
     {
-        if (context.equalityExpression() is not null)
+        if (context.AND() is not null)
         {
-            return Visit(context.equalityExpression());
+            return new AndExprNode(Visit(context.andExpression().First()), Visit(context.andExpression().Last()));
         }
-        return base.VisitAndExpression(context);
+        return Visit(context.equalityExpression());
     }
 
     public override AstNode VisitArgument([NotNull] TinyCellParser.ArgumentContext context)
     {
-        return base.VisitArgument(context);
+        if (context.Numeral() is not null)
+        {
+            return new ArgumentNode(new AstNode());
+        }
+        return new ArgumentNode(Visit(context.identifier()));
     }
 
     public override AstNode VisitArgumentList([NotNull] TinyCellParser.ArgumentListContext context)
     {
-        return base.VisitArgumentList(context);
+        var arguments = new List<ArgumentNode>();
+
+        if (context.argumentList() is not null)
+        {
+            var argumentListNode = Visit(context.argumentList()) as ArgumentListNode;
+            arguments.AddRange(argumentListNode.Arguments);
+        }
+
+        arguments.Add((ArgumentNode)Visit(context.argument()));
+
+        return new ArgumentListNode([.. arguments]); ;
     }
 
     public override AstNode VisitAssignment([NotNull] TinyCellParser.AssignmentContext context)
@@ -69,16 +91,21 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitAssignmentOperator([NotNull] TinyCellParser.AssignmentOperatorContext context)
     {
+
         return base.VisitAssignmentOperator(context);
     }
 
     public override AstNode VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context)
     {
-        if (context.additiveExpression() is not null)
+        if (context.BITSHIFTL() is not null)
         {
-            return Visit(context.additiveExpression());
+            return new BitshiftLExprNode(Visit(context.bitshiftExpression().First()), Visit(context.bitshiftExpression().Last()));
         }
-        return base.VisitBitshiftExpression(context);
+        if (context.BITSHIFTR() is not null)
+        {
+            return new BitshiftRExprNode(Visit(context.bitshiftExpression().First()), Visit(context.bitshiftExpression().Last()));
+        }
+        return Visit(context.additiveExpression());
     }
 
     public override AstNode VisitChildren(IRuleNode node)
@@ -88,22 +115,40 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context)
     {
-        if (context.bitshiftExpression() is not null)
+        if (context.LT() is not null)
         {
-            return Visit(context.bitshiftExpression());
+            return new LessThanExprNode(Visit(context.comparisonExpression().First()), Visit(context.comparisonExpression().Last()));
+        }
+        if (context.GT() is not null)
+        {
+            return new GreaterThanExprNode(Visit(context.comparisonExpression().First()), Visit(context.comparisonExpression().Last()));
+        }
+        if (context.LTE() is not null)
+        {
+            return new LessThanEqualExprNode(Visit(context.comparisonExpression().First()), Visit(context.comparisonExpression().Last()));
+        }
+        if (context.GTE() is not null)
+        {
+            return new GreaterThanEqualExprNode(Visit(context.comparisonExpression().First()), Visit(context.comparisonExpression().Last()));
         }
 
-        return base.VisitComparisonExpression(context);
+        return Visit(context.bitshiftExpression());
     }
 
     public override AstNode VisitCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
     {
-        return base.VisitCompoundStatement(context);
+        return new StatementCollectionNode(context.statement().Select(Visit).ToArray());
     }
 
     public override AstNode VisitDeclaration([NotNull] TinyCellParser.DeclarationContext context)
     {
-        return base.VisitDeclaration(context);
+        InitialDeclerationNode initialDecleration = Visit(context.initialDeclaration()) as InitialDeclerationNode;
+        if (initialDecleration.Action is not null)
+        {
+            var typ = Visit(context.type());
+            return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action);
+        }
+        return new DeclarationNode(Visit(context.type()), Visit(initialDecleration.Identifier));
     }
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
@@ -119,11 +164,15 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitEqualityExpression([NotNull] TinyCellParser.EqualityExpressionContext context)
     {
-        if (context.comparisonExpression() is not null)
+        if (context.EQ() is not null)
         {
-            return Visit(context.comparisonExpression());
+            return new EqualExprNode(Visit(context.equalityExpression().First()), Visit(context.equalityExpression().Last()));
         }
-        return base.VisitEqualityExpression(context);
+        if (context.NEQ() is not null)
+        {
+            return new NotEqualExprNode(Visit(context.equalityExpression().First()), Visit(context.equalityExpression().Last()));
+        }
+        return Visit(context.comparisonExpression());
     }
 
     public override AstNode VisitErrorNode(IErrorNode node)
@@ -133,28 +182,38 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitExpression([NotNull] TinyCellParser.ExpressionContext context)
     {
-        return Visit(context.pinExpression());
+        return Visit(context.ternaryExpression());
     }
 
     public override AstNode VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
     {
+        var allArguments = context.argumentList().Select(al => (ArgumentListNode)Visit(al)).Select(al => al.Arguments).SelectMany(x => x);
+        ArgumentListNode aggregatedArgumentList = new(allArguments.ToArray());
 
-        return base.VisitFunctionCall(context);
+        return new FunctionCallNode(Visit(context.identifier()), aggregatedArgumentList);
     }
 
     public override AstNode VisitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
     {
-        return base.VisitFunctionDefinition(context);
+        var allParameters = context.parameterList().Select(al => (ParameterListNode)Visit(al)).Select(al => al.Parameters).SelectMany(x => x);
+        ParameterListNode aggregatedParameterList = new(allParameters.ToArray());
+
+
+        return new FunctionDefinitionNode(Visit(context.type()), Visit(context.identifier()), aggregatedParameterList, Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context)
     {
-        return base.VisitGeneralDeclaration(context);
+        if (context.functionDefinition() is not null)
+        {
+            return Visit(context.functionDefinition());
+        }
+        return Visit(context.declaration());
     }
 
-    public override StringNode VisitIdentifier([NotNull] TinyCellParser.IdentifierContext context)
+    public override AstNode VisitIdentifier([NotNull] TinyCellParser.IdentifierContext context)
     {
-        return new StringNode(context.GetText());
+        return new IdentifierNode(context.GetText());
     }
 
     public override AstNode VisitIfStatement([NotNull] TinyCellParser.IfStatementContext context)
@@ -165,7 +224,12 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context)
     {
-        return base.VisitInitialDeclaration(context);
+        if (context.ASSIGN() is not null)
+        {
+            AstNode action = context.expression() is not null ? Visit(context.expression()) : Visit(context.functionCall());
+            return new InitialDeclerationNode(Visit(context.identifier()), action);
+        }
+        return new InitialDeclerationNode(Visit(context.identifier()));
     }
 
     public override AstNode VisitJumpStatement([NotNull] TinyCellParser.JumpStatementContext context)
@@ -187,23 +251,23 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new WhileStatementNode(Visit(context.expression().First()), Visit(context.compoundStatement()));
         }
-
-        return base.VisitLoopStatement(context);
+        
+        return new ForStatementNode(Visit(context.GetChild(2)), Visit(context.GetChild(4)), Visit(context.GetChild(6)), Visit(context.GetChild(8)));
     }
 
     public override AstNode VisitMultiplicativeExpression([NotNull] TinyCellParser.MultiplicativeExpressionContext context)
     {
         if (context.MULT() is not null)
         {
-            return new MultExprNode(Visit(context.multiplicativeExpression()), Visit(context.primitiveExpression()));
+            return new MultExprNode(Visit(context.multiplicativeExpression().First()), Visit(context.multiplicativeExpression().Last()));
         }
         else if (context.DIV() is not null)
         {
-            return new DivExprNode(Visit(context.multiplicativeExpression()), Visit(context.primitiveExpression()));
+            return new DivExprNode(Visit(context.multiplicativeExpression().First()), Visit(context.multiplicativeExpression().Last()));
         }
         else if (context.MOD() is not null)
         {
-            return new ModExprNode(Visit(context.multiplicativeExpression()), Visit(context.primitiveExpression()));
+            return new ModExprNode(Visit(context.multiplicativeExpression().First()), Visit(context.multiplicativeExpression().Last()));
         }
         else
         {
@@ -229,7 +293,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         var parameters = new List<AstNode>();
 
-        if (context.parameterList() != null)
+        if (context.parameterList() is not null)
         {
             var parameterListNode = Visit(context.parameterList()) as ParameterListNode;
             parameters.AddRange(parameterListNode.Parameters);
@@ -237,17 +301,17 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         parameters.Add(Visit(context.parameter()));
 
-        return new ParameterListNode(parameters);
+        return new ParameterListNode([.. parameters]);
     }
 
-    public override AstNode VisitPinExpression([NotNull] TinyCellParser.PinExpressionContext context)
-    {
-        if (context.identifier() is not null && context.pinVoltage() is not null)
-        {
-            return new PinExprNode((IdentifierNode)Visit(context.identifier()), (VoltageNode)Visit(context.pinVoltage()));
-        }
-        return Visit(context.ternaryExpression());
-    }
+    //public override AstNode VisitPinExpression([NotNull] TinyCellParser.PinExpressionContext context)
+    //{
+    //    if (context.identifier() is not null && context.pinVoltage() is not null)
+    //    {
+    //        return new PinExprNode((IdentifierNode)Visit(context.identifier()), (VoltageNode)Visit(context.pinVoltage()));
+    //    }
+    //    return Visit(context.ternaryExpression());
+    //}
 
     public override VoltageNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
     {
@@ -283,18 +347,24 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
             return new StringNode(s);
         }
+        if (context.identifier() is not null)
+        {
+            return new IdentifierNode(context.identifier().GetText());
+        }
+        if (context.functionCall() is not null)
+        {
+            return Visit(context.functionCall());
+        }
+        if (context.expression() is not null)
+        {
+            return Visit(context.expression());
+        }
         throw new InvalidOperationException();
     }
 
     public override AstNode VisitSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
     {
-        AstNode node = new();
-        foreach (var child in context.children)
-        {
-            AstNode childNode = Visit(child);
-            node.AddChild(childNode);
-        }
-        return node;
+        return new FunctionDefinitionNode(new VoidTypeNode(), new IdentifierNode("setup"),  new ParameterListNode([]),Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitStatement([NotNull] TinyCellParser.StatementContext context)
@@ -346,15 +416,39 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.ternaryExpression() is not null)
         {
-            return new IfStatementNode(Visit(context.ternaryExpression()), Visit(context.children[2]), Visit(context.children[4]));
+            return new IfStatementNode(Visit(context.ternaryExpression()), Visit(context.GetChild(2)), Visit(context.GetChild(4)));
         }
         return Visit(context.orExpression());
     }
 
-    //public override AstNode VisitType([NotNull] TinyCellParser.TypeContext context)
-    //{
-    //    return base.VisitType(context);
-    //}
+    public override AstNode VisitType([NotNull] TinyCellParser.TypeContext context)
+    {
+        if (context.VOID() is not null)
+        {
+            return new VoidTypeNode();
+        }
+        if (context.STRING() is not null)
+        {
+            return new StringTypeNode();
+        }
+        if (context.INT() is not null)
+        {
+            return new IntTypeNode();
+        }
+        if (context.FLOAT() is not null)
+        {
+            return new FloatTypeNode();
+        }
+        if (context.BOOL() is not null)
+        {
+            return new BoolTypeNode();
+        }
+        if (context.PIN() is not null)
+        {
+            return new PinTypeNode();
+        }
+        throw new InvalidOperationException();
+    }
 
     public override AstNode VisitUnaryExpression([NotNull] TinyCellParser.UnaryExpressionContext context)
     {

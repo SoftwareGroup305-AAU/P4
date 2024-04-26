@@ -1,7 +1,6 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using P4.TinyCell.AST;
-using P4.TinyCell.Languages.TinyCell;
 using Utilities;
 
 internal class Program
@@ -21,9 +20,9 @@ internal class Program
         // Parse the input (assuming "document" is the name of the start rule)
         var tree = parser.document();
 
-        LivenessAnalysisListener listener = new LivenessAnalysisListener();
-        ParseTreeWalker.Default.Walk(listener, tree);
-        var list = listener.instructions;
+        //LivenessAnalysisListener listener = new LivenessAnalysisListener();
+        //ParseTreeWalker.Default.Walk(listener, tree);
+        //var list = listener.instructions;
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");

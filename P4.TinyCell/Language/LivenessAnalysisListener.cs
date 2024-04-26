@@ -1,120 +1,120 @@
-﻿using System.Collections.Generic;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Misc;
-using Antlr4.Runtime.Tree;
+﻿//using System.Collections.Generic;
+//using Antlr4.Runtime;
+//using Antlr4.Runtime.Misc;
+//using Antlr4.Runtime.Tree;
 
-namespace P4.TinyCell.Languages.TinyCell
-{
-    internal class LivenessAnalysisListener : TinyCellBaseListener
-    {
-        /// <summary>
-        /// List of instructions
-        /// </summary>
-        public List<IInstruction>? instructions { get; set; }
-        /// <summary>
-        /// Gets or sets the current instruction in the tree walk
-        /// </summary>
-        public IInstruction? currentInstruction { get; set; }
-        /// <summary>
-        /// Keeps track of whether the variables seen in the current context are assigned (Right-hand side) or not
-        /// </summary>
-        public bool isAssigned;
+//namespace P4.TinyCell.Languages.TinyCell
+//{
+//    internal class LivenessAnalysisListener : TinyCellBaseListener
+//    {
+//        /// <summary>
+//        /// List of instructions
+//        /// </summary>
+//        public List<IInstruction>? instructions { get; set; }
+//        /// <summary>
+//        /// Gets or sets the current instruction in the tree walk
+//        /// </summary>
+//        public IInstruction? currentInstruction { get; set; }
+//        /// <summary>
+//        /// Keeps track of whether the variables seen in the current context are assigned (Right-hand side) or not
+//        /// </summary>
+//        public bool isAssigned;
 
-        public LivenessAnalysisListener()
-        {
-            instructions = [];
-        }
+//        public LivenessAnalysisListener()
+//        {
+//            instructions = [];
+//        }
 
-        public override void EnterDeclaration([NotNull] TinyCellParser.DeclarationContext context)
-        {
+//        public override void EnterDeclaration([NotNull] TinyCellParser.DeclarationContext context)
+//        {
 
-            Instruction<TinyCellParser.DeclarationContext> instruction = new Instruction<TinyCellParser.DeclarationContext>(context);
-            currentInstruction = instruction;
-            instructions.Add(instruction);
-        }
+//            Instruction<TinyCellParser.DeclarationContext> instruction = new Instruction<TinyCellParser.DeclarationContext>(context);
+//            currentInstruction = instruction;
+//            instructions.Add(instruction);
+//        }
 
-        public override void EnterExpression([NotNull] TinyCellParser.ExpressionContext context)
-        {
-            isAssigned = true;
-        }
+//        public override void EnterExpression([NotNull] TinyCellParser.ExpressionContext context)
+//        {
+//            isAssigned = true;
+//        }
 
-        public override void ExitExpression([NotNull] TinyCellParser.ExpressionContext context)
-        {
-            isAssigned = false;
-        }
+//        public override void ExitExpression([NotNull] TinyCellParser.ExpressionContext context)
+//        {
+//            isAssigned = false;
+//        }
 
-        public override void EnterIdentifier([NotNull] TinyCellParser.IdentifierContext context)
-        {
-            if (isAssigned)
-            {
-                currentInstruction.addGen(context);
-            }
-            else
-            {
-                currentInstruction.addKill(context);
-            }
-        }
+//        public override void EnterIdentifier([NotNull] TinyCellParser.IdentifierContext context)
+//        {
+//            if (isAssigned)
+//            {
+//                currentInstruction.addGen(context);
+//            }
+//            else
+//            {
+//                currentInstruction.addKill(context);
+//            }
+//        }
 
 
 
-        /// <summary>
-        /// Represents an instruction in the liveliness analysis./// </summary>
-        /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
-        private class Instruction<T> : IInstruction where T : ParserRuleContext
-        {
-            /// <summary>
-            /// Gets or sets the instruction.
-            /// </summary>
-            public T? baseInstruction { get; set; }
+//        /// <summary>
+//        /// Represents an instruction in the liveliness analysis./// </summary>
+//        /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
+//        private class Instruction<T> : IInstruction where T : ParserRuleContext
+//        {
+//            /// <summary>
+//            /// Gets or sets the instruction.
+//            /// </summary>
+//            public T? baseInstruction { get; set; }
 
-            public Instruction(T instruction)
-            {
-                baseInstruction = instruction;
-                gen = [];
-                kill = [];
-                succ = [];
-                outs = [];
-                ins = [];
-            }
+//            public Instruction(T instruction)
+//            {
+//                baseInstruction = instruction;
+//                gen = [];
+//                kill = [];
+//                succ = [];
+//                outs = [];
+//                ins = [];
+//            }
 
-            /// <summary>
-            /// Gets or sets the set of variables generated by this instruction.
-            /// </summary>
-            public List<TinyCellParser.IdentifierContext>? gen { get; set; }
+//            /// <summary>
+//            /// Gets or sets the set of variables generated by this instruction.
+//            /// </summary>
+//            public List<TinyCellParser.IdentifierContext>? gen { get; set; }
 
-            /// <summary>
-            /// Gets or sets the set of variables killed by this instruction.
-            /// </summary>
-            public List<TinyCellParser.IdentifierContext>? kill { get; set; }
+//            /// <summary>
+//            /// Gets or sets the set of variables killed by this instruction.
+//            /// </summary>
+//            public List<TinyCellParser.IdentifierContext>? kill { get; set; }
 
-            /// <summary>
-            /// Gets or sets the set of succeeding instructions
-            /// </summary>
-            public List<IInstruction>? succ { get; set; }
+//            /// <summary>
+//            /// Gets or sets the set of succeeding instructions
+//            /// </summary>
+//            public List<IInstruction>? succ { get; set; }
 
-            public List<TinyCellParser.IdentifierContext>? outs { get; set; }
+//            public List<TinyCellParser.IdentifierContext>? outs { get; set; }
 
-            public List<TinyCellParser.IdentifierContext>? ins { get; set; }
+//            public List<TinyCellParser.IdentifierContext>? ins { get; set; }
 
-            public void addGen(TinyCellParser.IdentifierContext context)
-            {
-                gen.Add(context);
-            }
+//            public void addGen(TinyCellParser.IdentifierContext context)
+//            {
+//                gen.Add(context);
+//            }
 
-            public void addKill(TinyCellParser.IdentifierContext context)
-            {
-                kill.Add(context);
-            }
-        }
+//            public void addKill(TinyCellParser.IdentifierContext context)
+//            {
+//                kill.Add(context);
+//            }
+//        }
 
-        /// <summary>
-        /// Interface to generalize instruction to generic
-        /// </summary>
-        public interface IInstruction
-        {
-            public void addGen(TinyCellParser.IdentifierContext context);
+//        /// <summary>
+//        /// Interface to generalize instruction to generic
+//        /// </summary>
+//        public interface IInstruction
+//        {
+//            public void addGen(TinyCellParser.IdentifierContext context);
 
-            public void addKill(TinyCellParser.IdentifierContext context);
-        }
-    }
-}
+//            public void addKill(TinyCellParser.IdentifierContext context);
+//        }
+//    }
+//}

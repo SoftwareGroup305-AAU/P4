@@ -5,7 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace P4.TinyCell.AST;
-public class ParameterListNode(List<AstNode> parameters) : AstNode
+public class ParameterListNode : AstNode
 {
-    public List<AstNode> Parameters { get; } = parameters;
+    public AstNode[] Parameters { get; }
+
+    public ParameterListNode(AstNode[] parameters)
+    {
+        Parameters = parameters;
+
+        foreach (AstNode parameter in parameters)
+        {
+            AddChild(parameter);
+        }
+    }
 }
