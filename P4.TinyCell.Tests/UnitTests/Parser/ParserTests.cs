@@ -33,11 +33,7 @@ public class ParserTests
 
         Assert.Equal(TinyCellParser.RULE_updateDefinition, doc.updateDefinition().RuleIndex);
 
-        Assert.Equal("setup", doc.GetChild(0).GetText());
-        Assert.Equal("{", doc.GetChild(1).GetText());
-        Assert.Equal("}", doc.GetChild(2).GetText());
-        Assert.Equal("update", doc.GetChild(3).GetText());
-        Assert.Equal("{", doc.GetChild(4).GetText());
-        Assert.Equal("}", doc.GetChild(5).GetText());
+        Assert.Equal("setup{}", doc.GetChild(0).GetText());
+        Assert.Equal("update{}", doc.GetChild(1).GetText());
     }
 }
