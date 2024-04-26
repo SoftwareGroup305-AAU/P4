@@ -1,25 +1,51 @@
-
-setup {
-  int a = 0;
-  int b = 1; 
-  int z = 0;
-  while (true) {
-	if (n == z) {
-	return;
-  }
-  else {
-	int t = a+b;
-	int a = b;
-	int b = t;
-	int n = n-1;
-	int z = 0;
-  }
- }
-
+pin dpin = 10;
+pin apin = a1;
+int testfunction(pin par)
+{
+    bool tttt = false;
+    int number;
+    if (tttt != true) {
+    }
+    else {
+        number = 0;
+        testfunction(1);
+        number = number + testfunction(dpin);
+    }
+    return number;
 }
-
-update {
-
-
-	
+// line comment
+/* 
+block comment
+*/
+int funnyfunky(int aaa) {
+    int nummm = aaa;
+    return (nummm + aaa);
+}
+setup
+{
+    /*float ni = (2 * 3) + (1 * (2 + 1));
+    ni == 9 ? ni = 9 : ni = 8;
+    int i = 0;
+    i = i + 1;*/
+    while (i < 10) {
+    }
+    bool yesyes = false;
+    for (int j = 10; j > 0; j--)
+    {
+        if (!yesyes && yesyes) {
+            break;
+        }
+    }
+    i += 2;
+}
+update
+{
+    pin tester = 1;
+    int threeisamagicnumber;
+    write HIGH to tester;
+    set tester to INPUT;
+    read tester to threeisamagicnumber;
+    string nunununu = "c, hello!";
+    testfunction(tester);
+    int varvarvar = testfunction(tester);
 }
