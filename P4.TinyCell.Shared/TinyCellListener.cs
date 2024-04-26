@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
+// Generated from ./P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -321,6 +321,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitTernaryExpression([NotNull] TinyCellParser.TernaryExpressionContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterExpression([NotNull] TinyCellParser.ExpressionContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitExpression([NotNull] TinyCellParser.ExpressionContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.pinAssignmentExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -340,16 +350,6 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context);
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterExpression([NotNull] TinyCellParser.ExpressionContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.expression"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitExpression([NotNull] TinyCellParser.ExpressionContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.identifier"/>.
 	/// </summary>

@@ -8,13 +8,15 @@ namespace P4.TinyCell.Languages.TinyCell
     internal class LivenessAnalysisListener : TinyCellBaseListener
     {   
 
-        public List<IInstruction> Instructions;
-
         private Stack<ParentStructure> parentStructureStack;
 
         private List<IInstruction> prevInstructions;
 
-        private Dictionary<string, IInstruction> funcLabelTable;
+        public Dictionary<string, List<IInstruction>> scopes;
+
+        private Stack<string> scopeStack;
+
+
 
         private bool isAssigned;
        
@@ -22,29 +24,104 @@ namespace P4.TinyCell.Languages.TinyCell
         { 
             parentStructureStack = new Stack<ParentStructure>();
             prevInstructions = new List<IInstruction>();
-            funcLabelTable = new Dictionary<string, IInstruction>();
-            Instructions = new List<IInstruction>();
+            scopes = new Dictionary<string, List<IInstruction>>();
+            scopeStack = new Stack<string>();
             
         }
 
         public override void EnterDocument([NotNull] TinyCellParser.DocumentContext context)
         {
             parentStructureStack.Push(new ParentStructure());
-            parentStructureStack.First().scopeStack.Push(new Scope());
+            parentStructureStack.First().compundStack.Push(new Scope());
+            scopes.Add("document", new List<IInstruction>());
+            scopeStack.Push("document");
         }
+
+        public override void EnterFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
+        {
+            parentStructureStack.Push(new ParentStructure());
+            parentStructureStack.First().compundStack.Push(new Scope());
+            var identifierName = context.identifier().GetText();
+            scopes.Add(identifierName, new List<IInstruction>());
+            scopeStack.Push(identifierName);
+        }
+
+        public override void ExitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
+        {
+            parentStructureStack.Pop();
+            scopeStack.Pop();
+        }
+
+        public override void EnterJumpStatement([NotNull] TinyCellParser.JumpStatementContext context)
+        {
+            var instruction = new Instruction<TinyCellParser.JumpStatementContext>(context);
+            scopes[scopeStack.First()].Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            prevInstructions.Add(instruction);
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
+            {
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
+            }
+            isAssigned = true;
+        }
+
+
+        public override void EnterPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context)
+        {
+            var instruction = new Instruction<TinyCellParser.PinStatusExpressionContext>(context);
+            scopes[scopeStack.First()].Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            prevInstructions.Add(instruction);
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
+            {
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
+            }
+            isAssigned = true;
+        }
+
+        public override void ExitPinStatusExpression([NotNull] TinyCellParser.PinStatusExpressionContext context)
+        {
+            isAssigned = false;
+        }
+
 
         public override void EnterSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
         {
             var parentStructure = new ParentStructure();
-            parentStructure.scopeStack.Push(new Scope());
+            parentStructure.compundStack.Push(new Scope());
             parentStructureStack.Push(parentStructure);
+            scopes.Add("setup", new List<IInstruction>());
+            scopeStack.Push("setup");
+        }
+
+        public override void ExitSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
+        {
+            parentStructureStack.Pop();
+            scopeStack.Pop();
+        }
+
+        public override void EnterUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context)
+        {
+            var parentStructure = new ParentStructure();
+            parentStructure.compundStack.Push(new Scope());
+            parentStructureStack.Push(parentStructure);
+            scopes.Add("update", new List<IInstruction>());
+            scopeStack.Push("update");
+        }
+
+        public override void ExitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context)
+        {
+            parentStructureStack.Pop();
+            scopeStack.Pop();
         }
 
         public override void EnterCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
         {
-            if (context.children.Count != 0)
+            if (context.children.Count > 2)
             {
-                parentStructureStack.First().scopeStack.Push(new Scope());
+                parentStructureStack.First().compundStack.Push(new Scope());
             }  
         }
 
@@ -52,20 +129,21 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (prevInstructions.Count != 0)
             {
-                parentStructureStack.First().scopeStack.First().lastInstruction = prevInstructions.First();
+                parentStructureStack.First().compundStack.First().lastInstruction = prevInstructions.First();
             }
             prevInstructions.Clear();
         }
 
+
         public override void EnterIfStatement([NotNull] TinyCellParser.IfStatementContext context)
         {
             var instruction = new Instruction<TinyCellParser.IfStatementContext>(context);
-            Instructions.Add(instruction);
+            scopes[scopeStack.First()].Add(instruction);
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
             prevInstructions.Clear();
-            if (parentStructureStack.First().scopeStack.First().firstInstruction == null)
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
             {
-                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
             }
             var parentStructure = new ParentStructure();
             parentStructure.Instruction = instruction;
@@ -75,12 +153,12 @@ namespace P4.TinyCell.Languages.TinyCell
         public override void ExitIfStatement([NotNull] TinyCellParser.IfStatementContext context)
         {
                 var parentStructure = parentStructureStack.First();
-                foreach (var scope in parentStructure.scopeStack)
+                foreach (var scope in parentStructure.compundStack)
                 {
                     parentStructure.Instruction.addSucc(scope.firstInstruction);
                     prevInstructions.Add(scope.lastInstruction);
                 }
-                if (parentStructure.scopeStack.Count <= 1)
+                if (parentStructure.compundStack.Count <= 1)
                 {
                 prevInstructions.Add(parentStructure.Instruction);
                 }
@@ -90,12 +168,12 @@ namespace P4.TinyCell.Languages.TinyCell
         public override void EnterLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
         {
             var instruction = new Instruction<TinyCellParser.LoopStatementContext>(context);
-            Instructions.Add(instruction);
+            scopes[scopeStack.First()].Add(instruction);
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
             prevInstructions.Clear();
-            if (parentStructureStack.First().scopeStack.First().firstInstruction == null)
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
             {
-                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
             }
             var parentStructure = new ParentStructure();
             parentStructure.Instruction = instruction;
@@ -105,12 +183,12 @@ namespace P4.TinyCell.Languages.TinyCell
         public override void ExitLoopStatement ([NotNull] TinyCellParser.LoopStatementContext context)
         {
             var parentStructure = parentStructureStack.First();
-            foreach (var scope in parentStructure.scopeStack)
+            foreach (var scope in parentStructure.compundStack)
             {
                 parentStructure.Instruction.addSucc(scope.firstInstruction);
                 prevInstructions.Add(scope.lastInstruction);
             }
-            if (parentStructure.scopeStack.Count <= 1)
+            if (parentStructure.compundStack.Count <= 1)
             {
                 prevInstructions.Add(parentStructure.Instruction);
             }
@@ -120,13 +198,26 @@ namespace P4.TinyCell.Languages.TinyCell
         public override void EnterDeclaration([NotNull] TinyCellParser.DeclarationContext context)
         {
             var instruction = new Instruction<TinyCellParser.DeclarationContext>(context);
-            Instructions.Add(instruction);
+            scopes[scopeStack.First()].Add(instruction);
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
             prevInstructions.Clear();
             prevInstructions.Add(instruction);
-            if (parentStructureStack.First().scopeStack.First().firstInstruction == null) 
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null) 
             {
-                parentStructureStack.First().scopeStack.First().firstInstruction = instruction;
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
+            }
+        }
+
+        public override void EnterAssignment([NotNull] TinyCellParser.AssignmentContext context)
+        {
+            var instruction = new Instruction<TinyCellParser.AssignmentContext>(context);
+            scopes[scopeStack.First()].Add(instruction);
+            prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+            prevInstructions.Clear();
+            prevInstructions.Add(instruction);
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
+            {
+                parentStructureStack.First().compundStack.First().firstInstruction = instruction;
             }
         }
 
@@ -142,14 +233,22 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void EnterIdentifier([NotNull] TinyCellParser.IdentifierContext context)
         {
+            if (context.Parent is TinyCellParser.FunctionCallContext  || context.Parent is TinyCellParser.FunctionDefinitionContext || context.Parent is TinyCellParser.ParameterContext)
+            {
+                return;
+            }
+            if (context.Parent is TinyCellParser.LoopStatementContext)
+            {
+                parentStructureStack.First().Instruction.addGen(context);
+            }
             if (isAssigned)
             {
-                Instructions.Last().addGen(context);
+                scopes[scopeStack.First()].Last().addGen(context);
 
             }
             else
             {
-                Instructions.Last().addKill(context);
+                scopes[scopeStack.First()].Last().addKill(context);
             }
         }
 
@@ -161,51 +260,53 @@ namespace P4.TinyCell.Languages.TinyCell
         private class ParentStructure
         {
             public IInstruction? Instruction;
-            public Stack<Scope> scopeStack { get; set; }
+            public Stack<Scope> compundStack { get; set; }
 
             public ParentStructure()
             {
-                scopeStack = new Stack<Scope>();
+                compundStack = new Stack<Scope>();
             }
         }
 
         public void LivenessGraph()
         {
-            if (Instructions.Count == 0)
+            foreach (var scopeInstructions in scopes.Values)
             {
-                return;
-            }
-            inizializeFirstOut();
-            List<IInstruction> instructionsCopy;
-            do
-            {
-                instructionsCopy = Instructions.Select(instruction => (IInstruction) instruction.Clone()).ToList();
-                for (int i = Instructions.Count - 1; i >= 0; i--)
+                if (scopeInstructions.Count == 0)
                 {
-                    var instruction = Instructions[i];
-                    Update(instruction);
+                    continue;
                 }
-            } while (!isListEqual(instructionsCopy, Instructions));
-            
+                InitializeFirstOut(scopeInstructions);
+                List<IInstruction> instructionsCopy;
+                do
+                {
+                    instructionsCopy = scopeInstructions.Select(instruction => (IInstruction)instruction.Clone()).ToList();
+                    for (int i = scopeInstructions.Count - 1; i >= 0; i--)
+                    {
+                        var instruction = scopeInstructions[i];
+                        Update(instruction);
+                    }
+                } while (!IsListEqual(instructionsCopy, scopeInstructions));
+            }
         }
 
-        public void inizializeFirstOut()
+        private void InitializeFirstOut(List<IInstruction> instructions)
         {
-            for (int i = Instructions.Count - 1; i >= 0; i--)
+            for (int i = instructions.Count - 1; i >= 0; i--)
             {
-                if (Instructions[i].getGen().Count != 0)
+                if (instructions[i].getGen().Count != 0)
                 {
-                    var lastInstructionIns = Instructions[i].getIns();
-                    var lastInstructionGen = Instructions[i].getGen();
-                    lastInstructionIns = lastInstructionIns.Union(lastInstructionGen).ToHashSet();
-                    Instructions[i].setIns(lastInstructionIns);
+                    var lastInstructionIns = instructions[i].getIns();
+                    var lastInstructionGen = instructions[i].getGen();
+                    lastInstructionIns.UnionWith(lastInstructionGen);
+                    instructions[i].setIns(lastInstructionIns);
                     break;
                 }
             }
-            
         }
 
-        private bool isListEqual(List<IInstruction> list1, List<IInstruction> list2)
+
+        private bool IsListEqual(List<IInstruction> list1, List<IInstruction> list2)
         {
             for (int i = 0; i < list1.Count; i++)
             {

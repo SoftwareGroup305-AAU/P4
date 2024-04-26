@@ -26,11 +26,14 @@ internal class Program
 
                 LivenessAnalysisListener listener = new LivenessAnalysisListener();
                 ParseTreeWalker.Default.Walk(listener, tree);
-                var instructions = listener.Instructions;
-        listener.LivenessGraph();
- 
 
-                Console.WriteLine("\n=================================================\n");
+                listener.LivenessGraph();
+
+        var lol = listener.scopes;
+
+
+
+        Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Tokens:");
 
                 foreach (var token in tokens)
