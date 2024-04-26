@@ -26,4 +26,8 @@
     <ProjectReference Include="..\P4.TinyCell.Shared\P4.TinyCell.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UnitTests/Parser/" />
+  </ItemGroup>
+
 </Project>

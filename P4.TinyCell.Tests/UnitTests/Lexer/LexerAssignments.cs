@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace P4.TinyCell.Tests;
 
-public class LexerAssignment
+public class LexerAssignments
 {
     // Can handle a numeral assignment.
     [Fact]
@@ -212,3 +212,8 @@ public class LexerAssignment
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 }
+
+// ParserArithmeticExpressions.cs
+// ParserAssignmentParsing.cs
+// ParserFunctionDefinitionParsing.cs
+// ParserFunctionInvocationParsing.cs
