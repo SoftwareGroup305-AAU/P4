@@ -78,4 +78,22 @@ public class Utility
         return parser;
     }
 
+    public int VisitParameterList(TinyCellParser.ParameterListContext context)
+    {
+        int count = 0;
+        var child = context;
+
+        while (child != null)
+        {
+            if (child.parameter() != null)
+            {
+                count++;
+            }
+
+            child = child.Parent as TinyCellParser.ParameterListContext;
+        }
+
+        return count;
+    }
+
 }

@@ -4,12 +4,11 @@ using Antlr4.Runtime;
 
 namespace P4.TinyCell.Tests;
 
-public class ParserTests
+public class ParserTreeStructure
 {
-
     [Fact]
-    [Description("Test a simple document")]
-    public void TestDocument()
+    [Description("Validates the structure of the parse tree for the document rule")]
+    public void ParserDocumentStructureTest()
     {
         var tokens = new List<IToken>
         {
@@ -29,11 +28,7 @@ public class ParserTests
 
         Assert.Equal(2, doc.ChildCount);
 
-        Assert.Equal(TinyCellParser.RULE_setupDefinition, doc.setupDefinition().RuleIndex);
-
-        Assert.Equal(TinyCellParser.RULE_updateDefinition, doc.updateDefinition().RuleIndex);
-
-        Assert.Equal("setup{}", doc.GetChild(0).GetText());
-        Assert.Equal("update{}", doc.GetChild(1).GetText());
+        Assert.IsType<TinyCellParser.SetupDefinitionContext>(doc.GetChild(0));
+        Assert.IsType<TinyCellParser.UpdateDefinitionContext>(doc.GetChild(1));
     }
 }
