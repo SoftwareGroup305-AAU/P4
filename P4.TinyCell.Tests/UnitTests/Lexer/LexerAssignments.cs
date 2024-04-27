@@ -212,8 +212,3 @@ public class LexerAssignments
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 }
-
-// ParserArithmeticExpressions.cs
-// ParserAssignmentParsing.cs
-// ParserFunctionDefinitionParsing.cs
-// ParserFunctionInvocationParsing.cs
