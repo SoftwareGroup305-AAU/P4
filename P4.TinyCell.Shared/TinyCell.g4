@@ -49,7 +49,7 @@ ifStatement:
 
 loopStatement:
 	WHILE LPAR expression RPAR compoundStatement
-	| FOR LPAR (expression | declaration) SEMI expression SEMI expression RPAR compoundStatement;
+	| FOR LPAR (expression | declaration) SEMI expression SEMI (expression | assignment) RPAR compoundStatement;
 
 jumpStatement:
 	CONTINUE SEMI
