@@ -12,7 +12,7 @@ namespace P4.TinyCell.Utilities
     /// <typeparam name="T">Vertex type</typeparam>
     public class Graph<T>
     {
-        private Dictionary<T, HashSet<T>> adjacencyList;
+        public Dictionary<T, HashSet<T>> adjacencyList;
 
         public Graph()
         {
