@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
+using Microsoft.VisualBasic;
 
 namespace P4.TinyCell.Tests;
 
@@ -77,7 +78,6 @@ public class ParserTreeStructure
         Assert.IsType<TinyCellParser.UpdateDefinitionContext>(update);
     }
 
-    // Validates the structure of the parse tree for an if statement
     [Fact]
     [Description("Validates the structure of the parse tree for an if statement")]
     public void ParserIfStatementStructureTest()
@@ -113,7 +113,6 @@ public class ParserTreeStructure
         Assert.IsType<TinyCellParser.CompoundStatementContext>(ifStatement.GetChild(4));
     }
 
-    // Validates the structure of the parse tree for a if-else statement
     [Fact]
     [Description("Validates the structure of the parse tree for an if-else statement")]
     public void ParserIfElseStatementStructureTest()
@@ -158,7 +157,6 @@ public class ParserTreeStructure
         Assert.IsType<TinyCellParser.CompoundStatementContext>(ifElseStatement.GetChild(6));
     }
 
-    // Validates the structure of the parse tree for a while statement
     [Fact]
     [Description("Validates the structure of the parse tree for a while statement")]
     public void ParserWhileStatementStructureTest()
@@ -194,7 +192,6 @@ public class ParserTreeStructure
         Assert.IsType<TinyCellParser.CompoundStatementContext>(whileStatement.GetChild(4));
     }
 
-    // Validates the structure of the parse tree for a for statement
     [Fact]
     [Description("Validates the structure of the parse tree for a for statement")]
     public void ParserForStatementStructureTest()
@@ -242,7 +239,101 @@ public class ParserTreeStructure
         Assert.IsType<TinyCellParser.CompoundStatementContext>(forStatement.GetChild(8));
     }
 
-    // Validates the structure of the parse tree for arithmetic operators
+    // The tests below are dedicated to the structure of the parse tree for various contexts
+    [Fact]
+    [Description("Validates the structure of the parse tree for a declaration")]
+    public void ParserDeclarationStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("int", TinyCellLexer.INT),
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var statement = parser.statement();
+
+        Assert.NotNull(statement);
+
+        Assert.Equal(2, statement.ChildCount);
+
+        Assert.IsType<TinyCellParser.DeclarationContext>(statement.GetChild(0));
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for an initial declaration")]
+    public void ParserInitialDeclarationStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("int", TinyCellLexer.INT),
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var declaration = parser.declaration();
+
+        Assert.NotNull(declaration);
+
+        Assert.Equal(2, declaration.ChildCount);
+
+        Assert.IsType<TinyCellParser.TypeContext>(declaration.GetChild(0));
+        Assert.IsType<TinyCellParser.InitialDeclarationContext>(declaration.GetChild(1));
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for an assignment")]
+    public void ParserAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var statement = parser.statement();
+
+        Assert.NotNull(statement);
+
+        Assert.Equal(2, statement.ChildCount);
+
+        Assert.IsType<TinyCellParser.AssignmentContext>(statement.GetChild(0));
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for a ternary expression")]
+    public void ParserTernaryExpressionStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("?", TinyCellLexer.QUESTION),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(":", TinyCellLexer.COLON),
+            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    // The tests below are dedicated to the structure of the parse tree for various expressions
     [Fact]
     [Description("Validates the structure of the parse tree for arithmetic operators")]
     public void ParserArithmeticOperatorsStructureTest()
@@ -269,30 +360,337 @@ public class ParserTreeStructure
 
         Assert.NotNull(expression);
 
-        Assert.Equal(7, expression.ChildCount);
+        Assert.Equal(1, expression.ChildCount);
 
-        Assert.IsType<TinyCellParser.ExpressionContext>(expression.GetChild(0));
-        Assert.IsType<TerminalNodeImpl>(expression.GetChild(1));
-        Assert.IsType<TinyCellParser.ExpressionContext>(expression.GetChild(2));
-        Assert.IsType<TerminalNodeImpl>(expression.GetChild(3));
-        Assert.IsType<TinyCellParser.ExpressionContext>(expression.GetChild(4));
-        Assert.IsType<TerminalNodeImpl>(expression.GetChild(5));
-        Assert.IsType<TinyCellParser.ExpressionContext>(expression.GetChild(6));
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
     }
 
-    /*
-        - comparison operators
-        - assignment operators
-        - function calls with no arguments
-        - function calls with arguments
-        - numeral assignment
-        - string assignment
-        - boolean assignment
-        - function assignment
-        - expression assignment
-        - unary expression assignment
-        - multiplicative expression assignment
-        - additive expression assignment
-        - bitshift expression assignment
-    */
+    [Fact]
+    [Description("Validates the structure of the parse tree for comparison operators")]
+    public void ParserComparisonOperatorsStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("y", TinyCellLexer.Identifier),
+            new TestToken("==", TinyCellLexer.EQ),
+            new TestToken("z", TinyCellLexer.Identifier),
+            new TestToken("!=", TinyCellLexer.NEQ),
+            new TestToken("a", TinyCellLexer.Identifier),
+            new TestToken("<", TinyCellLexer.LT),
+            new TestToken("b", TinyCellLexer.Identifier),
+            new TestToken(">", TinyCellLexer.GT),
+            new TestToken("c", TinyCellLexer.Identifier),
+            new TestToken("<=", TinyCellLexer.LTE),
+            new TestToken("d", TinyCellLexer.Identifier),
+            new TestToken(">=", TinyCellLexer.GTE),
+            new TestToken("e", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for assignment operators")]
+    public void ParserAssignmentOperatorsStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("+", TinyCellLexer.PLUS),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("-", TinyCellLexer.MINUS),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("*", TinyCellLexer.MULT),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("/", TinyCellLexer.DIV),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for function calls with no arguments")]
+    public void ParserFunctionCallNoArgumentsStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("foo", TinyCellLexer.Identifier),
+            new TestToken("(", TinyCellLexer.LPAR),
+            new TestToken(")", TinyCellLexer.RPAR),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for function calls with arguments")]
+    public void ParserFunctionCallWithArgumentsStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("foo", TinyCellLexer.Identifier),
+            new TestToken("(", TinyCellLexer.LPAR),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(")", TinyCellLexer.RPAR),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for numeral assignment")]
+    public void ParserNumeralAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for string assignment")]
+    public void ParserStringAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("\"hello\"", TinyCellLexer.String),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for boolean assignment")]
+    public void ParserBooleanAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("true", TinyCellLexer.Bool),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for function assignment")]
+    public void ParserFunctionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("foo", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for expression assignment")]
+    public void ParserExpressionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("+", TinyCellLexer.PLUS),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for unary expression assignment")]
+    public void ParserUnaryExpressionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("-", TinyCellLexer.MINUS),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for multiplicative expression assignment")]
+    public void ParserMultiplicativeExpressionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("*", TinyCellLexer.MULT),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for additive expression assignment")]
+    public void ParserAdditiveExpressionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("+", TinyCellLexer.PLUS),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for bitshift expression assignment")]
+    public void ParserBitshiftExpressionAssignmentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("<<", TinyCellLexer.BITSHIFTL),
+            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var expression = parser.expression();
+
+        Assert.NotNull(expression);
+
+        Assert.Equal(1, expression.ChildCount);
+
+        Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
 }
