@@ -45,6 +45,31 @@ namespace P4.TinyCell.Languages.TinyCell
             scopes.Add(identifierName, new List<IInstruction>());
             scopeStack.Push(identifierName);
         }
+        public override void EnterFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
+        {
+            if (context.Parent is TinyCellParser.StatementContext)
+            {
+                var instruction = new Instruction<TinyCellParser.FunctionCallContext>(context);
+                scopes[scopeStack.First()].Add(instruction);
+                prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
+                prevInstructions.Clear();
+                prevInstructions.Add(instruction);
+                if (parentStructureStack.First().compundStack.First().firstInstruction == null)
+                {
+                    parentStructureStack.First().compundStack.First().firstInstruction = instruction;
+                }
+                isAssigned = true;
+            }
+        }
+
+        public override void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
+        {
+            if (context.Parent is TinyCellParser.StatementContext)
+            {
+                isAssigned = false;
+            }
+        }
+
 
         public override void ExitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
         {
@@ -167,6 +192,7 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void EnterLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
         {
+            
             var instruction = new Instruction<TinyCellParser.LoopStatementContext>(context);
             scopes[scopeStack.First()].Add(instruction);
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
@@ -178,6 +204,7 @@ namespace P4.TinyCell.Languages.TinyCell
             var parentStructure = new ParentStructure();
             parentStructure.Instruction = instruction;
             parentStructureStack.Push(parentStructure);
+
         }
 
         public override void ExitLoopStatement ([NotNull] TinyCellParser.LoopStatementContext context)
