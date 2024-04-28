@@ -1,5 +1,7 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
+using P4.TinyCell.Utilities;
+using Utilities;
 using static P4.TinyCell.Languages.TinyCell.LivenessAnalysisListener;
 
 
@@ -279,11 +281,6 @@ namespace P4.TinyCell.Languages.TinyCell
             }
         }
 
-
-
-
-
-
         private class ParentStructure
         {
             public IInstruction? Instruction;
@@ -316,6 +313,34 @@ namespace P4.TinyCell.Languages.TinyCell
                 } while (!IsListEqual(instructionsCopy, scopeInstructions));
             }
         }
+
+        private Graph<string> generateGraph(List<IInstruction> instructions)
+        {
+            var graph = new Graph<string>();
+
+            foreach (var instruction in instructions)
+            {
+                HashSet<string> gen = instruction.getGen();
+                HashSet<string> kill = instruction.getKill();
+                HashSet<string> outs = instruction.getOuts();
+
+                foreach (string x in kill)
+                {
+                    foreach (string y in outs)
+                    {
+                        if (x != y && !gen.Contains(y) && !kill.Contains(x))
+                        {
+                            graph.AddEdge(x, y);
+                        }
+                    }
+
+                }
+            }
+
+
+            return graph;
+        }
+        
 
         private void InitializeFirstOut(List<IInstruction> instructions)
         {
@@ -400,7 +425,7 @@ namespace P4.TinyCell.Languages.TinyCell
         /// <summary>
         /// Represents an instruction in the liveliness analysis./// </summary>
         /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
-        private class Instruction<T> : IInstruction, ICloneable where T : ParserRuleContext
+        private class Instruction<T> : IInstruction where T : ParserRuleContext
         {
             /// <summary>
             /// Gets or sets the instruction.
@@ -525,5 +550,6 @@ namespace P4.TinyCell.Languages.TinyCell
             public void setIns(HashSet<string> newSet);
             public void setOuts(HashSet<string> newOuts);
         }
+        
     }
 }
