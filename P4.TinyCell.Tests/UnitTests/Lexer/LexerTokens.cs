@@ -50,6 +50,17 @@ public class LexerTokens
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
+    // Setup
+    [Fact]
+    [Description("Can detect the correct token type for a setup.")]
+    public void LexerSetupTest()
+    {
+        var input = "setup";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.SETUP, tokenTypes[0]);
+    }
+
     // Identifier
     [Fact]
     [Description("Can detect the correct token type for an identifier.")]

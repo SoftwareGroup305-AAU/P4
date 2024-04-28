@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
@@ -26,9 +25,9 @@ internal class Program
 
                 var tree = parser.document();
 
-                LivenessAnalysisListener listener = new LivenessAnalysisListener();
-                ParseTreeWalker.Default.Walk(listener, tree);
-                var list = listener.instructions;
+                // LivenessAnalysisListener listener = new LivenessAnalysisListener();
+                // ParseTreeWalker.Default.Walk(listener, tree);
+                // var list = listener.instructions;
 
                 Console.WriteLine("\n=================================================\n");
                 Console.WriteLine("Tokens:");
