@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from ./P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
+// Generated from P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -33,8 +33,7 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.1")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
-public partial class TinyCellBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ITinyCellVisitor<Result>
-{
+public partial class TinyCellBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ITinyCellVisitor<Result> {
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.document"/>.
 	/// <para>
