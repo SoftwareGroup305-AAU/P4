@@ -75,7 +75,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         arguments.Add((ArgumentNode)Visit(context.argument()));
 
-        return new ArgumentListNode([.. arguments]); ;
+        return new ArgumentListNode([.. arguments]);
     }
 
     public override AstNode VisitAssignment([NotNull] TinyCellParser.AssignmentContext context)
