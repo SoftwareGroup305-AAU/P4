@@ -185,10 +185,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context)
     {
-        var allArguments = context.argumentList().Select(al => (ArgumentListNode)Visit(al)).Select(al => al.Arguments).SelectMany(x => x);
-        ArgumentListNode aggregatedArgumentList = new(allArguments.ToArray());
+        IEnumerable<ArgumentNode>? allArguments = context.argumentList()?.Select(al => (ArgumentListNode)Visit(al)).Select(al => al.Arguments).SelectMany(x => x) ?? null;
+        ArgumentListNode? aggregatedArgumentList = allArguments is not null ? new(allArguments.ToArray()) : null;
 
-        return new FunctionCallNode(Visit(context.identifier()), aggregatedArgumentList);
+        return new FunctionCallNode((IdentifierNode)Visit(context.identifier()), aggregatedArgumentList);
     }
 
     public override AstNode VisitFunctionDefinition([NotNull] TinyCellParser.FunctionDefinitionContext context)
