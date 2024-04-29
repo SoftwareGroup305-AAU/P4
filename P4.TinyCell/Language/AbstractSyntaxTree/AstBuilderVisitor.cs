@@ -156,7 +156,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
     {
-        AstNode document = new();
+        RootNode document = new();
         foreach (var child in context.children)
         {
             AstNode childNode = Visit(child);
