@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\P4.TinyCell.Shared\P4.TinyCell.Shared.csproj" />
+  </ItemGroup>
+
 </Project>
