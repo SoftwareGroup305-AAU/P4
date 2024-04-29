@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from ./P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
+// Generated from P4.TinyCell.Shared/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -153,6 +153,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitDocument(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDocument(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -217,6 +223,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitGeneralDeclaration(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitGeneralDeclaration(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -276,6 +288,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitSetupDefinition(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitSetupDefinition(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -321,6 +339,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitUpdateDefinition(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitUpdateDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -380,6 +404,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitFunctionDefinition(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionDefinition(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -450,6 +480,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitType(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitType(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -504,6 +540,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitParameterList(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParameterList(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -588,6 +630,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitParameter(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitParameter(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -636,6 +684,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitArgumentList(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArgumentList(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -723,6 +777,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitArgument(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitArgument(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -803,6 +863,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitDeclaration(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitDeclaration(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -854,6 +920,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitInitialDeclaration(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitInitialDeclaration(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -933,6 +1005,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitCompoundStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitCompoundStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1015,6 +1093,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1134,6 +1218,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitIfStatement(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIfStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1229,6 +1319,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitLoopStatement(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitLoopStatement(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1358,6 +1454,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitJumpStatement(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitJumpStatement(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1437,6 +1539,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitAssignment(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignment(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1491,6 +1599,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitFunctionCall(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitFunctionCall(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1565,6 +1679,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitPrimitiveExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPrimitiveExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1638,6 +1758,9 @@ public partial class TinyCellParser : Parser {
 		[System.Diagnostics.DebuggerNonUserCode] public PrimitiveExpressionContext primitiveExpression() {
 			return GetRuleContext<PrimitiveExpressionContext>(0);
 		}
+		[System.Diagnostics.DebuggerNonUserCode] public IdentifierContext identifier() {
+			return GetRuleContext<IdentifierContext>(0);
+		}
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode UNARYPLUS() { return GetToken(TinyCellParser.UNARYPLUS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode UNARYMINUS() { return GetToken(TinyCellParser.UNARYMINUS, 0); }
 		[System.Diagnostics.DebuggerNonUserCode] public ITerminalNode NOT() { return GetToken(TinyCellParser.NOT, 0); }
@@ -1655,6 +1778,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitUnaryExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitUnaryExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1677,7 +1806,7 @@ public partial class TinyCellParser : Parser {
 				EnterOuterAlt(_localctx, 2);
 				{
 				State = 256;
-				primitiveExpression();
+				identifier();
 				State = 257;
 				Match(UNARYPLUS);
 				}
@@ -1686,7 +1815,7 @@ public partial class TinyCellParser : Parser {
 				EnterOuterAlt(_localctx, 3);
 				{
 				State = 259;
-				primitiveExpression();
+				identifier();
 				State = 260;
 				Match(UNARYMINUS);
 				}
@@ -1697,7 +1826,7 @@ public partial class TinyCellParser : Parser {
 				State = 262;
 				Match(UNARYPLUS);
 				State = 263;
-				primitiveExpression();
+				identifier();
 				}
 				break;
 			case 5:
@@ -1706,7 +1835,7 @@ public partial class TinyCellParser : Parser {
 				State = 264;
 				Match(UNARYMINUS);
 				State = 265;
-				primitiveExpression();
+				identifier();
 				}
 				break;
 			case 6:
@@ -1758,6 +1887,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitMultiplicativeExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitMultiplicativeExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -1874,6 +2009,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitAdditiveExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAdditiveExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -1976,6 +2117,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitBitshiftExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitBitshiftExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2081,6 +2228,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitComparisonExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitComparisonExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2209,6 +2362,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitEqualityExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitEqualityExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2311,6 +2470,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitAndExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAndExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2394,6 +2559,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitOrExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitOrExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2494,6 +2665,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitTernaryExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitTernaryExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2599,6 +2776,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2651,6 +2834,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitPinAssignmentExpression(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPinAssignmentExpression(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2779,6 +2968,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitPinStatusExpression(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPinStatusExpression(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2842,6 +3037,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitIdentifier(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitIdentifier(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2887,6 +3088,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitAssignmentOperator(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitAssignmentOperator(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -2938,6 +3145,12 @@ public partial class TinyCellParser : Parser {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitPinVoltage(this);
 		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPinVoltage(this);
+			else return visitor.VisitChildren(this);
+		}
 	}
 
 	[RuleVersion(0)]
@@ -2987,6 +3200,12 @@ public partial class TinyCellParser : Parser {
 		public override void ExitRule(IParseTreeListener listener) {
 			ITinyCellListener typedListener = listener as ITinyCellListener;
 			if (typedListener != null) typedListener.ExitPinStatus(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
+			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
+			if (typedVisitor != null) return typedVisitor.VisitPinStatus(this);
+			else return visitor.VisitChildren(this);
 		}
 	}
 
@@ -3189,9 +3408,9 @@ public partial class TinyCellParser : Parser {
 		254,3,64,32,0,248,254,3,36,18,0,249,250,5,28,0,0,250,251,3,58,29,0,251,
 		252,5,29,0,0,252,254,1,0,0,0,253,244,1,0,0,0,253,245,1,0,0,0,253,246,1,
 		0,0,0,253,247,1,0,0,0,253,248,1,0,0,0,253,249,1,0,0,0,254,39,1,0,0,0,255,
-		269,3,38,19,0,256,257,3,38,19,0,257,258,5,64,0,0,258,269,1,0,0,0,259,260,
-		3,38,19,0,260,261,5,65,0,0,261,269,1,0,0,0,262,263,5,64,0,0,263,269,3,
-		38,19,0,264,265,5,65,0,0,265,269,3,38,19,0,266,267,5,61,0,0,267,269,3,
+		269,3,38,19,0,256,257,3,64,32,0,257,258,5,64,0,0,258,269,1,0,0,0,259,260,
+		3,64,32,0,260,261,5,65,0,0,261,269,1,0,0,0,262,263,5,64,0,0,263,269,3,
+		64,32,0,264,265,5,65,0,0,265,269,3,64,32,0,266,267,5,61,0,0,267,269,3,
 		38,19,0,268,255,1,0,0,0,268,256,1,0,0,0,268,259,1,0,0,0,268,262,1,0,0,
 		0,268,264,1,0,0,0,268,266,1,0,0,0,269,41,1,0,0,0,270,271,6,21,-1,0,271,
 		272,3,40,20,0,272,284,1,0,0,0,273,274,10,3,0,0,274,275,5,48,0,0,275,283,
