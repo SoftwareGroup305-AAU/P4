@@ -15,28 +15,6 @@ namespace P4.TinyCell.AST;
 
 public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 {
-    protected override AstNode DefaultResult => base.DefaultResult;
-
-    public override bool Equals(object? obj)
-    {
-        return base.Equals(obj);
-    }
-
-    public override int GetHashCode()
-    {
-        return base.GetHashCode();
-    }
-
-    public override string? ToString()
-    {
-        return base.ToString();
-    }
-
-    //public override AstNode Visit(IParseTree tree)
-    //{
-    //    return base.Visit(tree);
-    //}
-
     public override AstNode VisitAdditiveExpression([NotNull] TinyCellParser.AdditiveExpressionContext context)
     {
         if (context.PLUS() is not null)
@@ -123,11 +101,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         return Visit(context.additiveExpression());
     }
 
-    public override AstNode VisitChildren(IRuleNode node)
-    {
-        return base.VisitChildren(node);
-    }
-
     public override AstNode VisitComparisonExpression([NotNull] TinyCellParser.ComparisonExpressionContext context)
     {
         if (context.LT() is not null)
@@ -188,11 +161,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return new NotEqualExprNode(Visit(context.equalityExpression()), Visit(context.comparisonExpression()));
         }
         return Visit(context.comparisonExpression());
-    }
-
-    public override AstNode VisitErrorNode(IErrorNode node)
-    {
-        return base.VisitErrorNode(node);
     }
 
     public override AstNode VisitExpression([NotNull] TinyCellParser.ExpressionContext context)
@@ -367,7 +335,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new PinModeExprNode((IdentifierNode)Visit(context.identifier()), (PinModeNode)Visit(context.pinStatus()));
         }
-        return base.VisitPinStatusExpression(context);
+        return Visit(context.pinAssignmentExpression());
+
+        throw new InvalidOperationException();
     }
 
     public override VoltageNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
@@ -431,37 +401,41 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return Visit(context.ifStatement());
         }
 
-        else if (context.loopStatement() is not null)
+        if (context.loopStatement() is not null)
         {
             return Visit(context.loopStatement());
         }
 
-        else if (context.jumpStatement() is not null)
+        if (context.jumpStatement() is not null)
         {
             return Visit(context.jumpStatement());
         }
 
-        else if (context.declaration() is not null)
+        if (context.declaration() is not null)
         {
             return Visit(context.declaration());
         }
 
-        else if (context.functionCall() is not null)
+        if (context.functionCall() is not null)
         {
             return Visit(context.functionCall());
         }
 
-        else if (context.assignment() is not null)
+        if (context.pinStatusExpression() is not null)
+        {
+            return Visit(context.pinStatusExpression());
+        }
+
+        if (context.assignment() is not null)
         {
             return Visit(context.assignment());
         }
 
-        else if (context.expression() is not null)
+        if (context.expression() is not null)
         {
             return Visit(context.expression());
         }
-
-        return base.VisitStatement(context);
+        throw new InvalidOperationException();
     }
 
     public override AstNode VisitTerminal(ITerminalNode node)
@@ -483,6 +457,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             string b = node.GetText();
             return new BoolNode(bool.Parse(b));
         }
+        
         return base.VisitTerminal(node);
     }
 
@@ -538,24 +513,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new NotExprNode(Visit(context.primitiveExpression()));
         }
-        else
-        {
-            return Visit(context.primitiveExpression());
-        }
-    }
-
-    public override AstNode VisitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context)
-    {
-        return base.VisitUpdateDefinition(context);
-    }
-
-    protected override AstNode AggregateResult(AstNode aggregate, AstNode nextResult)
-    {
-        return base.AggregateResult(aggregate, nextResult);
-    }
-
-    protected override bool ShouldVisitNextChild(IRuleNode node, AstNode currentResult)
-    {
-        return base.ShouldVisitNextChild(node, currentResult);
+        return Visit(context.primitiveExpression());
     }
 }
