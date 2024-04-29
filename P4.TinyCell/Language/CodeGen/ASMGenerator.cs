@@ -1,4 +1,5 @@
 using System.Numerics;
+using Antlr4.Runtime;
 
 namespace P4.TinyCell.Languages.TinyCell.CodeGen;
 
@@ -7,6 +8,80 @@ public class ASMGenerator
        private int labelCount = 0;
        private int ifLabelCount = 0;
        private int WhileLabelCount = 0;
+       /// <summary>
+       /// A dictonary to keep track of digital and analog pins
+       /// </summary>
+       /// <returns>true if digital, false if analog</returns>
+       Dictionary<string, bool> IsDigitalPinMap = new Dictionary<string, bool>();
+
+        public ASMGenerator()
+    {
+        Console.WriteLine("CODEGEN GO NYOOOM");
+    }
+
+    private List<IToken> UnParsedTokens = new List<IToken>();
+    public string GeneratedCode(IList<IToken> tokens)
+    {
+        string GeneratedText = "";
+        UnParsedTokens.AddRange(tokens);
+        while (UnParsedTokens.Count != 0)
+        {
+            switch (UnParsedTokens[0].Text)
+            {
+                case "if":
+                    GeneratedText = GeneratedText + IfAsm();
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                case "while":
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                case "for":
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                case "pin":
+                    //GeneratedText = GeneratedText + PinArduino(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+                    UnParsedTokens.RemoveRange(0, 6);
+                    break;
+                case "write":
+                    //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
+                    UnParsedTokens.RemoveRange(0, 6);
+                    break;
+                case "read":
+                    //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+                    UnParsedTokens.RemoveRange(0, 6);
+                    break;
+                case "set":
+                    //GeneratedText = GeneratedText +
+                     //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+                    UnParsedTokens.RemoveRange(0, 6);
+                    break;
+                case "setup":
+                    GeneratedText = GeneratedText + "void setup()\n{\n";
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                case "printf":
+                    //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
+                    UnParsedTokens.RemoveRange(0, 1);
+                    break;
+                case "}":
+                    GeneratedText = GeneratedText + "\n}\n";
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                case "update":
+                    GeneratedText = GeneratedText + "void loop()\n{\n";
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+                default:
+                    //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
+                    UnParsedTokens.RemoveAt(0);
+                    break;
+
+            }
+
+        }
+        return GeneratedText;
+    }
+    
        /// <summary>
        /// <c>AdditionASM</c> converts an addition operation to their ARM equivalant.
        /// </summary>
@@ -22,7 +97,7 @@ public class ASMGenerator
        /// </summary>
        /// <returns>a string representation of the comparison</returns>
        /// <remarks>THIS MIGHT BE WRONG DO NOT USE</remarks>
-       public string OperatorAsm(String operatorASM)
+       public string OperatorAsm(string operatorASM)
        {
               switch (operatorASM)
               {
@@ -53,16 +128,11 @@ public class ASMGenerator
               return "";
        }
 
-       public string CompareAsm(String comparison)
+       public string setupCompare(string compType, string varOne, string varTwo)
        {
-              switch (comparison)
-              {
-                     case ("<"):
-                            //Check if variable or const if const -> input the const instead with "#1" for ASCII 1
-                            return "CMP ";
-                            break;
-              }
-              
+              string finalComp = $"cmp {varOne}, {varTwo}\n{OperatorAsm(compType)}";
+              return finalComp;
+
        }
        
        /// <summary>
@@ -72,7 +142,9 @@ public class ASMGenerator
        /// <remarks>Not done. Requires liveness analysis to be done, should also take in a register</remarks>
        public string IfAsm()
        {
-              return "LDR r0, [sp, #8]\nCMP";
+           string label1, label2;
+           string comparison = setupCompare("","","");
+           return comparison; //+ $"{label1}\n bl {label2]}";
        }
 
        public string WhileAsm()
@@ -81,22 +153,22 @@ public class ASMGenerator
               
               WhileLabelCount = WhileLabelCount + 1;
               return "b " + loopLabel + "\n"+loopLabel+":\n"+IfAsm()+"OperatorAsm";
-              b       .LBB0_15 //jump to loop
-                     .LBB0_15: //loop label
-              ldr     r0, [sp, #4]
-              ldr     r1, [sp]
-              cmp     r0, r1 //compare i and p
-              bge     .LBB0_17 //jump out of loop
-              b       .LBB0_16
-                     .LBB0_16:
-              ldr     r0, .LCPI0_5 //print
-                     .LPC0_5:
-              add     r0, pc, r0
-              bl      printf
-              ldr     r0, [sp, #4] //increment i
-              add     r0, r0, #1 //increment i
-              str     r0, [sp, #4] //increment i
-              b       .LBB0_15
+              // b       .LBB0_15 //jump to loop
+              //        .LBB0_15: //loop label
+              // ldr     r0, [sp, #4]
+              // ldr     r1, [sp]
+              // cmp     r0, r1 //compare i and p
+              // bge     .LBB0_17 //jump out of loop
+              // b       .LBB0_16
+              //        .LBB0_16:
+              // ldr     r0, .LCPI0_5 //print
+              //        .LPC0_5:
+              // add     r0, pc, r0
+              // bl      printf
+              // ldr     r0, [sp, #4] //increment i
+              // add     r0, r0, #1 //increment i
+              // str     r0, [sp, #4] //increment i
+              // b       .LBB0_15
        }
 
 }
