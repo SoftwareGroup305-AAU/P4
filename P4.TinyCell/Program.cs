@@ -44,9 +44,10 @@ internal class Program
                 foreach (var scope in graphs)
                 {
                     var graph = scope.Value;
-                    var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 12);
+                    var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
                     allocatedScopes.Add(scope.Key, groupings);
                 }
+                //use allocatedScopes from here
                 
 
 

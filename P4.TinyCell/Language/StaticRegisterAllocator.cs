@@ -6,6 +6,12 @@ namespace P4.TinyCell.Language
 {
     public class StaticRegisterAllocator
     {
+        /// <summary>
+        /// Allocates registers for variables
+        /// </summary>
+        /// <param name="interferenceGraph">Inteference graph</param>
+        /// <param name="numRegisters">Number of available registers</param>
+        /// <returns></returns>
         public Dictionary<string, string> AllocateRegisters(Dictionary<string, HashSet<string>> interferenceGraph, int numRegisters)
         {
             Dictionary<string, string> allocationGroupings = [];

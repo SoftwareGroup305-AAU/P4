@@ -194,7 +194,6 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void EnterLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
         {
-            
             var instruction = new Instruction<TinyCellParser.LoopStatementContext>(context);
             scopes[scopeStack.First()].Add(instruction);
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
@@ -231,6 +230,10 @@ namespace P4.TinyCell.Languages.TinyCell
             prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
             prevInstructions.Clear();
             prevInstructions.Add(instruction);
+            if (context.Parent is TinyCellParser.LoopStatementContext)
+            {
+                return;
+            }
             if (parentStructureStack.First().compundStack.First().firstInstruction == null) 
             {
                 parentStructureStack.First().compundStack.First().firstInstruction = instruction;
