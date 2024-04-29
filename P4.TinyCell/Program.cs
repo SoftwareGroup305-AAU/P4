@@ -3,6 +3,7 @@ using System.IO;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using P4.TinyCell.Language;
+using P4.TinyCell.Languages.TinyCell;
 using P4.TinyCell.AST;
 using P4.TinyCell.Utilities;
 using Utilities;
@@ -52,10 +53,6 @@ internal class Program
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
 
-        foreach (var token in tokenStream.GetTokens())
-        {
-            Console.WriteLine(token);
-        }
         foreach (var token in tokens)
         {
             int tokenType = token.Type - 1;
