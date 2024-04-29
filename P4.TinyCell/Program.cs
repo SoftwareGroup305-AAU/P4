@@ -4,8 +4,10 @@ using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
 using P4.TinyCell.Language;
 using P4.TinyCell.Languages.TinyCell;
+using P4.TinyCell.AST;
 using P4.TinyCell.Utilities;
 using Utilities;
+using P4.TinyCell.Languages.TinyCell;
 
 internal class Program
 {
@@ -21,23 +23,22 @@ internal class Program
 
         var parser = new TinyCellParser(tokenStream);
 
+        var tree = parser.document();
         tokenStream.Fill();
 
         var tokens = tokenStream.GetTokens();
-
-        var tree = parser.document();
 
         // LivenessAnalysisListener listener = new LivenessAnalysisListener();
         // ParseTreeWalker.Default.Walk(listener, tree);
         // listener.FixedPointAnalysis();
         // var list = listener.scopes;
         // var graphs = new Dictionary<string, Graph<string>>();
-        //  var graphGenerator = new LivenessGraphGenerator();  
-        // foreach ( var scope in list )
-        //     {
-        //          var graph = graphGenerator.generateGraph(scope.Value);
-        //          graphs.Add(scope.Key, graph);
-        //     }
+        // var graphGenerator = new LivenessGraphGenerator();
+        // foreach (var scope in list)
+        // {
+        //     var graph = graphGenerator.generateGraph(scope.Value);
+        //     graphs.Add(scope.Key, graph);
+        // }
         // var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
         // var registerAllocator = new StaticRegisterAllocator();
         // foreach (var scope in graphs)
@@ -46,9 +47,6 @@ internal class Program
         //     var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
         //     allocatedScopes.Add(scope.Key, groupings);
         // }
-        //use allocatedScopes from here
-
-
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
@@ -64,5 +62,11 @@ internal class Program
         Console.WriteLine("Parse Tree:");
         var ParserHelper = new ParserHelper();
         ParserHelper.PrintTree(tree);
+
+        AstBuilderVisitor astBuilderVisitor = new();
+        AstNode abcd = astBuilderVisitor.Visit(tree);
+
+        Console.WriteLine(abcd.ToString());
+
     }
 }

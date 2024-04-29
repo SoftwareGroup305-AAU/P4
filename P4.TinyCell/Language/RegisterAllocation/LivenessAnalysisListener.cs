@@ -8,7 +8,7 @@ using static P4.TinyCell.Languages.TinyCell.LivenessAnalysisListener;
 namespace P4.TinyCell.Languages.TinyCell
 {
     internal class LivenessAnalysisListener : TinyCellBaseListener
-    {   
+    {
 
         private Stack<ParentStructure> parentStructureStack;
 
@@ -21,14 +21,14 @@ namespace P4.TinyCell.Languages.TinyCell
 
 
         private bool isAssigned;
-       
-        public LivenessAnalysisListener() 
-        { 
+
+        public LivenessAnalysisListener()
+        {
             parentStructureStack = new Stack<ParentStructure>();
             prevInstructions = new List<IInstruction>();
             scopes = new Dictionary<string, List<IInstruction>>();
             scopeStack = new Stack<string>();
-            
+
         }
 
         public override void EnterDocument([NotNull] TinyCellParser.DocumentContext context)
@@ -149,7 +149,7 @@ namespace P4.TinyCell.Languages.TinyCell
             if (context.children.Count > 2)
             {
                 parentStructureStack.First().compundStack.Push(new Scope());
-            }  
+            }
         }
 
         public override void ExitCompoundStatement([NotNull] TinyCellParser.CompoundStatementContext context)
@@ -179,17 +179,17 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void ExitIfStatement([NotNull] TinyCellParser.IfStatementContext context)
         {
-                var parentStructure = parentStructureStack.First();
-                foreach (var scope in parentStructure.compundStack)
-                {
-                    parentStructure.Instruction.addSucc(scope.firstInstruction);
-                    prevInstructions.Add(scope.lastInstruction);
-                }
-                if (parentStructure.compundStack.Count <= 1)
-                {
+            var parentStructure = parentStructureStack.First();
+            foreach (var scope in parentStructure.compundStack)
+            {
+                parentStructure.Instruction.addSucc(scope.firstInstruction);
+                prevInstructions.Add(scope.lastInstruction);
+            }
+            if (parentStructure.compundStack.Count <= 1)
+            {
                 prevInstructions.Add(parentStructure.Instruction);
-                }
-                parentStructureStack.Pop();
+            }
+            parentStructureStack.Pop();
         }
 
         public override void EnterLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
@@ -208,7 +208,7 @@ namespace P4.TinyCell.Languages.TinyCell
 
         }
 
-        public override void ExitLoopStatement ([NotNull] TinyCellParser.LoopStatementContext context)
+        public override void ExitLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
         {
             var parentStructure = parentStructureStack.First();
             foreach (var scope in parentStructure.compundStack)
@@ -234,7 +234,7 @@ namespace P4.TinyCell.Languages.TinyCell
             {
                 return;
             }
-            if (parentStructureStack.First().compundStack.First().firstInstruction == null) 
+            if (parentStructureStack.First().compundStack.First().firstInstruction == null)
             {
                 parentStructureStack.First().compundStack.First().firstInstruction = instruction;
             }
@@ -265,7 +265,7 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override void EnterIdentifier([NotNull] TinyCellParser.IdentifierContext context)
         {
-            if (context.Parent is TinyCellParser.FunctionCallContext  || context.Parent is TinyCellParser.FunctionDefinitionContext || context.Parent is TinyCellParser.ParameterContext)
+            if (context.Parent is TinyCellParser.FunctionCallContext || context.Parent is TinyCellParser.FunctionDefinitionContext || context.Parent is TinyCellParser.ParameterContext)
             {
                 return;
             }
@@ -354,7 +354,7 @@ namespace P4.TinyCell.Languages.TinyCell
                     return false;
                 }
             }
-            return true;    
+            return true;
 
 
         }
