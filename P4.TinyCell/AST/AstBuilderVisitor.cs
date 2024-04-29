@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using P4.TinyCell.AST.Assignment;
 using P4.TinyCell.AST.BitwiseExpr;
 using P4.TinyCell.AST.CompExpr;
 using P4.TinyCell.AST.Function;
@@ -79,13 +80,27 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitAssignment([NotNull] TinyCellParser.AssignmentContext context)
     {
-        return base.VisitAssignment(context);
-    }
+        if (context.assignmentOperator().ASSIGN() is not null)
+        {
+            return new AssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+        }
 
-    public override AstNode VisitAssignmentOperator([NotNull] TinyCellParser.AssignmentOperatorContext context)
-    {
+        if (context.assignmentOperator().MULTASSIGN() is not null)
+        {
+            return new MultAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+        }
 
-        return base.VisitAssignmentOperator(context);
+        if (context.assignmentOperator().DIVASSIGN() is not null)
+        {
+            return new DivAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+        }
+
+        if (context.assignmentOperator().PLUSASSIGN() is not null)
+        {
+            return new PlusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+        }
+        
+        return new MinusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
     }
 
     public override AstNode VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context)
