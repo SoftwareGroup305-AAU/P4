@@ -362,13 +362,13 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
             return num.Contains('.') ? new FloatNode(float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(int.Parse(num));
         }
-        else if (context.Bool() is not null)
+        if (context.Bool() is not null)
         {
             string b = context.Bool().GetText();
 
             return new BoolNode(bool.Parse(b));
         }
-        else if (context.String() is not null)
+        if (context.String() is not null)
         {
             string s = context.String().GetText()[1..^1];
 
