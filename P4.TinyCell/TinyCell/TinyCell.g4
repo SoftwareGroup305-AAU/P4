@@ -49,7 +49,7 @@ ifStatement:
 
 loopStatement:
 	WHILE LPAR expression RPAR compoundStatement
-	| FOR LPAR (expression | declaration) SEMI expression SEMI expression RPAR compoundStatement;
+	| FOR LPAR (expression | declaration) SEMI expression SEMI (expression | assignment) RPAR compoundStatement;
 
 jumpStatement:
 	CONTINUE SEMI
@@ -78,41 +78,41 @@ unaryExpression:
 
 multiplicativeExpression:
 	unaryExpression
-	| multiplicativeExpression MULT multiplicativeExpression
-	| multiplicativeExpression DIV multiplicativeExpression
-	| multiplicativeExpression MOD multiplicativeExpression;
+	| multiplicativeExpression MULT primitiveExpression
+	| multiplicativeExpression DIV primitiveExpression
+	| multiplicativeExpression MOD primitiveExpression;
 
 additiveExpression:
 	multiplicativeExpression
-	| additiveExpression PLUS additiveExpression
-	| additiveExpression MINUS additiveExpression;
+	| additiveExpression PLUS multiplicativeExpression
+	| additiveExpression MINUS multiplicativeExpression;
 
 bitshiftExpression:
 	additiveExpression
-	| bitshiftExpression BITSHIFTL bitshiftExpression
-	| bitshiftExpression BITSHIFTR bitshiftExpression;
+	| bitshiftExpression BITSHIFTL additiveExpression
+	| bitshiftExpression BITSHIFTR additiveExpression;
 
 comparisonExpression:
 	bitshiftExpression
-	| comparisonExpression LT comparisonExpression
-	| comparisonExpression GT comparisonExpression
-	| comparisonExpression LTE comparisonExpression
-	| comparisonExpression GTE comparisonExpression;
+	| comparisonExpression LT bitshiftExpression
+	| comparisonExpression GT bitshiftExpression
+	| comparisonExpression LTE bitshiftExpression
+	| comparisonExpression GTE bitshiftExpression;
 
 equalityExpression:
 	comparisonExpression
-	| equalityExpression EQ equalityExpression
-	| equalityExpression NEQ equalityExpression;
+	| equalityExpression EQ comparisonExpression
+	| equalityExpression NEQ comparisonExpression;
 
 andExpression:
 	equalityExpression
-	| andExpression AND andExpression;
+	| andExpression AND equalityExpression;
 
-orExpression: andExpression | orExpression OR orExpression;
+orExpression: andExpression | orExpression OR andExpression;
 
 ternaryExpression:
 	orExpression
-	| ternaryExpression QUESTION (
+	| orExpression QUESTION (
 		expression
 		| functionCall
 		| assignment
@@ -182,6 +182,7 @@ COMMA: ',';
 COLON: ':';
 TRUE: 'true';
 FALSE: 'false';
+NEWLINE: '\n';
 //Assignment op
 ASSIGN: '=';
 PLUSASSIGN: '+=';
@@ -205,13 +206,13 @@ GT: '>';
 LT: '<';
 GTE: '>=';
 LTE: '<=';
+NOT: '!';
 //Bitwise op
 BITSHIFTL: '<<';
 BITSHIFTR: '>>';
 //Unary op
 UNARYPLUS: '++';
 UNARYMINUS: '--';
-NOT: '!';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 

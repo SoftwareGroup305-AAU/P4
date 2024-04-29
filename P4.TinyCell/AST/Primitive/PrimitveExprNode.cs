@@ -6,19 +6,16 @@ public class PrimitveExprNode<T> : AstNode
     public Type Type { get; set; }
     public PrimitveExprNode(T value)
     {
-        ArgumentNullException.ThrowIfNull(value);
         Value = value;
     }
 
     public PrimitveExprNode(Type type)
     {
-        ArgumentNullException.ThrowIfNull(type);
         Type = type;
     }
 
     public PrimitveExprNode(T value, Type type)
     {
-        ArgumentNullException.ThrowIfNull(value);
         Value = value;
         Type = type;
     }
