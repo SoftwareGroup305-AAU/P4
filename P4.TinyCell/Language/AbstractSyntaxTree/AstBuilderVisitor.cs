@@ -156,7 +156,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
     {
-        AstNode document = new();
+        RootNode document = new();
         foreach (var child in context.children)
         {
             AstNode childNode = Visit(child);
@@ -518,11 +518,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.UNARYPLUS() is not null)
         {
-            return new UnaryPlusExprNode(Visit(context.primitiveExpression()));
+            return new UnaryPlusExprNode(Visit(context.identifier()));
         }
         if (context.UNARYMINUS() is not null)
         {
-            return new UnaryMinusExprNode(Visit(context.primitiveExpression()));
+            return new UnaryMinusExprNode(Visit(context.identifier()));
         }
         if (context.NOT() is not null)
         {

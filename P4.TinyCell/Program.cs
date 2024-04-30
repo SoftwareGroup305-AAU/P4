@@ -50,8 +50,6 @@ internal class Program
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Tokens:");
 
         foreach (var token in tokens)
         {
