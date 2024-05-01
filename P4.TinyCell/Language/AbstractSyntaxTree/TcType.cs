@@ -1,6 +1,6 @@
 ﻿namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
-public enum Type
+public enum TcType
 {
     VOID,
     STRING,
