@@ -210,8 +210,11 @@ namespace P4.TinyCell.Language.RegisterAllocation
             var parentStructure = parentStructureStack.First();
             foreach (var scope in parentStructure.compundStack)
             {
-                parentStructure.Instruction.addSucc(scope.firstInstruction);
-                prevInstructions.Add(scope.lastInstruction);
+                if (scope.firstInstruction != null && scope.lastInstruction != null)
+                {
+                    parentStructure.Instruction.addSucc(scope.firstInstruction);
+                    prevInstructions.Add(scope.lastInstruction);
+                }
             }
             if (parentStructure.compundStack.Count <= 1)
             {
