@@ -2,6 +2,7 @@
 using P4.TinyCell.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Language.AbstractSyntaxTree.Function;
 using P4.TinyCell.Language.AbstractSyntaxTree.NumExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
 using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
@@ -58,5 +59,15 @@ public interface IAstVisitor<Result>
     Result VisitBreakNode(BreakNode breakNode);
     Result VisitContinueNode(ContinueNode continueNode);
     Result VisitReturnNode(ReturnNode returnNode);
-    Result VisitWhileStatementNode(WhileStatementNode whileNode);
+    Result VisitWhileStatementNode(WhileStatementNode whileStatementNode);
+    Result VisitIfStatementNode(IfStatementNode ifStatementNode);
+    Result VisitForStatementNode(ForStatementNode forStatementNode);
+    Result VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode);
+    
+    Result VisitFunctionCallNode(FunctionCallNode functionCallNode);    
+    Result VisitFunctionDeclarationNode(FunctionDefinitionNode functionDefinitionNode);
+    Result VisitFunctionParameterListNode(ParameterListNode functionParameterListNode);
+    Result VisitFunctionParameterNode(ParameterNode functionParameterNode);
+    Result VisitArgumentListNode(ArgumentListNode argumentListNode);
+    Result VisitArgumentNode(ArgumentNode argumentNode);
 }

@@ -9,7 +9,7 @@ public abstract class AstNode : ParserRuleContext
         children = [];
     }
 
-    public virtual void Accept(IAstVisitor visitor) { }
+    public abstract T? Accept<T>(IAstVisitor<T> visitor);
 
     public override string ToString()
     {
