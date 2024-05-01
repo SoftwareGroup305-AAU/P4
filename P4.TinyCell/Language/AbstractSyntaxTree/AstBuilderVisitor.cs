@@ -153,7 +153,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             var typ = Visit(context.type());
             return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action);
         }
-        return new DeclarationNode(Visit(context.type()), Visit(initialDecleration.Identifier));
+        return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier);
     }
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)

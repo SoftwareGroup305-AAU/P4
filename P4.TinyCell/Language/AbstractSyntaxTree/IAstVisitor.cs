@@ -8,11 +8,15 @@ using P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
 using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Language.AbstractSyntaxTree.Types;
+using P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
 
 namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
 public interface IAstVisitor<Result>
 {
+    Result VisitRootNode(RootNode rootNode);
+
     Result VisitAssignNode(AssignNode assignNode);
     Result VisitDivAssignNode(DivAssignNode divAssignNode);
     Result VisitMultAssignNode(MultAssignNode multAssignNode);
@@ -70,4 +74,15 @@ public interface IAstVisitor<Result>
     Result VisitFunctionParameterNode(ParameterNode functionParameterNode);
     Result VisitArgumentListNode(ArgumentListNode argumentListNode);
     Result VisitArgumentNode(ArgumentNode argumentNode);
+
+    Result VisitBoolTypeNode(BoolTypeNode boolTypeNode);
+    Result VisitFloatTypeNode(FloatTypeNode floatTypeNode);
+    Result VisitIntTypeNode(IntTypeNode intTypeNode);
+    Result VisitStringTypeNode(StringTypeNode stringTypeNode);
+    Result VisitVoidTypeNode(VoidTypeNode voidTypeNode);
+    Result VisitPinTypeNode(PinTypeNode pinTypeNode);
+
+    Result VisitNotExprNode(NotExprNode notExprNode);
+    Result VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode);
+    Result VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode);
 }

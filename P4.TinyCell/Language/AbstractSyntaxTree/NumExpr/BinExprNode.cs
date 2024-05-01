@@ -4,7 +4,7 @@ public abstract class BinExprNode : AstNode
 {
     public BinExprNode(AstNode left, AstNode right)
     {
-        children.Add(left);
-        children.Add(right);
+        AddChild(left);
+        AddChild(right);
     }
 }

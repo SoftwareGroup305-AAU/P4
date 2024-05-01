@@ -2,14 +2,16 @@
 
 namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
-public abstract class AstNode : ParserRuleContext
+public abstract class AstNode
 {
+    public List<AstNode> Children { get; set; } = [];
+    
     public AstNode()
     {
-        children = [];
+        Children = [];
     }
 
-    public abstract T? Accept<T>(IAstVisitor<T> visitor);
+    public virtual void Accept<T>(IAstVisitor<T> visitor) { }
 
     public override string ToString()
     {
@@ -21,7 +23,7 @@ public abstract class AstNode : ParserRuleContext
         var indent = new string(' ', indentation * 2);
         string str = $"{indent}{GetType().Name}";
 
-        foreach (AstNode child in children.Where(s => s is not null))
+        foreach (AstNode child in Children.Where(s => s is not null))
         {
             str += $"\n{child.ToString(indentation + 1)}";
         }
@@ -31,6 +33,6 @@ public abstract class AstNode : ParserRuleContext
 
     public void AddChild(AstNode node)
     {
-        children.Add(node);
+        Children.Add(node);
     }
 }
