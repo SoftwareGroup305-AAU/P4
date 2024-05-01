@@ -13,7 +13,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        string fileContent = File.ReadAllText("Test.tc");
+        string fileContent = File.ReadAllText("/home/benj1/Documents/GitHub/P4-main/P4.TinyCell/test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 
