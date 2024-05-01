@@ -1,12 +1,9 @@
-﻿namespace P4.TinyCell.AST.UnaryExpr
-{
-    public class UnaryExprNode : AstNode
-    {
-        public UnaryExprNode(AstNode node)
-        {
-            ArgumentNullException.ThrowIfNull(node);
+﻿namespace P4.TinyCell.AST.UnaryExpr;
 
-            children.Add(node);
-        }
+public class UnaryExprNode : AstNode
+{
+    public UnaryExprNode(AstNode node)
+    {
+        children.Add(node);
     }
 }
