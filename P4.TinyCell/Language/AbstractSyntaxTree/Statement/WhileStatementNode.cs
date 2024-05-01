@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Statement;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 public class WhileStatementNode : AstNode
 {
     public AstNode Condition { get; set; }
@@ -11,5 +11,10 @@ public class WhileStatementNode : AstNode
 
         AddChild(Condition);
         AddChild(CompoundStatement);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitWhileStatementNode(this);
     }
 }

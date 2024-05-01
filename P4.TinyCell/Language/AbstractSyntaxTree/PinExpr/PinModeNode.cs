@@ -1,5 +1,4 @@
-﻿namespace P4.TinyCell.AST;
-public class PinModeNode : AstNode
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+public abstract class PinModeNode : AstNode
 {
-
 }

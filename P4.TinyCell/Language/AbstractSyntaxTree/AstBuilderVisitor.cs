@@ -1,18 +1,20 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
-using P4.TinyCell.AST.Assignment;
-using P4.TinyCell.AST.BitwiseExpr;
-using P4.TinyCell.AST.CompExpr;
-using P4.TinyCell.AST.Function;
-using P4.TinyCell.AST.NumExpr;
-using P4.TinyCell.AST.Primitive;
-using P4.TinyCell.AST.Statement;
-using P4.TinyCell.AST.StatementExpr;
-using P4.TinyCell.AST.Types;
-using P4.TinyCell.AST.UnaryExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
+using P4.TinyCell.Language.AbstractSyntaxTree.BitwiseExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Language.AbstractSyntaxTree.NumExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
+using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Language.AbstractSyntaxTree.Types;
+using P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
 using System.Globalization;
 
-namespace P4.TinyCell.AST;
+namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
 public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 {
@@ -42,7 +44,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.identifier() is not null)
         {
-            return new ArgumentNode((IdentifierNode)Visit(context.identifier()));
+            return new ArgumentNode(Visit(context.identifier()));
         }
 
         if (context.functionCall() is not null)
@@ -99,7 +101,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new PlusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
         }
-        
+
         return new MinusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
     }
 
@@ -148,10 +150,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         InitialDeclerationNode initialDecleration = Visit(context.initialDeclaration()) as InitialDeclerationNode;
         if (initialDecleration.Action is not null)
         {
-            var typ = Visit(context.type());
-            return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action);
+            return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier, initialDecleration.Action);
         }
-        return new DeclarationNode(Visit(context.type()), Visit(initialDecleration.Identifier));
+        return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier);
     }
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
@@ -197,7 +198,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         ParameterListNode aggregatedParameterList = new(allParameters.ToArray());
 
 
-        return new FunctionDefinitionNode(Visit(context.type()), Visit(context.identifier()), aggregatedParameterList, Visit(context.compoundStatement()));
+        return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList, (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context)
@@ -220,6 +221,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), Visit(context.compoundStatement().Last()));
         }
+        var comp = context.compoundStatement();
         return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), null);
     }
 
@@ -287,7 +289,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitParameter([NotNull] TinyCellParser.ParameterContext context)
     {
-        return new ParameterNode(Visit(context.type()), Visit(context.identifier()));
+        return new ParameterNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()));
     }
 
     public override AstNode VisitParameterList([NotNull] TinyCellParser.ParameterListContext context)
@@ -355,7 +357,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         throw new InvalidOperationException();
     }
 
-    public override VoltageNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
+    public override AstNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
     {
         if (context.VOLHIGH() is not null)
         {
@@ -406,7 +408,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
     {
-        return new FunctionDefinitionNode(new VoidTypeNode(), new IdentifierNode("setup"), new ParameterListNode([]), Visit(context.compoundStatement()));
+        return new FunctionDefinitionNode(new TypeNode(TcType.VOID), new IdentifierNode("setup"), new ParameterListNode([]), (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitStatement([NotNull] TinyCellParser.StatementContext context)
@@ -472,7 +474,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             string b = node.GetText();
             return new BoolNode(bool.Parse(b));
         }
-        
+
         return base.VisitTerminal(node);
     }
 
@@ -489,27 +491,27 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.VOID() is not null)
         {
-            return new VoidTypeNode();
+            return new TypeNode(TcType.VOID);
         }
         if (context.STRING() is not null)
         {
-            return new StringTypeNode();
+            return new TypeNode(TcType.STRING);
         }
         if (context.INT() is not null)
         {
-            return new IntTypeNode();
+            return new TypeNode(TcType.INT);
         }
         if (context.FLOAT() is not null)
         {
-            return new FloatTypeNode();
+            return new TypeNode(TcType.FLOAT);
         }
         if (context.BOOL() is not null)
         {
-            return new BoolTypeNode();
+            return new TypeNode(TcType.BOOL);
         }
         if (context.PIN() is not null)
         {
-            return new PinTypeNode();
+            return new TypeNode(TcType.PIN);
         }
         throw new InvalidOperationException();
     }

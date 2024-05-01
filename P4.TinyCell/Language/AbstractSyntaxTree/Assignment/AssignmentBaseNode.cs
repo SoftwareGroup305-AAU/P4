@@ -1,7 +1,7 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST.Assignment;
-public class AssignmentBaseNode : AstNode
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
+public abstract class AssignmentBaseNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }
     public AstNode Expression { get; set; }
@@ -14,5 +14,4 @@ public class AssignmentBaseNode : AstNode
         AddChild(Identifier);
         AddChild(Expression);
     }
-
 }

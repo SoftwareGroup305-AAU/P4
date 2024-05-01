@@ -1,6 +1,8 @@
-﻿using P4.TinyCell.AST.Primitive;
-
-namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
 public class PinWriteExprNode(AstNode from, AstNode to) : PinExprNode(from, to)
 {
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitPinWriteExprNode(this);
+    }
 }

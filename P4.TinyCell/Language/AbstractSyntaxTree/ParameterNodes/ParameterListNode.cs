@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
 public class ParameterListNode : AstNode
 {
     public AstNode[] Parameters { get; }
@@ -17,5 +11,10 @@ public class ParameterListNode : AstNode
         {
             AddChild(parameter);
         }
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitParameterListNode(this);
     }
 }

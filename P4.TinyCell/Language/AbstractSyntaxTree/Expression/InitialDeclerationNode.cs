@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Expression;
 public class InitialDeclerationNode : AstNode
 {
     public AstNode Identifier { get; set; }
@@ -12,5 +12,10 @@ public class InitialDeclerationNode : AstNode
     public InitialDeclerationNode(AstNode identifier)
     {
         Identifier = identifier;
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        throw new NotImplementedException();
     }
 }

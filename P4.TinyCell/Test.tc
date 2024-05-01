@@ -1,53 +1,24 @@
-pin dpin = 10;
-int testfunction(pin par)
-{
-    bool tttt = false;
-    int number;
-    if (tttt != true) {
-    }
-    else {
-        number = 0;
-        testfunction(1);
-        number = number + testfunction(dpin);
-    }
-    return number;
+pin numse = 10;  //Digital
+int a = 2 + 2;
+int a = 2 + 6;
+int a = 9 + 2;
+int a = 9 + 32;
+
+pin pis = A1;     //analog
+int antisocialiseringsbestraebelse = 4095
+int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
+setup {
+    set numse to output;
+    set pis to output;
 }
-// line comment
-/* 
-block comment
-*/
-int funnyfunky(int aaa) {
-    int nummm = aaa;
-    return (nummm + aaa);
-}
-setup
-{
-    float ni = (2 * 3) + (1 * (2 + 1));
-    ni == 9 ? ni = 9 : ni = 8;
-    int i = 0;
-    i = i + 1;
-    while (i < 10) {
-        i++;
-    }
-    bool yesyes = false;
-    for (int j = 10; j > 0; j--)
+update {
+    write HIGH to numse;
+    write antisocialiseringsbestraebelse to pis;
+    set pis to input;
+    read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
+    
+    if (aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA == 1020)
     {
-        if (!yesyes) {
-            break;
-        }
-        if (yesyes && yesyes) {
-        }
+        fuck();
     }
-    i += 2;
-}
-update
-{
-    pin tester = 1;
-    int threeisamagicnumber;
-    write HIGH to tester;
-    set tester to INPUT;
-    read tester to threeisamagicnumber;
-    string nunununu = "c";
-    testfunction(tester);
-    int varvarvar = testfunction(tester);
-}
+}z

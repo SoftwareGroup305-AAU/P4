@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Statement;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 public class ForStatementNode : AstNode
 {
     public AstNode Variable { get; set; }
@@ -17,5 +17,10 @@ public class ForStatementNode : AstNode
         AddChild(Condition);
         AddChild(Expression);
         AddChild(CompoundStatement);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitForStatementNode(this);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Function;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class ArgumentListNode : AstNode
 {
     public ArgumentNode[] Arguments { get; }
@@ -11,5 +11,10 @@ public class ArgumentListNode : AstNode
         {
             AddChild(argument);
         }
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitArgumentListNode(this);
     }
 }

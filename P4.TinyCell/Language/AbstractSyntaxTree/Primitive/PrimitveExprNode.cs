@@ -1,20 +1,20 @@
-﻿namespace P4.TinyCell.AST.Primitive;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-public class PrimitveExprNode<T> : AstNode
+public abstract class PrimitveExprNode<T> : AstNode
 {
     public T? Value { get; set; }
-    public Type Type { get; set; }
+    public TcType Type { get; set; }
     public PrimitveExprNode(T value)
     {
         Value = value;
     }
 
-    public PrimitveExprNode(Type type)
+    public PrimitveExprNode(TcType type)
     {
         Type = type;
     }
 
-    public PrimitveExprNode(T value, Type type)
+    public PrimitveExprNode(T value, TcType type)
     {
         Value = value;
         Type = type;

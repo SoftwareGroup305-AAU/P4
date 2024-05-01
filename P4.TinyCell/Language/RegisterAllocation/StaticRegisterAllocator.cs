@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace P4.TinyCell.Language
+﻿namespace P4.TinyCell.Language.RegisterAllocation
 {
     public class StaticRegisterAllocator
     {
@@ -16,7 +12,7 @@ namespace P4.TinyCell.Language
         {
             Dictionary<string, string> allocationGroupings = [];
             Stack<KeyValuePair<string, HashSet<string>>> stack = [];
-            
+
             // Simplify
             while (interferenceGraph.Count > 0)
             {
@@ -36,7 +32,7 @@ namespace P4.TinyCell.Language
                     stack.Push(vertex);
                     RemoveVertex(vertex, interferenceGraph);
                 }
-                
+
             }
 
             // Select
@@ -96,5 +92,5 @@ namespace P4.TinyCell.Language
         }
     }
 
-    
+
 }

@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.StatementExpr;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 
 public class IfStatementNode : AstNode
 {
@@ -18,5 +18,10 @@ public class IfStatementNode : AstNode
         {
             AddChild(ElseExpr);
         }
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitIfStatementNode(this);
     }
 }

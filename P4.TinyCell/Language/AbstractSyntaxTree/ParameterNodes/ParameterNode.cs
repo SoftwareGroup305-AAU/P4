@@ -1,13 +1,23 @@
-﻿using P4.TinyCell.AST.Primitive;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Language.AbstractSyntaxTree.Types;
 
-namespace P4.TinyCell.AST;
-public class ParameterNode(AstNode type, AstNode identifier) : AstNode
+namespace P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
+public class ParameterNode : AstNode
 {
-    public Type Type { get; set; }
+    public TypeNode Type { get; set; }
     public IdentifierNode Identifier { get; set; }
+
+    public ParameterNode(TypeNode type, IdentifierNode identifier)
+    {
+        Type = type;
+        Identifier = identifier;
+
+        AddChild(type);
+        AddChild(identifier);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        throw new NotImplementedException();
+    }
 }
