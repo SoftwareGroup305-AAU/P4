@@ -1,7 +1,5 @@
-﻿using P4.TinyCell.AST.Primitive;
-
-namespace P4.TinyCell.AST;
-public class PinExprNode : AstNode
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+public abstract class PinExprNode : AstNode
 {
     public AstNode From { get; set; }
     public AstNode To { get; set; }

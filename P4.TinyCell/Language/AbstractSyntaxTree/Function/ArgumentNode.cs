@@ -1,35 +1,18 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST.Function;
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class ArgumentNode : AstNode
 {
-    public IdentifierNode? Identifier { get; set; }
-    public FunctionCallNode? FunctionCall { get; set; }
-    public AstNode? Numeral { get; set; }
-    public StringNode? String { get; set; }
-    public BoolNode? Bool { get; set; }
+    public AstNode Node { get; set; }
 
-    public ArgumentNode(IdentifierNode identifier)
+    public ArgumentNode(AstNode node)
     {
-        Identifier = identifier;
-        AddChild(Identifier);
+        Node = node;
+        AddChild(Node);
     }
 
-    public ArgumentNode(FunctionCallNode functionCall)
+    public override T Accept<T>(IAstVisitor<T> visitor)
     {
-        FunctionCall = functionCall;
-        AddChild(FunctionCall);
-    }
-    
-    public ArgumentNode(StringNode stringNode)
-    {
-        String = stringNode;
-        AddChild(String);
-    }
-
-    public ArgumentNode(AstNode numeral)
-    {
-        Numeral = numeral;
-        AddChild(Numeral);
+        return visitor.VisitArgumentNode(this);
     }
 }

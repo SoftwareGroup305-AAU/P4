@@ -1,11 +1,8 @@
 ﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Misc;
-using P4.TinyCell.Utilities;
-using Utilities;
-using static P4.TinyCell.Languages.TinyCell.LivenessAnalysisListener;
 
 
-namespace P4.TinyCell.Languages.TinyCell
+namespace P4.TinyCell.Language.RegisterAllocation
 {
     internal class LivenessAnalysisListener : TinyCellBaseListener
     {
@@ -213,8 +210,11 @@ namespace P4.TinyCell.Languages.TinyCell
             var parentStructure = parentStructureStack.First();
             foreach (var scope in parentStructure.compundStack)
             {
-                parentStructure.Instruction.addSucc(scope.firstInstruction);
-                prevInstructions.Add(scope.lastInstruction);
+                if (scope.firstInstruction != null && scope.lastInstruction != null)
+                {
+                    parentStructure.Instruction.addSucc(scope.firstInstruction);
+                    prevInstructions.Add(scope.lastInstruction);
+                }
             }
             if (parentStructure.compundStack.Count <= 1)
             {
@@ -498,13 +498,13 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public object Clone()
         {
-            Instruction<T> clone = new Instruction<T>(this.baseInstruction);
+            Instruction<T> clone = new Instruction<T>(baseInstruction);
 
-            clone.gen = new HashSet<string>(this.gen);
-            clone.kill = new HashSet<string>(this.kill);
-            clone.succ = new HashSet<IInstruction>(this.succ);
-            clone.outs = new HashSet<string>(this.outs);
-            clone.ins = new HashSet<string>(this.ins);
+            clone.gen = new HashSet<string>(gen);
+            clone.kill = new HashSet<string>(kill);
+            clone.succ = new HashSet<IInstruction>(succ);
+            clone.outs = new HashSet<string>(outs);
+            clone.ins = new HashSet<string>(ins);
 
             return clone;
         }

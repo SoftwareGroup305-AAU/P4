@@ -1,13 +1,6 @@
-﻿using P4.TinyCell.Languages.TinyCell;
-using P4.TinyCell.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Utilities;
+﻿using P4.TinyCell.Utilities;
 
-namespace P4.TinyCell.Language
+namespace P4.TinyCell.Language.RegisterAllocation
 {
     public class LivenessGraphGenerator
     {
@@ -20,13 +13,13 @@ namespace P4.TinyCell.Language
                 HashSet<string> gen = instruction.getGen();
                 HashSet<string> kill = instruction.getKill();
 
-                foreach (var variable  in gen)
+                foreach (var variable in gen)
                 {
                     if (!graph.adjacencyList.ContainsKey(variable))
                     {
                         graph.adjacencyList.Add(variable, new HashSet<string>());
                     }
-                    
+
                 }
                 foreach (var variable in kill)
                 {

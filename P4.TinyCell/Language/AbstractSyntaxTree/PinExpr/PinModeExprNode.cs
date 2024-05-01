@@ -1,6 +1,6 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST;
+namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
 public class PinModeExprNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }
@@ -13,5 +13,10 @@ public class PinModeExprNode : AstNode
 
         AddChild(identifier);
         AddChild(value);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitPinModeExprNode(this);
     }
 }

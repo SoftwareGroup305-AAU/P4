@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Statement;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 public class StatementCollectionNode : AstNode
 {
     public StatementCollectionNode(AstNode[] statements)
@@ -7,5 +7,10 @@ public class StatementCollectionNode : AstNode
         {
             AddChild(statement);
         }
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitStatementCollectionNode(this);
     }
 }

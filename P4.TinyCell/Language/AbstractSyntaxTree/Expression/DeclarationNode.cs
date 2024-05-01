@@ -1,16 +1,21 @@
-﻿namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Expression;
 public class DeclarationNode : AstNode
 {
     public DeclarationNode(AstNode type, AstNode identifier)
     {
-        children.Add(type);
-        children.Add(identifier);
+        AddChild(type);
+        AddChild(identifier);
     }
 
     public DeclarationNode(AstNode type, AstNode identifier, AstNode action)
     {
-        children.Add(type);
-        children.Add(identifier);
-        children.Add(action);
+        AddChild(type);
+        AddChild(identifier);
+        AddChild(action);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitDeclarationNode(this);
     }
 }

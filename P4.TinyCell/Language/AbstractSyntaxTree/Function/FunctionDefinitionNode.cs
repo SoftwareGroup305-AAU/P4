@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Function;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class FunctionDefinitionNode : AstNode
 {
     public AstNode Type { get; set; }
@@ -16,5 +16,10 @@ public class FunctionDefinitionNode : AstNode
         AddChild(identifier);
         AddChild(parameterList);
         AddChild(compoundStatement);
+    }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitFunctionDefinitionNode(this);
     }
 }
