@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Expression;
 public class InitialDeclerationNode : AstNode
 {
     public AstNode Identifier { get; set; }

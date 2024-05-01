@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
 public class PinOutNode : PinModeNode
 {
 

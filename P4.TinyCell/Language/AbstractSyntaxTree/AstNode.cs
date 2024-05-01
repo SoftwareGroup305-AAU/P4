@@ -1,13 +1,15 @@
 ﻿using Antlr4.Runtime;
 
-namespace P4.TinyCell.AST;
+namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
-public class AstNode : ParserRuleContext
+public abstract class AstNode : ParserRuleContext
 {
     public AstNode()
     {
         children = [];
     }
+
+    public virtual void Accept(IAstVisitor visitor) { }
 
     public override string ToString()
     {

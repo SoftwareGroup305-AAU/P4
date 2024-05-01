@@ -1,13 +1,6 @@
-﻿using System;
-using System.IO;
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using P4.TinyCell.Language;
-using P4.TinyCell.Languages.TinyCell;
-using P4.TinyCell.AST;
+﻿using Antlr4.Runtime;
+using P4.TinyCell.Language.AbstractSyntaxTree;
 using P4.TinyCell.Utilities;
-using Utilities;
-using P4.TinyCell.Languages.TinyCell;
 
 internal class Program
 {

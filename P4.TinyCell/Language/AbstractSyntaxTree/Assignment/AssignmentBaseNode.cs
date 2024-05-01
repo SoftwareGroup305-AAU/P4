@@ -1,6 +1,6 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST.Assignment;
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
 public class AssignmentBaseNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }

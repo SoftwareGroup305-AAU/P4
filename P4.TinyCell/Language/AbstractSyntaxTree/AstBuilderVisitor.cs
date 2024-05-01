@@ -1,18 +1,13 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
-using P4.TinyCell.AST.Assignment;
-using P4.TinyCell.AST.BitwiseExpr;
-using P4.TinyCell.AST.CompExpr;
-using P4.TinyCell.AST.Function;
-using P4.TinyCell.AST.NumExpr;
-using P4.TinyCell.AST.Primitive;
-using P4.TinyCell.AST.Statement;
-using P4.TinyCell.AST.StatementExpr;
-using P4.TinyCell.AST.Types;
-using P4.TinyCell.AST.UnaryExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
+using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 using System.Globalization;
 
-namespace P4.TinyCell.AST;
+namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
 public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 {
@@ -99,7 +94,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new PlusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
         }
-        
+
         return new MinusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
     }
 
@@ -220,6 +215,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), Visit(context.compoundStatement().Last()));
         }
+        var comp = context.compoundStatement();
         return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), null);
     }
 
@@ -472,7 +468,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             string b = node.GetText();
             return new BoolNode(bool.Parse(b));
         }
-        
+
         return base.VisitTerminal(node);
     }
 

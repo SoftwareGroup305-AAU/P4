@@ -1,6 +1,6 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST.Function;
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class FunctionCallNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }

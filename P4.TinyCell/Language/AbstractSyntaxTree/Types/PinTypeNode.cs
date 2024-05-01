@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Types;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Types;
 public class PinTypeNode : AstNode
 {
 }

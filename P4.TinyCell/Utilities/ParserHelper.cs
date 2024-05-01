@@ -1,6 +1,6 @@
 using Antlr4.Runtime;
 
-namespace Utilities
+namespace P4.TinyCell.Utilities
 {
     public class ParserHelper
     {

@@ -1,6 +1,4 @@
-﻿using Antlr4.Runtime;
-
-namespace P4.TinyCell.AST;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree;
 
 public class RootNode : AstNode
 {

@@ -1,9 +1,9 @@
-﻿namespace P4.TinyCell.AST.UnaryExpr;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
 
 public class UnaryExprNode : AstNode
 {
     public UnaryExprNode(AstNode node)
     {
-        children.Add(node);
+        AddChild(node);
     }
 }

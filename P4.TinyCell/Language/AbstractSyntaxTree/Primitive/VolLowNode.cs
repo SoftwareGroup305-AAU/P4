@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Primitive;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
 public class VolLowNode : VoltageNode
 {

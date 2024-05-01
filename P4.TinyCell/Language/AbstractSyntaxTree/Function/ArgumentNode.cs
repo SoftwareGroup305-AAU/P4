@@ -1,6 +1,6 @@
-﻿using P4.TinyCell.AST.Primitive;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-namespace P4.TinyCell.AST.Function;
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class ArgumentNode : AstNode
 {
     public IdentifierNode? Identifier { get; set; }
@@ -20,7 +20,7 @@ public class ArgumentNode : AstNode
         FunctionCall = functionCall;
         AddChild(FunctionCall);
     }
-    
+
     public ArgumentNode(StringNode stringNode)
     {
         String = stringNode;

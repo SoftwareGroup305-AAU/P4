@@ -1,4 +1,4 @@
-﻿namespace P4.TinyCell.AST.Function;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class FunctionCollectionNode
 {
 }
