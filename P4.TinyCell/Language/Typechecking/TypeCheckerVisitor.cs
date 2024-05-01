@@ -12,21 +12,26 @@ namespace P4.TinyCell.Languages.TinyCell
     {
         private List<Function> fTable;
 
-        private Stack<KeyValuePair> vTable;
+        // private Stack<KeyValuePair> vTable;
 
         private class Function
         {
-            public string? Type { get; set; }
+            public TcType? Type { get; set; }
             public string? Id { get; set; }
-            public List<string> Parameters = [];
+            public List<TcType> Parameters = [];
         }
 
 
         public override AstNode VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
-            var function = new Function();
-            function.Type = GetType(functionDefinitionNode.Type);
-            function.Id = functionDefinitionNode.Identifier as PrimitveExprNode<string>.value;
+            var function = new Function
+            {
+                Type = functionDefinitionNode.Type.Type,
+                Id = functionDefinitionNode.Identifier.Value,
+                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.Type.Type).ToList()
+            };
+
+            fTable.Add(function);
 
             return base.VisitFunctionDefinitionNode(functionDefinitionNode);
         }
@@ -36,25 +41,25 @@ namespace P4.TinyCell.Languages.TinyCell
 
         }
 
-        public string GetType(AstNode node)
-        {
-            switch (node)
-            {
-                case VoidTypeNode:
-                    return "void";
-                case BoolTypeNode:
-                    return "bool";
-                case IntTypeNode:
-                    return "int";
-                case FloatTypeNode:
-                    return "float";
-                case PinTypeNode:
-                    return "pin";
-                case StringTypeNode:
-                    return "string";
-                default:
-                    return "";
-            }
-        }
+        // public string GetType(AstNode node)
+        // {
+        //     switch (node)
+        //     {
+        //         case VoidTypeNode:
+        //             return "void";
+        //         case BoolTypeNode:
+        //             return "bool";
+        //         case IntTypeNode:
+        //             return "int";
+        //         case FloatTypeNode:
+        //             return "float";
+        //         case PinTypeNode:
+        //             return "pin";
+        //         case StringTypeNode:
+        //             return "string";
+        //         default:
+        //             return "";
+        //     }
+        // }
     }
 }
