@@ -1,10 +1,10 @@
 using Antlr4.Runtime;
 
-namespace Utilities
+namespace P4.TinyCell.Utilities
 {
     public class ParserHelper
     {
-        public void PrintTree(ParserRuleContext tree, int indentation = 0)
+        public static void PrintTree(ParserRuleContext tree, int indentation = 0)
         {
             var indent = new string(' ', indentation * 2);
             Console.WriteLine($"{indent}{tree.GetType().Name}");

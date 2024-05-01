@@ -49,7 +49,10 @@ ifStatement:
 
 loopStatement:
 	WHILE LPAR expression RPAR compoundStatement
-	| FOR LPAR (expression | declaration) SEMI expression SEMI (expression | assignment) RPAR compoundStatement;
+	| FOR LPAR (expression | declaration) SEMI expression SEMI (
+		expression
+		| assignment
+	) RPAR compoundStatement;
 
 jumpStatement:
 	CONTINUE SEMI
@@ -70,10 +73,10 @@ primitiveExpression:
 
 unaryExpression:
 	primitiveExpression
-	| primitiveExpression UNARYPLUS
-	| primitiveExpression UNARYMINUS
-	| UNARYPLUS primitiveExpression
-	| UNARYMINUS primitiveExpression
+	| identifier UNARYPLUS
+	| identifier UNARYMINUS
+	| UNARYPLUS identifier
+	| UNARYMINUS identifier
 	| NOT primitiveExpression;
 
 multiplicativeExpression:
