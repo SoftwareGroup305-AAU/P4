@@ -28,7 +28,7 @@ namespace P4.TinyCell.Languages.TinyCell
             {
                 Type = functionDefinitionNode.Type.Type,
                 Id = functionDefinitionNode.Identifier.Value,
-                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.Type.Type).ToList()
+                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
             };
 
             fTable.Add(function);
