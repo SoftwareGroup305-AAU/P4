@@ -14,7 +14,7 @@ using P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
 namespace P4.TinyCell.Language.AbstractSyntaxTree;
 public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
 {
-    public virtual Result? Visit(AstNode node)
+    public virtual Result Visit(AstNode node)
     {
         return VisitChildren(node);
     }
@@ -71,11 +71,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(boolNode);
     }
 
-    public virtual Result VisitBoolTypeNode(BoolTypeNode boolTypeNode)
-    {
-        return VisitChildren(boolTypeNode);
-    }
-
     public virtual Result VisitBreakNode(BreakNode breakNode)
     {
         return VisitChildren(breakNode);
@@ -109,11 +104,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitFloatNode(FloatNode boolNode)
     {
         return VisitChildren(boolNode);
-    }
-
-    public virtual Result VisitFloatTypeNode(FloatTypeNode floatTypeNode)
-    {
-        return VisitChildren(floatTypeNode);
     }
 
     public virtual Result VisitForStatementNode(ForStatementNode forStatementNode)
@@ -164,11 +154,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitIntNode(IntNode intNode)
     {
         return VisitChildren(intNode);
-    }
-
-    public virtual Result VisitIntTypeNode(IntTypeNode intTypeNode)
-    {
-        return VisitChildren(intTypeNode);
     }
 
     public virtual Result VisitLessThanEqualExprNode(LessThanEqualExprNode lessThanOrEqualExprNode)
@@ -242,11 +227,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         throw new NotImplementedException();
     }
 
-    public virtual Result VisitPinTypeNode(PinTypeNode pinTypeNode)
-    {
-        return VisitChildren(pinTypeNode);
-    }
-
     public virtual Result VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
     {
         return VisitChildren(pinWriteExprNode);
@@ -287,11 +267,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(stringNode);
     }
 
-    public virtual Result VisitStringTypeNode(StringTypeNode stringTypeNode)
-    {
-        return VisitChildren(stringTypeNode);
-    }
-
     public virtual Result VisitSubExprNode(SubExprNode subExprNode)
     {
         return VisitChildren(subExprNode);
@@ -312,11 +287,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(voidNode);
     }
 
-    public virtual Result VisitVoidTypeNode(VoidTypeNode voidTypeNode)
-    {
-        return VisitChildren(voidTypeNode);
-    }
-
     public virtual Result VisitVolHighNode(VolHighNode volHighNode)
     {
         return VisitChildren(volHighNode);
@@ -330,5 +300,10 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitWhileStatementNode(WhileStatementNode whileStatementNode)
     {
         return VisitChildren(whileStatementNode);
+    }
+
+    public Result VisitTypeNode(TypeNode typeNode)
+    {
+        return VisitChildren(typeNode);
     }
 }

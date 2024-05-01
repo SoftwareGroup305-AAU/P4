@@ -1,13 +1,16 @@
-﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Expression;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Language.AbstractSyntaxTree.Types;
+
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Expression;
 public class DeclarationNode : AstNode
 {
-    public DeclarationNode(AstNode type, AstNode identifier)
+    public DeclarationNode(TypeNode type, IdentifierNode identifier)
     {
         AddChild(type);
         AddChild(identifier);
     }
 
-    public DeclarationNode(AstNode type, AstNode identifier, AstNode action)
+    public DeclarationNode(TypeNode type, IdentifierNode identifier, AstNode action)
     {
         AddChild(type);
         AddChild(identifier);

@@ -1,11 +1,16 @@
-﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
+using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Language.AbstractSyntaxTree.Types;
+
+namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class FunctionDefinitionNode : AstNode
 {
-    public AstNode Type { get; set; }
-    public AstNode Identifier { get; set; }
-    public AstNode ParameterList { get; set; }
-    public AstNode CompoundStatement { get; set; }
-    public FunctionDefinitionNode(AstNode type, AstNode identifier, AstNode parameterList, AstNode compoundStatement)
+    public TypeNode Type { get; set; }
+    public IdentifierNode Identifier { get; set; }
+    public ParameterListNode ParameterList { get; set; }
+    public StatementCollectionNode CompoundStatement { get; set; }
+    public FunctionDefinitionNode(TypeNode type, IdentifierNode identifier, ParameterListNode parameterList, StatementCollectionNode compoundStatement)
     {
         Type = type;
         Identifier = identifier;
