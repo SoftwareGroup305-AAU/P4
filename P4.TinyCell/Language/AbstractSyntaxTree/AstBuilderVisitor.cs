@@ -294,15 +294,15 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitParameterList([NotNull] TinyCellParser.ParameterListContext context)
     {
-        var parameters = new List<AstNode>();
+        var parameters = new List<ParameterNode>();
 
         if (context.parameterList() is not null)
         {
             var parameterListNode = Visit(context.parameterList()) as ParameterListNode;
-            parameters.AddRange(parameterListNode.Parameters);
+            parameters.AddRange(parameterListNode.Parameters.Cast<ParameterNode>());
         }
 
-        parameters.Add(Visit(context.parameter()));
+        parameters.Add((ParameterNode)Visit(context.parameter()));
 
         return new ParameterListNode([.. parameters]);
     }

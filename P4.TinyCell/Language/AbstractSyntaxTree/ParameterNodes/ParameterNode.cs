@@ -18,6 +18,6 @@ public class ParameterNode : AstNode
 
     public override T Accept<T>(IAstVisitor<T> visitor)
     {
-        throw new NotImplementedException();
+        return visitor.VisitParameterNode(this);
     }
 }

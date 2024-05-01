@@ -1,13 +1,13 @@
 ﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
 public class ParameterListNode : AstNode
 {
-    public AstNode[] Parameters { get; }
+    public ParameterNode[] Parameters { get; }
 
-    public ParameterListNode(AstNode[] parameters)
+    public ParameterListNode(ParameterNode[] parameters)
     {
         Parameters = parameters;
 
-        foreach (AstNode parameter in parameters)
+        foreach (ParameterNode parameter in parameters)
         {
             AddChild(parameter);
         }
