@@ -4,12 +4,12 @@ using P4.TinyCell.Language.AbstractSyntaxTree.Types;
 namespace P4.TinyCell.Language.AbstractSyntaxTree.ParameterNodes;
 public class ParameterNode : AstNode
 {
-    public TypeNode Type { get; set; }
+    public TypeNode TypeNode { get; set; }
     public IdentifierNode Identifier { get; set; }
 
     public ParameterNode(TypeNode type, IdentifierNode identifier)
     {
-        Type = type;
+        TypeNode = type;
         Identifier = identifier;
 
         AddChild(type);
