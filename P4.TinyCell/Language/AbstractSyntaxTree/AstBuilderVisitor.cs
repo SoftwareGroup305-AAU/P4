@@ -150,10 +150,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         InitialDeclerationNode initialDecleration = Visit(context.initialDeclaration()) as InitialDeclerationNode;
         if (initialDecleration.Action is not null)
         {
-            var typ = Visit(context.type());
-            return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action);
+            return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier, initialDecleration.Action);
         }
-        return new DeclarationNode(Visit(context.type()), initialDecleration.Identifier);
+        return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier);
     }
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
@@ -199,7 +198,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         ParameterListNode aggregatedParameterList = new(allParameters.ToArray());
 
 
-        return new FunctionDefinitionNode(Visit(context.type()), Visit(context.identifier()), aggregatedParameterList, Visit(context.compoundStatement()));
+        return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList, (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context)
@@ -409,7 +408,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitSetupDefinition([NotNull] TinyCellParser.SetupDefinitionContext context)
     {
-        return new FunctionDefinitionNode(new VoidTypeNode(), new IdentifierNode("setup"), new ParameterListNode([]), Visit(context.compoundStatement()));
+        return new FunctionDefinitionNode(new TypeNode(Type.VOID), new IdentifierNode("setup"), new ParameterListNode([]), (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 
     public override AstNode VisitStatement([NotNull] TinyCellParser.StatementContext context)
@@ -492,27 +491,27 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.VOID() is not null)
         {
-            return new VoidTypeNode();
+            return new TypeNode(Type.VOID);
         }
         if (context.STRING() is not null)
         {
-            return new StringTypeNode();
+            return new TypeNode(Type.STRING);
         }
         if (context.INT() is not null)
         {
-            return new IntTypeNode();
+            return new TypeNode(Type.INT);
         }
         if (context.FLOAT() is not null)
         {
-            return new FloatTypeNode();
+            return new TypeNode(Type.FLOAT);
         }
         if (context.BOOL() is not null)
         {
-            return new BoolTypeNode();
+            return new TypeNode(Type.BOOL);
         }
         if (context.PIN() is not null)
         {
-            return new PinTypeNode();
+            return new TypeNode(Type.PIN);
         }
         throw new InvalidOperationException();
     }

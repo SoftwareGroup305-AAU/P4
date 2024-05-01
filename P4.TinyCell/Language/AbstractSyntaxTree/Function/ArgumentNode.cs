@@ -1,6 +1,4 @@
-﻿using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
-
-namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
+﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Function;
 public class ArgumentNode : AstNode
 {
     public AstNode Node { get; set; }

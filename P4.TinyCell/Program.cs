@@ -61,5 +61,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
+
+        //TestAstVisitor test = new();
+        //test.VisitRootNode((RootNode)abcd);
     }
 }

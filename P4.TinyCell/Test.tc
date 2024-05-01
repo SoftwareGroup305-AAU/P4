@@ -1,4 +1,9 @@
 pin numse = 10;  //Digital
+int a = 2 + 2;
+int a = 2 + 6;
+int a = 9 + 2;
+int a = 9 + 32;
+
 pin pis = A1;     //analog
 int antisocialiseringsbestraebelse = 4095
 int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;

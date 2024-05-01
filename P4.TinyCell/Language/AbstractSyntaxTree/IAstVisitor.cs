@@ -77,12 +77,7 @@ public interface IAstVisitor<Result>
     Result VisitArgumentListNode(ArgumentListNode argumentListNode);
     Result VisitArgumentNode(ArgumentNode argumentNode);
 
-    Result VisitBoolTypeNode(BoolTypeNode boolTypeNode);
-    Result VisitFloatTypeNode(FloatTypeNode floatTypeNode);
-    Result VisitIntTypeNode(IntTypeNode intTypeNode);
-    Result VisitStringTypeNode(StringTypeNode stringTypeNode);
-    Result VisitVoidTypeNode(VoidTypeNode voidTypeNode);
-    Result VisitPinTypeNode(PinTypeNode pinTypeNode);
+    Result VisitTypeNode(TypeNode typeNode);
 
     Result VisitNotExprNode(NotExprNode notExprNode);
     Result VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode);
