@@ -14,4 +14,9 @@ public class PinModeExprNode : AstNode
         AddChild(identifier);
         AddChild(value);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitPinModeExprNode(this);
+    }
 }

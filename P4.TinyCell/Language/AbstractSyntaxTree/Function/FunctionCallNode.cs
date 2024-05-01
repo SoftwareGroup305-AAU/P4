@@ -16,4 +16,9 @@ public class FunctionCallNode : AstNode
             AddChild(argumentList);
         }
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitFunctionCallNode(this);
+    }
 }

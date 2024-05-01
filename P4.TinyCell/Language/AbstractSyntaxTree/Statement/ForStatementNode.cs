@@ -18,4 +18,9 @@ public class ForStatementNode : AstNode
         AddChild(Expression);
         AddChild(CompoundStatement);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitForStatementNode(this);
+    }
 }

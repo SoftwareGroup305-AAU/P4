@@ -12,4 +12,9 @@ public class ParameterListNode : AstNode
             AddChild(parameter);
         }
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitParameterListNode(this);
+    }
 }

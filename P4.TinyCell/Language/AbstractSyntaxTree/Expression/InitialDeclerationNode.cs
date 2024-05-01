@@ -13,4 +13,9 @@ public class InitialDeclerationNode : AstNode
     {
         Identifier = identifier;
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        throw new NotImplementedException();
+    }
 }

@@ -1,5 +1,4 @@
-﻿using Antlr4.Runtime.Tree;
-using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
+﻿using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
@@ -127,7 +126,7 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(functionCallNode);
     }
 
-    public virtual Result VisitFunctionDeclarationNode(FunctionDefinitionNode functionDefinitionNode)
+    public virtual Result VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
     {
         return VisitChildren(functionDefinitionNode);
     }
@@ -251,6 +250,16 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
     {
         return VisitChildren(pinWriteExprNode);
+    }
+
+    public virtual Result VisitPinOutNode(PinOutNode pinOutNode)
+    {
+        return VisitChildren(pinOutNode);
+    }
+
+    public virtual Result VisitPinInNode(PinInNode pinInNode)
+    {
+        return VisitChildren(pinInNode);
     }
 
     public virtual Result VisitPlusAssignNode(PlusAssignNode plusAssignNode)

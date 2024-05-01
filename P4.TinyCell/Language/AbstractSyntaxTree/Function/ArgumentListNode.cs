@@ -12,4 +12,9 @@ public class ArgumentListNode : AstNode
             AddChild(argument);
         }
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitArgumentListNode(this);
+    }
 }

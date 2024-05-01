@@ -50,6 +50,8 @@ public interface IAstVisitor<Result>
     Result VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode);
     Result VisitPinReadExprNode(PinReadExprNode pinReadExprNode);
     Result VisitPinModeExprNode(PinModeExprNode pinModeExprNode);
+    Result VisitPinOutNode(PinOutNode pinOutNode);
+    Result VisitPinInNode(PinInNode pinInNode);
 
     Result VisitBoolNode(BoolNode boolNode);
     Result VisitFloatNode(FloatNode boolNode);
@@ -69,7 +71,7 @@ public interface IAstVisitor<Result>
     Result VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode);
     
     Result VisitFunctionCallNode(FunctionCallNode functionCallNode);    
-    Result VisitFunctionDeclarationNode(FunctionDefinitionNode functionDefinitionNode);
+    Result VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode);
     Result VisitFunctionParameterListNode(ParameterListNode functionParameterListNode);
     Result VisitFunctionParameterNode(ParameterNode functionParameterNode);
     Result VisitArgumentListNode(ArgumentListNode argumentListNode);

@@ -17,4 +17,9 @@ public class FunctionDefinitionNode : AstNode
         AddChild(parameterList);
         AddChild(compoundStatement);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitFunctionDefinitionNode(this);
+    }
 }

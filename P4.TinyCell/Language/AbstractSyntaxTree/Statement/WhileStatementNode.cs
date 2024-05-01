@@ -12,4 +12,9 @@ public class WhileStatementNode : AstNode
         AddChild(Condition);
         AddChild(CompoundStatement);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitWhileStatementNode(this);
+    }
 }

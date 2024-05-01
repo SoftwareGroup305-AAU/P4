@@ -13,4 +13,9 @@ public class DeclarationNode : AstNode
         AddChild(identifier);
         AddChild(action);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitDeclarationNode(this);
+    }
 }

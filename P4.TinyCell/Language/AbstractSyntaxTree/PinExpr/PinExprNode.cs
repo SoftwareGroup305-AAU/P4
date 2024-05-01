@@ -1,5 +1,5 @@
 ﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
-public class PinExprNode : AstNode
+public abstract class PinExprNode : AstNode
 {
     public AstNode From { get; set; }
     public AstNode To { get; set; }

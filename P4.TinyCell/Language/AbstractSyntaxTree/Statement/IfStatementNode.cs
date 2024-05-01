@@ -19,4 +19,9 @@ public class IfStatementNode : AstNode
             AddChild(ElseExpr);
         }
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitIfStatementNode(this);
+    }
 }

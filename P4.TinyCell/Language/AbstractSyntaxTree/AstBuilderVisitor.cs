@@ -44,7 +44,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.identifier() is not null)
         {
-            return new ArgumentNode((IdentifierNode)Visit(context.identifier()));
+            return new ArgumentNode(Visit(context.identifier()));
         }
 
         if (context.functionCall() is not null)
@@ -290,7 +290,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitParameter([NotNull] TinyCellParser.ParameterContext context)
     {
-        return new ParameterNode(Visit(context.type()), Visit(context.identifier()));
+        return new ParameterNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()));
     }
 
     public override AstNode VisitParameterList([NotNull] TinyCellParser.ParameterListContext context)
@@ -358,7 +358,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         throw new InvalidOperationException();
     }
 
-    public override VoltageNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
+    public override AstNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)
     {
         if (context.VOLHIGH() is not null)
         {

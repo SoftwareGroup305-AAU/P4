@@ -5,4 +5,9 @@ public class ReturnNode : AstNode
     {
         AddChild(returnExpression);
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitReturnNode(this);
+    }
 }

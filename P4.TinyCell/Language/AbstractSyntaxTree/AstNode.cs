@@ -11,7 +11,7 @@ public abstract class AstNode
         Children = [];
     }
 
-    public virtual void Accept<T>(IAstVisitor<T> visitor) { }
+    public abstract T Accept<T>(IAstVisitor<T> visitor);
 
     public override string ToString()
     {

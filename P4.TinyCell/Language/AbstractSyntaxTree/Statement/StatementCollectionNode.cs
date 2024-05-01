@@ -8,4 +8,9 @@ public class StatementCollectionNode : AstNode
             AddChild(statement);
         }
     }
+
+    public override T Accept<T>(IAstVisitor<T> visitor)
+    {
+        return visitor.VisitStatementCollectionNode(this);
+    }
 }

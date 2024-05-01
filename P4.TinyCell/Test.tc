@@ -7,7 +7,7 @@ setup {
     set pis to output;
 }
 update {
-    write high to numse;
+    write HIGH to numse;
     write antisocialiseringsbestraebelse to pis;
     set pis to input;
     read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
