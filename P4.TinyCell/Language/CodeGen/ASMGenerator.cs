@@ -1,3 +1,4 @@
+using System.Net.Quic;
 using System.Numerics;
 using Antlr4.Runtime;
 using P4.TinyCell.Language.AbstractSyntaxTree;
@@ -12,107 +13,109 @@ public class ASMGenerator
        private int ifLabelCount = 0;
        private int WhileLabelCount = 0;
        private int ForLabelCount = 0;
+       private int DivLabelCount = 0;
+       private int ModLabelCount = 0;
        /// <summary>
        /// A dictonary to keep track of digital and analog pins
        /// </summary>
        /// <returns>true if digital, false if analog</returns>
        Dictionary<string, bool> IsDigitalPinMap = new Dictionary<string, bool>();
        private string CurrentFunction = "";
-        public ASMGenerator()
-    {
-        Console.WriteLine("Running code generation");
-    }
+       public ASMGenerator()
+       {
+              Console.WriteLine("Running code generation");
+       }
 
-    //private AstNode UnParsedTokens = AstNode();
-    private Dictionary<string, Dictionary<string, string>> RegisterDictionary = null;
+       //private AstNode UnParsedTokens = AstNode();
+       private Dictionary<string, Dictionary<string, string>> RegisterDictionary = null;
 
-    public string RegisterLookup(string variable)
-    {
-           return RegisterDictionary[CurrentFunction][variable];
-    }
-    public string GenerateCode(AstNode tokens, Dictionary<string, Dictionary<string, string>> Registers)
-    {
-        string GeneratedText = "";
-        RegisterDictionary = Registers;
-        //UnParsedTokens.AddRange(tokens);
+       public string RegisterLookup(string variable)
+       {
+              return RegisterDictionary[CurrentFunction][variable];
+       }
+       public string GenerateCode(AstNode tokens, Dictionary<string, Dictionary<string, string>> Registers)
+       {
+              string GeneratedText = "";
+              RegisterDictionary = Registers;
+              //UnParsedTokens.AddRange(tokens);
 
-        // Console.WriteLine(tokens.GetChild(1));
-        // if (tokens.GetChild(1) is DeclarationNode)
-        // {
-        //        Console.WriteLine(((IdentifierNode)tokens.GetChild(0).GetChild(0)).Value);
-        // }
-        //
-        // while (UnParsedTokens.Count != 0)
-        // {
-        //     switch (UnParsedTokens[0].Text)
-        //     {
-        //         case IfStatementNode:
-        //             GeneratedText = GeneratedText + IfAsm();
-        //             break;
-        //         case WhileStatementNode:
-        //
-        //             break;
-        //         case ForStatementNode:
-        //
-        //             break;
-        //         case DeclarationNode:
-        //             //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
-        //             break;
-        //         case PinWriteExprNode:
-        //             //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
-        //             break;
-        //         case PinReadExprNode:
-        //             //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-        //             break;
-        //         case PinModeExprNode:
-        //             //GeneratedText = GeneratedText +
-        //              //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-        //             break;
-        //         case FunctionDefinitionNode:
-        //             GeneratedText = GeneratedText + "void setup()\n{\n";
-        //             break;
-        //         case "printf":
-        //             //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
-        //             break;
-        //         default:
-        //             //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
-        //             Console.WriteLine("OOOO:");
-        //             break;
-        //
-        //     }
-        //
-        // }
-        return ""; //GeneratedText;
-    }
-    public string DoDecleration(AstNode FinalDeclarationType, string x, string y)
-    {
-           string FinalDeclaration = "";
+              // Console.WriteLine(tokens.GetChild(1));
+              // if (tokens.GetChild(1) is DeclarationNode)
+              // {
+              //        Console.WriteLine(((IdentifierNode)tokens.GetChild(0).GetChild(0)).Value);
+              // }
+              //
+              // while (UnParsedTokens.Count != 0)
+              // {
+              //     switch (UnParsedTokens[0].Text)
+              //     {
+              //         case IfStatementNode:
+              //             GeneratedText = GeneratedText + IfAsm();
+              //             break;
+              //         case WhileStatementNode:
+              //
+              //             break;
+              //         case ForStatementNode:
+              //
+              //             break;
+              //         case DeclarationNode:
+              //             //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
+              //             break;
+              //         case PinWriteExprNode:
+              //             //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
+              //             break;
+              //         case PinReadExprNode:
+              //             //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+              //             break;
+              //         case PinModeExprNode:
+              //             //GeneratedText = GeneratedText +
+              //              //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+              //             break;
+              //         case FunctionDefinitionNode:
+              //             GeneratedText = GeneratedText + "void setup()\n{\n";
+              //             break;
+              //         case "printf":
+              //             //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
+              //             break;
+              //         default:
+              //             //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
+              //             Console.WriteLine("OOOO:");
+              //             break;
+              //
+              //     }
+              //
+              // }
+              return ""; //GeneratedText;
+       }
+       public string DoDecleration(AstNode FinalDeclarationType, string x, string y)
+       {
+              string FinalDeclaration = "";
 
-           // switch (FinalDeclarationType)
-           // {
-           //        case (PinNode):
-           //               FinalDeclaration = "const int";
-           //               break;
-           //        case (BoolNode):
-           //               FinalDeclaration = "bool";
-           //               break;
-           //        case (FloatNode):
-           //               FinalDeclaration = "float";
-           //               break;
-           //        case (IntNode):
-           //               FinalDeclaration = "int";
-           //               break;
-           //        case (StringNode):
-           //               FinalDeclaration = "string";
-           //               break;
-           //        case (VoidNode):
-           //               FinalDeclaration = "void";
-           //               break;
-           // }
+              // switch (FinalDeclarationType)
+              // {
+              //        case (PinNode):
+              //               FinalDeclaration = "const int";
+              //               break;
+              //        case (BoolNode):
+              //               FinalDeclaration = "bool";
+              //               break;
+              //        case (FloatNode):
+              //               FinalDeclaration = "float";
+              //               break;
+              //        case (IntNode):
+              //               FinalDeclaration = "int";
+              //               break;
+              //        case (StringNode):
+              //               FinalDeclaration = "string";
+              //               break;
+              //        case (VoidNode):
+              //               FinalDeclaration = "void";
+              //               break;
+              // }
 
-           FinalDeclaration = $"{FinalDeclaration} {x} =  {y};";
-           return FinalDeclaration;
-    }
+              FinalDeclaration = $"{FinalDeclaration} {x} =  {y};";
+              return FinalDeclaration;
+       }
        /// <summary>
        /// <c>AdditionASM</c> converts an addition operation to their ARM equivalant.
        /// </summary>
@@ -136,9 +139,9 @@ public class ASMGenerator
        {
               return $"SUB {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
-       
+
        /// <summary>
-       /// <c>MultiplyAsm</c> converts an multiplication operation to their ARM equivalant.
+       /// <c>MultiplyAsm</c> converts a multiplication operation to their ARM equivalant.
        /// </summary>
        /// <param name="addTo">Result register</param>
        /// <param name="variable">First source</param>
@@ -148,7 +151,35 @@ public class ASMGenerator
        {
               return $"MULS {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
-       
+
+       /// <summary>
+       /// <c>DivideAsm<\c> converts a division operation to an ARM equivalent algorithm
+       /// </summary>
+       /// <param name="addTo">Result register</param>
+       /// <param name="variable">First source</param>
+       /// <param name="addVariable">Second source</param>
+       /// <returns>ARM instruction for division algorithm</returns>
+       public string DivideAsm(string addTo, string variable, string addVariable)
+       {
+              string loopStart = ".LBLDiv_" + DivLabelCount;
+              string loopCode = ".LBLDiv_" + DivLabelCount + ".1";
+              string loopEnd = ".LBLDiv_" + DivLabelCount + ".2";
+              // string loopAction = AuxiliaryCodeGen(null);//This should NOT be null, Pass tokens
+              string quotient = RegisterLookup(addTo);
+              string remainder = RegisterLookup(variable);
+              string loopAction1 = AdditionAsm(quotient, quotient, "#1");
+              string loopAction2 = SubtractAsm(remainder, remainder, addVariable);
+              DivLabelCount = DivLabelCount + 1;
+              return $"b {loopStart}\n" + //Go to loop label
+                     $"{loopStart}:\n //" +//Declare loop label 
+                     $"{IfAsm("", "", "", loopCode, loopEnd)}\n" +
+                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopAction1}\n" + //Declare increment of quotient 
+                     $"{loopAction2}\n" + //Declare decrement of dividend
+                     $"{loopStart}" +
+                     $"{loopEnd}";//Define end of loop
+       }
+
        /// <summary>
        /// <c>OperatorASM</c> converts operators to their ARM equivalant.
        /// </summary>
@@ -158,28 +189,28 @@ public class ASMGenerator
        {
               switch (operatorASM)
               {
-                     case("=="):
+                     case ("=="):
                             return "bne.n";
-                     case("!="):
+                     case ("!="):
                             return "beq.n";
-                     case("<"):
+                     case ("<"):
                             return "bge.n";
-                     case(">"):
+                     case (">"):
                             return "ble.n";
-                     case("<="):
+                     case ("<="):
                             return "bgt.n";
-                     case(">="):
+                     case (">="):
                             return "blt.n,";
-                     case("&&")://Fix this one
+                     case ("&&")://Fix this one
                             string label = ".LBL_" + labelCount;//Generate a label
                             labelCount = labelCount + 1;
                             return label;
-                     case("||")://Fix this one
+                     case ("||")://Fix this one
                             string label1 = ".LBL_" + labelCount;//Generate a label
                             labelCount = labelCount + 1;
                             string label2 = ".LBL_" + labelCount;//Generate a label
                             labelCount = labelCount + 1;
-                            return "bne "+label1+ "\n" +"b "+label2+ "\n";
+                            return "bne " + label1 + "\n" + "b " + label2 + "\n";
               }
 
               return "";
@@ -194,100 +225,100 @@ public class ASMGenerator
               return finalComp;
 
        }
-       
+
        /// <summary>
-       /// <c>ifASM</c> generates an if statement in ARM.
+       /// <c>ifAsm</c> generates an if statement in ARM.
        /// </summary>
        /// <returns>initialises the if statement</returns>
        /// <remarks>Not done. Requires liveness analysis to be done, should also take in a register</remarks>
        public string IfAsm(string ComparisonOperator, string leftHand, string rightHand, string? trueLabel = null, string? falseLabel = null)
        {
-           string label1, label2;
-           string comparison = setupCompare(ComparisonOperator,leftHand,rightHand);
-           label1 = trueLabel ?? $"{ifLabelCount}";
-           label2 = falseLabel ?? $"{ifLabelCount}.1"; //label2 = falseLabel if notNull, else ifLabelCount.1
-           
-           ifLabelCount += 1;
-           return comparison + $"{label1}\n bl {label2}";
+              string label1, label2;
+              string comparison = setupCompare(ComparisonOperator, leftHand, rightHand);
+              label1 = trueLabel ?? $"{ifLabelCount}";
+              label2 = falseLabel ?? $"{ifLabelCount}.1"; //label2 = falseLabel if notNull, else ifLabelCount.1
+
+              ifLabelCount += 1;
+              return comparison + $"{label1}\n bl {label2}";
        }
 
        public string WhileAsm()
        {
               string loopStart = ".LBLWhile_" + WhileLabelCount;
               string loopCode = ".LBLWhile_" + WhileLabelCount + ".1";
-              string loopEnd = ".LBLWhile_" + WhileLabelCount +".2";
+              string loopEnd = ".LBLWhile_" + WhileLabelCount + ".2";
               string loopAction = AuxiliaryCodeGen(null);//This should NOT be null, Pass tokens
               WhileLabelCount = WhileLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
                      $"{loopStart}:\n //" +//Declare loop label 
                      $"{IfAsm("", "", "", loopCode, loopEnd)}\n" +
-                     $"{loopCode}\n"+//Declare loop code
-                     $"{loopAction}\n"+ //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
-                     $"{loopStart}"+
+                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopAction}\n" + //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
+                     $"{loopStart}" +
                      $"{loopEnd}";//Define end of loop
        }
-       
+
        public string FroreAsm()
        {
               string loopStart = ".LBLFor_" + ForLabelCount;
               string loopCode = ".LBLFor_" + ForLabelCount + ".1";
-              string loopEnd = ".LBLFor_" + ForLabelCount +".2";
+              string loopEnd = ".LBLFor_" + ForLabelCount + ".2";
               string loopAction = AuxiliaryCodeGen(null);//This should NOT be null, Pass tokens
               WhileLabelCount = WhileLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
                      $"{loopStart}:\n //" +//Declare loop label 
-                     $"{ForLabelCount}\n"+//Switch out with variable init
+                     $"{ForLabelCount}\n" +//Switch out with variable init
                      $"{IfAsm("", "", "", loopCode, loopEnd)}\n" +
-                     $"{loopCode}\n"+//Declare loop code
-                     $"{loopAction}\n"+ //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
-                     $"{loopStart}"+
+                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopAction}\n" + //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
+                     $"{loopStart}" +
                      $"{loopEnd}";//Define end of loop
        }
-       
+
        public string AuxiliaryCodeGen(AstNode tokens)
-    {
-        // while (UnParsedTokens.Count != 0)
-        // {
-        //     switch (UnParsedTokens[0].Text)
-        //     {
-        //         case IfStatementNode:
-        //             GeneratedText = GeneratedText + IfAsm();
-        //             break;
-        //         case WhileStatementNode:
-        //
-        //             break;
-        //         case ForStatementNode:
-        //
-        //             break;
-        //         case DeclarationNode:
-        //             //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
-        //             break;
-        //         case PinWriteExprNode:
-        //             //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
-        //             break;
-        //         case PinReadExprNode:
-        //             //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-        //             break;
-        //         case PinModeExprNode:
-        //             //GeneratedText = GeneratedText +
-        //              //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-        //             break;
-        //         case FunctionDefinitionNode:
-        //             GeneratedText = GeneratedText + "void setup()\n{\n";
-        //             break;
-        //         case "printf":
-        //             //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
-        //             break;
-        //         default:
-        //             //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
-        //             Console.WriteLine("OOOO:");
-        //             break;
-        //
-        //     }
-        //
-        // }
-        return ""; //GeneratedText;
-    }
+       {
+              // while (UnParsedTokens.Count != 0)
+              // {
+              //     switch (UnParsedTokens[0].Text)
+              //     {
+              //         case IfStatementNode:
+              //             GeneratedText = GeneratedText + IfAsm();
+              //             break;
+              //         case WhileStatementNode:
+              //
+              //             break;
+              //         case ForStatementNode:
+              //
+              //             break;
+              //         case DeclarationNode:
+              //             //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
+              //             break;
+              //         case PinWriteExprNode:
+              //             //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
+              //             break;
+              //         case PinReadExprNode:
+              //             //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+              //             break;
+              //         case PinModeExprNode:
+              //             //GeneratedText = GeneratedText +
+              //              //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+              //             break;
+              //         case FunctionDefinitionNode:
+              //             GeneratedText = GeneratedText + "void setup()\n{\n";
+              //             break;
+              //         case "printf":
+              //             //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
+              //             break;
+              //         default:
+              //             //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
+              //             Console.WriteLine("OOOO:");
+              //             break;
+              //
+              //     }
+              //
+              // }
+              return ""; //GeneratedText;
+       }
 
 }
 //  R0-R12	RW	Unknown	General-purpose registers.
