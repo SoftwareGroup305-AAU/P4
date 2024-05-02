@@ -16,7 +16,7 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
 {
     public virtual Result Visit(AstNode node)
     {
-        return VisitChildren(node);
+        return node.Accept(this);
     }
 
     public virtual Result VisitChildren(AstNode node)
@@ -25,7 +25,7 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
 
         foreach (AstNode child in node.Children)
         {
-            child.Accept(this);
+            res = child.Accept(this);
         }
 
         return res;
