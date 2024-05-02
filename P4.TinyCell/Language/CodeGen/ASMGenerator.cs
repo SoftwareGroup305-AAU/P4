@@ -164,7 +164,6 @@ public class ASMGenerator
               string loopStart = ".LBLDiv_" + DivLabelCount;
               string loopCode = ".LBLDiv_" + DivLabelCount + ".1";
               string loopEnd = ".LBLDiv_" + DivLabelCount + ".2";
-              // string loopAction = AuxiliaryCodeGen(null);//This should NOT be null, Pass tokens
               string quotient = RegisterLookup(addTo);
               string remainder = RegisterLookup(variable);
               string loopAction1 = AdditionAsm(quotient, quotient, "#1");
@@ -178,6 +177,31 @@ public class ASMGenerator
                      $"{loopAction2}\n" + //Declare decrement of dividend
                      $"{loopStart}" +
                      $"{loopEnd}";//Define end of loop
+       }
+
+       /// <summary>
+       /// <c>ModuloAsm<\c> converts a modulo operation to an ARM equivalent algorithm
+       /// </summary>
+       /// <param name="addTo">Result register</param>
+       /// <param name="variable">First source</param>
+       /// <param name="addVariable">Second source</param>
+       /// <returns>ARM instruction for modulo algorithm</returns>
+       public string ModuloAsm(string addTo, string variable, string addVariable)
+       {
+              string loopStart = ".LBLMod_" + ModLabelCount;
+              string loopCode = ".LBLMod_" + ModLabelCount + ".1";
+              string loopEnd = ".LBLMod_" + ModLabelCount + ".2";
+              string remainder = RegisterLookup(variable);
+              string loopAction = SubtractAsm(remainder, remainder, addVariable);
+              ModLabelCount = ModLabelCount + 1;
+              return $"b {loopStart}\n" + //Go to loop label
+                     $"{loopStart}:\n //" +//Declare loop label 
+                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
+                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopAction}\n" + //Declare decrement of dividend
+                     $"{loopStart}" +
+                     $"{loopEnd}" + //Define end of loop
+                     $"MOV {addTo}, {remainder}"; //Move remainder to result register
        }
 
        /// <summary>
