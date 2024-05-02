@@ -1,11 +1,8 @@
 using System.Numerics;
 using Antlr4.Runtime;
-using P4.TinyCell.AST;
-using P4.TinyCell.AST.Function;
-using P4.TinyCell.AST.Primitive;
-using P4.TinyCell.AST.Statement;
-using P4.TinyCell.AST.StatementExpr;
-using P4.TinyCell.AST.Types;
+using P4.TinyCell.Language.AbstractSyntaxTree;
+using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
 namespace P4.TinyCell.Languages.TinyCell.CodeGen;
 
@@ -14,29 +11,37 @@ public class ASMGenerator
        private int labelCount = 0;
        private int ifLabelCount = 0;
        private int WhileLabelCount = 0;
+       private int ForLabelCount = 0;
        /// <summary>
        /// A dictonary to keep track of digital and analog pins
        /// </summary>
        /// <returns>true if digital, false if analog</returns>
        Dictionary<string, bool> IsDigitalPinMap = new Dictionary<string, bool>();
-
+       private string CurrentFunction = "";
         public ASMGenerator()
     {
         Console.WriteLine("Running code generation");
     }
 
-    private AstNode UnParsedTokens = new AstNode();
-    public string GeneratedCode(AstNode tokens)
+    //private AstNode UnParsedTokens = AstNode();
+    private Dictionary<string, Dictionary<string, string>> RegisterDictionary = null;
+
+    public string RegisterLookup(string variable)
+    {
+           return RegisterDictionary[CurrentFunction][variable];
+    }
+    public string GenerateCode(AstNode tokens, Dictionary<string, Dictionary<string, string>> Registers)
     {
         string GeneratedText = "";
+        RegisterDictionary = Registers;
         //UnParsedTokens.AddRange(tokens);
 
-        Console.WriteLine(tokens.GetChild(1));
-        if (tokens.GetChild(1) is DeclarationNode)
-        {
-               Console.WriteLine(((IdentifierNode)tokens.GetChild(0).GetChild(0)).Value);
-        }
-        
+        // Console.WriteLine(tokens.GetChild(1));
+        // if (tokens.GetChild(1) is DeclarationNode)
+        // {
+        //        Console.WriteLine(((IdentifierNode)tokens.GetChild(0).GetChild(0)).Value);
+        // }
+        //
         // while (UnParsedTokens.Count != 0)
         // {
         //     switch (UnParsedTokens[0].Text)
@@ -77,34 +82,33 @@ public class ASMGenerator
         //     }
         //
         // }
-        return GeneratedText;
+        return ""; //GeneratedText;
     }
-
     public string DoDecleration(AstNode FinalDeclarationType, string x, string y)
     {
            string FinalDeclaration = "";
 
-           switch (FinalDeclarationType)
-           {
-                  case (PinTypeNode):
-                         FinalDeclaration = "const int";
-                         break;
-                  case (BoolTypeNode):
-                         FinalDeclaration = "bool";
-                         break;
-                  case (FloatTypeNode):
-                         FinalDeclaration = "float";
-                         break;
-                  case (IntTypeNode):
-                         FinalDeclaration = "int";
-                         break;
-                  case (StringTypeNode):
-                         FinalDeclaration = "string";
-                         break;
-                  case (VoidTypeNode):
-                         FinalDeclaration = "void";
-                         break;
-           }
+           // switch (FinalDeclarationType)
+           // {
+           //        case (PinNode):
+           //               FinalDeclaration = "const int";
+           //               break;
+           //        case (BoolNode):
+           //               FinalDeclaration = "bool";
+           //               break;
+           //        case (FloatNode):
+           //               FinalDeclaration = "float";
+           //               break;
+           //        case (IntNode):
+           //               FinalDeclaration = "int";
+           //               break;
+           //        case (StringNode):
+           //               FinalDeclaration = "string";
+           //               break;
+           //        case (VoidNode):
+           //               FinalDeclaration = "void";
+           //               break;
+           // }
 
            FinalDeclaration = $"{FinalDeclaration} {x} =  {y};";
            return FinalDeclaration;
@@ -118,7 +122,7 @@ public class ASMGenerator
        /// <returns>ARM instruction for addition</returns>
        public string AdditionAsm(string addTo, string variable, string addVariable)
        {
-              return $"ADD {addTo}, {variable}, {addVariable}\n";
+              return $"ADD {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
 
        /// <summary>
@@ -130,7 +134,7 @@ public class ASMGenerator
        /// <returns>ARM instruction for subtraction</returns>
        public string SubtractAsm(string addTo, string variable, string addVariable)
        {
-              return $"SUB {addTo}, {variable}, {addVariable}\n";
+              return $"SUB {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
        
        /// <summary>
@@ -142,7 +146,7 @@ public class ASMGenerator
        /// <returns>ARM instruction for multiplication</returns>
        public string MultiplyAsm(string addTo, string variable, string addVariable)
        {
-              return $"MULS {addTo}, {variable}, {addVariable}\n";
+              return $"MULS {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
        
        /// <summary>
@@ -186,7 +190,7 @@ public class ASMGenerator
               //remember to:
               //" ldr     r0, [sp, #4]"
               //" ldr     r1, [sp]"
-              string finalComp = $"cmp {varOne}, {varTwo}\n{OperatorAsm(compType)}";
+              string finalComp = $"cmp {RegisterLookup(varOne)}, {RegisterLookup(varTwo)}\n{OperatorAsm(compType)}";
               return finalComp;
 
        }
@@ -221,7 +225,24 @@ public class ASMGenerator
                      $"{loopAction}\n"+ //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
                      $"{loopStart}"+
                      $"{loopEnd}";//Define end of loop
-       } 
+       }
+       
+       public string FroreAsm()
+       {
+              string loopStart = ".LBLFor_" + ForLabelCount;
+              string loopCode = ".LBLFor_" + ForLabelCount + ".1";
+              string loopEnd = ".LBLFor_" + ForLabelCount +".2";
+              string loopAction = AuxiliaryCodeGen(null);//This should NOT be null, Pass tokens
+              WhileLabelCount = WhileLabelCount + 1;
+              return $"b {loopStart}\n" + //Go to loop label
+                     $"{loopStart}:\n //" +//Declare loop label 
+                     $"{ForLabelCount}\n"+//Switch out with variable init
+                     $"{IfAsm("", "", "", loopCode, loopEnd)}\n" +
+                     $"{loopCode}\n"+//Declare loop code
+                     $"{loopAction}\n"+ //Declare code to execute  (Remember the action that can help the code end like incrementing i if the condition is i < 10) 
+                     $"{loopStart}"+
+                     $"{loopEnd}";//Define end of loop
+       }
        
        public string AuxiliaryCodeGen(AstNode tokens)
     {
@@ -265,7 +286,7 @@ public class ASMGenerator
         //     }
         //
         // }
-        return GeneratedText;
+        return ""; //GeneratedText;
     }
 
 }
