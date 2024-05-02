@@ -57,7 +57,7 @@ loopStatement:
 jumpStatement:
 	CONTINUE SEMI
 	| BREAK SEMI
-	| RETURN expression SEMI;
+	| RETURN expression? SEMI;
 
 assignment: identifier assignmentOperator expression;
 
