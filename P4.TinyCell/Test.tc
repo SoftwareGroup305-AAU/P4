@@ -1,4 +1,4 @@
-pin numse = 10;  //Digital
+pin numse = 2 || 2;
 int a = 2 + 2;
 int a = 2 + 6;
 int a = 9 + 2;
