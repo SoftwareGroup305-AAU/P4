@@ -1,6 +1,8 @@
 ﻿using Antlr4.Runtime;
 using P4.TinyCell.Language.AbstractSyntaxTree;
+using P4.TinyCell.Languages.TinyCell;
 using P4.TinyCell.Utilities;
+
 
 internal class Program
 {
@@ -41,6 +43,8 @@ internal class Program
         //     allocatedScopes.Add(scope.Key, groupings);
         // }
 
+
+
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
 
@@ -61,6 +65,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);
