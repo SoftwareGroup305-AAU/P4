@@ -172,7 +172,7 @@ public class ASMGenerator
               DivLabelCount = DivLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
                      $"{loopStart}:\n //" +//Declare loop label 
-                     $"{IfAsm("", "", "", loopCode, loopEnd)}\n" +
+                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopCode}\n" +//Declare loop code
                      $"{loopAction1}\n" + //Declare increment of quotient 
                      $"{loopAction2}\n" + //Declare decrement of dividend
