@@ -8,54 +8,114 @@ using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Language.AbstractSyntaxTree.NumExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
-
+using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
 namespace P4.TinyCell.Languages.TinyCell
 {
     class TypeCheckerVisitor : AstBaseVisitor<TcType>
     {
         private List<Function> fTable = [];
-        private Stack<KeyValuePair<string, TcType>> vTable = [];
+
+        private Stack<Stack<KeyValuePair<string, TcType>>> vTableStack = [];
+        
 
         private class Function
         {
-            public TcType? Type { get; set; }
+            public TcType Type { get; set; }
             public string? Id { get; set; }
             public List<TcType> Parameters = [];
+        }
+
+        public override TcType VisitRootNode(RootNode rootNode)
+        {
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
+            return base.VisitRootNode(rootNode);
         }
 
 
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             var function = new Function
             {
                 Type = functionDefinitionNode.Type.Type,
                 Id = functionDefinitionNode.Identifier.Value,
                 Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
             };
-
+            foreach (var parameter in functionDefinitionNode.ParameterList.Parameters)
+            {
+                vTableStack.First().Push(new KeyValuePair<string, TcType>(parameter.Identifier.Value, parameter.TypeNode.Type));
+            }
             fTable.Add(function);
-
-            return base.VisitFunctionDefinitionNode(functionDefinitionNode);
+            Visit(functionDefinitionNode.CompoundStatement);
+            vTableStack.Pop();
+            return default;
         }
 
-        public override TcType VisitRootNode(RootNode rootNode)
+
+        public override TcType VisitReturnNode(ReturnNode returnNode)
         {
-            int a = 2;
-            return base.VisitRootNode(rootNode);
+            var returnType = Visit(returnNode.Children[0]);
+            if (returnType != fTable.Last().Type)
+            {
+                throw new Exception($"Type mismatch: Expected return statement of type {fTable.Last().Type}");
+            }
+            return returnType;
         }
+
+        public override TcType VisitAssignNode(AssignNode assignNode)
+        {
+            var id = assignNode.Children[0] as IdentifierNode;
+            var assignedType = Visit(assignNode.Children[1]);
+            KeyValuePair<string, TcType> type = default;
+            foreach (var stack in vTableStack)
+            {
+                type = stack.FirstOrDefault(x => x.Key == id.Value);
+                if (!type.Equals(default(KeyValuePair<string, TcType>)))
+                {
+                    break;
+                }
+            }
+            if (type.Equals(default(KeyValuePair<string, TcType>)))
+            {
+                throw new Exception($"Variable {id.Value} not declared");
+            }
+            if (type.Value != assignedType)
+                {
+                    if (type.Value != TcType.PIN || assignedType != TcType.INT)
+                    {
+                        throw new Exception($"Type mismatch: expected {type.Value}, but got {assignedType}");
+                    }
+                }
+            return type.Value;
+        }
+
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
         {
             
             var declaredId = declarationNode.Children[1] as IdentifierNode;
-            var declaredType = declarationNode.Children[0] as TypeNode;
-            vTable.Push(new KeyValuePair<string, TcType>(declaredId.Value, declaredType.Type));
+            var declaredType = declarationNode.Children[0] as TypeNode; 
+            if (vTableStack.First().Any(x => x.Key == declaredId.Value))
+            {
+                throw new Exception($"Variable {declaredId.Value} already declared");
+            }
+            vTableStack.First().Push(new KeyValuePair<string, TcType>(declaredId.Value, declaredType.Type));
             if (declarationNode.Children.Count > 2)
             {
                 var actionType = Visit(declarationNode.Children[2]);
-                if (actionType != declaredType.Type)
+
+                if (declaredType.Type != TcType.PIN)
+                {
+                    if (actionType != declaredType.Type)
                 {
                     throw new Exception($"Type mismatch: expected {declaredType.Type}, but got {actionType}");
                 }
+                }
+                else if (actionType != TcType.INT)
+                {
+                    throw new Exception($"Type mismatch: expected {TcType.INT}, but got {actionType}");
+                }
+                
             }
             return declaredType.Type;
         }
@@ -129,8 +189,8 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitAddExprNode(AddExprNode addExprNode)
         {
             var left = Visit(addExprNode.Left);
-            var right = Visit(addExprNode.Right);   
-            if (left != TcType.INT || left != TcType.FLOAT || right != TcType.INT || right != TcType.FLOAT)
+            var right = Visit(addExprNode.Right);
+            if (!(left == TcType.INT || left == TcType.FLOAT) && !(right == TcType.INT || right == TcType.FLOAT))
             {
                 throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
             }
@@ -206,18 +266,99 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitIdentifierNode(IdentifierNode identifierNode)
         {
             var id = identifierNode.Value;
-            var type = vTable.FirstOrDefault(x => x.Key == id);
-            if (type.Equals(default(KeyValuePair<string, TcType>)))
+            foreach (var stack in vTableStack)
             {
-                throw new Exception($"Variable {id} not declared");
+                var type = stack.FirstOrDefault(x => x.Key == id);
+                if (!type.Equals(default(KeyValuePair<string, TcType>)))
+                {
+                    return type.Value;
+                }
             }
-            return type.Value;
+            throw new Exception($"Variable {id} not declared");
+        }
+
+        public override TcType VisitFunctionCallNode(FunctionCallNode functionCallNode)
+        {
+            var parameterList = functionCallNode.ArgumentList;
+            
+            var function = fTable.FirstOrDefault(x => x.Id == functionCallNode.Identifier.Value);
+            if (function is null)
+            {
+                throw new Exception($"Function {functionCallNode.Identifier.Value} not declared");
+            }
+            if (parameterList is not null)
+            {
+                if (parameterList.Arguments.Count() != function.Parameters.Count)
+                {
+                    throw new Exception($"Function {functionCallNode.Identifier.Value} expects {function.Parameters.Count} parameters, but got {parameterList.Arguments.Count()}");
+                }
+                for (int i = 0; i < parameterList.Arguments.Count(); i++)
+                {
+                    var parameterType = Visit(parameterList.Arguments[i].Children[i]);
+                    if (parameterType != function.Parameters[i])
+                    {
+                        throw new Exception($"Function {functionCallNode.Identifier.Value} expects parameter {i} to be of type {function.Parameters[i]}, but got {parameterType}");
+                    }
+                }
+            }
+            return function.Type;
+        }
+
+        public override TcType VisitForStatementNode(ForStatementNode forStatementNode)
+        {
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());   
+            Visit(forStatementNode.Variable);
+            Visit(forStatementNode.Condition);
+            Visit(forStatementNode.Expression);
+            Visit(forStatementNode.CompoundStatement);
+            vTableStack.Pop();
+            return default;
+        }
+
+        public override TcType VisitWhileStatementNode(WhileStatementNode whileStatementNode)
+        {
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
+            Visit(whileStatementNode.Condition);
+            Visit(whileStatementNode.CompoundStatement);
+            vTableStack.Pop();
+            return default;
+        }
+
+        public override TcType VisitIfStatementNode(IfStatementNode ifStatementNode)
+        {
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
+            Visit(ifStatementNode.Condition);
+            Visit(ifStatementNode.TrueExpr);
+            if (ifStatementNode.ElseExpr is not null)
+            {
+                Visit(ifStatementNode.ElseExpr);
+            }
+            vTableStack.Pop();
+            return default;
         }
 
         public override TcType VisitIntNode(IntNode intNode)
         {
             return intNode.Type;
         }
+
+        public override TcType VisitFloatNode(FloatNode floatNode)
+        {
+            return floatNode.Type;
+        }
+
+        public override TcType VisitStringNode(StringNode stringNode)
+        {
+            return stringNode.Type;
+        }
+
+        public override TcType VisitBoolNode(BoolNode boolNode)
+        {
+            return boolNode.Type;
+        }
+
+
+
 
         public static void BuildFunctionTable()
         {
