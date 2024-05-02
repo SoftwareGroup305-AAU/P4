@@ -245,7 +245,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new BreakNode();
         }
-        return new ReturnNode(Visit(context.expression()));
+        if (context.expression() is not null)
+        {
+            return new ReturnNode(Visit(context.expression()));
+        }
+        return new ReturnNode();
     }
 
     public override AstNode VisitLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
