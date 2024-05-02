@@ -359,4 +359,5 @@ public class ASMGenerator
 // UXTB	Rd, Rm	Zero extend a byte	-	SXT and UXT
 // UXTH	Rd, Rm	Zero extend a halfword	-	SXT and UXT
 // WFE	-	Wait For Event	-	WFE
+
 // WFI	-	Wait For Interrupt	-	WFI
