@@ -73,7 +73,7 @@ internal class Program
         // var typeChecker = new TypeCheckerVisitor();
         // typeChecker.Visit(abcd);
 
-        //TestAstVisitor test = new();
-        //test.VisitRootNode((RootNode)abcd);
+        // TestAstVisitor test = new();
+        // test.VisitRootNode((RootNode)abcd);
     }
 }
