@@ -1,30 +1,14 @@
-apin numse = 2;
-int a = 4 + 2;
+dpin a = 1;
+apin b = 2;
 
-apin pis = 2;     //analog
-string antisocialiseringsbestraebelse = "4095";
-int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
+
 setup {
-    set numse to output;
-    set pis to output;
+    string h = "hej";
+    read b to h;
+
+    
 }
 
 update {
-    write HIGH to numse;
-    write antisocialiseringsbestraebelse to pis;
-    set pis to input;
-    read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
     
-    fuck(2, 3, 4);
-
-    if ("aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA" == "1020")
-    {
-    }
-}
-
-void fuck(apin a, int b, apin c)
-{
-    a = 3;
-    b = 4;
-    c = 5;
 }

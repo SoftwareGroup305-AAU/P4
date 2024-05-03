@@ -57,7 +57,7 @@ namespace P4.TinyCell.Languages.TinyCell
             var idNode = assignNode.Children[0] as IdentifierNode;
             var assignedType = Visit(assignNode.Children[1]);
             var id = LookupVariable(idNode.Value, vTableStack);
-            CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.PIN, TcType.INT });
+            CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
             return id.Value;
         }
 
@@ -70,7 +70,7 @@ namespace P4.TinyCell.Languages.TinyCell
             if (declarationNode.Children.Count > 2)
             {
                 var actionType = Visit(declarationNode.Children[2]);
-                CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.PIN, TcType.INT });
+                CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
 
             }
             return declaredTypeNode.Type;
@@ -252,7 +252,7 @@ namespace P4.TinyCell.Languages.TinyCell
             var idNode = plusAssignNode.Identifier;
             var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(plusAssignNode.Expression);
-            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.PIN });
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return id.Value;
         }
 
@@ -261,7 +261,7 @@ namespace P4.TinyCell.Languages.TinyCell
             var idNode = minusAssignNode.Identifier;
             var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(minusAssignNode.Expression);
-            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.PIN });
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return id.Value;
         }
 
@@ -270,7 +270,7 @@ namespace P4.TinyCell.Languages.TinyCell
             var idNode = multAssignNode.Identifier;
             var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(multAssignNode.Expression);
-            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.PIN });
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
             return id.Value;
         }
 
@@ -279,28 +279,50 @@ namespace P4.TinyCell.Languages.TinyCell
             var idNode = divAssignNode.Identifier;
             var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(divAssignNode.Expression);
-            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.PIN });
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
             return id.Value;
         }
 
 
         public override TcType VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
         {
-            var id = pinModeExprNode.Identifier;
-            KeyValuePair<string, TcType> type = default;
-            foreach (var stack in vTableStack)
+            var id = LookupVariable(pinModeExprNode.Identifier.Value, vTableStack);
+            if (id.Value != TcType.APIN && id.Value != TcType.DPIN)
             {
-                type = stack.FirstOrDefault(pair => pair.Key == id.Value);
+                throw new Exception($"Variable '{pinModeExprNode.Identifier.Value}' is not a 'pin'");
             }
-            if (type.Equals(default(KeyValuePair<string, TcType>)))
+            return default;
+        }
+
+        public override TcType VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
+        {
+            var toType = Visit(pinWriteExprNode.To);
+            if (toType == TcType.DPIN)
             {
-                throw new Exception($"Variable '{id.Value}' not declared");
-            }
-            if (type.Value != TcType.PIN)
+            if (pinWriteExprNode.From is not VoltageNode)
             {
-                throw new Exception($"Variable '{id.Value}' is not of type pin");
+                throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is a 'digital pin' and expects a 'voltage'");
             }
-            return type.Value;
+            return default;
+            }
+            if (toType == TcType.APIN)
+            {
+            var valueType = Visit(pinWriteExprNode.From);
+            if (valueType != TcType.INT)
+            {
+                throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is an 'analog pin' and expects an 'int'");
+            }
+            return default;
+            }
+            throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is not a 'pin'");
+        }
+
+        public override TcType VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
+        {
+            var toType = Visit(pinReadExprNode.To);
+            var fromType = Visit(pinReadExprNode.From);
+            CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT });
+            return default;
         }
 
         private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
@@ -327,7 +349,6 @@ namespace P4.TinyCell.Languages.TinyCell
                 throw new Exception($"Type mismatch: expected {expectedType}, but got {actualType}");
             }
         }
-
 
 
         /// <summary>
