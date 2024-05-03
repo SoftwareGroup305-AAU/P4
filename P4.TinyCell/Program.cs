@@ -10,29 +10,6 @@ using Antlr4.Runtime.Sharpen;
 
 internal class Program
 {
-    public class NoErrorListener : BaseErrorListener
-    {
-        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
-        {
-            throw new Exception($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
-        }
-
-        public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
-        {
-            throw new Exception($"Ambiguity at {startIndex}:{stopIndex}");
-        }
-
-        public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
-        {
-            throw new Exception($"Attempting full context at {startIndex}:{stopIndex}");
-        }
-
-        public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
-        {
-            throw new Exception($"Context sensitivity at {startIndex}:{stopIndex}");
-        }
-    }
-
     private static void Main(string[] args)
     {
         Process.Start("java", "-jar P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp P4.TinyCell.Shared/Antlr/TinyCell.g4 -visitor -listener");
@@ -44,8 +21,6 @@ internal class Program
         var lexer = new TinyCellLexer(antlrInputStream);
 
         var tokenStream = new CommonTokenStream(lexer);
-
-        var ParserHelper = new ParserHelper();
 
         var parser = new TinyCellParser(tokenStream);
 
@@ -75,8 +50,6 @@ internal class Program
         //     var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
         //     allocatedScopes.Add(scope.Key, groupings);
         // }
-
-
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
