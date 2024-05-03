@@ -10,7 +10,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 
-namespace P4.TinyCell.Languages.TinyCell
+namespace P4.TinyCell.Shared.Language.Typechecking
 {
     public class TypeCheckerVisitor : AstBaseVisitor<TcType>
     {
@@ -299,20 +299,20 @@ namespace P4.TinyCell.Languages.TinyCell
             var toType = Visit(pinWriteExprNode.To);
             if (toType == TcType.DPIN)
             {
-            if (pinWriteExprNode.From is not VoltageNode)
-            {
-                throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage'");
-            }
-            return default;
+                if (pinWriteExprNode.From is not VoltageNode)
+                {
+                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage'");
+                }
+                return default;
             }
             if (toType == TcType.APIN)
             {
-            var valueType = Visit(pinWriteExprNode.From);
-            if (valueType != TcType.INT)
-            {
-                throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is an 'analog pin' and expects an 'int'");
-            }
-            return default;
+                var valueType = Visit(pinWriteExprNode.From);
+                if (valueType != TcType.INT)
+                {
+                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is an 'analog pin' and expects an 'int'");
+                }
+                return default;
             }
             throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is not a 'pin'");
         }
@@ -370,18 +370,18 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (argumentList is not null)
             {
-            if (argumentList.Arguments.Count() != parameters.Count)
-            {
-                throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
-            }
-            for (int i = 0; i < argumentList.Arguments.Count(); i++)
-            {
-                var parameterType = Visit(argumentList.Arguments[i].Children[0]);
-                if (parameterType != parameters[i])
+                if (argumentList.Arguments.Count() != parameters.Count)
                 {
-                throw new Exception($"Function expects parameter {i+1} to be of type {parameters[i]}, but got {parameterType}");
+                    throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
                 }
-            }
+                for (int i = 0; i < argumentList.Arguments.Count(); i++)
+                {
+                    var parameterType = Visit(argumentList.Arguments[i].Children[0]);
+                    if (parameterType != parameters[i])
+                    {
+                        throw new Exception($"Function expects parameter {i + 1} to be of type {parameters[i]}, but got {parameterType}");
+                    }
+                }
             }
         }
 

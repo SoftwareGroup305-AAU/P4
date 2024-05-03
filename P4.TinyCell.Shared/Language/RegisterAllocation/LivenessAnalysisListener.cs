@@ -4,7 +4,7 @@ using Antlr4.Runtime.Misc;
 
 namespace P4.TinyCell.Shared.Language.RegisterAllocation
 {
-    internal class LivenessAnalysisListener : TinyCellBaseListener
+    public class LivenessAnalysisListener : TinyCellBaseListener
     {
 
         private Stack<ParentStructure> parentStructureStack;
