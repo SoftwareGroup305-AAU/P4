@@ -302,7 +302,7 @@ namespace P4.TinyCell.Languages.TinyCell
             return type.Value;
         }
 
-        private KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
+        private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
         {
             foreach (var stack in vTableStack)
             {
@@ -315,7 +315,7 @@ namespace P4.TinyCell.Languages.TinyCell
             throw new Exception($"Variable '{id}' not declared");
         }
 
-        private void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
+        private static void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
         {
             if (expectedType != actualType)
             {
@@ -334,7 +334,7 @@ namespace P4.TinyCell.Languages.TinyCell
         /// </summary>
         /// <param name="id">Function identifier</param>
         /// <returns>Returns <see cref="Function" no null if no function was found /></returns>
-        private Function? LookupFunction(string id, List<Function> fTable)
+        private static Function? LookupFunction(string id, List<Function> fTable)
         {
             var function = fTable.FirstOrDefault(x => x.Id == id);
             if (function is null)
@@ -348,13 +348,13 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (argumentList is not null)
             {
-                if (argumentList.Arguments.Count() != parameters.Count)
+                if (argumentList.Arguments.Length != parameters.Count)
                 {
                     throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
                 }
-                for (int i = 0; i < argumentList.Arguments.Count(); i++)
+                for (int i = 0; i < argumentList.Arguments.Length; i++)
                 {
-                    var parameterType = Visit(argumentList.Arguments[i].Children[0]);
+                    var parameterType = Visit(argumentList.Arguments[i].Children[i]);
                     if (parameterType != parameters[i])
                     {
                         throw new Exception($"Function expects parameter {i} to be of type {parameters[i]}, but got {parameterType}");
@@ -363,11 +363,11 @@ namespace P4.TinyCell.Languages.TinyCell
             }
         }
 
-        private void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
+        private static void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
             {
-                throw new Exception($"Type mismatch: expected ({string.Join(", ", expectedTypes)}), but got {left} and {right}");
+                throw new Exception($"Type mismatch: expected {string.Join(", ", expectedTypes)}, but got {left} and {right}");
             }
         }
 
@@ -401,7 +401,7 @@ namespace P4.TinyCell.Languages.TinyCell
             vTableStack.First().Push(variable);
         }
 
-        private void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
+        private static void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
@@ -413,7 +413,7 @@ namespace P4.TinyCell.Languages.TinyCell
             }
         }
 
-        private Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
+        private static Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
         {
             return new Function
             {
