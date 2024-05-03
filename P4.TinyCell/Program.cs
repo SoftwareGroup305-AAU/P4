@@ -36,7 +36,7 @@ internal class Program
     private static void Main(string[] args)
     {
         Process.Start("java", "-jar P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp P4.TinyCell.Shared/Antlr/TinyCell.g4 -visitor -listener");
-        
+
         string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
@@ -101,7 +101,7 @@ internal class Program
         var typeChecker = new TypeCheckerVisitor();
         typeChecker.Visit(abcd);
 
-        // TestAstVisitor test = new();
-        // test.VisitRootNode((RootNode)abcd);
+        TestAstVisitor test = new();
+        test.VisitRootNode((RootNode)abcd);
     }
 }
