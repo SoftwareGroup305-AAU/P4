@@ -1,8 +1,8 @@
 pin numse = 2;
-int a = 2 + "hello";
+int a = 4.3 + 2;
 
 pin pis = 2;     //analog
-int antisocialiseringsbestraebelse = 4095;
+string antisocialiseringsbestraebelse = 4095;
 int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
 setup {
     set numse to output;
@@ -14,8 +14,7 @@ update {
     set pis to input;
     read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
     
-    if (aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA == 1020)
+    if ("aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA" == "1020")
     {
-        fuck();
     }
 }

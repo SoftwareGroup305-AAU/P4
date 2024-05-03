@@ -78,7 +78,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitOrExprNode(OrExprNode orExprNode)
         {
             var left = Visit(orExprNode.Left);
-            var right = Visit(orExprNode.Right);   
+            var right = Visit(orExprNode.Right);
             CheckComparisonTypes(left, right, new List<TcType> {TcType.BOOL});
             return TcType.BOOL;
         }
@@ -86,7 +86,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitAndExprNode(AndExprNode andExprNode)
         {
             var left = Visit(andExprNode.Left);
-            var right = Visit(andExprNode.Right);   
+            var right = Visit(andExprNode.Right);
             CheckComparisonTypes(left, right, new List<TcType> {TcType.BOOL});
             return TcType.BOOL;
         }
@@ -94,7 +94,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitEqualExprNode(EqualExprNode equalExprNode)
         {
             var left = Visit(equalExprNode.Left);
-            var right = Visit(equalExprNode.Right);   
+            var right = Visit(equalExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -102,7 +102,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitNotEqualExprNode(NotEqualExprNode notEqualExprNode)
         {
             var left = Visit(notEqualExprNode.Left);
-            var right = Visit(notEqualExprNode.Right);   
+            var right = Visit(notEqualExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -110,7 +110,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitLessThanExprNode(LessThanExprNode lessThanExprNode)
         {
             var left = Visit(lessThanExprNode.Left);
-            var right = Visit(lessThanExprNode.Right);   
+            var right = Visit(lessThanExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -118,7 +118,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitGreaterThanExprNode(GreaterThanExprNode greaterThanExprNode)
         {
             var left = Visit(greaterThanExprNode.Left);
-            var right = Visit(greaterThanExprNode.Right);   
+            var right = Visit(greaterThanExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -134,7 +134,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode)
         {
             var left = Visit(greaterThanOrEqualExprNode.Left);
-            var right = Visit(greaterThanOrEqualExprNode.Right);   
+            var right = Visit(greaterThanOrEqualExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -142,7 +142,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitLessThanEqualExprNode(LessThanEqualExprNode lessThanOrEqualExprNode)
         {
             var left = Visit(lessThanOrEqualExprNode.Left);
-            var right = Visit(lessThanOrEqualExprNode.Right);   
+            var right = Visit(lessThanOrEqualExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
@@ -150,7 +150,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitDivExprNode(DivExprNode divExprNode)
         {
             var left = Visit(divExprNode.Left);
-            var right = Visit(divExprNode.Right);   
+            var right = Visit(divExprNode.Right);
             CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
@@ -158,7 +158,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitSubExprNode(SubExprNode subExprNode)
         {
             var left = Visit(subExprNode.Left);
-            var right = Visit(subExprNode.Right);   
+            var right = Visit(subExprNode.Right);
             CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
@@ -166,7 +166,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitMultExprNode(MultExprNode mulExprNode)
         {
             var left = Visit(mulExprNode.Left);
-            var right = Visit(mulExprNode.Right);   
+            var right = Visit(mulExprNode.Right);
             CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
@@ -174,7 +174,7 @@ namespace P4.TinyCell.Languages.TinyCell
         public override TcType VisitModExprNode(ModExprNode modExprNode)
         {
             var left = Visit(modExprNode.Left);
-            var right = Visit(modExprNode.Right);   
+            var right = Visit(modExprNode.Right);
             CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT});
             return left >= right ? left : right;
         }
@@ -302,7 +302,7 @@ namespace P4.TinyCell.Languages.TinyCell
             return type.Value;
         }
 
-        private KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
+        private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
         {
             foreach (var stack in vTableStack)
             {
@@ -315,7 +315,7 @@ namespace P4.TinyCell.Languages.TinyCell
             throw new Exception($"Variable '{id}' not declared");
         }
 
-        private void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
+        private static void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
         {
             if (expectedType != actualType)
             {
@@ -334,7 +334,7 @@ namespace P4.TinyCell.Languages.TinyCell
         /// </summary>
         /// <param name="id">Function identifier</param>
         /// <returns>Returns <see cref="Function" no null if no function was found /></returns>
-        private Function? LookupFunction(string id, List<Function> fTable)
+        private static Function? LookupFunction(string id, List<Function> fTable)
         {
             var function = fTable.FirstOrDefault(x => x.Id == id);
             if (function is null)
@@ -348,26 +348,26 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (argumentList is not null)
             {
-            if (argumentList.Arguments.Count() != parameters.Count)
-            {
-                throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
-            }
-            for (int i = 0; i < argumentList.Arguments.Count(); i++)
-            {
-                var parameterType = Visit(argumentList.Arguments[i].Children[i]);
-                if (parameterType != parameters[i])
+                if (argumentList.Arguments.Length != parameters.Count)
                 {
-                throw new Exception($"Function expects parameter {i} to be of type {parameters[i]}, but got {parameterType}");
+                    throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
                 }
-            }
+                for (int i = 0; i < argumentList.Arguments.Length; i++)
+                {
+                    var parameterType = Visit(argumentList.Arguments[i].Children[i]);
+                    if (parameterType != parameters[i])
+                    {
+                        throw new Exception($"Function expects parameter {i} to be of type {parameters[i]}, but got {parameterType}");
+                    }
+                }
             }
         }
 
-        private void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
+        private static void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
             {
-                throw new Exception($"Type mismatch: expected ({string.Join(", ", expectedTypes)}), but got {left} and {right}");
+                throw new Exception($"Type mismatch: expected {string.Join(", ", expectedTypes)}, but got {left} and {right}");
             }
         }
 
@@ -401,7 +401,7 @@ namespace P4.TinyCell.Languages.TinyCell
             vTableStack.First().Push(variable);
         }
 
-        private void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
+        private static void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
@@ -413,7 +413,7 @@ namespace P4.TinyCell.Languages.TinyCell
             }
         }
 
-        private Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
+        private static Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
         {
             return new Function
             {
