@@ -170,12 +170,12 @@ public class ASMGenerator
               string loopAction2 = SubtractAsm(remainder, remainder, addVariable);
               DivLabelCount = DivLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
-                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopCode}:\n" +//Declare loop code
                      $"{loopAction1}\n" + //Declare increment of quotient 
                      $"{loopAction2}\n" + //Declare decrement of dividend
                      $"{loopStart}:\n //" +//Declare loop label 
                      $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
-                     $"{loopEnd}";//Define end of loop
+                     $"{loopEnd}:";//Declare end of loop
        }
 
        /// <summary>
@@ -196,15 +196,15 @@ public class ASMGenerator
               string loopAction = SubtractAsm(remainder, remainder, addVariable);
               ModLabelCount = ModLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
-                     $"{loopCode}\n" +//Declare loop code
+                     $"{loopCode}:\n" +//Declare loop code
                      $"{loopAction}\n" + //Declare decrement of dividend
                      $"{loopStart}:\n //" +//Declare loop label 
                      $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
-                     $"{loopEnd}\n" + //Define end of loop
+                     $"{loopEnd}\n" + //Declare end of loop
                      $"{IfAsm("<", remainder, "#0", zeroCheckSet, zeroCheckEnd)}\n" +
-                     $"{zeroCheckSet}:\n" +
-                     $"MOV {remainder}, #0\n" +
-                     $"{zeroCheckEnd}:\n" +
+                     $"{zeroCheckSet}:\n" + //Declare zero check label
+                     $"MOV {remainder}, #0\n" + //Set correct remainder value
+                     $"{zeroCheckEnd}:\n" + //Declare exit label
                      $"MOV {addTo}, {remainder}\n"; //Move remainder to result register
        }
 
