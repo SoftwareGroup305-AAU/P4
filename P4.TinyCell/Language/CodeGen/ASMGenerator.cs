@@ -190,6 +190,8 @@ public class ASMGenerator
               string loopStart = ".LBLMod_" + ModLabelCount;
               string loopCode = ".LBLMod_" + ModLabelCount + ".1";
               string loopEnd = ".LBLMod_" + ModLabelCount + ".2";
+              string zeroCheckSet = ".LBLMod_" + ModLabelCount + ".3";
+              string zeroCheckEnd = ".LBLMod_" + ModLabelCount + ".4";
               string remainder = RegisterLookup(variable);
               string loopAction = SubtractAsm(remainder, remainder, addVariable);
               ModLabelCount = ModLabelCount + 1;
@@ -198,8 +200,12 @@ public class ASMGenerator
                      $"{loopAction}\n" + //Declare decrement of dividend
                      $"{loopStart}:\n //" +//Declare loop label 
                      $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
-                     $"{loopEnd}" + //Define end of loop
-                     $"MOV {addTo}, {remainder}"; //Move remainder to result register
+                     $"{loopEnd}\n" + //Define end of loop
+                     $"{IfAsm("<", remainder, "#0", zeroCheckSet, zeroCheckEnd)}\n" +
+                     $"{zeroCheckSet}\n" +
+                     $"MOV {remainder}, #0\n" +
+                     $"{zeroCheckEnd}\n" +
+                     $"MOV {addTo}, {remainder}\n"; //Move remainder to result register
        }
 
        /// <summary>
