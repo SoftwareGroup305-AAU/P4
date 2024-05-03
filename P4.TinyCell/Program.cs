@@ -6,6 +6,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        Process.Start("java", "-jar P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp P4.TinyCell.Shared/Antlr/TinyCell.g4 -visitor -listener");
+        
         string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
