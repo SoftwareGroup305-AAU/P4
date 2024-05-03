@@ -8,6 +8,7 @@ using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
 
 namespace P4.TinyCell.Languages.TinyCell
 {
@@ -354,10 +355,10 @@ namespace P4.TinyCell.Languages.TinyCell
             }
             for (int i = 0; i < argumentList.Arguments.Count(); i++)
             {
-                var parameterType = Visit(argumentList.Arguments[i].Children[i]);
+                var parameterType = Visit(argumentList.Arguments[i].Children[0]);
                 if (parameterType != parameters[i])
                 {
-                throw new Exception($"Function expects parameter {i} to be of type {parameters[i]}, but got {parameterType}");
+                throw new Exception($"Function expects parameter {i+1} to be of type {parameters[i]}, but got {parameterType}");
                 }
             }
             }
