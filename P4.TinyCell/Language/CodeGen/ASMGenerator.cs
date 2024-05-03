@@ -202,9 +202,9 @@ public class ASMGenerator
                      $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopEnd}\n" + //Define end of loop
                      $"{IfAsm("<", remainder, "#0", zeroCheckSet, zeroCheckEnd)}\n" +
-                     $"{zeroCheckSet}\n" +
+                     $"{zeroCheckSet}:\n" +
                      $"MOV {remainder}, #0\n" +
-                     $"{zeroCheckEnd}\n" +
+                     $"{zeroCheckEnd}:\n" +
                      $"MOV {addTo}, {remainder}\n"; //Move remainder to result register
        }
 
