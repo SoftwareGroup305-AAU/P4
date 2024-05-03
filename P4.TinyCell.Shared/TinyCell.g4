@@ -15,7 +15,7 @@ updateDefinition: UPDATE compoundStatement;
 functionDefinition:
 	type identifier LPAR parameterList* RPAR compoundStatement;
 
-type: VOID | STRING | INT | FLOAT | BOOL | PIN;
+type: VOID | STRING | INT | FLOAT | BOOL | DPIN | APIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
@@ -124,7 +124,10 @@ ternaryExpression:
 expression: ternaryExpression;
 
 pinAssignmentExpression:
-	WRITE (pinVoltage | identifier) TO (identifier | Numeral)
+	WRITE (pinVoltage | identifier | Numeral) TO (
+		identifier
+		| Numeral
+	)
 	| READ (identifier | Numeral) TO identifier;
 
 pinStatusExpression:
@@ -151,7 +154,8 @@ VOLLOW: 'LOW';
 PININ: 'INPUT';
 PINOUT: 'OUTPUT';
 //Types
-PIN: 'pin';
+DPIN: 'dpin';
+APIN: 'apin';
 INT: 'int';
 FLOAT: 'float';
 STRING: 'string';

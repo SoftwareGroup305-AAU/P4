@@ -60,13 +60,13 @@ internal class Program
         var ParserHelper = new ParserHelper();
         ParserHelper.PrintTree(tree);
 
-        AstBuilderVisitor astBuilderVisitor = new();
-        AstNode abcd = astBuilderVisitor.Visit(tree);
+        // AstBuilderVisitor astBuilderVisitor = new();
+        // AstNode abcd = astBuilderVisitor.Visit(tree);
 
-        Console.WriteLine(abcd.ToString());
+        // Console.WriteLine(abcd.ToString());
 
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
+        // var typeChecker = new TypeCheckerVisitor();
+        // typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);
