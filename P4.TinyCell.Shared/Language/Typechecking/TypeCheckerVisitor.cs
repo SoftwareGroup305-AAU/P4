@@ -1,18 +1,18 @@
-using P4.TinyCell.Language.AbstractSyntaxTree;
-using P4.TinyCell.Language.AbstractSyntaxTree.Function;
-using P4.TinyCell.Language.AbstractSyntaxTree.Types;
-using P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
-using P4.TinyCell.Language.AbstractSyntaxTree.Expression;
-using P4.TinyCell.Language.AbstractSyntaxTree.NumExpr;
-using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
-using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
-using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
-using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
-using P4.TinyCell.Language.AbstractSyntaxTree.UnaryExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 
 namespace P4.TinyCell.Languages.TinyCell
 {
-    class TypeCheckerVisitor : AstBaseVisitor<TcType>
+    public class TypeCheckerVisitor : AstBaseVisitor<TcType>
     {
         private List<Function> fTable = new();
         private Stack<Stack<KeyValuePair<string, TcType>>> vTableStack = new();
@@ -301,7 +301,7 @@ namespace P4.TinyCell.Languages.TinyCell
             {
             if (pinWriteExprNode.From is not VoltageNode)
             {
-                throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is a 'digital pin' and expects a 'voltage'");
+                throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage'");
             }
             return default;
             }
@@ -310,11 +310,11 @@ namespace P4.TinyCell.Languages.TinyCell
             var valueType = Visit(pinWriteExprNode.From);
             if (valueType != TcType.INT)
             {
-                throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is an 'analog pin' and expects an 'int'");
+                throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is an 'analog pin' and expects an 'int'");
             }
             return default;
             }
-            throw new Exception($"Variable '{pinWriteExprNode.To.Value}' is not a 'pin'");
+            throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is not a 'pin'");
         }
 
         public override TcType VisitPinReadExprNode(PinReadExprNode pinReadExprNode)

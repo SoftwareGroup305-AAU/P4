@@ -1,7 +1,7 @@
 ﻿using Antlr4.Runtime;
-using P4.TinyCell.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Languages.TinyCell;
-using P4.TinyCell.Utilities;
+using P4.TinyCell.Shared.Utilities;
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
 using Antlr4.Runtime.Sharpen;
@@ -93,8 +93,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
-        // var typeChecker = new TypeCheckerVisitor();
-        // typeChecker.Visit(abcd);
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);

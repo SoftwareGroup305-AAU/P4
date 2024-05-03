@@ -4,7 +4,7 @@ apin b = 2;
 
 setup {
     string h = "hej";
-    read b to h;
+    write HIGH to b;
 
     
 }
