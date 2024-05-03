@@ -76,5 +76,4 @@ public class Utility
         parser.AddErrorListener(new NoErrorListener());
         return parser;
     }
-
 }
