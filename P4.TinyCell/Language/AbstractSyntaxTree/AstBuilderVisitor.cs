@@ -399,7 +399,46 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitStatement([NotNull] TinyCellParser.StatementContext context)
     {
-        return Visit(context.GetChild(0));
+        if (context.ifStatement() is not null)
+        {
+            return Visit(context.ifStatement());
+        }
+
+        if (context.loopStatement() is not null)
+        {
+            return Visit(context.loopStatement());
+        }
+
+        if (context.jumpStatement() is not null)
+        {
+            return Visit(context.jumpStatement());
+        }
+
+        if (context.declaration() is not null)
+        {
+            return Visit(context.declaration());
+        }
+
+        if (context.functionCall() is not null)
+        {
+            return Visit(context.functionCall());
+        }
+
+        if (context.pinStatusExpression() is not null)
+        {
+            return Visit(context.pinStatusExpression());
+        }
+
+        if (context.assignment() is not null)
+        {
+            return Visit(context.assignment());
+        }
+
+        if (context.expression() is not null)
+        {
+            return Visit(context.expression());
+        }
+        throw new InvalidOperationException();
     }
 
     public override AstNode VisitTerminal(ITerminalNode node)

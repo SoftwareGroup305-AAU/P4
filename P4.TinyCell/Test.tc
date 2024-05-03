@@ -1,21 +1,30 @@
-dpin numse = 2;
+apin numse = 2;
+int a = 4 + 2;
 
-apin pis = 1;     //analog
-int antisocialiseringsbestraebelse = 4095
+apin pis = 2;     //analog
+string antisocialiseringsbestraebelse = "4095";
 int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
 setup {
-    set numse to OUTPUT;
-    set pis to OUTPUT;
+    set numse to output;
+    set pis to output;
 }
+
 update {
     write HIGH to numse;
-    write 69 to numse;
     write antisocialiseringsbestraebelse to pis;
-    set pis to INPUT;
+    set pis to input;
     read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
     
-    if (aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA == 1020)
+    fuck(2, 3, 4);
+
+    if ("aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA" == "1020")
     {
-        fuck();
     }
-}z
+}
+
+void fuck(apin a, int b, apin c)
+{
+    a = 3;
+    b = 4;
+    c = 5;
+}
