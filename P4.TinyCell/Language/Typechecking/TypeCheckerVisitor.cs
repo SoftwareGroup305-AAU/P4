@@ -367,7 +367,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
             {
-                throw new Exception($"Type mismatch: expected {expectedTypes.ToString}, but got {left} and {right}");
+                throw new Exception($"Type mismatch: expected ({string.Join(", ", expectedTypes)}), but got {left} and {right}");
             }
         }
 
@@ -405,7 +405,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected {expectedTypes.ToString()}");
+                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected ({string.Join(", ", expectedTypes)})");
             }
             if (left != right)
             {
