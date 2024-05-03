@@ -1,8 +1,7 @@
-﻿using static P4.TinyCell.Tests.Utility;
+﻿using Antlr4.Runtime;
 using System.ComponentModel;
-using Antlr4.Runtime;
 
-namespace P4.TinyCell.Tests;
+namespace P4.TinyCell.Tests.IntegrationTests;
 
 public class LexerParser
 {
