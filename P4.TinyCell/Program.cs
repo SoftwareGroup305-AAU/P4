@@ -1,8 +1,6 @@
 ﻿using Antlr4.Runtime;
-using P4.TinyCell.Language.AbstractSyntaxTree;
-using P4.TinyCell.Languages.TinyCell;
-using P4.TinyCell.Utilities;
-
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Utilities;
 
 internal class Program
 {

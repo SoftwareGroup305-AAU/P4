@@ -1,7 +1,7 @@
-﻿using static P4.TinyCell.Tests.Utility;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using static P4.TinyCell.Tests.Utility;
 
-namespace P4.TinyCell.Tests;
+namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerTokens
 {
@@ -141,12 +141,22 @@ public class LexerTokens
     // PIN
     [Fact]
     [Description("Can detect the correct token type for a PIN.")]
-    public void LexerPINTest()
+    public void LexerAPINTest()
     {
-        var input = "pin";
+        var input = "apin";
         var tokenTypes = GetTokenTypesFromInput(input);
 
-        Assert.Equal(TinyCellLexer.PIN, tokenTypes[0]);
+        Assert.Equal(TinyCellLexer.APIN, tokenTypes[0]);
+    }
+
+    [Fact]
+    [Description("Can detect the correct token type for a PIN.")]
+    public void LexerPINTest()
+    {
+        var input = "dpin";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.DPIN, tokenTypes[0]);
     }
 
     // INT

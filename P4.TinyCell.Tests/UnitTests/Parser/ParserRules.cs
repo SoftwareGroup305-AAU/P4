@@ -1,8 +1,8 @@
-﻿using static P4.TinyCell.Tests.Utility;
+﻿using Antlr4.Runtime;
 using System.ComponentModel;
-using Antlr4.Runtime;
+using static P4.TinyCell.Tests.Utility;
 
-namespace P4.TinyCell.Tests;
+namespace P4.TinyCell.Tests.UnitTests.Parser;
 
 public class ParserRules
 {
@@ -553,8 +553,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("-", TinyCellLexer.UNARYMINUS),
+            new TestToken("--", TinyCellLexer.UNARYMINUS),
             new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
 

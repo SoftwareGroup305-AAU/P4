@@ -1,9 +1,8 @@
-﻿using static P4.TinyCell.Tests.Utility;
+﻿using Antlr4.Runtime;
 using System.ComponentModel;
-using Antlr4.Runtime;
-using Xunit.Sdk;
+using static P4.TinyCell.Tests.Utility;
 
-namespace P4.TinyCell.Tests;
+namespace P4.TinyCell.Tests.UnitTests.Parser;
 
 public class ParserErrorHandling
 {
