@@ -1,6 +1,3 @@
-using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using Antlr4.Runtime.Misc;
 using P4.TinyCell.Language.AbstractSyntaxTree;
 using P4.TinyCell.Language.AbstractSyntaxTree.Function;
 using P4.TinyCell.Language.AbstractSyntaxTree.Types;
@@ -10,20 +7,20 @@ using P4.TinyCell.Language.AbstractSyntaxTree.NumExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Language.AbstractSyntaxTree.Assignment;
+using P4.TinyCell.Language.AbstractSyntaxTree.PinExpr;
+
 namespace P4.TinyCell.Languages.TinyCell
 {
     class TypeCheckerVisitor : AstBaseVisitor<TcType>
     {
-        private List<Function> fTable = [];
-
-        private Stack<Stack<KeyValuePair<string, TcType>>> vTableStack = [];
-        
+        private List<Function> fTable = new();
+        private Stack<Stack<KeyValuePair<string, TcType>>> vTableStack = new();
 
         private class Function
         {
             public TcType Type { get; set; }
             public string? Id { get; set; }
-            public List<TcType> Parameters = [];
+            public List<TcType> Parameters { get; set; } = new();
         }
 
         public override TcType VisitRootNode(RootNode rootNode)
@@ -32,21 +29,12 @@ namespace P4.TinyCell.Languages.TinyCell
             return base.VisitRootNode(rootNode);
         }
 
-
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            var function = new Function
-            {
-                Type = functionDefinitionNode.Type.Type,
-                Id = functionDefinitionNode.Identifier.Value,
-                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
-            };
-            foreach (var parameter in functionDefinitionNode.ParameterList.Parameters)
-            {
-                vTableStack.First().Push(new KeyValuePair<string, TcType>(parameter.Identifier.Value, parameter.TypeNode.Type));
-            }
-            fTable.Add(function);
+            var function = CreateFunction(functionDefinitionNode);
+            UpdateFtable(function);
+            UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
             Visit(functionDefinitionNode.CompoundStatement);
             vTableStack.Pop();
             return default;
@@ -65,69 +53,33 @@ namespace P4.TinyCell.Languages.TinyCell
 
         public override TcType VisitAssignNode(AssignNode assignNode)
         {
-            var id = assignNode.Children[0] as IdentifierNode;
+            var idNode = assignNode.Children[0] as IdentifierNode;
             var assignedType = Visit(assignNode.Children[1]);
-            KeyValuePair<string, TcType> type = default;
-            foreach (var stack in vTableStack)
-            {
-                type = stack.FirstOrDefault(x => x.Key == id.Value);
-                if (!type.Equals(default(KeyValuePair<string, TcType>)))
-                {
-                    break;
-                }
-            }
-            if (type.Equals(default(KeyValuePair<string, TcType>)))
-            {
-                throw new Exception($"Variable {id.Value} not declared");
-            }
-            if (type.Value != assignedType)
-                {
-                    if (type.Value != TcType.PIN || assignedType != TcType.INT)
-                    {
-                        throw new Exception($"Type mismatch: expected {type.Value}, but got {assignedType}");
-                    }
-                }
-            return type.Value;
+            var id  = LookupVariable(idNode.Value, vTableStack);
+            CheckTypeMismatch(id.Value, assignedType, new List<TcType> {TcType.PIN, TcType.INT});
+            return id.Value;
         }
 
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
         {
             
-            var declaredId = declarationNode.Children[1] as IdentifierNode;
-            var declaredType = declarationNode.Children[0] as TypeNode; 
-            if (vTableStack.First().Any(x => x.Key == declaredId.Value))
-            {
-                throw new Exception($"Variable {declaredId.Value} already declared");
-            }
-            vTableStack.First().Push(new KeyValuePair<string, TcType>(declaredId.Value, declaredType.Type));
+            var declaredIdNode = declarationNode.Children[1] as IdentifierNode;
+            var declaredTypeNode = declarationNode.Children[0] as TypeNode; 
+            UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
             if (declarationNode.Children.Count > 2)
             {
                 var actionType = Visit(declarationNode.Children[2]);
-
-                if (declaredType.Type != TcType.PIN)
-                {
-                    if (actionType != declaredType.Type)
-                {
-                    throw new Exception($"Type mismatch: expected {declaredType.Type}, but got {actionType}");
-                }
-                }
-                else if (actionType != TcType.INT)
-                {
-                    throw new Exception($"Type mismatch: expected {TcType.INT}, but got {actionType}");
-                }
+                CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> {TcType.PIN, TcType.INT});
                 
             }
-            return declaredType.Type;
+            return declaredTypeNode.Type;
         }
 
         public override TcType VisitOrExprNode(OrExprNode orExprNode)
         {
             var left = Visit(orExprNode.Left);
             var right = Visit(orExprNode.Right);   
-            if (left != TcType.BOOL || right != TcType.BOOL)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right, new List<TcType> {TcType.BOOL});
             return TcType.BOOL;
         }
 
@@ -135,10 +87,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(andExprNode.Left);
             var right = Visit(andExprNode.Right);   
-            if (left != TcType.BOOL || right != TcType.BOOL)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right, new List<TcType> {TcType.BOOL});
             return TcType.BOOL;
         }
 
@@ -146,10 +95,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(equalExprNode.Left);
             var right = Visit(equalExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -157,10 +103,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(notEqualExprNode.Left);
             var right = Visit(notEqualExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -168,10 +111,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(lessThanExprNode.Left);
             var right = Visit(lessThanExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -179,10 +119,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(greaterThanExprNode.Left);
             var right = Visit(greaterThanExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -190,10 +127,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(addExprNode.Left);
             var right = Visit(addExprNode.Right);
-            if (!(left == TcType.INT || left == TcType.FLOAT) && !(right == TcType.INT || right == TcType.FLOAT))
-            {
-                throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
-            }
+            CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
 
@@ -201,10 +135,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(greaterThanOrEqualExprNode.Left);
             var right = Visit(greaterThanOrEqualExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -212,10 +143,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(lessThanOrEqualExprNode.Left);
             var right = Visit(lessThanOrEqualExprNode.Right);   
-            if (left != right)
-            {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}");
-            }
+            CheckComparisonTypes(left, right);
             return TcType.BOOL;
         }
 
@@ -223,10 +151,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(divExprNode.Left);
             var right = Visit(divExprNode.Right);   
-            if (left != TcType.INT || left != TcType.FLOAT || right != TcType.INT || right != TcType.FLOAT)
-            {
-                throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
-            }
+            CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
 
@@ -234,10 +159,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(subExprNode.Left);
             var right = Visit(subExprNode.Right);   
-            if (left != TcType.INT || left != TcType.FLOAT || right != TcType.INT || right != TcType.FLOAT)
-            {
-                throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
-            }
+            CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
 
@@ -245,10 +167,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(mulExprNode.Left);
             var right = Visit(mulExprNode.Right);   
-            if (left != TcType.INT || left != TcType.FLOAT || right != TcType.INT || right != TcType.FLOAT)
-            {
-                throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
-            }
+            CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT, TcType.FLOAT});
             return left >= right ? left : right;
         }
 
@@ -256,51 +175,21 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var left = Visit(modExprNode.Left);
             var right = Visit(modExprNode.Right);   
-            if (left != TcType.INT || left != TcType.FLOAT || right != TcType.INT || right != TcType.FLOAT)
-            {
-                throw new Exception($"Type mismatch: expected {TcType.INT} or {TcType.FLOAT}, but got {left} and {right}");
-            }
+            CheckAritmeticOperation(left, right, new List<TcType> {TcType.INT});
             return left >= right ? left : right;
         }
 
         public override TcType VisitIdentifierNode(IdentifierNode identifierNode)
         {
             var id = identifierNode.Value;
-            foreach (var stack in vTableStack)
-            {
-                var type = stack.FirstOrDefault(x => x.Key == id);
-                if (!type.Equals(default(KeyValuePair<string, TcType>)))
-                {
-                    return type.Value;
-                }
-            }
-            throw new Exception($"Variable {id} not declared");
+            return LookupVariable(id, vTableStack).Value;
         }
 
         public override TcType VisitFunctionCallNode(FunctionCallNode functionCallNode)
         {
-            var parameterList = functionCallNode.ArgumentList;
-            
-            var function = fTable.FirstOrDefault(x => x.Id == functionCallNode.Identifier.Value);
-            if (function is null)
-            {
-                throw new Exception($"Function {functionCallNode.Identifier.Value} not declared");
-            }
-            if (parameterList is not null)
-            {
-                if (parameterList.Arguments.Count() != function.Parameters.Count)
-                {
-                    throw new Exception($"Function {functionCallNode.Identifier.Value} expects {function.Parameters.Count} parameters, but got {parameterList.Arguments.Count()}");
-                }
-                for (int i = 0; i < parameterList.Arguments.Count(); i++)
-                {
-                    var parameterType = Visit(parameterList.Arguments[i].Children[i]);
-                    if (parameterType != function.Parameters[i])
-                    {
-                        throw new Exception($"Function {functionCallNode.Identifier.Value} expects parameter {i} to be of type {function.Parameters[i]}, but got {parameterType}");
-                    }
-                }
-            }
+            var argumentList = functionCallNode.ArgumentList;
+            var function = LookupFunction(functionCallNode.Identifier.Value, fTable);
+            CheckFunctionArguments(function.Parameters, argumentList);
             return function.Type;
         }
 
@@ -357,33 +246,181 @@ namespace P4.TinyCell.Languages.TinyCell
             return boolNode.Type;
         }
 
-
-
-
-        public static void BuildFunctionTable()
+        public override TcType VisitPlusAssignNode(PlusAssignNode plusAssignNode)
         {
-            
+            var idNode = plusAssignNode.Identifier;
+            var id = LookupVariable(idNode.Value, vTableStack);
+            var assignedTypeNode = Visit(plusAssignNode.Expression);
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> {TcType.INT, TcType.PIN});
+            return id.Value;
         }
 
-        // public string GetType(AstNode node)
-        // {
-        //     switch (node)
-        //     {
-        //         case VoidTypeNode:
-        //             return "void";
-        //         case BoolTypeNode:
-        //             return "bool";
-        //         case IntTypeNode:
-        //             return "int";
-        //         case FloatTypeNode:
-        //             return "float";
-        //         case PinTypeNode:
-        //             return "pin";
-        //         case StringTypeNode:
-        //             return "string";
-        //         default:
-        //             return "";
-        //     }
-        // }
+        public override TcType VisitMinusAssignNode(MinusAssignNode minusAssignNode)
+        {
+            var idNode = minusAssignNode.Identifier;
+            var id = LookupVariable(idNode.Value, vTableStack);
+            var assignedTypeNode = Visit(minusAssignNode.Expression);
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> {TcType.INT, TcType.PIN});
+            return id.Value;
+        }
+
+        public override TcType VisitMultAssignNode(MultAssignNode multAssignNode)
+        {
+            var idNode = multAssignNode.Identifier;
+            var id = LookupVariable(idNode.Value, vTableStack);
+            var assignedTypeNode = Visit(multAssignNode.Expression);
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> {TcType.INT, TcType.PIN});
+            return id.Value;
+        }
+
+        public override TcType VisitDivAssignNode(DivAssignNode divAssignNode)
+        {
+            var idNode = divAssignNode.Identifier;
+            var id = LookupVariable(idNode.Value, vTableStack);
+            var assignedTypeNode = Visit(divAssignNode.Expression);
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> {TcType.INT, TcType.PIN});
+            return id.Value;
+        }
+
+
+        public override TcType VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
+        {
+            var id = pinModeExprNode.Identifier;
+            KeyValuePair<string, TcType> type = default;
+            foreach (var stack in vTableStack)
+            {
+                type = stack.FirstOrDefault(pair => pair.Key == id.Value);
+            }
+            if (type.Equals(default(KeyValuePair<string, TcType>)))
+            {
+                throw new Exception($"Variable {id.Value} not declared");
+            }
+            if (type.Value != TcType.PIN)
+            {
+                throw new Exception($"Variable {id.Value} is not of type pin");
+            }
+            return type.Value;
+        }
+
+        private KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
+        {
+            foreach (var stack in vTableStack)
+            {
+                var type = stack.FirstOrDefault(x => x.Key == id);
+                if (!type.Equals(default(KeyValuePair<string, TcType>)))
+                {
+                    return type;
+                }
+            }
+            throw new Exception($"Variable {id} not declared");
+        }
+
+        private void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
+        {
+            if (expectedType != actualType)
+            {
+                if (exceptions is not null && exceptions.Contains(actualType) && exceptions.Contains(expectedType))
+                {
+                   return;
+                }
+                 throw new Exception($"Type mismatch: expected {expectedType}, but got {actualType}");     
+            }
+        }
+
+
+
+        /// <summary>
+        /// Looks up a function in the function table
+        /// </summary>
+        /// <param name="id">Function identifier</param>
+        /// <returns>Returns <see cref="Function" no null if no function was found /></returns>
+        private Function? LookupFunction(string id, List<Function> fTable)
+        {
+            var function = fTable.FirstOrDefault(x => x.Id == id);
+            if (function is null)
+            {
+                throw new Exception($"Function '{id}' not declared");
+            }
+            return function;
+        }
+
+        private void CheckFunctionArguments(List<TcType> parameters, ArgumentListNode argumentList)
+        {
+            if (argumentList is not null)
+            {
+            if (argumentList.Arguments.Count() != parameters.Count)
+            {
+                throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
+            }
+            for (int i = 0; i < argumentList.Arguments.Count(); i++)
+            {
+                var parameterType = Visit(argumentList.Arguments[i].Children[i]);
+                if (parameterType != parameters[i])
+                {
+                throw new Exception($"Function expects parameter {i} to be of type {parameters[i]}, but got {parameterType}");
+                }
+            }
+            }
+        }
+
+        private void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
+        {
+            if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
+            {
+                throw new Exception($"Type mismatch: expected {expectedTypes}, but got {left} and {right}");
+            }
+        }
+
+        private void UpdateFtable(Function function)
+        {
+            if (fTable.Any(f => f.Id == function.Id))
+            {
+                throw new Exception($"Function '{function.Id}' has already been declared");
+            }
+            fTable.Add(function);
+        }
+
+        private void UpdateVtable(List<KeyValuePair<string, TcType>> variables)
+        {
+            foreach (var variable in variables)
+            {
+                if (vTableStack.First().Any(x => x.Key == variable.Key))
+                {
+                    throw new Exception($"Variable '{variable.Key}' already declared");
+                }
+                vTableStack.First().Push(variable);
+            }
+        }
+
+        private void UpdateVtable(KeyValuePair<string, TcType> variable)
+        {
+            if (vTableStack.First().Any(x => x.Key == variable.Key))
+            {
+                throw new Exception($"Variable '{variable.Key}' already declared");
+            }
+            vTableStack.First().Push(variable);
+        }
+
+        private void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
+        {
+            if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
+            {
+                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected {expectedTypes}");
+            }
+            if (left != right)
+            {
+                throw new Exception($"Type mismatch: comparison between {left} and {right}");
+            }
+        }
+
+        private Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
+        {
+            return new Function
+            {
+                Type = functionDefinitionNode.Type.Type,
+                Id = functionDefinitionNode.Identifier.Value,
+                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
+            };
+        }
     }
 }
