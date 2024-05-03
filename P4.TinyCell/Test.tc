@@ -1,20 +1,16 @@
-pin numse = 10;  //Digital
-int a = 2 + 2;
-int a = 2 + 6;
-int a = 9 + 2;
-int a = 9 + 32;
+dpin numse = 2;
 
-pin pis = A1;     //analog
+apin pis = 1;     //analog
 int antisocialiseringsbestraebelse = 4095
 int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
 setup {
-    set numse to output;
-    set pis to output;
+    set numse to OUTPUT;
+    set pis to OUTPUT;
 }
 update {
     write HIGH to numse;
     write antisocialiseringsbestraebelse to pis;
-    set pis to input;
+    set pis to INPUT;
     read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
     
     if (aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA == 1020)
