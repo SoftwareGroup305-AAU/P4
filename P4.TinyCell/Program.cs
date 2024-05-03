@@ -2,10 +2,36 @@
 using P4.TinyCell.Language.AbstractSyntaxTree;
 using P4.TinyCell.Languages.TinyCell;
 using P4.TinyCell.Utilities;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Dfa;
+using Antlr4.Runtime.Sharpen;
 
 
 internal class Program
 {
+    public class NoErrorListener : BaseErrorListener
+    {
+        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        {
+            throw new Exception($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
+        }
+
+        public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+        {
+            throw new Exception($"Ambiguity at {startIndex}:{stopIndex}");
+        }
+
+        public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+        {
+            throw new Exception($"Attempting full context at {startIndex}:{stopIndex}");
+        }
+
+        public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+        {
+            throw new Exception($"Context sensitivity at {startIndex}:{stopIndex}");
+        }
+    }
+
     private static void Main(string[] args)
     {
         string fileContent = File.ReadAllText("Test.tc");
@@ -17,6 +43,8 @@ internal class Program
         var tokenStream = new CommonTokenStream(lexer);
 
         var parser = new TinyCellParser(tokenStream);
+
+        parser.AddErrorListener(new NoErrorListener());
 
         var tree = parser.document();
         tokenStream.Fill();
