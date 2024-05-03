@@ -1,7 +1,7 @@
-﻿using static P4.TinyCell.Tests.Utility;
-using System.ComponentModel;
+﻿using System.ComponentModel;
+using static P4.TinyCell.Tests.Utility;
 
-namespace P4.TinyCell.Tests;
+namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerControlFlow
 {

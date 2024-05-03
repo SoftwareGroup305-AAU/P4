@@ -1,14 +1,19 @@
-﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Tree;
-using P4.TinyCell.Language.AbstractSyntaxTree;
-using P4.TinyCell.Language.RegisterAllocation;
-using P4.TinyCell.Languages.TinyCell.CodeGen;
-using P4.TinyCell.Utilities;
+﻿using System.Diagnostics;
+using Antlr4.Runtime;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Languages.TinyCell;
+using P4.TinyCell.Shared.Utilities;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Dfa;
+using Antlr4.Runtime.Sharpen;
+
 
 internal class Program
 {
     private static void Main(string[] args)
     {
+        Process.Start("java", "-jar P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp P4.TinyCell.Shared/Antlr/TinyCell.g4 -visitor -listener");
+
         string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
@@ -18,6 +23,8 @@ internal class Program
         var tokenStream = new CommonTokenStream(lexer);
 
         var parser = new TinyCellParser(tokenStream);
+
+        parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
         tokenStream.Fill();
@@ -56,7 +63,7 @@ internal class Program
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Parse Tree:");
-        var ParserHelper = new ParserHelper();
+
         ParserHelper.PrintTree(tree);
 
         AstBuilderVisitor astBuilderVisitor = new();
@@ -64,11 +71,10 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
-        ASMGenerator codeGen = new ASMGenerator();
-        codeGen.GenerateCode(abcd, allocatedScopes);
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
 
-
-        //TestAstVisitor test = new();
-        //test.VisitRootNode((RootNode)abcd);
+        TestAstVisitor test = new();
+        test.VisitRootNode((RootNode)abcd);
     }
 }
