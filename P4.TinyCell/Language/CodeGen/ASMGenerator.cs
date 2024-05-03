@@ -170,12 +170,11 @@ public class ASMGenerator
               string loopAction2 = SubtractAsm(remainder, remainder, addVariable);
               DivLabelCount = DivLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
-                     $"{loopStart}:\n //" +//Declare loop label 
-                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopCode}\n" +//Declare loop code
                      $"{loopAction1}\n" + //Declare increment of quotient 
                      $"{loopAction2}\n" + //Declare decrement of dividend
-                     $"{loopStart}" +
+                     $"{loopStart}:\n //" +//Declare loop label 
+                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopEnd}";//Define end of loop
        }
 
@@ -195,11 +194,10 @@ public class ASMGenerator
               string loopAction = SubtractAsm(remainder, remainder, addVariable);
               ModLabelCount = ModLabelCount + 1;
               return $"b {loopStart}\n" + //Go to loop label
-                     $"{loopStart}:\n //" +//Declare loop label 
-                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopCode}\n" +//Declare loop code
                      $"{loopAction}\n" + //Declare decrement of dividend
-                     $"{loopStart}" +
+                     $"{loopStart}:\n //" +//Declare loop label 
+                     $"{IfAsm(">=", remainder, addVariable, loopCode, loopEnd)}\n" +
                      $"{loopEnd}" + //Define end of loop
                      $"MOV {addTo}, {remainder}"; //Move remainder to result register
        }
