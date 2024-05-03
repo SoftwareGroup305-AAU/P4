@@ -293,11 +293,11 @@ namespace P4.TinyCell.Languages.TinyCell
             }
             if (type.Equals(default(KeyValuePair<string, TcType>)))
             {
-                throw new Exception($"Variable {id.Value} not declared");
+                throw new Exception($"Variable '{id.Value}' not declared");
             }
             if (type.Value != TcType.PIN)
             {
-                throw new Exception($"Variable {id.Value} is not of type pin");
+                throw new Exception($"Variable '{id.Value}' is not of type pin");
             }
             return type.Value;
         }
@@ -312,7 +312,7 @@ namespace P4.TinyCell.Languages.TinyCell
                     return type;
                 }
             }
-            throw new Exception($"Variable {id} not declared");
+            throw new Exception($"Variable '{id}' not declared");
         }
 
         private void CheckTypeMismatch(TcType expectedType, TcType actualType, List<TcType> exceptions = null)
@@ -367,7 +367,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
             {
-                throw new Exception($"Type mismatch: expected {expectedTypes}, but got {left} and {right}");
+                throw new Exception($"Type mismatch: expected {expectedTypes.ToString}, but got {left} and {right}");
             }
         }
 
@@ -405,7 +405,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected {expectedTypes}");
+                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected {expectedTypes.ToString()}");
             }
             if (left != right)
             {

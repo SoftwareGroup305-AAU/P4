@@ -1,5 +1,5 @@
 pin numse = 2;
-int a = 2 + 2;
+int a = 2 + "hello";
 
 pin pis = 2;     //analog
 int antisocialiseringsbestraebelse = 4095;
