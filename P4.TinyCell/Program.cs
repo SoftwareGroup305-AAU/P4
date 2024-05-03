@@ -45,9 +45,11 @@ internal class Program
 
         var tokenStream = new CommonTokenStream(lexer);
 
+        var ParserHelper = new ParserHelper();
+
         var parser = new TinyCellParser(tokenStream);
 
-        parser.AddErrorListener(new NoErrorListener());
+        parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
         tokenStream.Fill();
@@ -88,7 +90,7 @@ internal class Program
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Parse Tree:");
-        var ParserHelper = new ParserHelper();
+
         ParserHelper.PrintTree(tree);
 
         AstBuilderVisitor astBuilderVisitor = new();
@@ -99,7 +101,7 @@ internal class Program
         var typeChecker = new TypeCheckerVisitor();
         typeChecker.Visit(abcd);
 
-        //TestAstVisitor test = new();
-        //test.VisitRootNode((RootNode)abcd);
+        // TestAstVisitor test = new();
+        // test.VisitRootNode((RootNode)abcd);
     }
 }

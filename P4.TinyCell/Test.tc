@@ -1,14 +1,7 @@
-dpin a = 1;
-apin b = 2;
-
-
-setup {
-    string h = "hej";
-    write HIGH to b;
-
-    
+setup{
+    string x = 2;
 }
 
-update {
-    
+update{
+
 }

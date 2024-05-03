@@ -1,4 +1,7 @@
 using Antlr4.Runtime;
+using Antlr4.Runtime.Atn;
+using Antlr4.Runtime.Dfa;
+using Antlr4.Runtime.Sharpen;
 
 namespace P4.TinyCell.Shared.Utilities
 {
@@ -16,6 +19,30 @@ namespace P4.TinyCell.Shared.Utilities
                 {
                     PrintTree(ruleContext, indentation + 1);
                 }
+            }
+        }
+
+        public class NoErrorListener : BaseErrorListener
+        {
+            public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            {
+                throw new Exception($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
+            }
+
+            public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+            {
+                throw new Exception($"Ambiguity at {startIndex}:{stopIndex}");
+            }
+
+            public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+            {
+                throw new Exception($"Attempting full context at {startIndex}:{stopIndex}");
+            }
+
+            public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+            {
+                throw new Exception($"Context sensitivity at {startIndex}:{stopIndex}");
+
             }
         }
     }
