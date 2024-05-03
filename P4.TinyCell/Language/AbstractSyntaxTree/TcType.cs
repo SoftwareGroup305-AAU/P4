@@ -7,5 +7,6 @@ public enum TcType
     INT,
     FLOAT,
     BOOL,
-    PIN
+    APIN,
+    DPIN
 }

@@ -2,8 +2,10 @@
 
 public abstract class UnaryExprNode : AstNode
 {
+    public AstNode Operand { get; set; }
     public UnaryExprNode(AstNode operand)
     {
+        Operand = operand;
         AddChild(operand);
     }
 }

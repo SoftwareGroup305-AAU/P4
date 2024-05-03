@@ -93,8 +93,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
+        // var typeChecker = new TypeCheckerVisitor();
+        // typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);

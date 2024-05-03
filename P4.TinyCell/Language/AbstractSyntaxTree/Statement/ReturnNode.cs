@@ -5,6 +5,9 @@ public class ReturnNode : AstNode
     {
         AddChild(returnExpression);
     }
+    public ReturnNode()
+    {
+    }
 
     public override T Accept<T>(IAstVisitor<T> visitor)
     {

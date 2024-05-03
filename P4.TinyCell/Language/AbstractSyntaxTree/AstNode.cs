@@ -18,7 +18,7 @@ public abstract class AstNode
         return ToString(0);
     }
 
-    public string ToString(int indentation)
+    public virtual string ToString(int indentation)
     {
         var indent = new string(' ', indentation * 2);
         string str = $"{indent}{GetType().Name}";

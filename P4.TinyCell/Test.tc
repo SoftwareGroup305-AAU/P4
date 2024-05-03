@@ -1,11 +1,30 @@
-int testFunc(int a, int b) {
-    return a+b;
+apin numse = 2;
+int a = 4 + 2;
+
+apin pis = 2;     //analog
+string antisocialiseringsbestraebelse = "4095";
+int aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
+setup {
+    set numse to output;
+    set pis to output;
 }
 
-setup{
-    int a = testFunc(1, 3);
+update {
+    write HIGH to numse;
+    write antisocialiseringsbestraebelse to pis;
+    set pis to input;
+    read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
+    
+    fuck(2, 3, 4);
+
+    if ("aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA" == "1020")
+    {
+    }
 }
 
-update{
-
+void fuck(apin a, int b, apin c)
+{
+    a = 3;
+    b = 4;
+    c = 5;
 }

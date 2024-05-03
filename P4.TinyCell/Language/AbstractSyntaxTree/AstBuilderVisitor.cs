@@ -221,7 +221,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), Visit(context.compoundStatement().Last()));
         }
-        var comp = context.compoundStatement();
         return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), null);
     }
 
@@ -245,7 +244,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new BreakNode();
         }
-        return new ReturnNode(Visit(context.expression()));
+        if (context.expression() is not null)
+        {
+            return new ReturnNode(Visit(context.expression()));
+        }
+        return new ReturnNode();
     }
 
     public override AstNode VisitLoopStatement([NotNull] TinyCellParser.LoopStatementContext context)
@@ -309,32 +312,15 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitPinAssignmentExpression([NotNull] TinyCellParser.PinAssignmentExpressionContext context)
     {
+        AstNode from = Visit(context.GetChild(1));
+        AstNode to = Visit(context.GetChild(3));
+       
         if (context.WRITE() is not null)
         {
-            if (context.pinVoltage() is not null)
-            {
-                if (context.Numeral() is not null)
-                {
-                    return new PinWriteExprNode(Visit(context.pinVoltage()), Visit(context.Numeral()));
-                }
-
-                return new PinWriteExprNode(Visit(context.pinVoltage()), Visit(context.identifier().First()));
-            }
-
-            if (context.Numeral() is not null)
-            {
-                return new PinWriteExprNode(Visit(context.pinVoltage()), Visit(context.Numeral()));
-            }
-
-            return new PinWriteExprNode(Visit(context.identifier().First()), Visit(context.identifier().Last()));
+            return new PinWriteExprNode(from, to);
         }
 
-        if (context.Numeral() is not null)
-        {
-            return new PinReadExprNode(Visit(context.Numeral()), Visit(context.identifier().First()));
-        }
-
-        return new PinReadExprNode(Visit(context.identifier().First()), Visit(context.identifier().Last()));
+        return new PinReadExprNode(from, to);
     }
 
     public override AstNode VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context)
@@ -509,9 +495,13 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return new TypeNode(TcType.BOOL);
         }
-        if (context.PIN() is not null)
+        if (context.APIN() is not null)
         {
-            return new TypeNode(TcType.PIN);
+            return new TypeNode(TcType.APIN);
+        }
+        if (context.DPIN() is not null)
+        {
+            return new TypeNode(TcType.DPIN);
         }
         throw new InvalidOperationException();
     }
