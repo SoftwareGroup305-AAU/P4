@@ -18,5 +18,29 @@ namespace P4.TinyCell.Shared.Utilities
                 }
             }
         }
+
+        public class NoErrorListener : BaseErrorListener
+        {
+            public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            {
+                throw new Exception($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
+            }
+
+            public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+            {
+                throw new Exception($"Ambiguity at {startIndex}:{stopIndex}");
+            }
+
+            public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+            {
+                throw new Exception($"Attempting full context at {startIndex}:{stopIndex}");
+            }
+
+            public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+            {
+                throw new Exception($"Context sensitivity at {startIndex}:{stopIndex}");
+
+            }
+        }
     }
 }
