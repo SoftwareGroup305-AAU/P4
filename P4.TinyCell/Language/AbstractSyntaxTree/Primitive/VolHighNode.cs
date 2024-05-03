@@ -1,6 +1,6 @@
 ﻿namespace P4.TinyCell.Language.AbstractSyntaxTree.Primitive;
 
-public class VolHighNode : AstNode
+public class VolHighNode : VoltageNode
 {
     public override T Accept<T>(IAstVisitor<T> visitor)
     {

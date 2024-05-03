@@ -9,6 +9,7 @@ setup {
 }
 update {
     write HIGH to numse;
+    write 69 to numse;
     write antisocialiseringsbestraebelse to pis;
     set pis to INPUT;
     read pis to aaaaaaaaaaaaAAAAAAAAAAAAAAAAAAA;
