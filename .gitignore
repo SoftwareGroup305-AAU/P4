@@ -407,3 +407,5 @@ Antlr/
 **/*.tokens
 **/*.java
 **/*.atn
+**/TinyCell.*
+**/!TinyCell.g4

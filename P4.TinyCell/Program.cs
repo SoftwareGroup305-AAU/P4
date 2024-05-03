@@ -1,11 +1,15 @@
-﻿using System.Diagnostics;
-using Antlr4.Runtime;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
-using P4.TinyCell.Languages.TinyCell;
-using P4.TinyCell.Shared.Utilities;
+﻿using Antlr4.Runtime;
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
+using Antlr4.Runtime.Tree;
 using Antlr4.Runtime.Sharpen;
+using P4.TinyCell;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.RegisterAllocation;
+using P4.TinyCell.Shared.Language.Typechecking;
+using P4.TinyCell.Shared.Language.CodeGen;
+using P4.TinyCell.Shared.Utilities;
+using System.Diagnostics;
 
 
 internal class Program
@@ -76,5 +80,8 @@ internal class Program
 
         TestAstVisitor test = new();
         test.VisitRootNode((RootNode)abcd);
+
+        ASMGenerator codeGen = new ASMGenerator();
+        codeGen.GenerateCode(abcd, allocatedScopes);
     }
 }

@@ -4,7 +4,7 @@ using Antlr4.Runtime.Misc;
 
 namespace P4.TinyCell.Shared.Language.RegisterAllocation
 {
-    internal class LivenessAnalysisListener : TinyCellBaseListener
+    public class LivenessAnalysisListener : TinyCellBaseListener
     {
 
         private Stack<ParentStructure> parentStructureStack;
@@ -14,8 +14,6 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
         public Dictionary<string, List<IInstruction>> scopes;
 
         private Stack<string> scopeStack;
-
-
 
         private bool isAssigned;
 
