@@ -321,7 +321,7 @@ namespace P4.TinyCell.Languages.TinyCell
         {
             var toType = Visit(pinReadExprNode.To);
             var fromType = Visit(pinReadExprNode.From);
-            CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT });
+            CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT, TcType.APIN });
             return default;
         }
 
@@ -429,7 +429,7 @@ namespace P4.TinyCell.Languages.TinyCell
             {
                 throw new Exception($"Type mismatch: comparison between {left} and {right}, expected ({string.Join(", ", expectedTypes)})");
             }
-            if (left != right)
+            if (left != right && expectedTypes is null)
             {
                 throw new Exception($"Type mismatch: comparison between {left} and {right}");
             }

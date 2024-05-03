@@ -1,5 +1,7 @@
+apin a = 2;
+
 setup{
-    string x = 2;
+    write HIGH to a;
 }
 
 update{
