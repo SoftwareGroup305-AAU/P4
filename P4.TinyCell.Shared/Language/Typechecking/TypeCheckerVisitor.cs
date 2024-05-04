@@ -487,7 +487,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     if (EvaluateCondition(whileStatementNode.Condition) == 1)
                     {
-                        return AllPathsReturn(whileStatementNode.CompoundStatement);
+                        if (!AllPathsReturn(whileStatementNode.CompoundStatement)) {
+                            throw new Exception("possible infinite loop in 'while' statement");
+                        } else {
+                            return true;
+                        }
                     }
                 }
                 if (statement is ForStatementNode forStatementNode && !ContainsIdentifier(forStatementNode.Condition))
@@ -495,7 +499,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     if (EvaluateCondition(forStatementNode.Condition) == 1)
                     {
                         if (!AllPathsReturn(forStatementNode.CompoundStatement)) {
-                            throw new Exception("possible infinite loop in for statement");
+                            throw new Exception("possible infinite loop in 'for' statement");
                         } else {
                             return true;
                         }
