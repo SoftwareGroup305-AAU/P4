@@ -1,7 +1,20 @@
+int x = 2;
+
+int checkNumber(int x) {
+    if (true) {
+        return 1;
+    }
+}
 
 
 setup{
-    
+    while (x == 2) {
+        if (2) {
+            bool x;
+            x = true;
+        }
+        x = 3;
+    }
 }
 
 update{
