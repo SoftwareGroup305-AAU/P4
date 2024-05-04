@@ -29,7 +29,8 @@ using IToken = Antlr4.Runtime.IToken;
 /// </summary>
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.1")]
 [System.CLSCompliant(false)]
-public interface ITinyCellListener : IParseTreeListener {
+public interface ITinyCellListener : IParseTreeListener
+{
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.document"/>.
 	/// </summary>

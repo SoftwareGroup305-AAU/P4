@@ -33,7 +33,8 @@ using ParserRuleContext = Antlr4.Runtime.ParserRuleContext;
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.1")]
 [System.Diagnostics.DebuggerNonUserCode]
 [System.CLSCompliant(false)]
-public partial class TinyCellBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ITinyCellVisitor<Result> {
+public partial class TinyCellBaseVisitor<Result> : AbstractParseTreeVisitor<Result>, ITinyCellVisitor<Result>
+{
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.document"/>.
 	/// <para>

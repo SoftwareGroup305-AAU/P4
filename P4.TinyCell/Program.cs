@@ -2,6 +2,7 @@
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
 using Antlr4.Runtime.Tree;
+using Antlr4.Runtime.Tree;
 using Antlr4.Runtime.Sharpen;
 using P4.TinyCell;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
@@ -16,7 +17,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        Process.Start("java", "-jar P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp P4.TinyCell.Shared/Antlr/TinyCell.g4 -visitor -listener");
+        ProgramHelper helper = new();
+        helper.GenerateAntlr();
 
         string fileContent = File.ReadAllText("Test.tc");
 

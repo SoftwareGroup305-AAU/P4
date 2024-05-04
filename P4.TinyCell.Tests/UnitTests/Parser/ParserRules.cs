@@ -553,9 +553,8 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("--", TinyCellLexer.UNARYMINUS),
             new TestToken("1", TinyCellLexer.Numeral),
-            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("--", TinyCellLexer.UNARYMINUS),
             new TestToken("", TinyCellLexer.Eof),
         };
 
