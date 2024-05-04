@@ -62,8 +62,6 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return false;
         }
 
-
-
         public override TcType VisitReturnNode(ReturnNode returnNode)
         {
             if (returnNode.Children.Count == 0)
@@ -490,6 +488,17 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     if (EvaluateCondition(whileStatementNode.Condition) == 1)
                     {
                         return AllPathsReturn(whileStatementNode.CompoundStatement);
+                    }
+                }
+                if (statement is ForStatementNode forStatementNode && !ContainsIdentifier(forStatementNode.Condition))
+                {
+                    if (EvaluateCondition(forStatementNode.Condition) == 1)
+                    {
+                        if (!AllPathsReturn(forStatementNode.CompoundStatement)) {
+                            throw new Exception("possible infinite loop in for statement");
+                        } else {
+                            return true;
+                        }
                     }
                 }
                 else if (statement is ReturnNode || (!IsConditional(statement) && AllPathsReturn(statement)))
