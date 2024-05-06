@@ -30,20 +30,44 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return base.VisitRootNode(rootNode);
         }
 
+
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            var function = CreateFunction(functionDefinitionNode);
-            UpdateFtable(function);
-            UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
-            Visit(functionDefinitionNode.CompoundStatement);
+            try {
+                var function = CreateFunction(functionDefinitionNode);
+                UpdateFtable(function);
+                UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
+                Visit(functionDefinitionNode.CompoundStatement);
+                if (function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
+                {
+                    throw new Exception("not all paths return a value");
+                }
+            } catch (Exception e) {
+                throw new Exception($"In function '{functionDefinitionNode.Identifier.Value}' -> {e.Message}");
+            }
             vTableStack.Pop();
             return default;
         }
 
+        private bool ContainsIdentifier(AstNode expression) {
+            if (expression is IdentifierNode) {
+                return true;
+            }
+            foreach (var child in expression.Children) {
+                if (ContainsIdentifier(child)) {
+                    return true;
+                }
+            }
+            return false;
+        }
 
         public override TcType VisitReturnNode(ReturnNode returnNode)
         {
+            if (returnNode.Children.Count == 0)
+            {
+                return TcType.VOID;
+            }
             var returnType = Visit(returnNode.Children[0]);
             if (returnType != fTable.Last().Type)
             {
@@ -55,10 +79,14 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitAssignNode(AssignNode assignNode)
         {
             var idNode = assignNode.Children[0] as IdentifierNode;
-            var assignedType = Visit(assignNode.Children[1]);
-            var id = LookupVariable(idNode.Value, vTableStack);
-            CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
-            return id.Value;
+            try {
+                var assignedType = Visit(assignNode.Children[1]);
+                var id = LookupVariable(idNode.Value, vTableStack);
+                CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
+                return id.Value;
+            } catch (Exception e) {
+                throw new Exception($"While assigning to '{idNode.Value}' -> {e.Message}");
+            }
         }
 
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
@@ -66,12 +94,16 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
             var declaredIdNode = declarationNode.Children[1] as IdentifierNode;
             var declaredTypeNode = declarationNode.Children[0] as TypeNode;
-            UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
-            if (declarationNode.Children.Count > 2)
-            {
-                var actionType = Visit(declarationNode.Children[2]);
-                CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
+            try {
+                UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
+                if (declarationNode.Children.Count > 2)
+                    {
+                        var actionType = Visit(declarationNode.Children[2]);
+                        CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
 
+                    }
+            } catch (Exception e) {
+                throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
             }
             return declaredTypeNode.Type;
         }
@@ -197,10 +229,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitForStatementNode(ForStatementNode forStatementNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            Visit(forStatementNode.Variable);
-            Visit(forStatementNode.Condition);
-            Visit(forStatementNode.Expression);
-            Visit(forStatementNode.CompoundStatement);
+            VisitChildren(forStatementNode);
             vTableStack.Pop();
             return default;
         }
@@ -208,8 +237,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitWhileStatementNode(WhileStatementNode whileStatementNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            Visit(whileStatementNode.Condition);
-            Visit(whileStatementNode.CompoundStatement);
+            VisitChildren(whileStatementNode);
             vTableStack.Pop();
             return default;
         }
@@ -217,12 +245,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitIfStatementNode(IfStatementNode ifStatementNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            Visit(ifStatementNode.Condition);
-            Visit(ifStatementNode.TrueExpr);
-            if (ifStatementNode.ElseExpr is not null)
-            {
-                Visit(ifStatementNode.ElseExpr);
-            }
+            VisitChildren(ifStatementNode);
             vTableStack.Pop();
             return default;
         }
@@ -443,6 +466,95 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 Id = functionDefinitionNode.Identifier.Value,
                 Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
             };
+        }
+
+        private bool AllPathsReturn(AstNode compoundStatement)
+        {
+            foreach (var statement in compoundStatement.Children)
+            {
+                if (statement is IfStatementNode ifStatementNode && !ContainsIdentifier(ifStatementNode.Condition))
+                {
+                    if (EvaluateCondition(ifStatementNode.Condition) == 1)
+                    {
+                        return AllPathsReturn(ifStatementNode.TrueExpr);
+                    }
+                    else if (ifStatementNode.ElseExpr is not null)
+                    {
+                        return AllPathsReturn(ifStatementNode.ElseExpr);
+                    }
+                }
+                else if (statement is WhileStatementNode whileStatementNode && !ContainsIdentifier(whileStatementNode.Condition))
+                {
+                    if (EvaluateCondition(whileStatementNode.Condition) == 1)
+                    {
+                        if (!AllPathsReturn(whileStatementNode.CompoundStatement)) {
+                            throw new Exception("possible infinite loop in 'while' statement");
+                        } else {
+                            return true;
+                        }
+                    }
+                }
+                if (statement is ForStatementNode forStatementNode && !ContainsIdentifier(forStatementNode.Condition))
+                {
+                    if (EvaluateCondition(forStatementNode.Condition) == 1)
+                    {
+                        if (!AllPathsReturn(forStatementNode.CompoundStatement)) {
+                            throw new Exception("possible infinite loop in 'for' statement");
+                        } else {
+                            return true;
+                        }
+                    }
+                }
+                else if (statement is ReturnNode || (!IsConditional(statement) && AllPathsReturn(statement)))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Evaluates a condition of a loop statemnt in case it is static
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns>1 if the condition is true, 0 if it is false</returns>
+        private int EvaluateCondition(AstNode condition)
+        {
+            if (condition is AddExprNode or SubExprNode or MultExprNode or DivExprNode or ModExprNode)
+            {
+            throw new Exception("Condition must evaluate to a boolean value");
+            }
+            return EvaluateConditionHelper(condition);
+            
+        }
+
+        private int EvaluateConditionHelper(AstNode condition)
+        {
+            return condition switch
+            {
+                IntNode intNode => intNode.Value,
+                OrExprNode orExprNode => EvaluateConditionHelper(orExprNode.Left) | EvaluateConditionHelper(orExprNode.Right),
+                AndExprNode andExprNode => EvaluateConditionHelper(andExprNode.Left) & EvaluateConditionHelper(andExprNode.Right),
+                NotExprNode notExprNode => ~EvaluateConditionHelper(notExprNode.Operand),
+                EqualExprNode equalExprNode => EvaluateConditionHelper(equalExprNode.Left) == EvaluateConditionHelper(equalExprNode.Right) ? 1 : 0,
+                NotEqualExprNode notEqualExprNode => EvaluateConditionHelper(notEqualExprNode.Left) != EvaluateConditionHelper(notEqualExprNode.Right) ? 1 : 0,
+                LessThanExprNode lessThanExprNode => EvaluateConditionHelper(lessThanExprNode.Left) < EvaluateConditionHelper(lessThanExprNode.Right) ? 1 : 0,
+                GreaterThanExprNode greaterThanExprNode => EvaluateConditionHelper(greaterThanExprNode.Left) > EvaluateConditionHelper(greaterThanExprNode.Right) ? 1 : 0,
+                GreaterThanEqualExprNode greaterThanOrEqualExprNode => EvaluateConditionHelper(greaterThanOrEqualExprNode.Left) >= EvaluateConditionHelper(greaterThanOrEqualExprNode.Right) ? 1 : 0,
+                LessThanEqualExprNode lessThanOrEqualExprNode => EvaluateConditionHelper(lessThanOrEqualExprNode.Left) <= EvaluateConditionHelper(lessThanOrEqualExprNode.Right) ? 1 : 0,
+                AddExprNode addExprNode => EvaluateConditionHelper(addExprNode.Left) + EvaluateConditionHelper(addExprNode.Right),
+                SubExprNode subExprNode => EvaluateConditionHelper(subExprNode.Left) - EvaluateConditionHelper(subExprNode.Right),
+                MultExprNode multExprNode => EvaluateConditionHelper(multExprNode.Left) * EvaluateConditionHelper(multExprNode.Right),
+                DivExprNode divExprNode => EvaluateConditionHelper(divExprNode.Left) / EvaluateConditionHelper(divExprNode.Right),
+                ModExprNode modExprNode => EvaluateConditionHelper(modExprNode.Left) % EvaluateConditionHelper(modExprNode.Right),
+                BoolNode boolNode => boolNode.Value ? 1 : 0,
+                _ => throw new Exception("Invalid condition")
+            };
+        }
+
+        private bool IsConditional(AstNode statement)
+        {
+            return statement is IfStatementNode or WhileStatementNode or ForStatementNode;
         }
     }
 }
