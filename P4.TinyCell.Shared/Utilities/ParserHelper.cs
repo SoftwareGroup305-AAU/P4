@@ -31,18 +31,17 @@ namespace P4.TinyCell.Shared.Utilities
 
             public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
             {
-                throw new Exception($"Ambiguity at {startIndex}:{stopIndex}");
+                Console.WriteLine($"Ambiguity at {startIndex}:{stopIndex}");
             }
 
             public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
             {
-                throw new Exception($"Attempting full context at {startIndex}:{stopIndex}");
+                Console.WriteLine($"Attempting full context at {startIndex}:{stopIndex}");
             }
 
             public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
             {
-                throw new Exception($"Context sensitivity at {startIndex}:{stopIndex}");
-
+                Console.WriteLine($"Context sensitivity at {startIndex}:{stopIndex}");
             }
         }
     }
