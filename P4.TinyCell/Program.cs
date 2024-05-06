@@ -58,6 +58,18 @@ internal class Program
         }
 
         Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Registers:");
+
+        foreach (var scope in allocatedScopes)
+        {
+            Console.WriteLine(scope.Key);
+            foreach (var variable in scope.Value)
+            {
+                Console.WriteLine(variable.Key + " : " + variable.Value);
+            }
+        }
+
+        Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
 
         foreach (var token in tokens)
@@ -85,7 +97,6 @@ internal class Program
 
         ASMGenVisitor asmGen = new(allocatedScopes);
         asmGen.Visit(abcd);
-
 
         ASMGenerator codeGen = new ASMGenerator();
         codeGen.GenerateCode(abcd, allocatedScopes);
