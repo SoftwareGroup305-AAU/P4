@@ -1,5 +1,6 @@
 using System.Runtime.CompilerServices;
 using System.Transactions;
+using System.Xml.XPath;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
@@ -40,41 +41,77 @@ namespace CodeGen
             currentVariable = declarationNode.Identifier.Value;
             if (declarationNode.Action != null)
             {
-                return Visit(declarationNode.Action);
+                string code1 = Visit(declarationNode.Action);
+                string x = code1 + $"MOV {RegisterScopes[Scopes.First()][currentVariable]}, r9\n";
+                Console.WriteLine(x);
             }
             return base.VisitDeclarationNode(declarationNode);
         }
 
         public override string VisitAddExprNode(AddExprNode addExprNode)
         {
-            string register = RegisterScopes[Scopes.First()][currentVariable];
-            string code1 = Visit(addExprNode.Right);
-            string code2 = Visit(addExprNode.Left);
-
-            return code1 + code2;
+            string code1 = Visit(addExprNode.Left);
+            string code2 = Visit(addExprNode.Right);
+            return doArithmaticOperation("ADD", code1, code2, addExprNode.Left, addExprNode.Right);
         }
 
         public override string VisitMultExprNode(MultExprNode multExprNode)
         {
-            string register = RegisterScopes[Scopes.First()][currentVariable];
-            string code1 = Visit(multExprNode.Right);
-            string code2 = Visit(multExprNode.Left);
-            if (isLeafNode(multExprNode.Left) && isLeafNode(multExprNode.Right))
-            {
-                return $"MOV r9, {code1}\n" + $"MUL r9, r9, {code2}\n";
-            }
-            return code1 + code2;
+            string code1 = Visit(multExprNode.Left);
+            string code2 = Visit(multExprNode.Right);
+            return doArithmaticOperation("MUL", code1, code2, multExprNode.Left, multExprNode.Right);
         }
+
+        public override string VisitSubExprNode(SubExprNode subExprNode)
+        {
+            string code1 = Visit(subExprNode.Left);
+            string code2 = Visit(subExprNode.Right);
+
+            string result = "";
+
+            return result;
+        }
+
+        public override string VisitIdentifierNode(IdentifierNode identifierNode)
+        {
+            return RegisterScopes["document"][identifierNode.Value];
+        }
+
 
         public override string VisitIntNode(IntNode intNode)
         {
             return "#" + intNode.Value.ToString();
         }
 
-        public override string VisitIdentifierNode(IdentifierNode identifierNode)
+        private string doArithmaticOperation(string op, string code1, string code2, AstNode left, AstNode right)
         {
-            return RegisterScopes["document"][currentVariable];
+            string finalRegister = RegisterScopes[Scopes.First()][currentVariable];
+            string result = "";
+            if (isLeafNode(left) && isLeafNode(right))
+            {
+                result += $"MOV {finalRegister}, {code2}\n";
+                result += $"{op} r9, {finalRegister}, {code1}\n";
+            }
+            else if (isLeafNode(left))
+            {
+                result += code2;
+                result += $"{op} r9, r9, {code1}\n";
+            }
+            else if (isLeafNode(right))
+            {
+                result += code1;
+                result += $"{op} r9, r9, {code2}\n";
+            }
+            else
+            {
+                result += code2;
+                result += $"MOV r12, r9\n";
+                result += code1;
+                result += $"{op} r9, r12, r9\n";
+            }
+            return result;
         }
+
 
         private bool isLeafNode(AstNode node)
         {
