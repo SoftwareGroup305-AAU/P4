@@ -16,8 +16,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        ProgramHelper helper = new();
-        helper.GenerateAntlr();
+        //ProgramHelper helper = new();
+        //helper.GenerateAntlr();
 
         string fileContent = File.ReadAllText("Test.tc");
 

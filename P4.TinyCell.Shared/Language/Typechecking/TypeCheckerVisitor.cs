@@ -528,7 +528,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             
         }
 
-        private int EvaluateConditionHelper(AstNode condition)
+        private static int EvaluateConditionHelper(AstNode condition)
         {
             return condition switch
             {

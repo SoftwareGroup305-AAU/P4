@@ -197,7 +197,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         var allParameters = context.parameterList().Select(al => (ParameterListNode)Visit(al)).Select(al => al.Parameters).SelectMany(x => x).Cast<ParameterNode>();
         ParameterListNode aggregatedParameterList = new(allParameters.ToArray());
 
-
         return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList, (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 
@@ -521,5 +520,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return new NotExprNode(Visit(context.primitiveExpression()));
         }
         return Visit(context.primitiveExpression());
+    }
+
+    public override AstNode VisitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context)
+    {
+        return new FunctionDefinitionNode(new TypeNode(TcType.VOID), new IdentifierNode("update"), new ParameterListNode([]), (StatementCollectionNode)Visit(context.compoundStatement()));
     }
 }

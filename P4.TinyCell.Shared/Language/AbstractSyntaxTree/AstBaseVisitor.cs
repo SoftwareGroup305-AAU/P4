@@ -96,14 +96,14 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(divExprNode);
     }
 
-    public virtual Result VisitEqualExprNode(EqualExprNode bitshiftRExprNode)
+    public virtual Result VisitEqualExprNode(EqualExprNode equalExprNode)
     {
-        return VisitChildren(bitshiftRExprNode);
+        return VisitChildren(equalExprNode);
     }
 
-    public virtual Result VisitFloatNode(FloatNode boolNode)
+    public virtual Result VisitFloatNode(FloatNode floatNode)
     {
-        return VisitChildren(boolNode);
+        return VisitChildren(floatNode);
     }
 
     public virtual Result VisitForStatementNode(ForStatementNode forStatementNode)
@@ -119,16 +119,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
     {
         return VisitChildren(functionDefinitionNode);
-    }
-
-    public virtual Result VisitFunctionParameterListNode(ParameterListNode functionParameterListNode)
-    {
-        return VisitChildren(functionParameterListNode);
-    }
-
-    public virtual Result VisitFunctionParameterNode(ParameterNode functionParameterNode)
-    {
-        return VisitChildren(functionParameterNode);
     }
 
     public virtual Result VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode)
@@ -302,7 +292,7 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(whileStatementNode);
     }
 
-    public Result VisitTypeNode(TypeNode typeNode)
+    public virtual Result VisitTypeNode(TypeNode typeNode)
     {
         return VisitChildren(typeNode);
     }
