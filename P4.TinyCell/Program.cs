@@ -15,8 +15,8 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        ProgramHelper helper = new();
-        helper.GenerateAntlr();
+        //ProgramHelper helper = new();
+        //helper.GenerateAntlr();
 
         string fileContent = File.ReadAllText("Test.tc");
 
@@ -80,5 +80,10 @@ internal class Program
 
         TestAstVisitor test = new();
         test.VisitRootNode((RootNode)abcd);
+        
+
+        CGeneratorVisitor codeGen = new CGeneratorVisitor();
+        string code = codeGen.VisitRootNode((RootNode)abcd);
+        Console.WriteLine(code);
     }
 }
