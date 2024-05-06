@@ -1,6 +1,0 @@
-- Expressions (y \* 2)
-- Arguments i mod parametre
-- Function type & return type
-- Declaration / Assignment
-- Statements
-  - for loops
