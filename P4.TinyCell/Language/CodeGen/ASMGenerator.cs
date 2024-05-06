@@ -41,48 +41,48 @@ public class ASMGenerator
         //        Console.WriteLine(((IdentifierNode)tokens.GetChild(0).GetChild(0)).Value);
         // }
         //
-        tokens.
-        while (UnParsedTokens.Count != 0)
-        {
-            switch (UnParsedTokens[0].Text)
-            {
-                case IfStatementNode:
-                    GeneratedText = GeneratedText + IfAsm();
-                    break;
-                case WhileStatementNode:
+       //  tokens.
+       //  while (UnParsedTokens.Count != 0)
+       //  {
+       //      switch (UnParsedTokens[0].Text)
+       //      {
+       //          case IfStatementNode:
+       //              GeneratedText = GeneratedText + IfAsm();
+       //              break;
+       //          case WhileStatementNode:
         
-                    break;
-                case ForStatementNode:
+       //              break;
+       //          case ForStatementNode:
         
-                    break;
-                case DeclarationNode:
-                    //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
-                    break;
-                case PinWriteExprNode:
-                    //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
-                    break;
-                case PinReadExprNode:
-                    //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-                    break;
-                case PinModeExprNode:
-                    //GeneratedText = GeneratedText +
-                     //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
-                    break;
-                case FunctionDefinitionNode:
-                    GeneratedText = GeneratedText + "void setup()\n{\n";
-                    break;
-                case "printf":
-                    //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
-                    break;
-                default:
-                    //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
-                    Console.WriteLine("OOOO:");
-                    break;
+       //              break;
+       //          case DeclarationNode:
+       //              //GeneratedText = GeneratedText + Declaration(((IdentifierNode)tokens.GetChild(0).GetChild(1).Value);
+       //              break;
+       //          case PinWriteExprNode:
+       //              //GeneratedText = GeneratedText + WritePin(UnParsedTokens[6].Text, UnParsedTokens[2].Text);
+       //              break;
+       //          case PinReadExprNode:
+       //              //GeneratedText = GeneratedText + ReadPin(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+       //              break;
+       //          case PinModeExprNode:
+       //              //GeneratedText = GeneratedText +
+       //               //               PinMode(UnParsedTokens[2].Text, UnParsedTokens[6].Text);
+       //              break;
+       //          case FunctionDefinitionNode:
+       //              GeneratedText = GeneratedText + "void setup()\n{\n";
+       //              break;
+       //          case "printf":
+       //              //GeneratedText = GeneratedText + ConsoleArduino(UnParsedTokens[2].Text);
+       //              break;
+       //          default:
+       //              //GeneratedText = GeneratedText + UnParsedTokens[0].Text;
+       //              Console.WriteLine("OOOO:");
+       //              break;
         
-            }
+       //      }
         
-        }
-        return ""; //GeneratedText;
+       //  }
+              return ""; //GeneratedText;
     }
     public string DoDecleration(AstNode FinalDeclarationType, string x, string y)
     {
@@ -148,7 +148,7 @@ public class ASMGenerator
        {
               return $"MULS {RegisterLookup(addTo)}, {RegisterLookup(variable)}, {RegisterLookup(addVariable)}\n";
        }
-       
+
        /// <summary>
        /// <c>OperatorASM</c> converts operators to their ARM equivalant.
        /// </summary>
