@@ -27,7 +27,7 @@ public interface IAstVisitor<Result>
     Result VisitBitshiftLExprNode(BitshiftLExprNode bitshiftLExprNode);
     Result VisitBitshiftRExprNode(BitshiftRExprNode bitshiftRExprNode);
 
-    Result VisitEqualExprNode(EqualExprNode bitshiftRExprNode);
+    Result VisitEqualExprNode(EqualExprNode equalExprNode);
     Result VisitGreaterThanExprNode(GreaterThanExprNode greaterThanExprNode);
     Result VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode);
     Result VisitLessThanExprNode(LessThanExprNode lessThanExprNode);
@@ -54,7 +54,7 @@ public interface IAstVisitor<Result>
     Result VisitPinInNode(PinInNode pinInNode);
 
     Result VisitBoolNode(BoolNode boolNode);
-    Result VisitFloatNode(FloatNode boolNode);
+    Result VisitFloatNode(FloatNode floatNode);
     Result VisitIntNode(IntNode intNode);
     Result VisitStringNode(StringNode stringNode);
     Result VisitIdentifierNode(IdentifierNode identifierNode);
@@ -72,8 +72,6 @@ public interface IAstVisitor<Result>
 
     Result VisitFunctionCallNode(FunctionCallNode functionCallNode);
     Result VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode);
-    Result VisitFunctionParameterListNode(ParameterListNode functionParameterListNode);
-    Result VisitFunctionParameterNode(ParameterNode functionParameterNode);
     Result VisitArgumentListNode(ArgumentListNode argumentListNode);
     Result VisitArgumentNode(ArgumentNode argumentNode);
 
