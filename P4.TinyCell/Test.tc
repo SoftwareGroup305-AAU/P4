@@ -1,17 +1,19 @@
-int x = 2;
-
-int checkNumber(int x) {
-    for (int i = 0; 1!=1 ; i++) {
-        return 2;
+int factorial(int n, bool f) {
+    string b = "c";
+    int result = 1;
+    while (b) {
+        result = result * n;
+        n = n - 1;
     }
-
+    return result;
 }
 
-
-setup{
-  
+setup {
+    int num = 5;
+    int hello = 2;
 }
 
-update{
-
+update {
+    int hello = 2;
+    int b = 2 + factorial(hello);
 }
