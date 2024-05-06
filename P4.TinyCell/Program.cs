@@ -28,7 +28,7 @@ internal class Program
 
         var parser = new TinyCellParser(tokenStream);
 
-        parser.AddErrorListener(new ParserHelper.NoErrorListener());
+        // parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
         tokenStream.Fill();
@@ -70,20 +70,20 @@ internal class Program
 
         ParserHelper.PrintTree(tree);
 
-        AstBuilderVisitor astBuilderVisitor = new();
-        AstNode abcd = astBuilderVisitor.Visit(tree);
+        // AstBuilderVisitor astBuilderVisitor = new();
+        // AstNode abcd = astBuilderVisitor.Visit(tree);
 
-        Console.WriteLine(abcd.ToString());
+        // Console.WriteLine(abcd.ToString());
 
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
+        // var typeChecker = new TypeCheckerVisitor();
+        // typeChecker.Visit(abcd);
 
-        TestAstVisitor test = new();
-        test.VisitRootNode((RootNode)abcd);
+        // TestAstVisitor test = new();
+        // test.VisitRootNode((RootNode)abcd);
         
 
-        CGeneratorVisitor codeGen = new CGeneratorVisitor();
-        string code = codeGen.VisitRootNode((RootNode)abcd);
-        Console.WriteLine(code);
+        // CGeneratorVisitor codeGen = new CGeneratorVisitor();
+        // string code = codeGen.VisitRootNode((RootNode)abcd);
+        // Console.WriteLine(code);
     }
 }
