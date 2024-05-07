@@ -35,9 +35,7 @@ internal class Program
 
         var tokens = tokenStream.GetTokens();
 
-        // LivenessAnalysisListener listener = new LivenessAnalysisListener();
-        // ParseTreeWalker.Default.Walk(listener, tree);
-        // listener.FixedPointAnalysis();
+
         // var list = listener.scopes;
         // var graphs = new Dictionary<string, Graph<string>>();
         // var graphGenerator = new LivenessGraphGenerator();
@@ -75,6 +73,23 @@ internal class Program
 
         LivenessAnalysisVisitor livenessAnalysisVisitor = new();
         livenessAnalysisVisitor.Visit(abcd);
+        var list = livenessAnalysisVisitor.Scopes;
+        var graphs = new Dictionary<string, Graph<string>>();
+        var graphGenerator = new LivenessGraphGenerator();
+        foreach (var scope in list)
+        {
+            var graph = graphGenerator.generateGraph(scope.Value);
+            graphs.Add(scope.Key, graph);
+        }
+        var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
+        var registerAllocator = new StaticRegisterAllocator();
+        foreach (var scope in graphs)
+        {
+            var graph = scope.Value;
+            var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 9);
+            allocatedScopes.Add(scope.Key, groupings);
+        }
+
 
         // Console.WriteLine(abcd.ToString());
 

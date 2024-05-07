@@ -1,15 +1,31 @@
+int a = 10;
+int b = 20;
+int c = 30;
+int d = 40;
+int e = 50;
+int f = 60;
+int g = 70;
+int h = 80;
+int i = 90;
+int j = 100;
 
-setup{
-    int a = 2 + b;
-    if (2) {
-        int a = b;
-        c = a;
-    } else {
-        
-    }
-    a = 2;
-    
+setup {
+    a = a + b;
+    c = c - d;
+    e = e * f;
+    g = g / h;
+    i = i % j;
 }
 
-update{
+update {
+    a = a + 1;
+    b = b + 2;
+    c = c + 3;
+    d = d + 4;
+    e = e + 5;
+    f = f + 6;
+    g = g + 7;
+    h = h + 8;
+    i = i + 9;
+    j = j + 10;
 }

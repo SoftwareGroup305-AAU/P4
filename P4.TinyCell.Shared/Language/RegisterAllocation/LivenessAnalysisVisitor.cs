@@ -3,8 +3,9 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
-using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.RegisterAllocation
 {
@@ -37,29 +38,63 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             Scopes.Add("global", new List<IInstruction>());
             currentVariables.Push(new List<string>());
             VisitChildren(rootNode);
+            FixedPointAnalysis();
             return new HashSet<string>();
         }
 
+        public override HashSet<string> VisitUnaryMinusExprNode(UnaryMinusExprNode unaryExpressionNode)
+        {
+            var instruction = new Instruction<UnaryMinusExprNode>(unaryExpressionNode);
+            AddInstruction(instruction);
+            var gens = Visit(unaryExpressionNode.Operand);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+                instruction.addKill(gen);
+            }
+            return gens;
+        }
+
+        public override HashSet<string> VisitUnaryPlusExprNode(UnaryPlusExprNode unaryExpressionNode)
+        {
+            var instruction = new Instruction<UnaryPlusExprNode>(unaryExpressionNode);
+            AddInstruction(instruction);
+            var gens = Visit(unaryExpressionNode.Operand);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+                instruction.addKill(gen);
+            }
+            return gens;
+        }
         public override HashSet<string> VisitDeclarationNode(DeclarationNode declarationNode)
         {
             declarationNode.Identifier.Value = CheckPrevId(declarationNode.Identifier.Value);
             var id = declarationNode.Identifier.Value;
             var instruction = new Instruction<DeclarationNode>(declarationNode);
             instruction.addKill(id);
-            HashSet<string> res = Visit(declarationNode.Action);
-            foreach (var identifier in res)
+            if (declarationNode.Action != null)
             {
-                instruction.addGen(identifier);
+                HashSet<string> res = Visit(declarationNode.Action);
+                foreach (var identifier in res)
+                {
+                    instruction.addGen(identifier);
+                }
             }
+
             AddInstruction(instruction);
             return new HashSet<string>();
         }
 
         public override HashSet<string> VisitIdentifierNode(IdentifierNode identifierNode)
         {
-            if (toBeRenamed.Count() != 0 && toBeRenamed.Peek().ContainsKey(identifierNode.Value))
+            foreach (var stack in toBeRenamed)
             {
-                identifierNode.Value += $"_{toBeRenamed.Peek()[identifierNode.Value]}";
+                if (stack.ContainsKey(identifierNode.Value))
+                {
+                    identifierNode.Value = $"{identifierNode.Value}_{stack[identifierNode.Value]}";
+                    break;
+                }
             }
             HashSet<string> res = [identifierNode.Value];
             return res;
@@ -67,9 +102,13 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
 
         public override HashSet<string> VisitAssignNode(AssignNode assignmentNode)
         {
-            if (toBeRenamed.Peek().ContainsKey(assignmentNode.Identifier.Value))
+            foreach (var stack in toBeRenamed)
             {
-                assignmentNode.Identifier.Value += $"_{toBeRenamed.Peek()[assignmentNode.Identifier.Value]}";
+                if (stack.ContainsKey(assignmentNode.Identifier.Value))
+                {
+                    assignmentNode.Identifier.Value = $"{assignmentNode.Identifier.Value}_{stack[assignmentNode.Identifier.Value]}";
+                    break;
+                }
             }
             var id = assignmentNode.Identifier.Value;
             var instruction = new Instruction<AssignNode>(assignmentNode);
@@ -105,6 +144,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             if (ifStatementNode.TrueExpr.Children.Count > 0)
             {
                 toBeRenamed.Push(new Dictionary<string, int>());
+
                 firstInstruction = true;
                 Visit(ifStatementNode.TrueExpr);
                 lastInstructions.AddRange(prevInstructions);
@@ -118,13 +158,89 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     lastInstructions.AddRange(prevInstructions);
                     toBeRenamed.Pop();
                 }
-                else {
+                else
+                {
                     prevInstructions.Clear();
                     prevInstructions.Add(instruction);
                     prevInstructions.AddRange(lastInstructions);
                 }
-               
-                
+            }
+            parentInstructions.Pop();
+            return new HashSet<string>();
+        }
+
+        public override HashSet<string> VisitForStatementNode(ForStatementNode forStatementNode)
+        {
+            var instruction = new Instruction<ForStatementNode>(forStatementNode);
+            AddInstruction(instruction);
+            parentInstructions.Push(instruction);
+            var gens = Visit(forStatementNode.Condition);
+
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+            }
+            if (forStatementNode.CompoundStatement.Children.Count > 0)
+            {
+                Visit(forStatementNode.Variable);
+                toBeRenamed.Push(new Dictionary<string, int>());
+                prevInstructions.Clear();
+                firstInstruction = true;
+                Visit(forStatementNode.CompoundStatement);
+                Visit(forStatementNode.Expression);
+                prevInstructions.Clear();
+                prevInstructions.Add(instruction);
+                prevInstructions.AddRange(lastInstructions);
+                toBeRenamed.Pop();
+            }
+            parentInstructions.Pop();
+            return new HashSet<string>();
+        }
+
+        public override HashSet<string> VisitReturnNode(ReturnNode returnStatementNode)
+        {
+            var instruction = new Instruction<ReturnNode>(returnStatementNode);
+            AddInstruction(instruction);
+            var gens = Visit(returnStatementNode.ReturnExpression);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+            }
+            return new HashSet<string>();
+        }
+
+        public override HashSet<string> VisitWhileStatementNode(WhileStatementNode whileStatementNode)
+        {
+            var instruction = new Instruction<WhileStatementNode>(whileStatementNode);
+            AddInstruction(instruction);
+            parentInstructions.Push(instruction);
+            var gens = Visit(whileStatementNode.Condition);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+            }
+            if (whileStatementNode.CompoundStatement.Children.Count > 0)
+            {
+                toBeRenamed.Push(new Dictionary<string, int>());
+                firstInstruction = true;
+                Visit(whileStatementNode.CompoundStatement);
+                prevInstructions.Clear();
+                prevInstructions.Add(instruction);
+                prevInstructions.AddRange(lastInstructions);
+                toBeRenamed.Pop();
+            }
+            parentInstructions.Pop();
+            return new HashSet<string>();
+        }
+
+        public override HashSet<string> VisitFunctionCallNode(FunctionCallNode functionCallNode)
+        {
+            var instruction = new Instruction<FunctionCallNode>(functionCallNode);
+            AddInstruction(instruction);
+            var gens = Visit(functionCallNode.ArgumentList);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
             }
             return new HashSet<string>();
         }
@@ -144,12 +260,12 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
         }
         private string RenameId(string id)
         {
-            foreach (var stack in toBeRenamed.Reverse())
+            foreach (var stack in toBeRenamed)
             {
                 if (stack.ContainsKey(id))
                 {
-                    stack[id]++;
-                    return id += $"_{stack[id]}";
+                    toBeRenamed.Peek().Add(id, stack[id] + 1);
+                    return id += $"_{toBeRenamed.Peek()[id]}";
                 }
             }
             toBeRenamed.Peek().Add(id, 0);
@@ -171,6 +287,108 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             }
             prevInstructions.Add(instruction);
             Scopes.Last().Value.Add(instruction);
+        }
+
+        //<summary>
+        //Performs fixed point analysis on <see cref="scopes"/>
+        //</summary>
+        public void FixedPointAnalysis()
+        {
+            foreach (var scopeInstructions in Scopes.Values)
+            {
+                if (scopeInstructions.Count == 0)
+                {
+                    continue;
+                }
+                InitializeFirstOut(scopeInstructions);
+                List<IInstruction> instructionsCopy;
+                do
+                {
+                    instructionsCopy = scopeInstructions.Select(instruction => (IInstruction)instruction.Clone()).ToList();
+                    for (int i = scopeInstructions.Count - 1; i >= 0; i--)
+                    {
+                        var instruction = scopeInstructions[i];
+                        Update(instruction);
+                    }
+                } while (!IsListEqual(instructionsCopy, scopeInstructions));
+            }
+        }
+
+
+        //<summary>
+        // Makes sure that the last instruction <see cref="Instruction{T}.gen"></see> as its <see cref="Instruction{T}.ins"/>
+        //</summary>
+        //<param name="instructions"></param>
+        private void InitializeFirstOut(List<IInstruction> instructions)
+        {
+            for (int i = instructions.Count - 1; i >= 0; i--)
+            {
+                if (instructions[i].getGen().Count != 0)
+                {
+                    var lastInstructionIns = instructions[i].getIns();
+                    var lastInstructionGen = instructions[i].getGen();
+                    lastInstructionIns.UnionWith(lastInstructionGen);
+                    instructions[i].setIns(lastInstructionIns);
+                    break;
+                }
+            }
+        }
+
+
+        private bool IsListEqual(List<IInstruction> list1, List<IInstruction> list2)
+        {
+            for (int i = 0; i < list1.Count; i++)
+            {
+                var instruction1 = list1[i];
+                var instruction2 = list2[i];
+                if (!areInstructionsEqual(instruction1, instruction2))
+                {
+                    return false;
+                }
+            }
+            return true;
+
+
+        }
+
+        private bool areInstructionsEqual(IInstruction instruction1, IInstruction instruction2)
+        {
+            if (!instruction1.getIns().SetEquals(instruction2.getIns()))
+            {
+                return false;
+            }
+            if (!instruction1.getOuts().SetEquals(instruction2.getOuts()))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private void Update(IInstruction instruction)
+        {
+            UpdateOuts(instruction);
+            UpdateIns(instruction);
+        }
+
+        private void UpdateOuts(IInstruction instruction)
+        {
+            var instructionOuts = instruction.getOuts();
+            foreach (var succ in instruction.getSucc())
+            {
+                instructionOuts.UnionWith(succ.getIns());
+            }
+            instruction.setOuts(instructionOuts);
+        }
+
+        private void UpdateIns(IInstruction instruction)
+        {
+            var gen = instruction.getGen();
+            var outs = instruction.getOuts();
+            var kill = instruction.getKill();
+            var outsMinusKill = new HashSet<string>(outs);
+            outsMinusKill.ExceptWith(kill);
+            var newIns = gen.Union(outsMinusKill).ToHashSet();
+            instruction.setIns(newIns);
         }
 
 
