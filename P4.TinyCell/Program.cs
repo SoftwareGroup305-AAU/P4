@@ -73,6 +73,9 @@ internal class Program
         AstBuilderVisitor astBuilderVisitor = new();
         AstNode abcd = astBuilderVisitor.Visit(tree);
 
+        LivenessAnalysisVisitor livenessAnalysisVisitor = new();
+        livenessAnalysisVisitor.Visit(abcd);
+
         // Console.WriteLine(abcd.ToString());
 
         // var typeChecker = new TypeCheckerVisitor();
