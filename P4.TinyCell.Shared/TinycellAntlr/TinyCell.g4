@@ -71,7 +71,7 @@ primitiveExpression:
 	| functionCall
 	| LPAR expression RPAR;
 
-negativeExpression: primitiveExpression | MINUS? Numeral;
+negativeExpression: primitiveExpression | MINUS Numeral;
 
 unaryExpression:
 	negativeExpression

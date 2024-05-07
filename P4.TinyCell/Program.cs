@@ -70,8 +70,8 @@ internal class Program
 
         ParserHelper.PrintTree(tree);
 
-        // AstBuilderVisitor astBuilderVisitor = new();
-        // AstNode abcd = astBuilderVisitor.Visit(tree);
+        AstBuilderVisitor astBuilderVisitor = new();
+        AstNode abcd = astBuilderVisitor.Visit(tree);
 
         // Console.WriteLine(abcd.ToString());
 
@@ -80,10 +80,10 @@ internal class Program
 
         // TestAstVisitor test = new();
         // test.VisitRootNode((RootNode)abcd);
-        
 
-        // CGeneratorVisitor codeGen = new CGeneratorVisitor();
-        // string code = codeGen.VisitRootNode((RootNode)abcd);
-        // Console.WriteLine(code);
+
+        CGeneratorVisitor codeGen = new CGeneratorVisitor();
+        string code = codeGen.VisitRootNode((RootNode)abcd);
+        Console.WriteLine(code);
     }
 }
