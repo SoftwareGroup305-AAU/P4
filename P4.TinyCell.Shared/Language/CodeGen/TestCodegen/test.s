@@ -1,6 +1,8 @@
 .section .text
 .global main
 
+.equ RCCAHBENR, 0x40000800
+
 main:
     push {r4, lr}
     
