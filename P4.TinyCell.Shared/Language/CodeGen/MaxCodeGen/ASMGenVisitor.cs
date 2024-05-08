@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using System.Transactions;
-using System.Xml.XPath;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
