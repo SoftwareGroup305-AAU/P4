@@ -3,6 +3,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
 
@@ -67,21 +68,57 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
 
         public override HashSet<string> VisitAssignNode(AssignNode assignmentNode)
         {
-            if (toBeRenamed.Peek().ContainsKey(assignmentNode.Identifier.Value))
-            {
-                assignmentNode.Identifier.Value += $"_{toBeRenamed.Peek()[assignmentNode.Identifier.Value]}";
-            }
-            var id = assignmentNode.Identifier.Value;
-            var instruction = new Instruction<AssignNode>(assignmentNode);
-            instruction.addKill(id);
-            HashSet<string> res = Visit(assignmentNode.Expression);
-            foreach (var identifier in res)
-            {
-                instruction.addGen(identifier);
-            }
+            return VisitAssignNodeHelper(assignmentNode);
+        }
+
+        public override HashSet<string> VisitPlusAssignNode(PlusAssignNode plusAssignNode)
+        {
+            return VisitAssignNodeHelper(plusAssignNode);
+        }
+
+        public override HashSet<string> VisitMinusAssignNode(MinusAssignNode minusAssignNode)
+        {
+            return VisitAssignNodeHelper(minusAssignNode);
+        }
+
+        public override HashSet<string> VisitDivAssignNode(DivAssignNode divAssignNode)
+        {
+            return VisitAssignNodeHelper(divAssignNode);
+        }
+
+        public override HashSet<string> VisitMultAssignNode(MultAssignNode mulAssignNode)
+        {
+            return VisitAssignNodeHelper(mulAssignNode);
+        }
+
+        public override HashSet<string> VisitModAssignNode(ModAssignNode modAssignNode)
+        {
+            return VisitAssignNodeHelper(modAssignNode);
+        }
+
+        public override HashSet<string> VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
+        {
+            return VisitPinExprHelper(pinReadExprNode);
+        }
+
+        public override HashSet<string> VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
+        {
+            return VisitPinExprHelper(pinWriteExprNode);
+        }
+
+        public override HashSet<string> VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
+        {
+            var instruction = new Instruction<PinModeExprNode>(pinModeExprNode);
             AddInstruction(instruction);
+            var kills = Visit(pinModeExprNode.Value);
+            foreach (var kill in kills)
+            {
+                instruction.addKill(kill);
+            }
             return new HashSet<string>();
         }
+
+
 
         public override HashSet<string> VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
@@ -118,13 +155,14 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     lastInstructions.AddRange(prevInstructions);
                     toBeRenamed.Pop();
                 }
-                else {
+                else
+                {
                     prevInstructions.Clear();
                     prevInstructions.Add(instruction);
                     prevInstructions.AddRange(lastInstructions);
                 }
-               
-                
+
+
             }
             return new HashSet<string>();
         }
@@ -173,6 +211,40 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             Scopes.Last().Value.Add(instruction);
         }
 
+        private HashSet<string> VisitAssignNodeHelper(AssignmentBaseNode assignmentNode)
+        {
+            if (toBeRenamed.Peek().ContainsKey(assignmentNode.Identifier.Value))
+            {
+                assignmentNode.Identifier.Value += $"_{toBeRenamed.Peek()[assignmentNode.Identifier.Value]}";
+            }
+            var id = assignmentNode.Identifier.Value;
+            var instruction = new Instruction<AssignmentBaseNode>(assignmentNode);
+            instruction.addKill(id);
+            HashSet<string> res = Visit(assignmentNode.Expression);
+            foreach (var identifier in res)
+            {
+                instruction.addGen(identifier);
+            }
+            AddInstruction(instruction);
+            return new HashSet<string>();
+        }
+
+        private HashSet<string> VisitPinExprHelper(PinExprNode pinExprNode)
+        {
+            var instruction = new Instruction<PinExprNode>(pinExprNode);
+            AddInstruction(instruction);
+            var gens = Visit(pinExprNode.From);
+            var kills = Visit(pinExprNode.To);
+            foreach (var gen in gens)
+            {
+                instruction.addGen(gen);
+            }
+            foreach (var kill in kills)
+            {
+                instruction.addKill(kill);
+            }
+            return new HashSet<string>();
+        }
 
     }
 }

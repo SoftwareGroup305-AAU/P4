@@ -5,7 +5,7 @@ setup{
         int a = b;
         c = a;
     } else {
-        
+        read b to a;
     }
     a = 2;
     
