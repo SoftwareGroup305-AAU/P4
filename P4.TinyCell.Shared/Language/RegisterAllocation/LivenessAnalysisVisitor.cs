@@ -145,11 +145,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
         {
             var instruction = new Instruction<PinModeExprNode>(pinModeExprNode);
             AddInstruction(instruction);
-            var kills = Visit(pinModeExprNode.Value);
-            foreach (var kill in kills)
-            {
-                instruction.addKill(kill);
-            }
+            instruction.addKill(pinModeExprNode.Identifier.Value);
             return new HashSet<string>();
         }
 
