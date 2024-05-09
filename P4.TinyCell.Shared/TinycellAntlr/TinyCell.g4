@@ -71,13 +71,15 @@ primitiveExpression:
 	| functionCall
 	| LPAR expression RPAR;
 
+negativeExpression: primitiveExpression | MINUS Numeral;
+
 unaryExpression:
-	primitiveExpression
+	negativeExpression
 	| identifier UNARYPLUS
 	| identifier UNARYMINUS
 	| UNARYPLUS identifier
 	| UNARYMINUS identifier
-	| NOT primitiveExpression;
+	| NOT negativeExpression;
 
 multiplicativeExpression:
 	unaryExpression
@@ -225,7 +227,7 @@ Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
-Numeral: [-]? ([0] | [1-9]) [0-9]* ([.][0-9]+)?;
+Numeral: [0-9]+ ([.][0-9]+)?;
 
 BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
 
