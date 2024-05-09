@@ -99,6 +99,14 @@ internal class Program
         // TestAstVisitor test = new();
         // test.VisitRootNode((RootNode)abcd);
 
+        TestAstVisitor test = new();
+        test.VisitRootNode((RootNode)abcd);
+
+        ASMGenVisitor asmGen = new(allocatedScopes);
+        asmGen.Visit(abcd);
+
+        ASMGenerator codeGen = new ASMGenerator();
+        codeGen.GenerateCode(abcd, allocatedScopes);
 
         CGeneratorVisitor codeGen = new CGeneratorVisitor();
         string code = codeGen.VisitRootNode((RootNode)abcd);
