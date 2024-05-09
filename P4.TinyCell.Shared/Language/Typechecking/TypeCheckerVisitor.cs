@@ -378,8 +378,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// Looks up a function in the function table
         /// </summary>
         /// <param name="id">Function identifier</param>
-        /// <returns>Returns <see cref="Function" no null if no function was found /></returns>
-        private static Function? LookupFunction(string id, List<Function> fTable)
+        /// <returns>Function matching id</returns>
+        private static Function LookupFunction(string id, List<Function> fTable)
         {
             var function = fTable.FirstOrDefault(x => x.Id == id);
             if (function is null)
@@ -389,6 +389,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return function;
         }
 
+        /// <summary>
+        /// Checks if the arguments of a function call match the expected parameters
+        /// </summary>
+        /// <param name="parameters">Declared function parameters</param>
+        /// <param name="argumentList">called function argument node</param>
+        /// <exception cref="Exception"></exception>
         private void CheckFunctionArguments(List<TcType> parameters, ArgumentListNode argumentList)
         {
             if (argumentList is not null)
@@ -408,6 +414,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             }
         }
 
+        
         private static void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
@@ -415,7 +422,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 throw new Exception($"Type mismatch: expected {string.Join(", ", expectedTypes)}, but got {left} and {right}");
             }
         }
-
+        /// <summary>
+        /// Updates the function table with a new function
+        /// </summary>
+        /// <param name="function"></param>
+        /// <exception cref="Exception"></exception>
         private void UpdateFtable(Function function)
         {
             if (fTable.Any(f => f.Id == function.Id))
@@ -425,6 +436,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             fTable.Add(function);
         }
 
+        /// <summary>
+        /// Updates the variable table with a list of variables
+        /// </summary>
+        /// <param name="variables"></param>
+        /// <exception cref="Exception"></exception>
         private void UpdateVtable(List<KeyValuePair<string, TcType>> variables)
         {
             foreach (var variable in variables)
@@ -436,7 +452,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 vTableStack.First().Push(variable);
             }
         }
-
+        /// <summary>
+        /// Updates the variable table with a single variable
+        /// </summary>
+        /// <param name="variable"></param>
+        /// <exception cref="Exception"></exception>
         private void UpdateVtable(KeyValuePair<string, TcType> variable)
         {
             if (vTableStack.First().Any(x => x.Key == variable.Key))
@@ -445,6 +465,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             }
             vTableStack.First().Push(variable);
         }
+
 
         private static void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
         {
@@ -458,6 +479,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             }
         }
 
+        /// <summary>
+        /// Creates a function object from a function definition node
+        /// </summary>
+        /// <param name="functionDefinitionNode"></param>
+        /// <returns></returns>
         private static Function CreateFunction(FunctionDefinitionNode functionDefinitionNode)
         {
             return new Function
@@ -468,9 +494,15 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             };
         }
 
-        private bool AllPathsReturn(AstNode compoundStatement)
+        /// <summary>
+        /// Checks if all code paths in a function definition return a value
+        /// </summary>
+        /// <param name="functionBody"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private bool AllPathsReturn(AstNode functionBody)
         {
-            foreach (var statement in compoundStatement.Children)
+            foreach (var statement in functionBody.Children)
             {
                 if (statement is IfStatementNode ifStatementNode && !ContainsIdentifier(ifStatementNode.Condition))
                 {
@@ -514,10 +546,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         }
 
         /// <summary>
-        /// Evaluates a condition of a loop statemnt in case it is static
+        /// Evaluates a condition of a conditional statemnt in case it is static
         /// </summary>
         /// <param name="condition"></param>
         /// <returns>1 if the condition is true, 0 if it is false</returns>
+        /// <exception cref="Exception"></exception>
         private int EvaluateCondition(AstNode condition)
         {
             if (condition is AddExprNode or SubExprNode or MultExprNode or DivExprNode or ModExprNode)
@@ -526,9 +559,17 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             }
             return EvaluateConditionHelper(condition);
             
+        
+            
         }
 
-        private static int EvaluateConditionHelper(AstNode condition)
+        /// <summary>
+        /// Evaluates a condition of a conditional statement, recursively, given it is static. Used by <see cref="EvaluateCondition"/>
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private int EvaluateConditionHelper(AstNode condition)
         {
             return condition switch
             {
@@ -552,6 +593,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             };
         }
 
+        /// <summary>
+        /// Checks if a statement is a conditional statement
+        /// </summary>
+        /// <param name="statement"></param>
+        /// <returns></returns>
         private bool IsConditional(AstNode statement)
         {
             return statement is IfStatementNode or WhileStatementNode or ForStatementNode;
