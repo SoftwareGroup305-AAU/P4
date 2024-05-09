@@ -10,6 +10,7 @@ using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Language.CodeGen;
 using P4.TinyCell.Shared.Utilities;
 using System.Diagnostics;
+using CodeGen;
 
 internal class Program
 {
@@ -108,8 +109,8 @@ internal class Program
         ASMGenerator codeGen = new ASMGenerator();
         codeGen.GenerateCode(abcd, allocatedScopes);
 
-        CGeneratorVisitor codeGen = new CGeneratorVisitor();
-        string code = codeGen.VisitRootNode((RootNode)abcd);
+        CGeneratorVisitor codeGenC = new CGeneratorVisitor();
+        string code = codeGenC.VisitRootNode((RootNode)abcd);
         Console.WriteLine(code);
     }
 }
