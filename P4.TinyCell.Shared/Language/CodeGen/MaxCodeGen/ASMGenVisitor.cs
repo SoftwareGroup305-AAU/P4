@@ -7,6 +7,7 @@ namespace CodeGen
 {
     public class ASMGenVisitor : AstBaseVisitor<string>
     {
+        private int arithmaticaccumulator;
         private string currentVariable = "";
         private int labelCount = 0;
         private int ifLabelCount = 0;
@@ -86,15 +87,20 @@ namespace CodeGen
             string result = "";
             if (isLeafNode(left) && isLeafNode(right))
             {
+                if (left is IntNode leftInt && right is IntNode rightInt)
+                {
+                    arithmaticaccumulator += ComputeStaticExpression((int)leftInt.Value, (int)rightInt.Value, op);
+                    return "";
+                }
                 result += $"MOV {finalRegister}, {code2}\n";
                 result += $"{op} r9, {finalRegister}, {code1}\n";
             }
-            else if (isLeafNode(left))
+            else if (isLeafNode(left) && code1 != "")
             {
                 result += code2;
                 result += $"{op} r9, r9, {code1}\n";
             }
-            else if (isLeafNode(right))
+            else if (isLeafNode(right) && code2 != "")
             {
                 result += code1;
                 result += $"{op} r9, r9, {code2}\n";
@@ -104,9 +110,25 @@ namespace CodeGen
                 result += code2;
                 result += $"MOV r12, r9\n";
                 result += code1;
-                result += $"{op} r9, r12, r9\n";
+                result += "{$op} r9, r12, r9\n";
+                if (arithmaticaccumulator != 0)
+                {
+                    result += $"ADD r9, r9, #{arithmaticaccumulator}\n";
+                    arithmaticaccumulator = 0;
+                }
             }
             return result;
+        }
+
+        private int ComputeStaticExpression(int val1, int val2, string op)
+        {
+            return op switch
+            {
+                "MUL" => val1 * val2,
+                "ADD" => val1 + val2,
+                _ => throw new InvalidOperationException("Invalid operation")
+            };
+
         }
 
 
@@ -114,5 +136,9 @@ namespace CodeGen
         {
             return node.Children.Count == 0;
         }
+
+
+
+
     }
 }
