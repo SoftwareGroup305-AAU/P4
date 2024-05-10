@@ -141,7 +141,7 @@ ternaryExpression:
 expression: ternaryExpression;
 
 pinAssignmentExpression:
-	WRITE (pinVoltage | identifier | Numeral) TO (
+	WRITE (pinVoltage | Bool | identifier | Numeral) TO (
 		identifier
 		| Numeral
 	)
