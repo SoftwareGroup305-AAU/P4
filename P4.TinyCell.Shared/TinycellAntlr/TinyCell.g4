@@ -88,7 +88,10 @@ primitiveExpression:
 	| LCURLY (arrayContent COMMA)* arrayContent RCURLY
 	| LPAR expression RPAR;
 
-negativeExpression: primitiveExpression | MINUS Numeral;
+negativeExpression:
+	primitiveExpression
+	| MINUS Numeral
+	| MINUS LPAR expression RPAR;
 
 unaryExpression:
 	negativeExpression
