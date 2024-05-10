@@ -1,4 +1,4 @@
-include liberal.tcl;
+include stdlib.tcl;
 
 int a = 2+2;
 int b = 3*a+2*3*4;
@@ -17,5 +17,5 @@ setup{
 }
 
 update{
-
+	print("fuck");
 }

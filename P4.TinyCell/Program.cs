@@ -1,16 +1,8 @@
 ﻿using Antlr4.Runtime;
-using Antlr4.Runtime.Atn;
-using Antlr4.Runtime.Dfa;
-using Antlr4.Runtime.Tree;
-using Antlr4.Runtime.Sharpen;
-using P4.TinyCell;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
-using P4.TinyCell.Shared.Language.RegisterAllocation;
-using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Language.CodeGen;
+using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Utilities;
-using System.Diagnostics;
-using CodeGen;
 
 
 internal class Program
@@ -37,37 +29,37 @@ internal class Program
 
         var tokens = tokenStream.GetTokens();
 
-        LivenessAnalysisListener listener = new LivenessAnalysisListener();
-        ParseTreeWalker.Default.Walk(listener, tree);
-        listener.FixedPointAnalysis();
-        var list = listener.scopes;
-        var graphs = new Dictionary<string, Graph<string>>();
-        var graphGenerator = new LivenessGraphGenerator();
-        foreach (var scope in list)
-        {
-            var graph = graphGenerator.generateGraph(scope.Value);
-            graphs.Add(scope.Key, graph);
-        }
-        var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
-        var registerAllocator = new StaticRegisterAllocator();
-        foreach (var scope in graphs)
-        {
-            var graph = scope.Value;
-            var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
-            allocatedScopes.Add(scope.Key, groupings);
-        }
+        //LivenessAnalysisListener listener = new LivenessAnalysisListener();
+        //ParseTreeWalker.Default.Walk(listener, tree);
+        //listener.FixedPointAnalysis();
+        //var list = listener.scopes;
+        //var graphs = new Dictionary<string, Graph<string>>();
+        //var graphGenerator = new LivenessGraphGenerator();
+        //foreach (var scope in list)
+        //{
+        //    var graph = graphGenerator.generateGraph(scope.Value);
+        //    graphs.Add(scope.Key, graph);
+        //}
+        //var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
+        //var registerAllocator = new StaticRegisterAllocator();
+        //foreach (var scope in graphs)
+        //{
+        //    var graph = scope.Value;
+        //    var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
+        //    allocatedScopes.Add(scope.Key, groupings);
+        //}
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Registers:");
 
-        foreach (var scope in allocatedScopes)
-        {
-            Console.WriteLine(scope.Key);
-            foreach (var variable in scope.Value)
-            {
-                Console.WriteLine(variable.Key + " : " + variable.Value);
-            }
-        }
+        //foreach (var scope in allocatedScopes)
+        //{
+        //    Console.WriteLine(scope.Key);
+        //    foreach (var variable in scope.Value)
+        //    {
+        //        Console.WriteLine(variable.Key + " : " + variable.Value);
+        //    }
+        //}
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
