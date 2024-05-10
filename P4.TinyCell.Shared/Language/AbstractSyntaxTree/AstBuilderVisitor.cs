@@ -280,6 +280,17 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         }
     }
 
+    public override AstNode VisitNegativeExpression([NotNull] TinyCellParser.NegativeExpressionContext context)
+    {
+        if (context.Numeral() is not null)
+        {
+            string num = context.Numeral().GetText();
+
+            return num.Contains('.') ? new FloatNode(-float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(-int.Parse(num));
+        }
+        return base.VisitNegativeExpression(context);
+    }
+
     public override AstNode VisitOrExpression([NotNull] TinyCellParser.OrExpressionContext context)
     {
         if (context.OR() is not null)
@@ -517,9 +528,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         }
         if (context.NOT() is not null)
         {
-            return new NotExprNode(Visit(context.primitiveExpression()));
+            return new NotExprNode(Visit(context.negativeExpression()));
         }
-        return Visit(context.primitiveExpression());
+        return Visit(context.negativeExpression());
     }
 
     public override AstNode VisitUpdateDefinition([NotNull] TinyCellParser.UpdateDefinitionContext context)

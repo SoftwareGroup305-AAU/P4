@@ -15,8 +15,6 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 namespace P4.TinyCell.Shared.Language.CodeGen;
 public class CGeneratorVisitor : AstBaseVisitor<string>
 {
-    //private string fuck = string.Empty;
-
     public override string VisitAddExprNode(AddExprNode addExprNode)
     {
         return $"{Visit(addExprNode.Left)} + {Visit(addExprNode.Right)}";
