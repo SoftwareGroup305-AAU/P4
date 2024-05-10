@@ -5,13 +5,15 @@ int b = 3*a+2*3*4;
 int c = a+b;
 
 setup{
-    int d[4];
-    int e[4] = {1,2,3,4};
+    int d[5];
+    int e[5] = {1,2,3,4};
     d[0] = 1;
     d[2] = e[0];
 
     int i = 2;
     d[i] = 1;
+
+    int e[4] = {a,b,c};
 }
 
 update{

@@ -75,14 +75,16 @@ assignment:
 
 functionCall: identifier LPAR argumentList* RPAR;
 
+arrayContent: Numeral | String | identifier;
+
 primitiveExpression:
 	Numeral
 	| Bool
 	| String
 	| identifier
 	| functionCall
-	| LPAR expression RPAR
-	| LCURLY ((Numeral | String) COMMA)* (Numeral | String) RCURLY;
+	| LCURLY (arrayContent COMMA)* arrayContent RCURLY
+	| LPAR expression RPAR;
 
 negativeExpression: primitiveExpression | MINUS Numeral;
 
