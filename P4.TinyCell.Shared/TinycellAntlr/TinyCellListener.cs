@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell.Shared//TinycellAntlr//TinyCell.g4 by ANTLR 4.13.1
+// Generated from P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -40,6 +40,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitDocument([NotNull] TinyCellParser.DocumentContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInclude([NotNull] TinyCellParser.IncludeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInclude([NotNull] TinyCellParser.IncludeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
 	/// </summary>
@@ -370,6 +380,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTclib([NotNull] TinyCellParser.TclibContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTclib([NotNull] TinyCellParser.TclibContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.assignmentOperator"/>.
 	/// </summary>

@@ -69,27 +69,27 @@ internal class Program
 
         ParserHelper.PrintTree(tree);
 
-        AstBuilderVisitor astBuilderVisitor = new();
-        AstNode abcd = astBuilderVisitor.Visit(tree);
+        // AstBuilderVisitor astBuilderVisitor = new();
+        // AstNode abcd = astBuilderVisitor.Visit(tree);
 
-        LivenessAnalysisVisitor livenessAnalysisVisitor = new();
-        livenessAnalysisVisitor.Visit(abcd);
-        var list = livenessAnalysisVisitor.Scopes;
-        var graphs = new Dictionary<string, Graph<string>>();
-        var graphGenerator = new LivenessGraphGenerator();
-        foreach (var scope in list)
-        {
-            var graph = graphGenerator.generateGraph(scope.Value);
-            graphs.Add(scope.Key, graph);
-        }
-        var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
-        var registerAllocator = new StaticRegisterAllocator();
-        foreach (var scope in graphs)
-        {
-            var graph = scope.Value;
-            var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 9);
-            allocatedScopes.Add(scope.Key, groupings);
-        }
+        // LivenessAnalysisVisitor livenessAnalysisVisitor = new();
+        // livenessAnalysisVisitor.Visit(abcd);
+        // var list = livenessAnalysisVisitor.Scopes;
+        // var graphs = new Dictionary<string, Graph<string>>();
+        // var graphGenerator = new LivenessGraphGenerator();
+        // foreach (var scope in list)
+        // {
+        //     var graph = graphGenerator.generateGraph(scope.Value);
+        //     graphs.Add(scope.Key, graph);
+        // }
+        // var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
+        // var registerAllocator = new StaticRegisterAllocator();
+        // foreach (var scope in graphs)
+        // {
+        //     var graph = scope.Value;
+        //     var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 9);
+        //     allocatedScopes.Add(scope.Key, groupings);
+        // }
 
 
         // Console.WriteLine(abcd.ToString());
@@ -100,17 +100,17 @@ internal class Program
         // TestAstVisitor test = new();
         // test.VisitRootNode((RootNode)abcd);
 
-        TestAstVisitor test = new();
-        test.VisitRootNode((RootNode)abcd);
+        // TestAstVisitor test = new();
+        // test.VisitRootNode((RootNode)abcd);
 
-        ASMGenVisitor asmGen = new(allocatedScopes);
-        asmGen.Visit(abcd);
+        // ASMGenVisitor asmGen = new(allocatedScopes);
+        // asmGen.Visit(abcd);
 
-        ASMGenerator codeGen = new ASMGenerator();
-        codeGen.GenerateCode(abcd, allocatedScopes);
+        // ASMGenerator codeGen = new ASMGenerator();
+        // codeGen.GenerateCode(abcd, allocatedScopes);
 
-        CGeneratorVisitor codeGenC = new CGeneratorVisitor();
-        string code = codeGenC.VisitRootNode((RootNode)abcd);
-        Console.WriteLine(code);
+        // CGeneratorVisitor codeGenC = new CGeneratorVisitor();
+        // string code = codeGenC.VisitRootNode((RootNode)abcd);
+        // Console.WriteLine(code);
     }
 }
