@@ -241,6 +241,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

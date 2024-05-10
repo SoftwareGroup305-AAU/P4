@@ -45,8 +45,8 @@ public partial class TinyCellParser : Parser {
 		MULTASSIGN=45, DIVASSIGN=46, MODASSIGN=47, MINUSASSIGN=48, QUOTE=49, MULT=50, 
 		DIV=51, PLUS=52, MINUS=53, MOD=54, AND=55, OR=56, EQ=57, NEQ=58, GT=59, 
 		LT=60, GTE=61, LTE=62, NOT=63, BITSHIFTL=64, BITSHIFTR=65, UNARYPLUS=66, 
-		UNARYMINUS=67, Identifier=68, LibraryIdent=69, String=70, Numeral=71, 
-		IntNumeral=72, BlockComment=73, LineComment=74, Newline=75;
+		UNARYMINUS=67, Identifier=68, LibraryIdent=69, String=70, IntNumeral=71, 
+		Numeral=72, BlockComment=73, LineComment=74, Newline=75;
 	public const int
 		RULE_document = 0, RULE_include = 1, RULE_generalDeclaration = 2, RULE_setupDefinition = 3, 
 		RULE_updateDefinition = 4, RULE_functionDefinition = 5, RULE_type = 6, 
@@ -92,8 +92,8 @@ public partial class TinyCellParser : Parser {
 		"NEWLINE", "ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN", 
 		"MINUSASSIGN", "QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND", 
 		"OR", "EQ", "NEQ", "GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR", 
-		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "Numeral", 
-		"IntNumeral", "BlockComment", "LineComment", "Newline"
+		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "IntNumeral", 
+		"Numeral", "BlockComment", "LineComment", "Newline"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
 
@@ -1189,7 +1189,7 @@ public partial class TinyCellParser : Parser {
 			State = 196;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -9214364831967461502L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 55L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -9214364831967461502L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 87L) != 0)) {
 				{
 				{
 				State = 193;
@@ -1662,7 +1662,7 @@ public partial class TinyCellParser : Parser {
 				State = 267;
 				ErrorHandler.Sync(this);
 				_la = TokenStream.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & -9214364832231325694L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 55L) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & -9214364832231325694L) != 0) || ((((_la - 66)) & ~0x3f) == 0 && ((1L << (_la - 66)) & 87L) != 0)) {
 					{
 					State = 266;
 					expression();
@@ -1817,7 +1817,7 @@ public partial class TinyCellParser : Parser {
 			State = 287;
 			ErrorHandler.Sync(this);
 			_la = TokenStream.LA(1);
-			while (_la==Bool || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & 13L) != 0)) {
+			while (_la==Bool || ((((_la - 68)) & ~0x3f) == 0 && ((1L << (_la - 68)) & 21L) != 0)) {
 				{
 				{
 				State = 284;
@@ -1926,6 +1926,16 @@ public partial class TinyCellParser : Parser {
 		{
 		}
 		public override int RuleIndex { get { return RULE_arrayIndex; } }
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void EnterRule(IParseTreeListener listener) {
+			ITinyCellListener typedListener = listener as ITinyCellListener;
+			if (typedListener != null) typedListener.EnterArrayIndex(this);
+		}
+		[System.Diagnostics.DebuggerNonUserCode]
+		public override void ExitRule(IParseTreeListener listener) {
+			ITinyCellListener typedListener = listener as ITinyCellListener;
+			if (typedListener != null) typedListener.ExitArrayIndex(this);
+		}
 		[System.Diagnostics.DebuggerNonUserCode]
 		public override TResult Accept<TResult>(IParseTreeVisitor<TResult> visitor) {
 			ITinyCellVisitor<TResult> typedVisitor = visitor as ITinyCellVisitor<TResult>;
@@ -3886,7 +3896,7 @@ public partial class TinyCellParser : Parser {
 		72,36,0,149,17,1,0,0,0,150,151,6,9,-1,0,151,152,3,20,10,0,152,158,1,0,
 		0,0,153,154,10,1,0,0,154,155,5,38,0,0,155,157,3,20,10,0,156,153,1,0,0,
 		0,157,160,1,0,0,0,158,156,1,0,0,0,158,159,1,0,0,0,159,19,1,0,0,0,160,158,
-		1,0,0,0,161,167,3,72,36,0,162,167,3,38,19,0,163,167,5,71,0,0,164,167,5,
+		1,0,0,0,161,167,3,72,36,0,162,167,3,38,19,0,163,167,5,72,0,0,164,167,5,
 		70,0,0,165,167,5,1,0,0,166,161,1,0,0,0,166,162,1,0,0,0,166,163,1,0,0,0,
 		166,164,1,0,0,0,166,165,1,0,0,0,167,21,1,0,0,0,168,169,3,12,6,0,169,170,
 		3,24,12,0,170,23,1,0,0,0,171,176,3,72,36,0,172,173,5,34,0,0,173,174,3,
@@ -3922,10 +3932,10 @@ public partial class TinyCellParser : Parser {
 		0,0,277,278,1,0,0,0,278,279,1,0,0,0,279,280,3,76,38,0,280,281,3,66,33,
 		0,281,37,1,0,0,0,282,283,3,72,36,0,283,287,5,30,0,0,284,286,3,18,9,0,285,
 		284,1,0,0,0,286,289,1,0,0,0,287,285,1,0,0,0,287,288,1,0,0,0,288,290,1,
-		0,0,0,289,287,1,0,0,0,290,291,5,31,0,0,291,39,1,0,0,0,292,296,5,71,0,0,
+		0,0,0,289,287,1,0,0,0,290,291,5,31,0,0,291,39,1,0,0,0,292,296,5,72,0,0,
 		293,296,5,70,0,0,294,296,3,72,36,0,295,292,1,0,0,0,295,293,1,0,0,0,295,
-		294,1,0,0,0,296,41,1,0,0,0,297,300,5,72,0,0,298,300,3,72,36,0,299,297,
-		1,0,0,0,299,298,1,0,0,0,300,43,1,0,0,0,301,323,5,71,0,0,302,323,5,1,0,
+		294,1,0,0,0,296,41,1,0,0,0,297,300,5,71,0,0,298,300,3,72,36,0,299,297,
+		1,0,0,0,299,298,1,0,0,0,300,43,1,0,0,0,301,323,5,72,0,0,302,323,5,1,0,
 		0,303,323,5,70,0,0,304,323,3,72,36,0,305,323,3,38,19,0,306,312,5,32,0,
 		0,307,308,3,40,20,0,308,309,5,38,0,0,309,311,1,0,0,0,310,307,1,0,0,0,311,
 		314,1,0,0,0,312,310,1,0,0,0,312,313,1,0,0,0,313,315,1,0,0,0,314,312,1,
@@ -3933,7 +3943,7 @@ public partial class TinyCellParser : Parser {
 		0,0,319,320,3,66,33,0,320,321,5,31,0,0,321,323,1,0,0,0,322,301,1,0,0,0,
 		322,302,1,0,0,0,322,303,1,0,0,0,322,304,1,0,0,0,322,305,1,0,0,0,322,306,
 		1,0,0,0,322,318,1,0,0,0,323,45,1,0,0,0,324,328,3,44,22,0,325,326,5,53,
-		0,0,326,328,5,71,0,0,327,324,1,0,0,0,327,325,1,0,0,0,328,47,1,0,0,0,329,
+		0,0,326,328,5,72,0,0,327,324,1,0,0,0,327,325,1,0,0,0,328,47,1,0,0,0,329,
 		343,3,46,23,0,330,331,3,72,36,0,331,332,5,66,0,0,332,343,1,0,0,0,333,334,
 		3,72,36,0,334,335,5,67,0,0,335,343,1,0,0,0,336,337,5,66,0,0,337,343,3,
 		72,36,0,338,339,5,67,0,0,339,343,3,72,36,0,340,341,5,63,0,0,341,343,3,
@@ -3972,10 +3982,10 @@ public partial class TinyCellParser : Parser {
 		19,0,456,458,3,36,18,0,457,454,1,0,0,0,457,455,1,0,0,0,457,456,1,0,0,0,
 		458,460,1,0,0,0,459,445,1,0,0,0,459,446,1,0,0,0,460,65,1,0,0,0,461,462,
 		3,64,32,0,462,67,1,0,0,0,463,468,5,20,0,0,464,469,3,78,39,0,465,469,5,
-		1,0,0,466,469,3,72,36,0,467,469,5,71,0,0,468,464,1,0,0,0,468,465,1,0,0,
+		1,0,0,466,469,3,72,36,0,467,469,5,72,0,0,468,464,1,0,0,0,468,465,1,0,0,
 		0,468,466,1,0,0,0,468,467,1,0,0,0,469,470,1,0,0,0,470,473,5,18,0,0,471,
-		474,3,72,36,0,472,474,5,71,0,0,473,471,1,0,0,0,473,472,1,0,0,0,474,483,
-		1,0,0,0,475,478,5,19,0,0,476,479,3,72,36,0,477,479,5,71,0,0,478,476,1,
+		474,3,72,36,0,472,474,5,72,0,0,473,471,1,0,0,0,473,472,1,0,0,0,474,483,
+		1,0,0,0,475,478,5,19,0,0,476,479,3,72,36,0,477,479,5,72,0,0,478,476,1,
 		0,0,0,478,477,1,0,0,0,479,480,1,0,0,0,480,481,5,18,0,0,481,483,3,72,36,
 		0,482,463,1,0,0,0,482,475,1,0,0,0,483,69,1,0,0,0,484,491,3,68,34,0,485,
 		486,5,17,0,0,486,487,3,72,36,0,487,488,5,18,0,0,488,489,3,80,40,0,489,

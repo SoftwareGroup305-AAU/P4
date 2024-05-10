@@ -288,6 +288,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitArrayContent([NotNull] TinyCellParser.ArrayContentContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>

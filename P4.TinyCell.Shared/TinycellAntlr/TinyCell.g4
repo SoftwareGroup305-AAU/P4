@@ -249,9 +249,9 @@ LibraryIdent: Identifier DOT 'tcl';
 
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
-Numeral: [0-9]+ ([.][0-9]+)?;
-
 IntNumeral: [0-9]+;
+
+Numeral: [0-9]+ ([.][0-9]+)?;
 
 BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
 
