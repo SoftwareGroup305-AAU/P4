@@ -527,6 +527,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPinStatus([NotNull] TinyCellParser.PinStatusContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNumeral([NotNull] TinyCellParser.NumeralContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNumeral([NotNull] TinyCellParser.NumeralContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

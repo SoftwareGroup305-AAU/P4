@@ -440,4 +440,14 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitPinStatus([NotNull] TinyCellParser.PinStatusContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNumeral([NotNull] TinyCellParser.NumeralContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNumeral([NotNull] TinyCellParser.NumeralContext context);
 }

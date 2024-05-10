@@ -31,7 +31,7 @@ parameter: type identifier;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier | functionCall | Numeral | String | Bool;
+argument: identifier | functionCall | numeral | String | Bool;
 
 declaration: type initialDeclaration;
 
@@ -75,12 +75,12 @@ assignment:
 
 functionCall: identifier LPAR argumentList* RPAR;
 
-arrayContent: Numeral | String | identifier;
+arrayContent: numeral | String | identifier;
 
 arrayIndex: IntNumeral | identifier;
 
 primitiveExpression:
-	Numeral
+	numeral
 	| Bool
 	| String
 	| identifier
@@ -88,7 +88,10 @@ primitiveExpression:
 	| LCURLY (arrayContent COMMA)* arrayContent RCURLY
 	| LPAR expression RPAR;
 
-negativeExpression: primitiveExpression | MINUS Numeral;
+negativeExpression:
+	primitiveExpression
+	| MINUS numeral
+	| MINUS LPAR expression RPAR;
 
 unaryExpression:
 	negativeExpression
@@ -143,11 +146,11 @@ ternaryExpression:
 expression: ternaryExpression;
 
 pinAssignmentExpression:
-	WRITE (pinVoltage | Bool | identifier | Numeral) TO (
+	WRITE (pinVoltage | Bool | identifier | IntNumeral) TO (
 		identifier
-		| Numeral
+		| IntNumeral
 	)
-	| READ (identifier | Numeral) TO identifier;
+	| READ (identifier | IntNumeral) TO identifier;
 
 pinStatusExpression:
 	pinAssignmentExpression
@@ -168,6 +171,8 @@ assignmentOperator:
 pinVoltage: VOLHIGH | VOLLOW;
 
 pinStatus: PININ | PINOUT;
+
+numeral: FloatNumeral | IntNumeral;
 
 //Pin op
 VOLHIGH: 'HIGH';
@@ -249,9 +254,9 @@ LibraryIdent: Identifier DOT 'tcl';
 
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
-IntNumeral: [0-9]+;
+FloatNumeral: [0-9]+ [.][0-9]+;
 
-Numeral: [0-9]+ ([.][0-9]+)?;
+IntNumeral: [0-9]+;
 
 BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
 
