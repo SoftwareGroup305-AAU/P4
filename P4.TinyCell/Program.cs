@@ -12,6 +12,7 @@ using P4.TinyCell.Shared.Utilities;
 using System.Diagnostics;
 using CodeGen;
 
+
 internal class Program
 {
     private static void Main(string[] args)
@@ -29,30 +30,44 @@ internal class Program
 
         var parser = new TinyCellParser(tokenStream);
 
-        // parser.AddErrorListener(new ParserHelper.NoErrorListener());
+        parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
         tokenStream.Fill();
 
         var tokens = tokenStream.GetTokens();
 
+        LivenessAnalysisListener listener = new LivenessAnalysisListener();
+        ParseTreeWalker.Default.Walk(listener, tree);
+        listener.FixedPointAnalysis();
+        var list = listener.scopes;
+        var graphs = new Dictionary<string, Graph<string>>();
+        var graphGenerator = new LivenessGraphGenerator();
+        foreach (var scope in list)
+        {
+            var graph = graphGenerator.generateGraph(scope.Value);
+            graphs.Add(scope.Key, graph);
+        }
+        var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
+        var registerAllocator = new StaticRegisterAllocator();
+        foreach (var scope in graphs)
+        {
+            var graph = scope.Value;
+            var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
+            allocatedScopes.Add(scope.Key, groupings);
+        }
 
-        // var list = listener.scopes;
-        // var graphs = new Dictionary<string, Graph<string>>();
-        // var graphGenerator = new LivenessGraphGenerator();
-        // foreach (var scope in list)
-        // {
-        //     var graph = graphGenerator.generateGraph(scope.Value);
-        //     graphs.Add(scope.Key, graph);
-        // }
-        // var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
-        // var registerAllocator = new StaticRegisterAllocator();
-        // foreach (var scope in graphs)
-        // {
-        //     var graph = scope.Value;
-        //     var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
-        //     allocatedScopes.Add(scope.Key, groupings);
-        // }
+        Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Registers:");
+
+        foreach (var scope in allocatedScopes)
+        {
+            Console.WriteLine(scope.Key);
+            foreach (var variable in scope.Value)
+            {
+                Console.WriteLine(variable.Key + " : " + variable.Value);
+            }
+        }
 
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
@@ -69,48 +84,25 @@ internal class Program
 
         ParserHelper.PrintTree(tree);
 
-        // AstBuilderVisitor astBuilderVisitor = new();
-        // AstNode abcd = astBuilderVisitor.Visit(tree);
+        AstBuilderVisitor astBuilderVisitor = new();
+        AstNode abcd = astBuilderVisitor.Visit(tree);
 
-        // LivenessAnalysisVisitor livenessAnalysisVisitor = new();
-        // livenessAnalysisVisitor.Visit(abcd);
-        // var list = livenessAnalysisVisitor.Scopes;
-        // var graphs = new Dictionary<string, Graph<string>>();
-        // var graphGenerator = new LivenessGraphGenerator();
-        // foreach (var scope in list)
-        // {
-        //     var graph = graphGenerator.generateGraph(scope.Value);
-        //     graphs.Add(scope.Key, graph);
-        // }
-        // var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
-        // var registerAllocator = new StaticRegisterAllocator();
-        // foreach (var scope in graphs)
-        // {
-        //     var graph = scope.Value;
-        //     var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 9);
-        //     allocatedScopes.Add(scope.Key, groupings);
-        // }
+        Console.WriteLine(abcd.ToString());
 
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
 
-        // Console.WriteLine(abcd.ToString());
+        //TestAstVisitor test = new();
+        //test.VisitRootNode((RootNode)abcd);
 
-        // var typeChecker = new TypeCheckerVisitor();
-        // typeChecker.Visit(abcd);
+        CGeneratorVisitor cGeneratorVisitor = new();
+        string ccode = cGeneratorVisitor.Visit(abcd);
+        Console.WriteLine(ccode);
 
-        // TestAstVisitor test = new();
-        // test.VisitRootNode((RootNode)abcd);
+        //ASMGenVisitor asmGen = new(allocatedScopes);
+        //asmGen.Visit(abcd);
 
-        // TestAstVisitor test = new();
-        // test.VisitRootNode((RootNode)abcd);
-
-        // ASMGenVisitor asmGen = new(allocatedScopes);
-        // asmGen.Visit(abcd);
-
-        // ASMGenerator codeGen = new ASMGenerator();
-        // codeGen.GenerateCode(abcd, allocatedScopes);
-
-        // CGeneratorVisitor codeGenC = new CGeneratorVisitor();
-        // string code = codeGenC.VisitRootNode((RootNode)abcd);
-        // Console.WriteLine(code);
+        //ASMGenerator codeGen = new ASMGenerator();
+        //codeGen.GenerateCode(abcd, allocatedScopes);
     }
 }
