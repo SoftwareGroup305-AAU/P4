@@ -36,8 +36,8 @@ argument: identifier | functionCall | Numeral | String | Bool;
 declaration: type initialDeclaration;
 
 initialDeclaration:
-	identifier (LBRACKET (IntNumeral | identifier) RBRACKET)?
-	| identifier (LBRACKET (IntNumeral | identifier) RBRACKET)? ASSIGN (
+	identifier (LBRACKET arrayIndex RBRACKET)?
+	| identifier (LBRACKET arrayIndex RBRACKET)? ASSIGN (
 		expression
 		| functionCall
 	);
@@ -71,11 +71,13 @@ jumpStatement:
 	| RETURN expression? SEMI;
 
 assignment:
-	identifier (LBRACKET (IntNumeral | identifier) RBRACKET) assignmentOperator expression;
+	identifier (LBRACKET arrayIndex RBRACKET) assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
 arrayContent: Numeral | String | identifier;
+
+arrayIndex: IntNumeral | identifier;
 
 primitiveExpression:
 	Numeral

@@ -158,6 +158,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
