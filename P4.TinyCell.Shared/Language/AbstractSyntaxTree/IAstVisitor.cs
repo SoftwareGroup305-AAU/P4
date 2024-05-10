@@ -1,4 +1,5 @@
-﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
@@ -80,6 +81,6 @@ public interface IAstVisitor<Result>
     Result VisitNotExprNode(NotExprNode notExprNode);
     Result VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode);
     Result VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode);
-
+    Result VisitArrayDeclarationNode(ArrayDecleration arrayDecleration);
     Result VisitIncludeNode(IncludeNode includeNode);
 }
