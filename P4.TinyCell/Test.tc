@@ -20,8 +20,12 @@ update{
 	print("fuck");
 
     dpin led = 6;
+    apin pines = 1;
     bool yes = true;
     bool no;
     write true to led;
     read led to no;
+    write yes to led;
+    //write false to pines;
+    //read pines to no;
 }
