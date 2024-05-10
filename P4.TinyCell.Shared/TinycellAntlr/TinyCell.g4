@@ -71,7 +71,7 @@ jumpStatement:
 	| RETURN expression? SEMI;
 
 assignment:
-	identifier (LBRACKET arrayIndex RBRACKET) assignmentOperator expression;
+	identifier (LBRACKET arrayIndex RBRACKET)? assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
