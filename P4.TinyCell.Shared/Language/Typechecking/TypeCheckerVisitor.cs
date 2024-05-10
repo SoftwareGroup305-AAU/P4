@@ -343,7 +343,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 if (pinWriteExprNode.From is not VoltageNode || pinWriteExprNode.From is not BoolNode)
                 {
-                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage'");
+                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage' or 'bool'");
                 }
                 return default;
             }
@@ -365,7 +365,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var fromType = Visit(pinReadExprNode.From);
             if (fromType == TcType.DPIN)
             {
-                CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.BOOL, TcType.APIN });
+                CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.BOOL, TcType.DPIN });
                 return default;
             }
             if (fromType == TcType.APIN)
