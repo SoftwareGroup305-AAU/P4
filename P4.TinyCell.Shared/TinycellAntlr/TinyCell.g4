@@ -4,7 +4,12 @@ Bool: (TRUE | FALSE);
 
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
-document: generalDeclaration* setupDefinition updateDefinition;
+document: (
+		include* generalDeclaration* setupDefinition updateDefinition
+	)
+	| functionDefinition+;
+
+include: INCLUDE tclib SEMI;
 
 generalDeclaration: functionDefinition | declaration SEMI;
 
@@ -13,7 +18,10 @@ setupDefinition: SETUP compoundStatement;
 updateDefinition: UPDATE compoundStatement;
 
 functionDefinition:
-	type identifier LPAR parameterList* RPAR compoundStatement;
+	type identifier LPAR parameterList* RPAR (
+		compoundStatement
+		| SEMI
+	);
 
 type: VOID | STRING | INT | FLOAT | BOOL | DPIN | APIN;
 
@@ -138,6 +146,8 @@ pinStatusExpression:
 
 identifier: Identifier;
 
+tclib: LibraryIdent;
+
 assignmentOperator:
 	ASSIGN
 	| MULTASSIGN
@@ -178,6 +188,7 @@ FOR: 'for';
 CONTINUE: 'continue';
 BREAK: 'break';
 RETURN: 'return';
+INCLUDE: 'include';
 QUESTION: '?';
 LPAR: '(';
 RPAR: ')';
@@ -224,6 +235,8 @@ UNARYPLUS: '++';
 UNARYMINUS: '--';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
+
+LibraryIdent: Identifier DOT 'tcl';
 
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
