@@ -80,4 +80,6 @@ public interface IAstVisitor<Result>
     Result VisitNotExprNode(NotExprNode notExprNode);
     Result VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode);
     Result VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode);
+
+    Result VisitIncludeNode(IncludeNode includeNode);
 }

@@ -223,6 +223,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         return new IfStatementNode(Visit(context.expression()), Visit(context.compoundStatement().First()), null);
     }
 
+    public override AstNode VisitInclude([NotNull] TinyCellParser.IncludeContext context)
+    {
+        return new IncludeNode((IdentifierNode)Visit(context.tclib()));
+    }
+
     public override AstNode VisitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context)
     {
         if (context.ASSIGN() is not null)
@@ -449,6 +454,11 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return Visit(context.expression());
         }
         throw new InvalidOperationException();
+    }
+
+    public override AstNode VisitTclib([NotNull] TinyCellParser.TclibContext context)
+    {
+        return new IdentifierNode(context.GetText());
     }
 
     public override AstNode VisitTerminal(ITerminalNode node)
