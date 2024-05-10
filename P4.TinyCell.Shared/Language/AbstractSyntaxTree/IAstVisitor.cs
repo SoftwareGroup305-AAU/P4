@@ -81,6 +81,7 @@ public interface IAstVisitor<Result>
     Result VisitNotExprNode(NotExprNode notExprNode);
     Result VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode);
     Result VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode);
-    Result VisitArrayDeclarationNode(ArrayDecleration arrayDecleration);
+    Result VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration);
+    Result VisitArrayElementsNode(ArrayElementsNode elements);
     Result VisitIncludeNode(IncludeNode includeNode);
 }

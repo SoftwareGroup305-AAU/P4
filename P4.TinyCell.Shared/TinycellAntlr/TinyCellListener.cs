@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
+// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell.Shared//TinycellAntlr//TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -230,6 +230,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>

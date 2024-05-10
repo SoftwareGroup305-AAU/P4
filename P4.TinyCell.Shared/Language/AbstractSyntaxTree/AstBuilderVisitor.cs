@@ -1,5 +1,6 @@
 ﻿using Antlr4.Runtime.Misc;
 using Antlr4.Runtime.Tree;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
@@ -80,29 +81,44 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         return new ArgumentListNode([.. arguments]);
     }
 
+    public override AstNode VisitArrayContent([NotNull] TinyCellParser.ArrayContentContext context)
+    {
+        return Visit(context.GetChild(0));
+    }
+
     public override AstNode VisitAssignment([NotNull] TinyCellParser.AssignmentContext context)
     {
+        if (context.LBRACKET() is not null)
+        {
+            if (context.assignmentOperator().ASSIGN() is null)
+            {
+                throw new InvalidOperationException("Only '=' assignment operator is allowed for array assignments");
+            }
+
+            return new ArrayAssignmentNode((IdentifierNode)Visit(context.identifier().Last()), (IntNode)Visit(context.GetChild(2)), Visit(context.expression()));
+        }
+
         if (context.assignmentOperator().ASSIGN() is not null)
         {
-            return new AssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+            return new AssignNode((IdentifierNode)Visit(context.GetChild(0)), Visit(context.expression()));
         }
 
         if (context.assignmentOperator().MULTASSIGN() is not null)
         {
-            return new MultAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+            return new MultAssignNode((IdentifierNode)Visit(context.GetChild(0)), Visit(context.expression()));
         }
 
         if (context.assignmentOperator().DIVASSIGN() is not null)
         {
-            return new DivAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+            return new DivAssignNode((IdentifierNode)Visit(context.GetChild(0)), Visit(context.expression()));
         }
 
         if (context.assignmentOperator().PLUSASSIGN() is not null)
         {
-            return new PlusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+            return new PlusAssignNode((IdentifierNode)Visit(context.GetChild(0)), Visit(context.expression()));
         }
 
-        return new MinusAssignNode((IdentifierNode)Visit(context.identifier()), Visit(context.expression()));
+        return new MinusAssignNode((IdentifierNode)Visit(context.GetChild(0)), Visit(context.expression()));
     }
 
     public override AstNode VisitBitshiftExpression([NotNull] TinyCellParser.BitshiftExpressionContext context)
@@ -148,11 +164,32 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     public override AstNode VisitDeclaration([NotNull] TinyCellParser.DeclarationContext context)
     {
         InitialDeclerationNode initialDecleration = Visit(context.initialDeclaration()) as InitialDeclerationNode;
+
+        if (initialDecleration.ArrayIndex is not null)
+        {
+            if (initialDecleration.Action is not null)
+            {
+                if (initialDecleration.Action is FunctionCallNode)
+                {
+                    return new ArrayDeclarationNode((TypeNode)Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action as FunctionCallNode);
+                }
+
+                else if (initialDecleration.Action is ArrayElementsNode)
+                {
+                    return new ArrayDeclarationNode((TypeNode)Visit(context.type()), initialDecleration.Identifier, initialDecleration.Action as ArrayElementsNode);
+                }
+
+                else throw new InvalidOperationException($"Invalid array declaration");
+            }
+         
+            return new ArrayDeclarationNode((TypeNode)Visit(context.type()), initialDecleration.ArrayIndex);
+        }
+
         if (initialDecleration.Action is not null)
         {
-            return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier, initialDecleration.Action);
+            return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.initialDeclaration()), initialDecleration.Action);
         }
-        return new DeclarationNode((TypeNode)Visit(context.type()), (IdentifierNode)initialDecleration.Identifier);
+        return new DeclarationNode((TypeNode)Visit(context.type()), initialDecleration.Identifier);
     }
 
     public override AstNode VisitDocument([NotNull] TinyCellParser.DocumentContext context)
@@ -238,9 +275,31 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         if (context.ASSIGN() is not null)
         {
             AstNode action = context.expression() is not null ? Visit(context.expression()) : Visit(context.functionCall());
-            return new InitialDeclerationNode(Visit(context.identifier()), action);
+            
+            if (context.LBRACKET() is not null)
+            {
+                if (context.IntNumeral() is not null)
+                {
+                    return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()), (IntNode)Visit(context.IntNumeral()), action);
+                }
+
+                return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()), (IdentifierNode)Visit(context.identifier().Last()), action);
+            }
+
+            return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()), action);
         }
-        return new InitialDeclerationNode(Visit(context.identifier()));
+
+        if (context.LBRACKET() is not null)
+        {
+            if (context.IntNumeral() is not null)
+            {
+                return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()), (IntNode)Visit(context.IntNumeral()));
+            }
+
+            return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()), (IdentifierNode)Visit(context.identifier().Last()));
+        }
+
+        return new InitialDeclerationNode((IdentifierNode)Visit(context.identifier().First()));
     }
 
     public override AstNode VisitJumpStatement([NotNull] TinyCellParser.JumpStatementContext context)
@@ -409,6 +468,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return Visit(context.expression());
         }
+        if (context.arrayContent() is not null)
+        {
+            return new ArrayElementsNode(context.arrayContent().Select(Visit).ToArray());
+        }
         throw new InvalidOperationException();
     }
 
@@ -467,6 +530,12 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             string nodeText = node.GetText();
             return nodeText.Contains('.') ? new FloatNode(float.Parse(nodeText, CultureInfo.InvariantCulture)) : new IntNode(int.Parse(nodeText));
+        }
+
+        if (node.Symbol.Type == TinyCellParser.IntNumeral)
+        {
+            string nodeText = node.GetText();
+            return new IntNode(int.Parse(nodeText));
         }
 
         if (node.Symbol.Type == TinyCellParser.String)
