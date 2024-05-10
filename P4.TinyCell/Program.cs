@@ -20,14 +20,20 @@ internal class Program
 
         var tokenStream = new CommonTokenStream(lexer);
 
+        tokenStream.Fill();
+
+        var tokens = tokenStream.GetTokens();
+        foreach (var token in tokens)
+        {
+            int tokenType = token.Type - 1;
+            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
+            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
+        }
         var parser = new TinyCellParser(tokenStream);
 
         parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
-        tokenStream.Fill();
-
-        var tokens = tokenStream.GetTokens();
 
         //LivenessAnalysisListener listener = new LivenessAnalysisListener();
         //ParseTreeWalker.Default.Walk(listener, tree);

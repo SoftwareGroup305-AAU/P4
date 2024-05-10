@@ -277,4 +277,10 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNumeral([NotNull] TinyCellParser.NumeralContext context);
 }
