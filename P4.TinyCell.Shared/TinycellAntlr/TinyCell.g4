@@ -36,8 +36,11 @@ argument: identifier | functionCall | Numeral | String | Bool;
 declaration: type initialDeclaration;
 
 initialDeclaration:
-	identifier
-	| identifier ASSIGN (expression | functionCall);
+	identifier (LBRACKET (IntNumeral | identifier) RBRACKET)?
+	| identifier (LBRACKET (IntNumeral | identifier) RBRACKET)? ASSIGN (
+		expression
+		| functionCall
+	);
 
 compoundStatement: LCURLY statement* RCURLY;
 
@@ -67,7 +70,8 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression? SEMI;
 
-assignment: identifier assignmentOperator expression;
+assignment:
+	identifier (LBRACKET (IntNumeral | identifier) RBRACKET) assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
@@ -77,7 +81,8 @@ primitiveExpression:
 	| String
 	| identifier
 	| functionCall
-	| LPAR expression RPAR;
+	| LPAR expression RPAR
+	| LCURLY ((Numeral | String) COMMA)* (Numeral | String) RCURLY;
 
 negativeExpression: primitiveExpression | MINUS Numeral;
 
@@ -241,6 +246,8 @@ LibraryIdent: Identifier DOT 'tcl';
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
 Numeral: [0-9]+ ([.][0-9]+)?;
+
+IntNumeral: [0-9]+;
 
 BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
 
