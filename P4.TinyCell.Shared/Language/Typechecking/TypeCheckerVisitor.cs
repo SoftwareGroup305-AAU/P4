@@ -9,6 +9,8 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using Antlr4.Runtime;
+using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
@@ -38,7 +40,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 var function = CreateFunction(functionDefinitionNode);
                 UpdateFtable(function);
                 UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
-                Visit(functionDefinitionNode.CompoundStatement);
+                if (functionDefinitionNode.CompoundStatement is not null)
+                {
+                    Visit(functionDefinitionNode.CompoundStatement);
+                }
+
                 if (function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
                 {
                     throw new Exception("not all paths return a value");
@@ -345,6 +351,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var toType = Visit(pinReadExprNode.To);
             var fromType = Visit(pinReadExprNode.From);
             CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT, TcType.APIN });
+            return default;
+        }
+
+        public override TcType VisitIncludeNode(IncludeNode includeNode)
+        {
+            AstNode includeAst = AstHelper.GetAstFromFile(includeNode.FileName);
+            Visit(includeAst);
             return default;
         }
 

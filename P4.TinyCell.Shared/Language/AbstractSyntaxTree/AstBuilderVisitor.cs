@@ -197,7 +197,12 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         var allParameters = context.parameterList().Select(al => (ParameterListNode)Visit(al)).Select(al => al.Parameters).SelectMany(x => x).Cast<ParameterNode>();
         ParameterListNode aggregatedParameterList = new(allParameters.ToArray());
 
-        return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList, (StatementCollectionNode)Visit(context.compoundStatement()));
+        if (context.compoundStatement() is not null)
+        {
+            return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList, (StatementCollectionNode)Visit(context.compoundStatement()));
+        }
+
+        return new FunctionDefinitionNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), aggregatedParameterList);
     }
 
     public override AstNode VisitGeneralDeclaration([NotNull] TinyCellParser.GeneralDeclarationContext context)
@@ -225,7 +230,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitInclude([NotNull] TinyCellParser.IncludeContext context)
     {
-        return new IncludeNode((IdentifierNode)Visit(context.tclib()));
+        return new IncludeNode(context.tclib().GetText());
     }
 
     public override AstNode VisitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context)
@@ -454,11 +459,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return Visit(context.expression());
         }
         throw new InvalidOperationException();
-    }
-
-    public override AstNode VisitTclib([NotNull] TinyCellParser.TclibContext context)
-    {
-        return new IdentifierNode(context.GetText());
     }
 
     public override AstNode VisitTerminal(ITerminalNode node)

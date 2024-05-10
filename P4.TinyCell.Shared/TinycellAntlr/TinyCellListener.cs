@@ -41,6 +41,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDocument([NotNull] TinyCellParser.DocumentContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInclude([NotNull] TinyCellParser.IncludeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInclude([NotNull] TinyCellParser.IncludeContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -370,6 +380,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTclib([NotNull] TinyCellParser.TclibContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTclib([NotNull] TinyCellParser.TclibContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.assignmentOperator"/>.
 	/// </summary>
