@@ -401,6 +401,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>

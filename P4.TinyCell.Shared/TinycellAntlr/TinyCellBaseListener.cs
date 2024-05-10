@@ -480,6 +480,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
