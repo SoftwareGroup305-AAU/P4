@@ -92,13 +92,17 @@ internal class Program
         var typeChecker = new TypeCheckerVisitor();
         typeChecker.Visit(abcd);
 
-        TestAstVisitor test = new();
-        test.VisitRootNode((RootNode)abcd);
+        //TestAstVisitor test = new();
+        //test.VisitRootNode((RootNode)abcd);
 
-        ASMGenVisitor asmGen = new(allocatedScopes);
-        asmGen.Visit(abcd);
+        CGeneratorVisitor cGeneratorVisitor = new();
+        string ccode = cGeneratorVisitor.Visit(abcd);
+        Console.WriteLine(ccode);
 
-        ASMGenerator codeGen = new ASMGenerator();
-        codeGen.GenerateCode(abcd, allocatedScopes);
+        //ASMGenVisitor asmGen = new(allocatedScopes);
+        //asmGen.Visit(abcd);
+
+        //ASMGenerator codeGen = new ASMGenerator();
+        //codeGen.GenerateCode(abcd, allocatedScopes);
     }
 }
