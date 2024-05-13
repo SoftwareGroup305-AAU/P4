@@ -5,7 +5,7 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerControlFlow
 {
-    // Can handle if statements
+
     [Fact]
     [Description("Can handle if statements")]
     public void LexerIfStatement()
@@ -41,7 +41,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle if-else statements
+
     [Fact]
     [Description("Can handle if-else statements")]
     public void LexerIfElseStatement()
@@ -90,7 +90,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle while statements
+
     [Fact]
     [Description("Can handle while statements")]
     public void LexerWhileStatement()
@@ -126,7 +126,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle for statements
+
     [Fact]
     [Description("Can handle for statements")]
     public void LexerForStatement()
