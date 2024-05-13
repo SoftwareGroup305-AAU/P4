@@ -45,6 +45,12 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     {
         if (context.identifier() is not null)
         {
+            if (context.LBRACKET() is not null)
+            {
+                var identifierNode = (IdentifierNode)Visit(context.identifier());
+                var arrayElementReference = new ArrayElementReferenceNode(identifierNode, Visit(context.arrayIndex()));
+                return new ArgumentNode(arrayElementReference);
+            }
             return new ArgumentNode(Visit(context.identifier()));
         }
 
