@@ -37,7 +37,7 @@ public class LexerFunctionCalls
         {
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Eof

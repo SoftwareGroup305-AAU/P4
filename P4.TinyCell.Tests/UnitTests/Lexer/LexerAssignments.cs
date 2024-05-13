@@ -19,7 +19,7 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
@@ -105,11 +105,11 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
@@ -130,7 +130,8 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.MINUS,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
@@ -151,11 +152,11 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.MULT,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
@@ -176,11 +177,11 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
@@ -201,11 +202,36 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.BITSHIFTL,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
+            TinyCellLexer.Eof
+        };
+
+        Assert.Equal(expectedTokenTypes, tokenTypes);
+    }
+
+    // Can handle float expression assignment with floats.
+    [Fact]
+    [Description("Can handle float expression assignment with floats")]
+    public void LexerFloatExpressionAssignment()
+    {
+        var input = "x = 5.5 + 5.5";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        var expectedTokenTypes = new List<int>
+        {
+            TinyCellLexer.Identifier,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.ASSIGN,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.FloatNumeral,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.PLUS,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.FloatNumeral,
             TinyCellLexer.Eof
         };
 

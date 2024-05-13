@@ -5,7 +5,7 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerTokens
 {
-    // Eof
+
     [Fact]
     [Description("Can handle an empty string.")]
     public void LexerEmptyStringTest()
@@ -16,7 +16,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.Eof, tokenTypes[0]);
     }
 
-    // Whitespace
+
     [Fact]
     [Description("Can handle a string with only whitespace.")]
     public void LexerWhitespaceTest()
@@ -33,7 +33,7 @@ public class LexerTokens
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // LineComment
+
     [Fact]
     [Description("Can handle a string with only comments.")]
     public void LexerCommentTest()
@@ -50,7 +50,7 @@ public class LexerTokens
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Setup
+
     [Fact]
     [Description("Can detect the correct token type for a setup.")]
     public void LexerSetupTest()
@@ -61,7 +61,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.SETUP, tokenTypes[0]);
     }
 
-    // Identifier
+
     [Fact]
     [Description("Can detect the correct token type for an identifier.")]
     public void LexerIdentifierTest()
@@ -72,7 +72,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.Identifier, tokenTypes[0]);
     }
 
-    // Bool
+
     [Fact]
     [Description("Can detect the correct token type for a boolean.")]
     public void LexerBoolTest()
@@ -83,7 +83,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.Bool, tokenTypes[0]);
     }
 
-    // Newline
+
     [Fact]
     [Description("Can detect the correct token type for a newline.")]
     public void LexerNewlineTest()
@@ -94,7 +94,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.Whitespace, tokenTypes[0]);
     }
 
-    // VOLHIGH
+
     [Fact]
     [Description("Can detect the correct token type for a VOLHIGH.")]
     public void LexerVOLHIGHTest()
@@ -105,7 +105,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.VOLHIGH, tokenTypes[0]);
     }
 
-    // VOLLOW
+
     [Fact]
     [Description("Can detect the correct token type for a VOLLOW.")]
     public void LexerVOLLOWTest()
@@ -116,7 +116,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.VOLLOW, tokenTypes[0]);
     }
 
-    // PININ
+
     [Fact]
     [Description("Can detect the correct token type for a PININ.")]
     public void LexerPININTest()
@@ -127,7 +127,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.PININ, tokenTypes[0]);
     }
 
-    // PINOUT
+
     [Fact]
     [Description("Can detect the correct token type for a PINOUT.")]
     public void LexerPINOUTTest()
@@ -138,7 +138,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.PINOUT, tokenTypes[0]);
     }
 
-    // PIN
+
     [Fact]
     [Description("Can detect the correct token type for a PIN.")]
     public void LexerAPINTest()
@@ -159,7 +159,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.DPIN, tokenTypes[0]);
     }
 
-    // INT
+
     [Fact]
     [Description("Can detect the correct token type for an INT.")]
     public void LexerINTTest()
@@ -170,7 +170,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.INT, tokenTypes[0]);
     }
 
-    // FLOAT
+
     [Fact]
     [Description("Can detect the correct token type for a FLOAT.")]
     public void LexerFLOATTest()
@@ -181,7 +181,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.FLOAT, tokenTypes[0]);
     }
 
-    // STRING
+
     [Fact]
     [Description("Can detect the correct token type for a STRING.")]
     public void LexerSTRINGTest()
@@ -192,7 +192,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.STRING, tokenTypes[0]);
     }
 
-    // BOOL
+
     [Fact]
     [Description("Can detect the correct token type for a BOOL.")]
     public void LexerBOOLTest()
@@ -203,7 +203,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.BOOL, tokenTypes[0]);
     }
 
-    // VOID
+
     [Fact]
     [Description("Can detect the correct token type for a VOID.")]
     public void LexerVOIDTest()
@@ -214,7 +214,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.VOID, tokenTypes[0]);
     }
 
-    // CHAR
+
     [Fact]
     [Description("Can detect the correct token type for a CHAR.")]
     public void LexerCHARTest()
@@ -225,7 +225,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.CHAR, tokenTypes[0]);
     }
 
-    // UPDATE
+
     [Fact]
     [Description("Can detect the correct token type for an UPDATE.")]
     public void LexerUPDATETest()
@@ -236,7 +236,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.UPDATE, tokenTypes[0]);
     }
 
-    // SETUP
+
     [Fact]
     [Description("Can detect the correct token type for a SETUP.")]
     public void LexerSETUPTest()
@@ -247,7 +247,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.SETUP, tokenTypes[0]);
     }
 
-    // SET
+
     [Fact]
     [Description("Can detect the correct token type for a SET.")]
     public void LexerSETTest()
@@ -258,7 +258,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.SET, tokenTypes[0]);
     }
 
-    // TO
+
     [Fact]
     [Description("Can detect the correct token type for a TO.")]
     public void LexerTOTest()
@@ -269,7 +269,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.TO, tokenTypes[0]);
     }
 
-    // READ
+
     [Fact]
     [Description("Can detect the correct token type for a READ.")]
     public void LexerREADTest()
@@ -280,7 +280,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.READ, tokenTypes[0]);
     }
 
-    // WRITE
+
     [Fact]
     [Description("Can detect the correct token type for a WRITE.")]
     public void LexerWRITETest()
@@ -291,7 +291,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.WRITE, tokenTypes[0]);
     }
 
-    // IF
+
     [Fact]
     [Description("Can detect the correct token type for an IF.")]
     public void LexerIFTest()
@@ -302,7 +302,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.IF, tokenTypes[0]);
     }
 
-    // ELSE
+
     [Fact]
     [Description("Can detect the correct token type for an ELSE.")]
     public void LexerELSETest()
@@ -313,7 +313,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.ELSE, tokenTypes[0]);
     }
 
-    // WHILE
+
     [Fact]
     [Description("Can detect the correct token type for a WHILE.")]
     public void LexerWHILETest()
@@ -324,7 +324,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.WHILE, tokenTypes[0]);
     }
 
-    // FOR
+
     [Fact]
     [Description("Can detect the correct token type for a FOR.")]
     public void LexerFORTest()
@@ -335,7 +335,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.FOR, tokenTypes[0]);
     }
 
-    // CONTINUE
+
     [Fact]
     [Description("Can detect the correct token type for a CONTINUE.")]
     public void LexerCONTINUETest()
@@ -346,7 +346,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.CONTINUE, tokenTypes[0]);
     }
 
-    // BREAK
+
     [Fact]
     [Description("Can detect the correct token type for a BREAK.")]
     public void LexerBREAKTest()
@@ -357,7 +357,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.BREAK, tokenTypes[0]);
     }
 
-    // RETURN
+
     [Fact]
     [Description("Can detect the correct token type for a RETURN.")]
     public void LexerRETURNTest()
@@ -368,7 +368,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.RETURN, tokenTypes[0]);
     }
 
-    // QUESTION
+
     [Fact]
     [Description("Can detect the correct token type for a QUESTION.")]
     public void LexerQUESTIONTest()
@@ -379,7 +379,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.QUESTION, tokenTypes[0]);
     }
 
-    // LPAR
+
     [Fact]
     [Description("Can detect the correct token type for a LPAR.")]
     public void LexerLPARTest()
@@ -390,7 +390,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.LPAR, tokenTypes[0]);
     }
 
-    // RPAR
+
     [Fact]
     [Description("Can detect the correct token type for a RPAR.")]
     public void LexerRPARTest()
@@ -401,7 +401,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.RPAR, tokenTypes[0]);
     }
 
-    // LCURLY
+
     [Fact]
     [Description("Can detect the correct token type for a LCURVY.")]
     public void LexerLCURVYTest()
@@ -412,7 +412,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.LCURLY, tokenTypes[0]);
     }
 
-    // RCURLY
+
     [Fact]
     [Description("Can detect the correct token type for a RCURLY.")]
     public void LexerRCURLYTest()
@@ -423,7 +423,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.RCURLY, tokenTypes[0]);
     }
 
-    // LBRACKET
+
     [Fact]
     [Description("Can detect the correct token type for a LBRACKET.")]
     public void LexerLBRACKETTest()
@@ -434,7 +434,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.LBRACKET, tokenTypes[0]);
     }
 
-    // RBRACKET
+
     [Fact]
     [Description("Can detect the correct token type for a RBRACKET.")]
     public void LexerRBRACKETTest()
@@ -445,7 +445,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.RBRACKET, tokenTypes[0]);
     }
 
-    // SEMI
+
     [Fact]
     [Description("Can detect the correct token type for a SEMI.")]
     public void LexerSEMITest()
@@ -456,7 +456,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.SEMI, tokenTypes[0]);
     }
 
-    // DOT
+
     [Fact]
     [Description("Can detect the correct token type for a DOT.")]
     public void LexerDOTTest()
@@ -467,7 +467,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.DOT, tokenTypes[0]);
     }
 
-    // COMMA
+
     [Fact]
     [Description("Can detect the correct token type for a COMMA.")]
     public void LexerCOMMATest()
@@ -478,7 +478,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.COMMA, tokenTypes[0]);
     }
 
-    // COLON
+
     [Fact]
     [Description("Can detect the correct token type for a COLON.")]
     public void LexerCOLONTest()
@@ -489,7 +489,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.COLON, tokenTypes[0]);
     }
 
-    // ASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for an ASSIGN.")]
     public void LexerASSIGNTest()
@@ -500,7 +500,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.ASSIGN, tokenTypes[0]);
     }
 
-    // PLUSASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for a PLUSASSIGN.")]
     public void LexerPLUSASSIGNTest()
@@ -511,7 +511,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.PLUSASSIGN, tokenTypes[0]);
     }
 
-    // MULTASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for a MULTASSIGN.")]
     public void LexerMULTASSIGNTest()
@@ -522,7 +522,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MULTASSIGN, tokenTypes[0]);
     }
 
-    // DIVASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for a DIVASSIGN.")]
     public void LexerDIVASSIGNTest()
@@ -533,7 +533,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.DIVASSIGN, tokenTypes[0]);
     }
 
-    // MODASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for a MODASSIGN.")]
     public void LexerMODASSIGNTest()
@@ -544,7 +544,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MODASSIGN, tokenTypes[0]);
     }
 
-    // MINUSASSIGN
+
     [Fact]
     [Description("Can detect the correct token type for a MINUSASSIGN.")]
     public void LexerMINUSASSIGNTest()
@@ -555,7 +555,7 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MINUSASSIGN, tokenTypes[0]);
     }
 
-    // QUOTE
+
     [Fact]
     [Description("Can detect the correct token type for a QUOTE.")]
     public void LexerQUOTETest()
@@ -566,7 +566,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.QUOTE, tokenTypes[0]);
     }
 
-    // MULT
     [Fact]
     [Description("Can detect the correct token type for a MULT.")]
     public void LexerMULTTest()
@@ -577,7 +576,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MULT, tokenTypes[0]);
     }
 
-    // DIV
     [Fact]
     [Description("Can detect the correct token type for a DIV.")]
     public void LexerDIVTest()
@@ -588,7 +586,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.DIV, tokenTypes[0]);
     }
 
-    // PLUS
     [Fact]
     [Description("Can detect the correct token type for a PLUS.")]
     public void LexerPLUSTest()
@@ -599,7 +596,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.PLUS, tokenTypes[0]);
     }
 
-    // MINUS
     [Fact]
     [Description("Can detect the correct token type for a MINUS.")]
     public void LexerMINUSTest()
@@ -610,7 +606,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MINUS, tokenTypes[0]);
     }
 
-    // MOD
     [Fact]
     [Description("Can detect the correct token type for a MOD.")]
     public void LexerMODTest()
@@ -621,7 +616,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.MOD, tokenTypes[0]);
     }
 
-    // EQ
     [Fact]
     [Description("Can detect the correct token type for an EQ.")]
     public void LexerEQTest()
@@ -632,7 +626,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.EQ, tokenTypes[0]);
     }
 
-    // NEQ
     [Fact]
     [Description("Can detect the correct token type for a NEQ.")]
     public void LexerNEQTest()
@@ -643,7 +636,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.NEQ, tokenTypes[0]);
     }
 
-    // GT
     [Fact]
     [Description("Can detect the correct token type for a GT.")]
     public void LexerGTTest()
@@ -654,7 +646,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.GT, tokenTypes[0]);
     }
 
-    // GTE
     [Fact]
     [Description("Can detect the correct token type for a GTE.")]
     public void LexerGTETest()
@@ -665,7 +656,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.GTE, tokenTypes[0]);
     }
 
-    // LT
     [Fact]
     [Description("Can detect the correct token type for a LT.")]
     public void LexerLTTest()
@@ -676,7 +666,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.LT, tokenTypes[0]);
     }
 
-    // LTE
     [Fact]
     [Description("Can detect the correct token type for a LTE.")]
     public void LexerLTETest()
@@ -687,7 +676,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.LTE, tokenTypes[0]);
     }
 
-    // AND
     [Fact]
     [Description("Can detect the correct token type for an AND.")]
     public void LexerANDTest()
@@ -698,7 +686,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.AND, tokenTypes[0]);
     }
 
-    // OR
     [Fact]
     [Description("Can detect the correct token type for an OR.")]
     public void LexerORTest()
@@ -709,7 +696,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.OR, tokenTypes[0]);
     }
 
-    // NOT
     [Fact]
     [Description("Can detect the correct token type for a NOT.")]
     public void LexerNOTTest()
@@ -720,7 +706,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.NOT, tokenTypes[0]);
     }
 
-    // BITSHIFTL
     [Fact]
     [Description("Can detect the correct token type for a BITSHIFTL.")]
     public void LexerBITSHIFTLTest()
@@ -731,7 +716,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.BITSHIFTL, tokenTypes[0]);
     }
 
-    // BITSHIFTR
     [Fact]
     [Description("Can detect the correct token type for a BITSHIFTR.")]
     public void LexerBITSHIFTRTest()
@@ -742,7 +726,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.BITSHIFTR, tokenTypes[0]);
     }
 
-    // UNARYPLUS
     [Fact]
     [Description("Can detect the correct token type for a UNARYPLUS.")]
     public void LexerUNARYPLUSTest()
@@ -753,7 +736,6 @@ public class LexerTokens
         Assert.Equal(TinyCellLexer.UNARYPLUS, tokenTypes[0]);
     }
 
-    // UNARYMINUS
     [Fact]
     [Description("Can detect the correct token type for a UNARYMINUS.")]
     public void LexerUNARYMINUSTest()
@@ -762,5 +744,45 @@ public class LexerTokens
         var tokenTypes = GetTokenTypesFromInput(input);
 
         Assert.Equal(TinyCellLexer.UNARYMINUS, tokenTypes[0]);
+    }
+
+    [Fact]
+    [Description("Can detect the correct token type for a LIBRARYIDENT.")]
+    public void LexerLIBRARYIDENTTest()
+    {
+        var input = "lib.tcl";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.LibraryIdent, tokenTypes[0]);
+    }
+
+    [Fact]
+    [Description("Can detect the correct token type for a FLOAT NUMERAL.")]
+    public void LexerFLOATNUMERALTest()
+    {
+        var input = "5.5";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.FloatNumeral, tokenTypes[0]);
+    }
+
+    [Fact]
+    [Description("Can detect the correct token type for an INTEGER NUMERAL.")]
+    public void LexerINTEGERNUMERALTest()
+    {
+        var input = "5";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.IntNumeral, tokenTypes[0]);
+    }
+
+    [Fact]
+    [Description("Can detect the correct token type for an INCLUDE.")]
+    public void LexerINCLUDETest()
+    {
+        var input = "include";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        Assert.Equal(TinyCellLexer.INCLUDE, tokenTypes[0]);
     }
 }
