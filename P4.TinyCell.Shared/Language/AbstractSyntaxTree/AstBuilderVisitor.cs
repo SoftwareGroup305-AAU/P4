@@ -53,9 +53,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return new ArgumentNode(Visit(context.functionCall()));
         }
 
-        if (context.Numeral() is not null)
+        if (context.numeral() is not null)
         {
-            return new ArgumentNode(Visit(context.Numeral()));
+            return new ArgumentNode(Visit(context.numeral()));
         }
 
         if (context.String() is not null)
@@ -351,9 +351,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitNegativeExpression([NotNull] TinyCellParser.NegativeExpressionContext context)
     {
-        if (context.Numeral() is not null)
+        if (context.numeral() is not null)
         {
-            string num = context.Numeral().GetText();
+            string num = context.numeral().GetText();
 
             return num.Contains('.') ? new FloatNode(-float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(-int.Parse(num));
         }
@@ -438,9 +438,9 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitPrimitiveExpression([NotNull] TinyCellParser.PrimitiveExpressionContext context)
     {
-        if (context.Numeral() is not null)
+        if (context.numeral() is not null)
         {
-            string num = context.Numeral().GetText();
+            string num = context.numeral().GetText();
 
             return num.Contains('.') ? new FloatNode(float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(int.Parse(num));
         }
@@ -526,10 +526,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitTerminal(ITerminalNode node)
     {
-        if (node.Symbol.Type == TinyCellParser.Numeral)
+        if (node.Symbol.Type == TinyCellParser.FloatNumeral)
         {
             string nodeText = node.GetText();
-            return nodeText.Contains('.') ? new FloatNode(float.Parse(nodeText, CultureInfo.InvariantCulture)) : new IntNode(int.Parse(nodeText));
+            return new FloatNode(float.Parse(nodeText, CultureInfo.InvariantCulture));
         }
 
         if (node.Symbol.Type == TinyCellParser.IntNumeral)
