@@ -180,18 +180,6 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDeclaration([NotNull] TinyCellParser.DeclarationContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.compoundStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -479,18 +467,6 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context) { }
-	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIdent"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitArrayIdent([NotNull] TinyCellParser.ArrayIdentContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
 	/// <para>The default implementation does nothing.</para>

@@ -33,14 +33,9 @@ argumentList: argument | argumentList COMMA argument;
 
 argument: identifier | functionCall | numeral | String | Bool;
 
-declaration: type initialDeclaration;
-
-initialDeclaration:
-	identifier (LBRACKET arrayIndex RBRACKET)?
-	| identifier (LBRACKET arrayIndex RBRACKET)? ASSIGN (
+declaration: type identifier (LBRACKET arrayIndex RBRACKET)? (ASSIGN (
 		expression
-		| functionCall
-	);
+		| functionCall))?;
 
 compoundStatement: LCURLY statement* RCURLY;
 

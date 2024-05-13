@@ -83,5 +83,6 @@ public interface IAstVisitor<Result>
     Result VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode);
     Result VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration);
     Result VisitArrayElementsNode(ArrayElementsNode elements);
+    Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode);
     Result VisitIncludeNode(IncludeNode includeNode);
 }

@@ -312,4 +312,9 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     {
         return VisitChildren(elements);
     }
+
+    public Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+    {
+        return VisitChildren(arrayElementReferenceNode);
+    }
 }
