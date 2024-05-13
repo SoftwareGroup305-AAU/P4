@@ -36,8 +36,8 @@ argument: identifier | functionCall | numeral | String | Bool;
 declaration: type initialDeclaration;
 
 initialDeclaration:
-	identifier (LBRACKET arrayIndex RBRACKET)?
-	| identifier (LBRACKET arrayIndex RBRACKET)? ASSIGN (
+	(identifier | arrayIdent)
+	| (identifier | arrayIdent) ASSIGN (
 		expression
 		| functionCall
 	);
@@ -71,7 +71,7 @@ jumpStatement:
 	| RETURN expression? SEMI;
 
 assignment:
-	identifier (LBRACKET arrayIndex RBRACKET)? assignmentOperator expression;
+	(identifier | arrayIdent) assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
@@ -83,7 +83,7 @@ primitiveExpression:
 	numeral
 	| Bool
 	| String
-	| identifier
+	| (identifier | arrayIdent)
 	| functionCall
 	| LCURLY (arrayContent COMMA)* arrayContent RCURLY
 	| LPAR expression RPAR;
@@ -157,6 +157,8 @@ pinStatusExpression:
 	| SET identifier TO pinStatus;
 
 identifier: Identifier;
+
+arrayIdent: identifier LBRACKET arrayIndex RBRACKET;
 
 tclib: LibraryIdent;
 
