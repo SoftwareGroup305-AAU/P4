@@ -14,6 +14,7 @@ public class ArrayAssignmentNode : AssignmentBaseNode
 
     public override T Accept<T>(IAstVisitor<T> visitor)
     {
-        throw new NotImplementedException();
+
+        return visitor.VisitArrayAssignmentNode(this);
     }
 }
