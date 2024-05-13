@@ -397,9 +397,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         if (context.numeral() is not null)
         {
-            string num = context.numeral().GetText();
+            return new NegativeExpressionNode(Visit(context.numeral()));
+            //string num = context.numeral().GetText();
 
-            return num.Contains('.') ? new FloatNode(-float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(-int.Parse(num));
+            //return num.Contains('.') ? new FloatNode(-float.Parse(num, CultureInfo.InvariantCulture)) : new IntNode(-int.Parse(num));
         }
         return base.VisitNegativeExpression(context);
     }
