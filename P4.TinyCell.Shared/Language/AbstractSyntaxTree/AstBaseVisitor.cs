@@ -308,22 +308,22 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(includeNode);
     }
 
-    public Result VisitArrayElementsNode(ArrayElementsNode elements)
+    public virtual Result VisitArrayElementsNode(ArrayElementsNode elements)
     {
         return VisitChildren(elements);
     }
 
-    public Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+    public virtual Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
     {
         return VisitChildren(arrayElementReferenceNode);
     }
 
-    public Result VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+    public virtual Result VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
     {
         return VisitChildren(arrayAssignmentNode);
     }
 
-    public Result VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+    public virtual Result VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
     {
         return VisitChildren(negativeExpressionNode);
     }
