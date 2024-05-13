@@ -91,7 +91,11 @@ primitiveExpression:
 
 negativeExpression:
 	primitiveExpression
-	| MINUS primitiveExpression
+	| MINUS (
+		numeral
+		| identifier (LBRACKET arrayIndex RBRACKET)?
+		| functionCall
+	)
 	| MINUS LPAR expression RPAR;
 
 unaryExpression:
