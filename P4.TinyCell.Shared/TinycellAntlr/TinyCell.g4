@@ -27,20 +27,21 @@ type: VOID | STRING | INT | FLOAT | BOOL | DPIN | APIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
-parameter: type identifier;
+parameter: type identifier (LBRACKET RBRACKET)?;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier | functionCall | numeral | String | Bool;
-
-declaration: type initialDeclaration;
-
-initialDeclaration:
+argument:
 	identifier (LBRACKET arrayIndex RBRACKET)?
-	| identifier (LBRACKET arrayIndex RBRACKET)? ASSIGN (
-		expression
-		| functionCall
-	);
+	| functionCall
+	| numeral
+	| String
+	| Bool;
+
+declaration:
+	type identifier (LBRACKET arrayIndex RBRACKET)? (
+		ASSIGN ( expression | functionCall)
+	)?;
 
 compoundStatement: LCURLY statement* RCURLY;
 
