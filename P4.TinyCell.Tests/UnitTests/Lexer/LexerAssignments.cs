@@ -1,5 +1,5 @@
-﻿using System.ComponentModel;
-using static P4.TinyCell.Tests.Utility;
+﻿using static P4.TinyCell.Tests.Utility;
+using System.ComponentModel;
 
 namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
