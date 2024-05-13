@@ -317,4 +317,9 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     {
         return VisitChildren(arrayElementReferenceNode);
     }
+
+    public Result VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+    {
+        return VisitChildren(arrayAssignmentNode);
+    }
 }
