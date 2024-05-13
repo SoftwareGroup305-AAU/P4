@@ -377,7 +377,22 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         if (context.primitiveExpression() is not null)
         {
-            return new NegativeExpressionNode(Visit(context.primitiveExpression()));
+            return Visit(context.primitiveExpression());
+        }
+
+        if (context.identifier() is not null)
+        {
+            if (context.LBRACKET() is not null)
+            {
+                var arrayElement = new ArrayElementReferenceNode((IdentifierNode)Visit(context.identifier()), Visit(context.arrayIndex()));
+                return new NegativeExpressionNode(arrayElement);
+            }
+            return new NegativeExpressionNode(Visit(context.identifier()));
+        }
+
+        if (context.functionCall() is not null)
+        {
+            return new NegativeExpressionNode(Visit(context.functionCall()));
         }
 
         if (context.numeral() is not null)
