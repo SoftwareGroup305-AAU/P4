@@ -322,4 +322,9 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     {
         return VisitChildren(arrayAssignmentNode);
     }
+
+    public Result VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+    {
+        return VisitChildren(negativeExpressionNode);
+    }
 }

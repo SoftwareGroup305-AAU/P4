@@ -86,4 +86,5 @@ public interface IAstVisitor<Result>
     Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode);
     Result VisitIncludeNode(IncludeNode includeNode);
     Result VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode);
+    Result VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode);
 }

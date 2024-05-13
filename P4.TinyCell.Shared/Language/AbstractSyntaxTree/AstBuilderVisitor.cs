@@ -370,6 +370,16 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitNegativeExpression([NotNull] TinyCellParser.NegativeExpressionContext context)
     {
+        if (context.expression() is not null)
+        {
+            return new NegativeExpressionNode(Visit(context.expression()));
+        }
+
+        if (context.primitiveExpression() is not null)
+        {
+            return new NegativeExpressionNode(Visit(context.primitiveExpression()));
+        }
+
         if (context.numeral() is not null)
         {
             string num = context.numeral().GetText();
