@@ -91,7 +91,7 @@ primitiveExpression:
 
 negativeExpression:
 	primitiveExpression
-	| MINUS numeral
+	| MINUS primitiveExpression
 	| MINUS LPAR expression RPAR;
 
 unaryExpression:

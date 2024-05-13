@@ -2,10 +2,19 @@ include stdlib.tcl;
 
 int num = -(-2)- -(-(-2));
 
+int func(int nums[], int num) {
+    num = nums[1];
+    return num;
+}
+
+int func2(int num) {
+    return num;
+}
+
 setup{
-    int e[5] = {1,2,3,4,5};
+    int d[5];
+    int e[5] = {1,2,3,4};
     d[0] = 1;
-    print("asdasd");
     d[2] = e[0];
 
     int i = 2;
@@ -15,6 +24,9 @@ setup{
 
     if (d[0] == 1) {
     }
+
+    func(d, i);
+    func2(d[0]);
 }
 
 update{
