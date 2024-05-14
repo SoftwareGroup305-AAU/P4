@@ -12,9 +12,8 @@ int func2(int num) {
 }
 
 setup{
-
-    func(2, i);
-    func2(d[0]);
+    int i = 1;
+    func(i, i);
 }
 
 update{

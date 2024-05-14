@@ -535,13 +535,21 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     if (argumentList.Arguments[i].Node is IdentifierNode identifierNode)
                     {
                         var variable = LookupVariable(identifierNode.Value, vTableStack);
-                        if (variable.Type != parameter.Type || variable.isArray != parameter.isArray)
+                        if (variable.isArray != parameter.isArray)
+                        {
+                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive variable of type {variable.Type}");
+                        }
+                        if (variable.Type != parameter.Type)
                         {
                             throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {variable.Type}");
                         }
                     }
                     else
                     {
+                        if (parameter.isArray is true)
+                        {
+                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive reference");
+                        }
                         var argumentType = Visit(argumentList.Arguments[i].Node);
                         if (argumentType != parameter.Type)
                         {
@@ -636,7 +644,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             return new Variable(parameterNode.TypeNode.Type, parameterNode.Identifier.Value, parameterNode.IsArray);
         }
-        
+
         /// <summary>
         /// Checks if all code paths in a function definition return a value
         /// </summary>
