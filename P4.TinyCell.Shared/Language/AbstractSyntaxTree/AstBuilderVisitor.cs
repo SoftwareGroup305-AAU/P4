@@ -413,7 +413,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
     public override AstNode VisitParameter([NotNull] TinyCellParser.ParameterContext context)
     {
-        return new ParameterNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()));
+        return new ParameterNode((TypeNode)Visit(context.type()), (IdentifierNode)Visit(context.identifier()), context.RBRACKET() is not null);
     }
 
     public override AstNode VisitParameterList([NotNull] TinyCellParser.ParameterListContext context)
@@ -438,10 +438,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         if (context.WRITE() is not null)
         {
-            return new PinWriteExprNode(from, to);
+            return new PinWriteExprNode(from, (IdentifierNode)to);
         }
 
-        return new PinReadExprNode(from, to);
+        return new PinReadExprNode((IdentifierNode)from, (IdentifierNode)to);
     }
 
     public override AstNode VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context)
@@ -460,8 +460,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return new PinModeExprNode((IdentifierNode)Visit(context.identifier()), (PinModeNode)Visit(context.pinStatus()));
         }
         return Visit(context.pinAssignmentExpression());
-
-        throw new InvalidOperationException();
     }
 
     public override AstNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)

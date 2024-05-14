@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from ../P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
+// Generated from /home/rasmus/Documents/GitHub/P4/P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -29,22 +29,21 @@ using DFA = Antlr4.Runtime.Dfa.DFA;
 
 [System.CodeDom.Compiler.GeneratedCode("ANTLR", "4.13.1")]
 [System.CLSCompliant(false)]
-public partial class TinyCellLexer : Lexer
-{
+public partial class TinyCellLexer : Lexer {
 	protected static DFA[] decisionToDFA;
 	protected static PredictionContextCache sharedContextCache = new PredictionContextCache();
 	public const int
-		Bool = 1, Whitespace = 2, VOLHIGH = 3, VOLLOW = 4, PININ = 5, PINOUT = 6, DPIN = 7,
-		APIN = 8, INT = 9, FLOAT = 10, STRING = 11, BOOL = 12, VOID = 13, CHAR = 14, UPDATE = 15,
-		SETUP = 16, SET = 17, TO = 18, READ = 19, WRITE = 20, IF = 21, ELSE = 22, WHILE = 23,
-		FOR = 24, CONTINUE = 25, BREAK = 26, RETURN = 27, INCLUDE = 28, QUESTION = 29, LPAR = 30,
-		RPAR = 31, LCURLY = 32, RCURLY = 33, LBRACKET = 34, RBRACKET = 35, SEMI = 36, DOT = 37,
-		COMMA = 38, COLON = 39, TRUE = 40, FALSE = 41, NEWLINE = 42, ASSIGN = 43, PLUSASSIGN = 44,
-		MULTASSIGN = 45, DIVASSIGN = 46, MODASSIGN = 47, MINUSASSIGN = 48, QUOTE = 49, MULT = 50,
-		DIV = 51, PLUS = 52, MINUS = 53, MOD = 54, AND = 55, OR = 56, EQ = 57, NEQ = 58, GT = 59,
-		LT = 60, GTE = 61, LTE = 62, NOT = 63, BITSHIFTL = 64, BITSHIFTR = 65, UNARYPLUS = 66,
-		UNARYMINUS = 67, Identifier = 68, LibraryIdent = 69, String = 70, FloatNumeral = 71,
-		IntNumeral = 72, BlockComment = 73, LineComment = 74, Newline = 75;
+		Bool=1, Whitespace=2, VOLHIGH=3, VOLLOW=4, PININ=5, PINOUT=6, DPIN=7, 
+		APIN=8, INT=9, FLOAT=10, STRING=11, BOOL=12, VOID=13, CHAR=14, UPDATE=15, 
+		SETUP=16, SET=17, TO=18, READ=19, WRITE=20, IF=21, ELSE=22, WHILE=23, 
+		FOR=24, CONTINUE=25, BREAK=26, RETURN=27, INCLUDE=28, QUESTION=29, LPAR=30, 
+		RPAR=31, LCURLY=32, RCURLY=33, LBRACKET=34, RBRACKET=35, SEMI=36, DOT=37, 
+		COMMA=38, COLON=39, TRUE=40, FALSE=41, NEWLINE=42, ASSIGN=43, PLUSASSIGN=44, 
+		MULTASSIGN=45, DIVASSIGN=46, MODASSIGN=47, MINUSASSIGN=48, QUOTE=49, MULT=50, 
+		DIV=51, PLUS=52, MINUS=53, MOD=54, AND=55, OR=56, EQ=57, NEQ=58, GT=59, 
+		LT=60, GTE=61, LTE=62, NOT=63, BITSHIFTL=64, BITSHIFTR=65, UNARYPLUS=66, 
+		UNARYMINUS=67, Identifier=68, LibraryIdent=69, String=70, FloatNumeral=71, 
+		IntNumeral=72, BlockComment=73, LineComment=74, Newline=75;
 	public static string[] channelNames = {
 		"DEFAULT_TOKEN_CHANNEL", "HIDDEN"
 	};
@@ -54,15 +53,15 @@ public partial class TinyCellLexer : Lexer
 	};
 
 	public static readonly string[] ruleNames = {
-		"Bool", "Whitespace", "VOLHIGH", "VOLLOW", "PININ", "PINOUT", "DPIN",
-		"APIN", "INT", "FLOAT", "STRING", "BOOL", "VOID", "CHAR", "UPDATE", "SETUP",
-		"SET", "TO", "READ", "WRITE", "IF", "ELSE", "WHILE", "FOR", "CONTINUE",
-		"BREAK", "RETURN", "INCLUDE", "QUESTION", "LPAR", "RPAR", "LCURLY", "RCURLY",
-		"LBRACKET", "RBRACKET", "SEMI", "DOT", "COMMA", "COLON", "TRUE", "FALSE",
-		"NEWLINE", "ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN",
-		"MINUSASSIGN", "QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND",
-		"OR", "EQ", "NEQ", "GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR",
-		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "FloatNumeral",
+		"Bool", "Whitespace", "VOLHIGH", "VOLLOW", "PININ", "PINOUT", "DPIN", 
+		"APIN", "INT", "FLOAT", "STRING", "BOOL", "VOID", "CHAR", "UPDATE", "SETUP", 
+		"SET", "TO", "READ", "WRITE", "IF", "ELSE", "WHILE", "FOR", "CONTINUE", 
+		"BREAK", "RETURN", "INCLUDE", "QUESTION", "LPAR", "RPAR", "LCURLY", "RCURLY", 
+		"LBRACKET", "RBRACKET", "SEMI", "DOT", "COMMA", "COLON", "TRUE", "FALSE", 
+		"NEWLINE", "ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN", 
+		"MINUSASSIGN", "QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND", 
+		"OR", "EQ", "NEQ", "GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR", 
+		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "FloatNumeral", 
 		"IntNumeral", "BlockComment", "LineComment", "Newline"
 	};
 
@@ -77,25 +76,25 @@ public partial class TinyCellLexer : Lexer
 	}
 
 	private static readonly string[] _LiteralNames = {
-		null, null, null, "'HIGH'", "'LOW'", "'INPUT'", "'OUTPUT'", "'dpin'",
-		"'apin'", "'int'", "'float'", "'string'", "'bool'", "'void'", "'char'",
-		"'update'", "'setup'", "'set'", "'to'", "'read'", "'write'", "'if'", "'else'",
-		"'while'", "'for'", "'continue'", "'break'", "'return'", "'include'",
-		"'?'", "'('", "')'", "'{'", "'}'", "'['", "']'", "';'", "'.'", "','",
-		"':'", "'true'", "'false'", "'\\n'", "'='", "'+='", "'*='", "'/='", "'%='",
-		"'-='", "'\"'", "'*'", "'/'", "'+'", "'-'", "'%'", "'&&'", "'||'", "'=='",
+		null, null, null, "'HIGH'", "'LOW'", "'INPUT'", "'OUTPUT'", "'dpin'", 
+		"'apin'", "'int'", "'float'", "'string'", "'bool'", "'void'", "'char'", 
+		"'update'", "'setup'", "'set'", "'to'", "'read'", "'write'", "'if'", "'else'", 
+		"'while'", "'for'", "'continue'", "'break'", "'return'", "'include'", 
+		"'?'", "'('", "')'", "'{'", "'}'", "'['", "']'", "';'", "'.'", "','", 
+		"':'", "'true'", "'false'", "'\\n'", "'='", "'+='", "'*='", "'/='", "'%='", 
+		"'-='", "'\"'", "'*'", "'/'", "'+'", "'-'", "'%'", "'&&'", "'||'", "'=='", 
 		"'!='", "'>'", "'<'", "'>='", "'<='", "'!'", "'<<'", "'>>'", "'++'", "'--'"
 	};
 	private static readonly string[] _SymbolicNames = {
-		null, "Bool", "Whitespace", "VOLHIGH", "VOLLOW", "PININ", "PINOUT", "DPIN",
-		"APIN", "INT", "FLOAT", "STRING", "BOOL", "VOID", "CHAR", "UPDATE", "SETUP",
-		"SET", "TO", "READ", "WRITE", "IF", "ELSE", "WHILE", "FOR", "CONTINUE",
-		"BREAK", "RETURN", "INCLUDE", "QUESTION", "LPAR", "RPAR", "LCURLY", "RCURLY",
-		"LBRACKET", "RBRACKET", "SEMI", "DOT", "COMMA", "COLON", "TRUE", "FALSE",
-		"NEWLINE", "ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN",
-		"MINUSASSIGN", "QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND",
-		"OR", "EQ", "NEQ", "GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR",
-		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "FloatNumeral",
+		null, "Bool", "Whitespace", "VOLHIGH", "VOLLOW", "PININ", "PINOUT", "DPIN", 
+		"APIN", "INT", "FLOAT", "STRING", "BOOL", "VOID", "CHAR", "UPDATE", "SETUP", 
+		"SET", "TO", "READ", "WRITE", "IF", "ELSE", "WHILE", "FOR", "CONTINUE", 
+		"BREAK", "RETURN", "INCLUDE", "QUESTION", "LPAR", "RPAR", "LCURLY", "RCURLY", 
+		"LBRACKET", "RBRACKET", "SEMI", "DOT", "COMMA", "COLON", "TRUE", "FALSE", 
+		"NEWLINE", "ASSIGN", "PLUSASSIGN", "MULTASSIGN", "DIVASSIGN", "MODASSIGN", 
+		"MINUSASSIGN", "QUOTE", "MULT", "DIV", "PLUS", "MINUS", "MOD", "AND", 
+		"OR", "EQ", "NEQ", "GT", "LT", "GTE", "LTE", "NOT", "BITSHIFTL", "BITSHIFTR", 
+		"UNARYPLUS", "UNARYMINUS", "Identifier", "LibraryIdent", "String", "FloatNumeral", 
 		"IntNumeral", "BlockComment", "LineComment", "Newline"
 	};
 	public static readonly IVocabulary DefaultVocabulary = new Vocabulary(_LiteralNames, _SymbolicNames);
@@ -119,11 +118,9 @@ public partial class TinyCellLexer : Lexer
 
 	public override int[] SerializedAtn { get { return _serializedATN; } }
 
-	static TinyCellLexer()
-	{
+	static TinyCellLexer() {
 		decisionToDFA = new DFA[_ATN.NumberOfDecisions];
-		for (int i = 0; i < _ATN.NumberOfDecisions; i++)
-		{
+		for (int i = 0; i < _ATN.NumberOfDecisions; i++) {
 			decisionToDFA[i] = new DFA(_ATN.GetDecisionState(i), i);
 		}
 	}
