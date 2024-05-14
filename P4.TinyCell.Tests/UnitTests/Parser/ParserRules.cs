@@ -252,11 +252,11 @@ public class ParserRules
         {
             new TestToken("myFunc", TinyCellLexer.Identifier),
             new TestToken("(", TinyCellLexer.LPAR),
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("3", TinyCellLexer.Numeral),
+            new TestToken("3", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -277,11 +277,11 @@ public class ParserRules
         {
             new TestToken("myFunc", TinyCellLexer.Identifier),
             new TestToken("(", TinyCellLexer.LPAR),
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("3", TinyCellLexer.Numeral),
+            new TestToken("3", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -318,32 +318,6 @@ public class ParserRules
         Assert.NotNull(decl);
 
         Assert.Equal(TinyCellParser.RULE_declaration, decl.RuleIndex);
-    }
-
-    [Fact]
-    [Description("Can parse based on the initialDeclaration rule")]
-    public void ParserInitialDeclarationRule()
-    {
-        var tokens = new List<IToken>
-        {
-            new TestToken("int", TinyCellLexer.INT),
-            new TestToken("myVar", TinyCellLexer.Identifier),
-            new TestToken(";", TinyCellLexer.SEMI),
-            new TestToken("setup", TinyCellLexer.SETUP),
-            new TestToken("{", TinyCellLexer.LCURLY),
-            new TestToken("}", TinyCellLexer.RCURLY),
-            new TestToken("update", TinyCellLexer.UPDATE),
-            new TestToken("{", TinyCellLexer.LCURLY),
-            new TestToken("}", TinyCellLexer.RCURLY),
-            new TestToken("", TinyCellLexer.Eof),
-        };
-
-        var parser = CreateParserNoError(tokens);
-        var initDecl = parser.declaration();
-
-        Assert.NotNull(initDecl.initialDeclaration());
-
-        Assert.Equal(TinyCellParser.RULE_initialDeclaration, initDecl.initialDeclaration().RuleIndex);
     }
 
     [Fact]
@@ -440,11 +414,11 @@ public class ParserRules
             new TestToken("int", TinyCellLexer.INT),
             new TestToken("i", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("0", TinyCellLexer.Numeral),
+            new TestToken("0", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("i", TinyCellLexer.Identifier),
             new TestToken("<", TinyCellLexer.LT),
-            new TestToken("10", TinyCellLexer.Numeral),
+            new TestToken("10", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("i", TinyCellLexer.Identifier),
             new TestToken("++", TinyCellLexer.UNARYPLUS),
@@ -469,7 +443,7 @@ public class ParserRules
         var tokens = new List<IToken>
         {
             new TestToken("return", TinyCellLexer.RETURN),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -490,7 +464,7 @@ public class ParserRules
         {
             new TestToken("myVar", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -511,11 +485,11 @@ public class ParserRules
         {
             new TestToken("myFunc", TinyCellLexer.Identifier),
             new TestToken("(", TinyCellLexer.LPAR),
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken(",", TinyCellLexer.COMMA),
-            new TestToken("3", TinyCellLexer.Numeral),
+            new TestToken("3", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
@@ -535,7 +509,7 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -553,7 +527,7 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("--", TinyCellLexer.UNARYMINUS),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -572,9 +546,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("*", TinyCellLexer.MULT),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -592,9 +566,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("+", TinyCellLexer.PLUS),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -612,9 +586,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("<<", TinyCellLexer.BITSHIFTL),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -632,9 +606,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("<", TinyCellLexer.LT),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -652,9 +626,9 @@ public class ParserRules
     {
         var tokens = new List<IToken>
         {
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken("==", TinyCellLexer.EQ),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -714,9 +688,9 @@ public class ParserRules
         {
             new TestToken("true", TinyCellLexer.Bool),
             new TestToken("?", TinyCellLexer.QUESTION),
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken(":", TinyCellLexer.COLON),
-            new TestToken("2", TinyCellLexer.Numeral),
+            new TestToken("2", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof),
         };
 
@@ -861,5 +835,25 @@ public class ParserRules
         Assert.NotNull(pinStat);
 
         Assert.Equal(TinyCellParser.RULE_pinStatus, pinStat.RuleIndex);
+    }
+
+    [Fact]
+    [Description("Can parse based on the arrayContent rule")]
+    public void ParserArrayContentRule()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("1", TinyCellLexer.IntNumeral),
+            new TestToken(",", TinyCellLexer.COMMA),
+            new TestToken("2", TinyCellLexer.IntNumeral),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var arrayContent = parser.arrayContent();
+
+        Assert.NotNull(arrayContent);
+
+        Assert.Equal(TinyCellParser.RULE_arrayContent, arrayContent.RuleIndex);
     }
 }

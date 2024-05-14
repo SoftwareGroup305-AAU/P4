@@ -5,7 +5,7 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerControlFlow
 {
-    // Can handle if statements
+
     [Fact]
     [Description("Can handle if statements")]
     public void LexerIfStatement()
@@ -22,7 +22,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.EQ,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LCURLY,
@@ -31,7 +31,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.RCURLY,
@@ -41,7 +41,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle if-else statements
+
     [Fact]
     [Description("Can handle if-else statements")]
     public void LexerIfElseStatement()
@@ -58,7 +58,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.EQ,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LCURLY,
@@ -67,7 +67,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.RCURLY,
@@ -80,7 +80,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.RCURLY,
@@ -90,7 +90,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle while statements
+
     [Fact]
     [Description("Can handle while statements")]
     public void LexerWhileStatement()
@@ -107,7 +107,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.EQ,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LCURLY,
@@ -116,7 +116,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.RCURLY,
@@ -126,7 +126,7 @@ public class LexerControlFlow
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle for statements
+
     [Fact]
     [Description("Can handle for statements")]
     public void LexerForStatement()
@@ -143,14 +143,14 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LT,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
@@ -161,7 +161,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LCURLY,
@@ -170,7 +170,7 @@ public class LexerControlFlow
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.RCURLY,

@@ -1,0 +1,44 @@
+include stdlib.tcl;
+
+int num = -(-2)- -(-(-2));
+
+int func(int nums[], int num) {
+    num = nums[1];
+    return num;
+}
+
+int func2(int num) {
+    return num;
+}
+
+setup{
+    int d[5];
+    int e[5] = {1,2,3,4};
+    d[0] = 1;
+    d[2] = e[0];
+
+    int i = 2;
+    d[i] = 1;
+
+    int e[4] = {a,b,c};
+
+    if (d[0] == 1) {
+    }
+
+    func(d, i);
+    func2(d[0]);
+}
+
+update{
+    print("fuck");
+
+    dpin led = 6;
+    apin pines = 1;
+    bool yes = true;
+    bool no;
+    write true to led;
+    read led to no;
+    write yes to led;
+    //write false to pines;
+    //read pines to no;
+}

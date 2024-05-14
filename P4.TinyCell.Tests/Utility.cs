@@ -2,11 +2,17 @@
 using Antlr4.Runtime.Atn;
 using Antlr4.Runtime.Dfa;
 using Antlr4.Runtime.Sharpen;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.Typechecking;
+using P4.TinyCell.Shared.Utilities;
+using Xunit;
 
 namespace P4.TinyCell.Tests;
 
-public class Utility
+public static class Utility
 {
+    #region Token Utilities
+
     public static List<int> GetTokenTypesFromInput(string input)
     {
         var antlrInputStream = new AntlrInputStream(input);
@@ -15,10 +21,20 @@ public class Utility
         tokenStream.Fill();
         var tokens = tokenStream.GetTokens();
 
-        var tokenTypes = tokens.Select(token => token.Type).ToList();
-
-        return tokenTypes;
+        return tokens.Select(token => token.Type).ToList();
     }
+
+    public static TinyCellParser CreateParserNoError(List<IToken> tokens)
+    {
+        var tokenStream = new CommonTokenStream(new ListTokenSource(tokens));
+        var parser = new TinyCellParser(tokenStream);
+        parser.AddErrorListener(new NoErrorListener());
+        return parser;
+    }
+
+    #endregion
+
+    #region Custom Token and Error Listener
 
     public class TestToken : IToken
     {
@@ -33,8 +49,6 @@ public class Utility
 
         public string Text => _text;
         public int Type => _type;
-
-        // Implement other IToken methods as needed, returning 0 or null as appropriate
         public int Line => 0;
         public int CharPositionInLine => 0;
         public int Channel => 0;
@@ -69,11 +83,25 @@ public class Utility
         }
     }
 
-    public static TinyCellParser CreateParserNoError(List<IToken> tokens)
+    #endregion
+
+    #region Typechecking Utility
+
+    public static Exception? CheckTypeErrors(string testCode)
     {
-        var tokenStream = new CommonTokenStream(new ListTokenSource(tokens));
+        var antlrInputStream = new AntlrInputStream(testCode);
+        var lexer = new TinyCellLexer(antlrInputStream);
+        var tokenStream = new CommonTokenStream(lexer);
         var parser = new TinyCellParser(tokenStream);
         parser.AddErrorListener(new NoErrorListener());
-        return parser;
+        var tree = parser.document();
+
+        var astBuilderVisitor = new AstBuilderVisitor();
+        var ast = astBuilderVisitor.Visit(tree);
+
+        var typeChecker = new TypeCheckerVisitor();
+        return Record.Exception(() => typeChecker.Visit(ast));
     }
+
+    #endregion
 }

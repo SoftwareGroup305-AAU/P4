@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell.Shared//TinycellAntlr//TinyCell.g4 by ANTLR 4.13.1
+// Generated from ../P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -47,6 +47,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDocument([NotNull] TinyCellParser.DocumentContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterInclude([NotNull] TinyCellParser.IncludeContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitInclude([NotNull] TinyCellParser.IncludeContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -168,18 +180,6 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitDeclaration([NotNull] TinyCellParser.DeclarationContext context) { }
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void EnterInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context) { }
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// <para>The default implementation does nothing.</para>
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	public virtual void ExitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context) { }
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.compoundStatement"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -263,6 +263,30 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArrayContent([NotNull] TinyCellParser.ArrayContentContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArrayContent([NotNull] TinyCellParser.ArrayContentContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context) { }
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// <para>The default implementation does nothing.</para>
@@ -444,6 +468,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context) { }
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterTclib([NotNull] TinyCellParser.TclibContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitTclib([NotNull] TinyCellParser.TclibContext context) { }
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.assignmentOperator"/>.
 	/// <para>The default implementation does nothing.</para>
 	/// </summary>
@@ -479,6 +515,18 @@ public partial class TinyCellBaseListener : ITinyCellListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	public virtual void ExitPinStatus([NotNull] TinyCellParser.PinStatusContext context) { }
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void EnterNumeral([NotNull] TinyCellParser.NumeralContext context) { }
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// <para>The default implementation does nothing.</para>
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	public virtual void ExitNumeral([NotNull] TinyCellParser.NumeralContext context) { }
 
 	/// <inheritdoc/>
 	/// <remarks>The default implementation does nothing.</remarks>

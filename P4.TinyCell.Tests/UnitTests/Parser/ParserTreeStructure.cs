@@ -87,12 +87,12 @@ public class ParserTreeStructure
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("==", TinyCellLexer.EQ),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof),
@@ -122,19 +122,19 @@ public class ParserTreeStructure
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("==", TinyCellLexer.EQ),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("else", TinyCellLexer.ELSE),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("7", TinyCellLexer.Numeral),
+            new TestToken("7", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof),
@@ -166,12 +166,12 @@ public class ParserTreeStructure
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("==", TinyCellLexer.EQ),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof),
@@ -202,11 +202,11 @@ public class ParserTreeStructure
             new TestToken("int", TinyCellLexer.INT),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("0", TinyCellLexer.Numeral),
+            new TestToken("0", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("<", TinyCellLexer.LT),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("++", TinyCellLexer.UNARYPLUS),
@@ -214,7 +214,7 @@ public class ParserTreeStructure
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof),
@@ -262,29 +262,6 @@ public class ParserTreeStructure
     }
 
     [Fact]
-    [Description("Validates the structure of the parse tree for an initial declaration")]
-    public void ParserInitialDeclarationStructureTest()
-    {
-        var tokens = new List<IToken>
-        {
-            new TestToken("int", TinyCellLexer.INT),
-            new TestToken("x", TinyCellLexer.Identifier),
-            new TestToken(";", TinyCellLexer.SEMI),
-            new TestToken("", TinyCellLexer.Eof),
-        };
-
-        var parser = CreateParserNoError(tokens);
-        var declaration = parser.declaration();
-
-        Assert.NotNull(declaration);
-
-        Assert.Equal(2, declaration.ChildCount);
-
-        Assert.IsType<TinyCellParser.TypeContext>(declaration.GetChild(0));
-        Assert.IsType<TinyCellParser.InitialDeclarationContext>(declaration.GetChild(1));
-    }
-
-    [Fact]
     [Description("Validates the structure of the parse tree for an assignment")]
     public void ParserAssignmentStructureTest()
     {
@@ -292,7 +269,7 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -315,9 +292,9 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("?", TinyCellLexer.QUESTION),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(":", TinyCellLexer.COLON),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -341,15 +318,15 @@ public class ParserTreeStructure
             {
                 new TestToken("x", TinyCellLexer.Identifier),
                 new TestToken("=", TinyCellLexer.ASSIGN),
-                new TestToken("5", TinyCellLexer.Numeral),
+                new TestToken("5", TinyCellLexer.IntNumeral),
                 new TestToken("+", TinyCellLexer.PLUS),
-                new TestToken("5", TinyCellLexer.Numeral),
+                new TestToken("5", TinyCellLexer.IntNumeral),
                 new TestToken("-", TinyCellLexer.MINUS),
-                new TestToken("5", TinyCellLexer.Numeral),
+                new TestToken("5", TinyCellLexer.IntNumeral),
                 new TestToken("*", TinyCellLexer.MULT),
-                new TestToken("5", TinyCellLexer.Numeral),
+                new TestToken("5", TinyCellLexer.IntNumeral),
                 new TestToken("/", TinyCellLexer.DIV),
-                new TestToken("5", TinyCellLexer.Numeral),
+                new TestToken("5", TinyCellLexer.IntNumeral),
                 new TestToken(";", TinyCellLexer.SEMI),
                 new TestToken("", TinyCellLexer.Eof),
             };
@@ -407,15 +384,15 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("+", TinyCellLexer.PLUS),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("-", TinyCellLexer.MINUS),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("*", TinyCellLexer.MULT),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("/", TinyCellLexer.DIV),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -461,7 +438,7 @@ public class ParserTreeStructure
         {
             new TestToken("foo", TinyCellLexer.Identifier),
             new TestToken("(", TinyCellLexer.LPAR),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
@@ -478,14 +455,14 @@ public class ParserTreeStructure
     }
 
     [Fact]
-    [Description("Validates the structure of the parse tree for numeral assignment")]
-    public void ParserNumeralAssignmentStructureTest()
+    [Description("Validates the structure of the parse tree for IntNumeral assignment")]
+    public void ParserIntNumeralAssignmentStructureTest()
     {
         var tokens = new List<IToken>
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -577,9 +554,9 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("+", TinyCellLexer.PLUS),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -603,7 +580,7 @@ public class ParserTreeStructure
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
             new TestToken("-", TinyCellLexer.MINUS),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -626,9 +603,9 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("*", TinyCellLexer.MULT),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -651,9 +628,9 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("+", TinyCellLexer.PLUS),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -676,9 +653,9 @@ public class ParserTreeStructure
         {
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("<<", TinyCellLexer.BITSHIFTL),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof),
         };
@@ -691,5 +668,25 @@ public class ParserTreeStructure
         Assert.Equal(1, expression.ChildCount);
 
         Assert.IsType<TinyCellParser.ExpressionContext>(expression);
+    }
+
+    [Fact]
+    [Description("Validates the structure of the parse tree for an array content")]
+    public void ParserArrayContentStructureTest()
+    {
+        var tokens = new List<IToken>
+        {
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken("", TinyCellLexer.Eof),
+        };
+
+        var parser = CreateParserNoError(tokens);
+        var arrayContent = parser.arrayContent();
+
+        Assert.NotNull(arrayContent);
+
+        Assert.Equal(1, arrayContent.ChildCount);
+
+        Assert.IsType<TinyCellParser.NumeralContext>(arrayContent.GetChild(0));
     }
 }

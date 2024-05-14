@@ -1,4 +1,5 @@
-﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
@@ -295,5 +296,35 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitTypeNode(TypeNode typeNode)
     {
         return VisitChildren(typeNode);
+    }
+
+    public virtual Result VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration)
+    {
+        return VisitChildren(arrayDecleration);
+    }
+
+    public virtual Result VisitIncludeNode(IncludeNode includeNode)
+    {
+        return VisitChildren(includeNode);
+    }
+
+    public virtual Result VisitArrayElementsNode(ArrayElementsNode elements)
+    {
+        return VisitChildren(elements);
+    }
+
+    public virtual Result VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+    {
+        return VisitChildren(arrayElementReferenceNode);
+    }
+
+    public virtual Result VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+    {
+        return VisitChildren(arrayAssignmentNode);
+    }
+
+    public virtual Result VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+    {
+        return VisitChildren(negativeExpressionNode);
     }
 }

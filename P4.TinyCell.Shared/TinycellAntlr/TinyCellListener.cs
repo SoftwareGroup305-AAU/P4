@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell.Shared//TinycellAntlr//TinyCell.g4 by ANTLR 4.13.1
+// Generated from ../P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -40,6 +40,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitDocument([NotNull] TinyCellParser.DocumentContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterInclude([NotNull] TinyCellParser.IncludeContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitInclude([NotNull] TinyCellParser.IncludeContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
 	/// </summary>
@@ -141,16 +151,6 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitDeclaration([NotNull] TinyCellParser.DeclarationContext context);
 	/// <summary>
-	/// Enter a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void EnterInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context);
-	/// <summary>
-	/// Exit a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	void ExitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context);
-	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.compoundStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -220,6 +220,26 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
 	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
@@ -371,6 +391,16 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// <param name="context">The parse tree.</param>
 	void ExitIdentifier([NotNull] TinyCellParser.IdentifierContext context);
 	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterTclib([NotNull] TinyCellParser.TclibContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitTclib([NotNull] TinyCellParser.TclibContext context);
+	/// <summary>
 	/// Enter a parse tree produced by <see cref="TinyCellParser.assignmentOperator"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -400,4 +430,14 @@ public interface ITinyCellListener : IParseTreeListener {
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
 	void ExitPinStatus([NotNull] TinyCellParser.PinStatusContext context);
+	/// <summary>
+	/// Enter a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void EnterNumeral([NotNull] TinyCellParser.NumeralContext context);
+	/// <summary>
+	/// Exit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	void ExitNumeral([NotNull] TinyCellParser.NumeralContext context);
 }

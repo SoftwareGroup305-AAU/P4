@@ -45,7 +45,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
@@ -141,7 +141,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
@@ -153,7 +153,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
@@ -217,7 +217,7 @@ public class LexerParser
     {
         var input = @"
         setup{
-            for (i = 0; i < 10; i = i + 1) {
+            for (int i = 0; i < 10; i = i + 1) {
                 print(i);
             }  
         }
@@ -241,18 +241,20 @@ public class LexerParser
             TinyCellLexer.FOR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LPAR,
+            TinyCellLexer.INT,
+            TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LT,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
@@ -263,7 +265,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.Whitespace,
             TinyCellLexer.LCURLY,
@@ -303,28 +305,29 @@ public class LexerParser
         Assert.IsType<TinyCellParser.CompoundStatementContext>(setup.GetChild(1));
 
         var compoundStatement = setup.GetChild(1);
-        Assert.Equal(7, compoundStatement.ChildCount);
+        Assert.Equal(3, compoundStatement.ChildCount);
         Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(compoundStatement.GetChild(0));
         Assert.IsType<TinyCellParser.StatementContext>(compoundStatement.GetChild(1));
-        Assert.IsType<TinyCellParser.StatementContext>(compoundStatement.GetChild(2));
-        Assert.IsType<TinyCellParser.StatementContext>(compoundStatement.GetChild(3));
-        Assert.IsType<TinyCellParser.StatementContext>(compoundStatement.GetChild(4));
-        Assert.IsType<TinyCellParser.StatementContext>(compoundStatement.GetChild(5));
-        Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(compoundStatement.GetChild(6));
+        Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(compoundStatement.GetChild(2));
 
         var statement = compoundStatement.GetChild(1);
         Assert.Equal(1, statement.ChildCount);
         Assert.IsType<TinyCellParser.LoopStatementContext>(statement.GetChild(0));
 
         var loopStatement = statement.GetChild(0);
-        Assert.Equal(4, loopStatement.ChildCount);
+        Assert.Equal(9, loopStatement.ChildCount);
         Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(loopStatement.GetChild(0));
         Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(loopStatement.GetChild(1));
-        Assert.IsType<TinyCellParser.ExpressionContext>(loopStatement.GetChild(2));
-        Assert.IsType<Antlr4.Runtime.Tree.ErrorNodeImpl>(loopStatement.GetChild(3));
+        Assert.IsType<TinyCellParser.DeclarationContext>(loopStatement.GetChild(2));
+        Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(loopStatement.GetChild(3));
+        Assert.IsType<TinyCellParser.ExpressionContext>(loopStatement.GetChild(4));
+        Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(loopStatement.GetChild(5));
+        Assert.IsType<TinyCellParser.AssignmentContext>(loopStatement.GetChild(6));
+        Assert.IsType<Antlr4.Runtime.Tree.TerminalNodeImpl>(loopStatement.GetChild(7));
+        Assert.IsType<TinyCellParser.CompoundStatementContext>(loopStatement.GetChild(8));
 
         var update = tree.GetChild(1);
-        Assert.Equal(3, update.ChildCount);
+        Assert.Equal(2, update.ChildCount);
         Assert.Equal("UpdateDefinitionContext", update.GetType().Name);
     }
 
@@ -366,7 +369,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,
@@ -449,7 +452,7 @@ public class LexerParser
             TinyCellLexer.Whitespace,
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Whitespace,

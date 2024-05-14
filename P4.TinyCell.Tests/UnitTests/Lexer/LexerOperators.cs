@@ -5,7 +5,7 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerOperators
 {
-    // Can handle arithmetic operators
+
     [Fact]
     [Description("Can handle arithmetic operators")]
     public void LexerArithmeticOperators()
@@ -43,7 +43,7 @@ public class LexerOperators
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle comparison operators
+
     [Fact]
     [Description("Can handle comparison operators")]
     public void LexerComparisonOperators()
@@ -89,7 +89,7 @@ public class LexerOperators
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle assignment operators
+
     [Fact]
     [Description("Can handle assignment operators")]
     public void LexerAssignmentOperators()
