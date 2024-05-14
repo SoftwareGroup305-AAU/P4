@@ -12,8 +12,8 @@ int func2(int num) {
 }
 
 setup{
-    int i = 1;
-    func(i, i);
+    
+
 }
 
 update{
