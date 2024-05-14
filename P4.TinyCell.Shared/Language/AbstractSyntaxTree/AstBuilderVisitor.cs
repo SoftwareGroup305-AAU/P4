@@ -460,8 +460,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
             return new PinModeExprNode((IdentifierNode)Visit(context.identifier()), (PinModeNode)Visit(context.pinStatus()));
         }
         return Visit(context.pinAssignmentExpression());
-
-        throw new InvalidOperationException();
     }
 
     public override AstNode VisitPinVoltage([NotNull] TinyCellParser.PinVoltageContext context)

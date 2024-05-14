@@ -16,6 +16,8 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 namespace P4.TinyCell.Shared.Language.CodeGen;
 public class CGeneratorVisitor : AstBaseVisitor<string>
 {
+    private IDictionary<IdentifierNode, TcType> pinTable = new Dictionary<IdentifierNode, TcType>();
+
     public override string VisitAddExprNode(AddExprNode addExprNode)
     {
         return $"{Visit(addExprNode.Left)} + {Visit(addExprNode.Right)}";
@@ -70,6 +72,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitDeclarationNode(DeclarationNode declarationNode)
     {
         string action = declarationNode.Action is null ? string.Empty : $" = {Visit(declarationNode.Action)}";
+        if (declarationNode.Type.Type == TcType.DPIN || declarationNode.Type.Type == TcType.APIN)
+        {
+            pinTable.Add(declarationNode.Identifier, declarationNode.Type.Type);
+        }
         return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};"; 
     }
 
@@ -219,6 +225,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
     {
+        if (pinWriteExprNode.To is IdentifierNode)
+        {
+
+        }
         return base.VisitPinWriteExprNode(pinWriteExprNode);
     }
 
@@ -294,9 +304,9 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         return typeNode.Type.ToString().ToLower();
     }
 
-    public override string VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration)
+    public override string VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclaration)
     {
-        return base.VisitArrayDeclarationNode(arrayDecleration);
+        return base.VisitArrayDeclarationNode(arrayDeclaration);
     }
 
     public override string VisitIncludeNode(IncludeNode includeNode)
