@@ -13,6 +13,8 @@ public class StatementCollectionNode : AstNode
         }
     }
 
+    public int Count => Statements.Length;
+
     public override T Accept<T>(IAstVisitor<T> visitor)
     {
         return visitor.VisitStatementCollectionNode(this);

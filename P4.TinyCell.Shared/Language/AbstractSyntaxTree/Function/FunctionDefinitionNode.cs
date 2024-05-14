@@ -9,18 +9,22 @@ public class FunctionDefinitionNode : AstNode
     public TypeNode Type { get; set; }
     public IdentifierNode Identifier { get; set; }
     public ParameterListNode ParameterList { get; set; }
-    public StatementCollectionNode CompoundStatement { get; set; }
-    public FunctionDefinitionNode(TypeNode type, IdentifierNode identifier, ParameterListNode parameterList, StatementCollectionNode compoundStatement)
+    public StatementCollectionNode? CompoundStatement { get; set; }
+    public FunctionDefinitionNode(TypeNode type, IdentifierNode identifier, ParameterListNode parameterList, StatementCollectionNode? compoundStatement = null)
     {
         Type = type;
         Identifier = identifier;
         ParameterList = parameterList;
-        CompoundStatement = compoundStatement;
 
         AddChild(type);
         AddChild(identifier);
         AddChild(parameterList);
-        AddChild(compoundStatement);
+        
+        if(compoundStatement is not null)
+        {
+            CompoundStatement = compoundStatement;
+            AddChild(compoundStatement);
+        }
     }
 
     public override T Accept<T>(IAstVisitor<T> visitor)

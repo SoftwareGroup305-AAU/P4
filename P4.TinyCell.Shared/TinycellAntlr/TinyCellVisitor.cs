@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from c://Users//karto//Desktop//VS//P4//P4.TinyCell.Shared//TinycellAntlr//TinyCell.g4 by ANTLR 4.13.1
+// Generated from ../P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 by ANTLR 4.13.1
 
 // Unreachable code detected
 #pragma warning disable 0162
@@ -37,6 +37,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitDocument([NotNull] TinyCellParser.DocumentContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.include"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitInclude([NotNull] TinyCellParser.IncludeContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.generalDeclaration"/>.
 	/// </summary>
@@ -98,12 +104,6 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitDeclaration([NotNull] TinyCellParser.DeclarationContext context);
 	/// <summary>
-	/// Visit a parse tree produced by <see cref="TinyCellParser.initialDeclaration"/>.
-	/// </summary>
-	/// <param name="context">The parse tree.</param>
-	/// <return>The visitor result.</return>
-	Result VisitInitialDeclaration([NotNull] TinyCellParser.InitialDeclarationContext context);
-	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.compoundStatement"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -145,6 +145,18 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitFunctionCall([NotNull] TinyCellParser.FunctionCallContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.arrayContent"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArrayContent([NotNull] TinyCellParser.ArrayContentContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.arrayIndex"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitArrayIndex([NotNull] TinyCellParser.ArrayIndexContext context);
 	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.primitiveExpression"/>.
 	/// </summary>
@@ -236,6 +248,12 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <return>The visitor result.</return>
 	Result VisitIdentifier([NotNull] TinyCellParser.IdentifierContext context);
 	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.tclib"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitTclib([NotNull] TinyCellParser.TclibContext context);
+	/// <summary>
 	/// Visit a parse tree produced by <see cref="TinyCellParser.assignmentOperator"/>.
 	/// </summary>
 	/// <param name="context">The parse tree.</param>
@@ -253,4 +271,10 @@ public interface ITinyCellVisitor<Result> : IParseTreeVisitor<Result> {
 	/// <param name="context">The parse tree.</param>
 	/// <return>The visitor result.</return>
 	Result VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context);
+	/// <summary>
+	/// Visit a parse tree produced by <see cref="TinyCellParser.numeral"/>.
+	/// </summary>
+	/// <param name="context">The parse tree.</param>
+	/// <return>The visitor result.</return>
+	Result VisitNumeral([NotNull] TinyCellParser.NumeralContext context);
 }

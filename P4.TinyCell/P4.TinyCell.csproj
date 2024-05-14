@@ -12,6 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="stdlib.tcl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="test.tc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

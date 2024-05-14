@@ -4,7 +4,12 @@ Bool: (TRUE | FALSE);
 
 Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
-document: generalDeclaration* setupDefinition updateDefinition;
+document: (
+		include* generalDeclaration* setupDefinition updateDefinition
+	)
+	| functionDefinition+;
+
+include: INCLUDE tclib SEMI;
 
 generalDeclaration: functionDefinition | declaration SEMI;
 
@@ -13,23 +18,30 @@ setupDefinition: SETUP compoundStatement;
 updateDefinition: UPDATE compoundStatement;
 
 functionDefinition:
-	type identifier LPAR parameterList* RPAR compoundStatement;
+	type identifier LPAR parameterList* RPAR (
+		compoundStatement
+		| SEMI
+	);
 
 type: VOID | STRING | INT | FLOAT | BOOL | DPIN | APIN;
 
 parameterList: parameter | parameterList COMMA parameter;
 
-parameter: type identifier;
+parameter: type identifier (LBRACKET RBRACKET)?;
 
 argumentList: argument | argumentList COMMA argument;
 
-argument: identifier | functionCall | Numeral | String | Bool;
+argument:
+	identifier (LBRACKET arrayIndex RBRACKET)?
+	| functionCall
+	| numeral
+	| String
+	| Bool;
 
-declaration: type initialDeclaration;
-
-initialDeclaration:
-	identifier
-	| identifier ASSIGN (expression | functionCall);
+declaration:
+	type identifier (LBRACKET arrayIndex RBRACKET)? (
+		ASSIGN ( expression | functionCall)
+	)?;
 
 compoundStatement: LCURLY statement* RCURLY;
 
@@ -59,19 +71,32 @@ jumpStatement:
 	| BREAK SEMI
 	| RETURN expression? SEMI;
 
-assignment: identifier assignmentOperator expression;
+assignment:
+	identifier (LBRACKET arrayIndex RBRACKET)? assignmentOperator expression;
 
 functionCall: identifier LPAR argumentList* RPAR;
 
+arrayContent: numeral | String | identifier;
+
+arrayIndex: IntNumeral | identifier;
+
 primitiveExpression:
-	Numeral
+	numeral
 	| Bool
 	| String
-	| identifier
+	| identifier (LBRACKET arrayIndex RBRACKET)?
 	| functionCall
+	| LCURLY (arrayContent COMMA)* arrayContent RCURLY
 	| LPAR expression RPAR;
 
-negativeExpression: primitiveExpression | MINUS Numeral;
+negativeExpression:
+	primitiveExpression
+	| MINUS (
+		numeral
+		| identifier (LBRACKET arrayIndex RBRACKET)?
+		| functionCall
+	)
+	| MINUS LPAR expression RPAR;
 
 unaryExpression:
 	negativeExpression
@@ -126,17 +151,19 @@ ternaryExpression:
 expression: ternaryExpression;
 
 pinAssignmentExpression:
-	WRITE (pinVoltage | identifier | Numeral) TO (
+	WRITE (pinVoltage | Bool | identifier | IntNumeral) TO (
 		identifier
-		| Numeral
+		| IntNumeral
 	)
-	| READ (identifier | Numeral) TO identifier;
+	| READ (identifier | IntNumeral) TO identifier;
 
 pinStatusExpression:
 	pinAssignmentExpression
 	| SET identifier TO pinStatus;
 
 identifier: Identifier;
+
+tclib: LibraryIdent;
 
 assignmentOperator:
 	ASSIGN
@@ -149,6 +176,8 @@ assignmentOperator:
 pinVoltage: VOLHIGH | VOLLOW;
 
 pinStatus: PININ | PINOUT;
+
+numeral: FloatNumeral | IntNumeral;
 
 //Pin op
 VOLHIGH: 'HIGH';
@@ -178,6 +207,7 @@ FOR: 'for';
 CONTINUE: 'continue';
 BREAK: 'break';
 RETURN: 'return';
+INCLUDE: 'include';
 QUESTION: '?';
 LPAR: '(';
 RPAR: ')';
@@ -225,9 +255,13 @@ UNARYMINUS: '--';
 
 Identifier: [a-zA-Z_][a-zA-Z0-9_]*;
 
+LibraryIdent: Identifier DOT 'tcl';
+
 String: QUOTE ([ a-zA-Z0-9_!@#$%^&()=;:'<>,.?/`~])* QUOTE;
 
-Numeral: [0-9]+ ([.][0-9]+)?;
+FloatNumeral: [0-9]+ [.][0-9]+;
+
+IntNumeral: [0-9]+;
 
 BlockComment: '/*' .*? '*/' -> channel(HIDDEN);
 

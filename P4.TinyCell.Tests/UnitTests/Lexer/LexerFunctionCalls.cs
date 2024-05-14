@@ -5,7 +5,7 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerFunctionCalls
 {
-    // Can handle function calls
+
     [Fact]
     [Description("Can handle function calls")]
     public void LexerFunctionCall()
@@ -25,7 +25,7 @@ public class LexerFunctionCalls
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle function calls with arguments
+
     [Fact]
     [Description("Can handle function calls with arguments")]
     public void LexerFunctionCallWithArguments()
@@ -37,7 +37,7 @@ public class LexerFunctionCalls
         {
             TinyCellLexer.Identifier,
             TinyCellLexer.LPAR,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.RPAR,
             TinyCellLexer.SEMI,
             TinyCellLexer.Eof

@@ -9,6 +9,9 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using Antlr4.Runtime;
+using P4.TinyCell.Shared.Utilities;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
@@ -34,28 +37,39 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
             vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
-            try {
+            try
+            {
                 var function = CreateFunction(functionDefinitionNode);
                 UpdateFtable(function);
                 UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
-                Visit(functionDefinitionNode.CompoundStatement);
+                if (functionDefinitionNode.CompoundStatement is not null)
+                {
+                    Visit(functionDefinitionNode.CompoundStatement);
+                }
+
                 if (function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
                 {
                     throw new Exception("not all paths return a value");
                 }
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 throw new Exception($"In function '{functionDefinitionNode.Identifier.Value}' -> {e.Message}");
             }
             vTableStack.Pop();
             return default;
         }
 
-        private bool ContainsIdentifier(AstNode expression) {
-            if (expression is IdentifierNode) {
+        private bool ContainsIdentifier(AstNode expression)
+        {
+            if (expression is IdentifierNode)
+            {
                 return true;
             }
-            foreach (var child in expression.Children) {
-                if (ContainsIdentifier(child)) {
+            foreach (var child in expression.Children)
+            {
+                if (ContainsIdentifier(child))
+                {
                     return true;
                 }
             }
@@ -79,12 +93,15 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitAssignNode(AssignNode assignNode)
         {
             var idNode = assignNode.Children[0] as IdentifierNode;
-            try {
+            try
+            {
                 var assignedType = Visit(assignNode.Children[1]);
                 var id = LookupVariable(idNode.Value, vTableStack);
                 CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
                 return id.Value;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 throw new Exception($"While assigning to '{idNode.Value}' -> {e.Message}");
             }
         }
@@ -101,8 +118,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                         var actionType = Visit(declarationNode.Action);
                         CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
 
-                    }
-            } catch (Exception e) {
+                }
+            }
+            catch (Exception e)
+            {
                 throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
             }
             return declaredTypeNode.Type;
@@ -322,9 +341,9 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var toType = Visit(pinWriteExprNode.To);
             if (toType == TcType.DPIN)
             {
-                if (pinWriteExprNode.From is not VoltageNode)
+                if (pinWriteExprNode.From is not VoltageNode || pinWriteExprNode.From is not BoolNode)
                 {
-                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage'");
+                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage' or 'bool'");
                 }
                 return default;
             }
@@ -344,8 +363,49 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             var toType = Visit(pinReadExprNode.To);
             var fromType = Visit(pinReadExprNode.From);
-            CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT, TcType.APIN });
+            if (fromType == TcType.DPIN)
+            {
+                CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.BOOL, TcType.DPIN });
+                return default;
+            }
+            if (fromType == TcType.APIN)
+            {
+                CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT, TcType.APIN });
+                return default;
+            }
+            throw new Exception($"Variable '{pinReadExprNode.To}' is not a pin");
+        }
+
+        public override TcType VisitIncludeNode(IncludeNode includeNode)
+        {
+            AstNode includeAst = AstHelper.GetAstFromFile(includeNode.FileName);
+            Visit(includeAst);
             return default;
+        }
+
+        public override TcType VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclarationNode)
+        {
+            return VisitChildren(arrayDeclarationNode);
+        }
+
+        public override TcType VisitArrayElementsNode(ArrayElementsNode arrayElementsNode)
+        {
+            return VisitChildren(arrayElementsNode);
+        }
+
+        public override TcType VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+        {
+            return VisitChildren(arrayElementReferenceNode);
+        }
+
+        public override TcType VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+        {
+            return VisitChildren(arrayAssignmentNode);
+        }
+
+        public override TcType VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+        {
+            return VisitChildren(negativeExpressionNode);
         }
 
         private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
@@ -414,7 +474,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             }
         }
 
-        
+
         private static void CheckAritmeticOperation(TcType left, TcType right, List<TcType> expectedTypes)
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
@@ -519,9 +579,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     if (EvaluateCondition(whileStatementNode.Condition) == 1)
                     {
-                        if (!AllPathsReturn(whileStatementNode.CompoundStatement)) {
+                        if (!AllPathsReturn(whileStatementNode.CompoundStatement))
+                        {
                             throw new Exception("possible infinite loop in 'while' statement");
-                        } else {
+                        }
+                        else
+                        {
                             return true;
                         }
                     }
@@ -530,9 +593,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     if (EvaluateCondition(forStatementNode.Condition) == 1)
                     {
-                        if (!AllPathsReturn(forStatementNode.CompoundStatement)) {
+                        if (!AllPathsReturn(forStatementNode.CompoundStatement))
+                        {
                             throw new Exception("possible infinite loop in 'for' statement");
-                        } else {
+                        }
+                        else
+                        {
                             return true;
                         }
                     }
@@ -555,12 +621,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             if (condition is AddExprNode or SubExprNode or MultExprNode or DivExprNode or ModExprNode)
             {
-            throw new Exception("Condition must evaluate to a boolean value");
+                throw new Exception("Condition must evaluate to a boolean value");
             }
             return EvaluateConditionHelper(condition);
-            
-        
-            
+
+
+
         }
 
         /// <summary>

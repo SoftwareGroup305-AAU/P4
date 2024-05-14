@@ -1,11 +1,11 @@
-﻿using System.ComponentModel;
-using static P4.TinyCell.Tests.Utility;
+﻿using static P4.TinyCell.Tests.Utility;
+using System.ComponentModel;
 
 namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerAssignments
 {
-    // Can handle a numeral assignment.
+
     [Fact]
     [Description("Can handle a numeral assignment")]
     public void LexerNumeralAssignment()
@@ -19,14 +19,14 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle a string assignment.
+
     [Fact]
     [Description("Can handle a string assignment")]
     public void LexerStringAssignment()
@@ -47,7 +47,7 @@ public class LexerAssignments
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle a boolean assignment.
+
     [Fact]
     [Description("Can handle a boolean assignment")]
     public void LexerBooleanAssignment()
@@ -68,7 +68,7 @@ public class LexerAssignments
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle a function assignment.
+
     [Fact]
     [Description("Can handle a function assignment")]
     public void LexerFunctionAssignment()
@@ -91,7 +91,7 @@ public class LexerAssignments
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle an expression assignment.
+
     [Fact]
     [Description("Can handle an expression assignment")]
     public void LexerExpressionAssignment()
@@ -105,18 +105,18 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle a unary expression assignment.
+
     [Fact]
     [Description("Can handle a unary expression assignment")]
     public void LexerUnaryExpressionAssignment()
@@ -130,14 +130,15 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.MINUS,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle a multiplicative expression assignment.
+
     [Fact]
     [Description("Can handle a multiplicative expression assignment")]
     public void LexerMultiplicativeExpressionAssignment()
@@ -151,18 +152,18 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.MULT,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle additive expression assignment.
+
     [Fact]
     [Description("Can handle additive expression assignment")]
     public void LexerAdditiveExpressionAssignment()
@@ -176,18 +177,18 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.PLUS,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Eof
         };
 
         Assert.Equal(expectedTokenTypes, tokenTypes);
     }
 
-    // Can handle bitshift expression assignment.
+
     [Fact]
     [Description("Can handle bitshift expression assignment")]
     public void LexerBitshiftExpressionAssignment()
@@ -201,11 +202,36 @@ public class LexerAssignments
             TinyCellLexer.Whitespace,
             TinyCellLexer.ASSIGN,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
             TinyCellLexer.Whitespace,
             TinyCellLexer.BITSHIFTL,
             TinyCellLexer.Whitespace,
-            TinyCellLexer.Numeral,
+            TinyCellLexer.IntNumeral,
+            TinyCellLexer.Eof
+        };
+
+        Assert.Equal(expectedTokenTypes, tokenTypes);
+    }
+
+
+    [Fact]
+    [Description("Can handle float expression assignment with floats")]
+    public void LexerFloatExpressionAssignment()
+    {
+        var input = "x = 5.5 + 5.5";
+        var tokenTypes = GetTokenTypesFromInput(input);
+
+        var expectedTokenTypes = new List<int>
+        {
+            TinyCellLexer.Identifier,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.ASSIGN,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.FloatNumeral,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.PLUS,
+            TinyCellLexer.Whitespace,
+            TinyCellLexer.FloatNumeral,
             TinyCellLexer.Eof
         };
 

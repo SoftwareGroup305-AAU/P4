@@ -13,7 +13,7 @@ public class ParserErrorHandling
         var tokens = new List<IToken>
         {
             new TestToken("x", TinyCellLexer.Identifier),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken("", TinyCellLexer.Eof)
         };
 
@@ -43,12 +43,12 @@ public class ParserErrorHandling
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof)
@@ -78,7 +78,7 @@ public class ParserErrorHandling
         {
             new TestToken("foo", TinyCellLexer.Identifier),
             new TestToken("(", TinyCellLexer.LPAR),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("", TinyCellLexer.Eof)
         };
@@ -109,12 +109,12 @@ public class ParserErrorHandling
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof)
@@ -146,22 +146,22 @@ public class ParserErrorHandling
             new TestToken("(", TinyCellLexer.LPAR),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("5", TinyCellLexer.Numeral),
+            new TestToken("5", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("<", TinyCellLexer.LT),
-            new TestToken("10", TinyCellLexer.Numeral),
+            new TestToken("10", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("+", TinyCellLexer.PLUS),
-            new TestToken("1", TinyCellLexer.Numeral),
+            new TestToken("1", TinyCellLexer.IntNumeral),
             new TestToken(")", TinyCellLexer.RPAR),
             new TestToken("{", TinyCellLexer.LCURLY),
             new TestToken("x", TinyCellLexer.Identifier),
             new TestToken("=", TinyCellLexer.ASSIGN),
-            new TestToken("6", TinyCellLexer.Numeral),
+            new TestToken("6", TinyCellLexer.IntNumeral),
             new TestToken(";", TinyCellLexer.SEMI),
             new TestToken("}", TinyCellLexer.RCURLY),
             new TestToken("", TinyCellLexer.Eof)
