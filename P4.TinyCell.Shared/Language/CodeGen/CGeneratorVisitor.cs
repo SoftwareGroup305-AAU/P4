@@ -1,4 +1,5 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
@@ -291,5 +292,35 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitTypeNode(TypeNode typeNode)
     {
         return typeNode.Type.ToString().ToLower();
+    }
+
+    public override string VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration)
+    {
+        return base.VisitArrayDeclarationNode(arrayDecleration);
+    }
+
+    public override string VisitIncludeNode(IncludeNode includeNode)
+    {
+        return base.VisitIncludeNode(includeNode);
+    }
+
+    public override string VisitArrayElementsNode(ArrayElementsNode elements)
+    {
+        return base.VisitArrayElementsNode(elements);
+    }
+
+    public override string VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+    {
+        return base.VisitArrayElemenetReferenceNode(arrayElementReferenceNode);
+    }
+
+    public override string VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+    {
+        return base.VisitArrayAssignmentNode(arrayAssignmentNode);
+    }
+
+    public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+    {
+        return base.VisitNegativeExpressionNode(negativeExpressionNode);
     }
 }
