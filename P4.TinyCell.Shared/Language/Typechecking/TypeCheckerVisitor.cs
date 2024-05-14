@@ -11,6 +11,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 using Antlr4.Runtime;
 using P4.TinyCell.Shared.Utilities;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
@@ -381,6 +382,31 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             AstNode includeAst = AstHelper.GetAstFromFile(includeNode.FileName);
             Visit(includeAst);
             return default;
+        }
+
+        public override TcType VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclarationNode)
+        {
+            return VisitChildren(arrayDeclarationNode);
+        }
+
+        public override TcType VisitArrayElementsNode(ArrayElementsNode arrayElementsNode)
+        {
+            return VisitChildren(arrayElementsNode);
+        }
+
+        public override TcType VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+        {
+            return VisitChildren(arrayElementReferenceNode);
+        }
+
+        public override TcType VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+        {
+            return VisitChildren(arrayAssignmentNode);
+        }
+
+        public override TcType VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+        {
+            return VisitChildren(negativeExpressionNode);
         }
 
         private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
