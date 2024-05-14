@@ -76,7 +76,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             pinTable.Add(declarationNode.Identifier, declarationNode.Type.Type);
         }
-        return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};"; 
+        return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};";
     }
 
     public override string VisitDivAssignNode(DivAssignNode divAssignNode)
@@ -214,17 +214,17 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitPinInNode(PinInNode pinInNode)
     {
-        return base.VisitPinInNode(pinInNode);
-    }
-
-    public override string VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
-    {
-        return base.VisitPinModeExprNode(pinModeExprNode);
+        return "INPUT";
     }
 
     public override string VisitPinOutNode(PinOutNode pinOutNode)
     {
-        return base.VisitPinOutNode(pinOutNode);
+        return "OUTPUT";
+    }
+
+    public override string VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
+    {
+        return $"pinMode({Visit(pinModeExprNode.Identifier)}, {Visit(pinModeExprNode.Value)})";
     }
 
     public override string VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
@@ -245,7 +245,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             return $"digitalWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
         }
-     
+
         return $"analogWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
     }
 
@@ -320,7 +320,6 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     {
         if (typeNode.Type == TcType.STRING)
         {
-            //Could translate to char array
             return "String";
         }
         return typeNode.Type.ToString().ToLower();
@@ -328,27 +327,28 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclaration)
     {
-        return base.VisitArrayDeclarationNode(arrayDeclaration);
+        string elements = string.Empty;
+        if (arrayDeclaration.Elements is not null)
+        {
+            elements = $"={{{Visit(arrayDeclaration.Elements)}}}";
+        }
+        return $"{Visit(arrayDeclaration.TypeNode)} {Visit(arrayDeclaration.Identifier)} {elements};";
     }
 
-    public override string VisitIncludeNode(IncludeNode includeNode)
+    public override string VisitArrayElementsNode(ArrayElementsNode arrayElementsNode)
     {
-        return base.VisitIncludeNode(includeNode);
-    }
-
-    public override string VisitArrayElementsNode(ArrayElementsNode elements)
-    {
-        return base.VisitArrayElementsNode(elements);
+        IEnumerable<string> elements = arrayElementsNode.Elements.Select(Visit);
+        return string.Join(", ", elements);
     }
 
     public override string VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
     {
-        return base.VisitArrayElemenetReferenceNode(arrayElementReferenceNode);
+        return $"{Visit(arrayElementReferenceNode.Identifier)}[{Visit(arrayElementReferenceNode.Index)}]";
     }
 
     public override string VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
     {
-        return base.VisitArrayAssignmentNode(arrayAssignmentNode);
+        return $"";
     }
 
     public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
