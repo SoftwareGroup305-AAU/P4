@@ -106,14 +106,23 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitFunctionCallNode(FunctionCallNode functionCallNode)
     {
-        string arguments = Visit(functionCallNode.ArgumentList);
+        string arguments = string.Empty;
+        if (functionCallNode.ArgumentList is not null)
+        {
+            arguments = Visit(functionCallNode.ArgumentList);
+        }
         return $"{Visit(functionCallNode.Identifier)}{arguments}";
     }
 
     public override string VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
     {
         string parameters = Visit(functionDefinitionNode.ParameterList);
-        return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {Visit(functionDefinitionNode.CompoundStatement)}";
+        string statements = string.Empty;
+        if (functionDefinitionNode.CompoundStatement is not null)
+        {
+            statements = Visit(functionDefinitionNode.CompoundStatement);
+        }
+        return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {statements}";
     }
 
     public override string VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode)
@@ -245,12 +254,12 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitRootNode(RootNode rootNode)
     {
-        string fuck = string.Empty;
+        string kød = string.Empty;
         foreach (var child in rootNode.Children)
         {
-            fuck += Visit(child);
+            kød += Visit(child);
         }
-        return fuck;
+        return kød;
     }
 
     public override string VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode)
@@ -301,6 +310,11 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitTypeNode(TypeNode typeNode)
     {
+        if (typeNode.Type == TcType.STRING)
+        {
+            //Could translate to char array
+            return "String";
+        }
         return typeNode.Type.ToString().ToLower();
     }
 
@@ -331,6 +345,6 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
     {
-        return base.VisitNegativeExpressionNode(negativeExpressionNode);
+        return $"-{Visit(negativeExpressionNode.Expression)}";
     }
 }

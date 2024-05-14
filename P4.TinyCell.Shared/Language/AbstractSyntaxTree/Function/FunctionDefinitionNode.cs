@@ -19,8 +19,8 @@ public class FunctionDefinitionNode : AstNode
         AddChild(type);
         AddChild(identifier);
         AddChild(parameterList);
-        
-        if(compoundStatement is not null)
+
+        if (compoundStatement is not null)
         {
             CompoundStatement = compoundStatement;
             AddChild(compoundStatement);
