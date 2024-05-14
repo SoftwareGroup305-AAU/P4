@@ -151,11 +151,8 @@ ternaryExpression:
 expression: ternaryExpression;
 
 pinAssignmentExpression:
-	WRITE (pinVoltage | Bool | identifier | IntNumeral) TO (
-		identifier
-		| IntNumeral
-	)
-	| READ (identifier | IntNumeral) TO identifier;
+	WRITE (pinVoltage | Bool | identifier | IntNumeral) TO identifier
+	| READ identifier TO identifier;
 
 pinStatusExpression:
 	pinAssignmentExpression

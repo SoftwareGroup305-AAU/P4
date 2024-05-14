@@ -28,25 +28,25 @@ public class ArrayDeclarationNode : AstNode
         Size = size;
         Identifier = identifier;
         Elements = arrayElements;
-        
+
         AddChild(TypeNode);
         AddChild(identifier);
         AddChild(size);
         AddChild(Elements);
     }
 
-    public ArrayDeclarationNode(TypeNode typeNode, IdentifierNode identifier, AstNode size, FunctionCallNode functionCall)
-    {
-        TypeNode = typeNode;
-        Size = size;
-        Identifier = identifier;
-        FunctionCall = functionCall;
+    // public ArrayDeclarationNode(TypeNode typeNode, IdentifierNode identifier, AstNode size, FunctionCallNode functionCall)
+    // {
+    //     TypeNode = typeNode;
+    //     Size = size;
+    //     Identifier = identifier;
+    //     FunctionCall = functionCall;
 
-        AddChild(TypeNode);
-        AddChild(identifier);
-        AddChild(size);
-        AddChild(functionCall);
-    }
+    //     AddChild(TypeNode);
+    //     AddChild(identifier);
+    //     AddChild(size);
+    //     AddChild(functionCall);
+    // }
 
     public override T Accept<T>(IAstVisitor<T> visitor)
     {

@@ -90,7 +90,7 @@ public class TypecheckerVariableAssignments
 
         var ex = CheckTypeErrors(input);
 
-        // Assert.Null(ex);
+        Assert.Null(ex);
     }
 
     [Fact]
