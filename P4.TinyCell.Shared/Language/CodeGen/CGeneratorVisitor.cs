@@ -229,16 +229,24 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
     {
-        return base.VisitPinReadExprNode(pinReadExprNode);
+        TcType pinType = pinTable[pinReadExprNode.To];
+        if (pinType == TcType.DPIN)
+        {
+            return $"{Visit(pinReadExprNode.To)} = digitalRead({Visit(pinReadExprNode.From)})";
+        }
+
+        return $"{Visit(pinReadExprNode.To)} = analogRead({Visit(pinReadExprNode.From)})";
     }
 
     public override string VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
     {
-        if (pinWriteExprNode.To is IdentifierNode)
+        TcType pinType = pinTable[pinWriteExprNode.To];
+        if (pinType == TcType.DPIN)
         {
-
+            return $"digitalWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
         }
-        return base.VisitPinWriteExprNode(pinWriteExprNode);
+     
+        return $"analogWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
     }
 
     public override string VisitPlusAssignNode(PlusAssignNode plusAssignNode)

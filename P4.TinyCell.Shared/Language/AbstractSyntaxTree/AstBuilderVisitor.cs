@@ -438,10 +438,10 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         if (context.WRITE() is not null)
         {
-            return new PinWriteExprNode(from, to);
+            return new PinWriteExprNode(from, (IdentifierNode)to);
         }
 
-        return new PinReadExprNode(from, to);
+        return new PinReadExprNode((IdentifierNode)from, (IdentifierNode)to);
     }
 
     public override AstNode VisitPinStatus([NotNull] TinyCellParser.PinStatusContext context)
