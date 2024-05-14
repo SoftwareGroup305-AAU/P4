@@ -6,7 +6,7 @@ public abstract class PinExprNode : AstNode
     public AstNode From { get; set; }
     public IdentifierNode To { get; set; }
 
-    public PinExprNode(AstNode from, AstNode to)
+    public PinExprNode(AstNode from, IdentifierNode to)
     {
         From = from;
         To = to;

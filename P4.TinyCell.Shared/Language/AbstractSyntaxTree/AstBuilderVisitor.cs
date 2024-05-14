@@ -178,25 +178,28 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
 
         if (context.arrayIndex() is not null)
         {
-            if (context.functionCall() is not null)
-            {
-                return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()), (FunctionCallNode)Visit(context.functionCall()));
-            }
+            // if (context.functionCall() is not null)
+            // {
+            //     return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()), (FunctionCallNode)Visit(context.functionCall()));
+            // }
 
-            else if (context.expression() is not null)
+            if (context.expression() is not null)
             {
                 var assignmentValue = Visit(context.expression());
-                if (assignmentValue is FunctionCallNode functionCallNode)
-                {
-                    return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()), functionCallNode);
-                }
-                else if (assignmentValue is ArrayElementsNode arrayElementsNode)
+                // if (assignmentValue is FunctionCallNode functionCallNode)
+                // {
+                //     return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()), functionCallNode);
+                // }
+                if (assignmentValue is ArrayElementsNode arrayElementsNode)
                 {
                     return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()), arrayElementsNode);
                 }
-                throw new InvalidOperationException($"Invalid array decleration in {context.GetText()}");
+                else
+                {
+                    throw new InvalidOperationException($"Invalid array decleration in {context.GetText()}");
+                }
             }
-            
+
             return new ArrayDeclarationNode((TypeNode)Visit(context.type()), identifierNode, Visit(context.arrayIndex()));
         }
 
@@ -294,7 +297,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
     //    if (context.ASSIGN() is not null)
     //    {
     //        AstNode action = context.expression() is not null ? Visit(context.expression()) : Visit(context.functionCall());
-            
+
     //        if (context.LBRACKET() is not null)
     //        {
     //            if (context.arrayIndex().IntNumeral() is not null)
@@ -508,7 +511,7 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         {
             return Visit(context.expression());
         }
-        if (context.arrayIndex() is  not null)
+        if (context.arrayIndex() is not null)
         {
             return new ArrayElementReferenceNode((IdentifierNode)Visit(context.identifier()), Visit(context.arrayIndex()));
         }
