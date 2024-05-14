@@ -12,6 +12,8 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 using Antlr4.Runtime;
 using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+using System.ComponentModel;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.ParameterNodes;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
@@ -32,20 +34,16 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             public TcType Type { get; set; }
             public string Id { get; set; }
 
-            public Variable(TcType type, string id)
+            public bool isArray { get; set; }
+
+            public Variable(TcType type, string id, bool isArray)
             {
                 Type = type;
                 Id = id;
+                this.isArray = isArray;
             }
         }
 
-        private class ArrayVariable : Variable
-        {
-
-            public ArrayVariable(TcType type, string id) : base(type, id)
-            {
-            }
-        }
 
         public override TcType VisitRootNode(RootNode rootNode)
         {
@@ -61,7 +59,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 var function = CreateFunction(functionDefinitionNode);
                 UpdateFtable(function);
-                UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
+                UpdateVtable(function.Parameters);
                 if (functionDefinitionNode.CompoundStatement is not null)
                 {
                     Visit(functionDefinitionNode.CompoundStatement);
@@ -448,7 +446,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
         {
             var identifier = LookupVariable(arrayElementReferenceNode.Identifier.Value, vTableStack);
-            if (identifier is not ArrayVariable)
+            if (identifier.isArray is false)
             {
                 throw new Exception($"Variable '{arrayElementReferenceNode.Identifier.Value}' is not an array");
             }
@@ -460,7 +458,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
         {
             var identifier = LookupVariable(arrayAssignmentNode.Identifier.Value, vTableStack);
-            if (identifier is not ArrayVariable)
+            if (identifier.isArray is false)
             {
                 throw new Exception($"Variable '{arrayAssignmentNode.Identifier.Value}' is not an array");
             }
@@ -523,7 +521,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// <param name="parameters">Declared function parameters</param>
         /// <param name="argumentList">called function argument node</param>
         /// <exception cref="Exception"></exception>
-        private void CheckFunctionArguments(List<TcType> parameters, ArgumentListNode argumentList)
+        private void CheckFunctionArguments(List<Variable> parameters, ArgumentListNode argumentList)
         {
             if (argumentList is not null)
             {
@@ -533,10 +531,22 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 }
                 for (int i = 0; i < argumentList.Arguments.Count(); i++)
                 {
-                    var parameterType = Visit(argumentList.Arguments[i].Children[0]);
-                    if (parameterType != parameters[i])
+                    var parameter = parameters[i];
+                    if (argumentList.Arguments[i].Node is IdentifierNode identifierNode)
                     {
-                        throw new Exception($"Function expects parameter {i + 1} to be of type {parameters[i]}, but got {parameterType}");
+                        var variable = LookupVariable(identifierNode.Value, vTableStack);
+                        if (variable.Type != parameter.Type || variable.isArray != parameter.isArray)
+                        {
+                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {variable.Type}");
+                        }
+                    }
+                    else
+                    {
+                        var argumentType = Visit(argumentList.Arguments[i].Node);
+                        if (argumentType != parameter.Type)
+                        {
+                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {argumentType}");
+                        }
                     }
                 }
             }
@@ -569,22 +579,15 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// </summary>
         /// <param name="variables"></param>
         /// <exception cref="Exception"></exception>
-        private void UpdateVtable(List<KeyValuePair<string, TcType>> variables, bool isArray = false)
+        private void UpdateVtable(List<Variable> variables)
         {
             foreach (var variable in variables)
             {
-                if (vTableStack.First().Any(x => x.Id == variable.Key))
+                if (vTableStack.First().Any(x => x.Id == variable.Id))
                 {
-                    throw new Exception($"Variable '{variable.Key}' already declared");
+                    throw new Exception($"Variable '{variable.Id}' already declared");
                 }
-                if (isArray)
-                {
-                    vTableStack.First().Push(new ArrayVariable(variable.Value, variable.Key));
-                }
-                else
-                {
-                    vTableStack.First().Push(new Variable(variable.Value, variable.Key));
-                }
+                vTableStack.First().Push(variable);
             }
         }
         /// <summary>
@@ -598,14 +601,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Variable '{variable.Key}' already declared");
             }
-            if (isArray)
-            {
-                vTableStack.First().Push(new ArrayVariable(variable.Value, variable.Key));
-            }
-            else
-            {
-                vTableStack.First().Push(new Variable(variable.Value, variable.Key));
-            }
+            vTableStack.First().Push(new Variable(variable.Value, variable.Key, isArray));
         }
 
 
@@ -632,10 +628,15 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 Type = functionDefinitionNode.Type.Type,
                 Id = functionDefinitionNode.Identifier.Value,
-                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
+                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(InitParameter).ToList()
             };
         }
 
+        private static Variable InitParameter(ParameterNode parameterNode)
+        {
+            return new Variable(parameterNode.TypeNode.Type, parameterNode.Identifier.Value, parameterNode.IsArray);
+        }
+        
         /// <summary>
         /// Checks if all code paths in a function definition return a value
         /// </summary>
