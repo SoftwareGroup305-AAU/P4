@@ -6,11 +6,13 @@ public class ParameterNode : AstNode
 {
     public TypeNode TypeNode { get; set; }
     public IdentifierNode Identifier { get; set; }
+    public bool IsArray { get; set; }
 
-    public ParameterNode(TypeNode type, IdentifierNode identifier)
+    public ParameterNode(TypeNode type, IdentifierNode identifier, bool isArray = default)
     {
         TypeNode = type;
         Identifier = identifier;
+        IsArray = isArray;
 
         AddChild(type);
         AddChild(identifier);

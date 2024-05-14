@@ -1,4 +1,5 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.BitwiseExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
@@ -15,6 +16,8 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 namespace P4.TinyCell.Shared.Language.CodeGen;
 public class CGeneratorVisitor : AstBaseVisitor<string>
 {
+    private IDictionary<IdentifierNode, TcType> pinTable = new Dictionary<IdentifierNode, TcType>();
+
     public override string VisitAddExprNode(AddExprNode addExprNode)
     {
         return $"{Visit(addExprNode.Left)} + {Visit(addExprNode.Right)}";
@@ -69,6 +72,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitDeclarationNode(DeclarationNode declarationNode)
     {
         string action = declarationNode.Action is null ? string.Empty : $" = {Visit(declarationNode.Action)}";
+        if (declarationNode.Type.Type == TcType.DPIN || declarationNode.Type.Type == TcType.APIN)
+        {
+            pinTable.Add(declarationNode.Identifier, declarationNode.Type.Type);
+        }
         return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};"; 
     }
 
@@ -99,14 +106,23 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitFunctionCallNode(FunctionCallNode functionCallNode)
     {
-        string arguments = Visit(functionCallNode.ArgumentList);
+        string arguments = string.Empty;
+        if (functionCallNode.ArgumentList is not null)
+        {
+            arguments = Visit(functionCallNode.ArgumentList);
+        }
         return $"{Visit(functionCallNode.Identifier)}{arguments}";
     }
 
     public override string VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
     {
         string parameters = Visit(functionDefinitionNode.ParameterList);
-        return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {Visit(functionDefinitionNode.CompoundStatement)}";
+        string statements = string.Empty;
+        if (functionDefinitionNode.CompoundStatement is not null)
+        {
+            statements = Visit(functionDefinitionNode.CompoundStatement);
+        }
+        return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {statements}";
     }
 
     public override string VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode)
@@ -213,12 +229,24 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
     {
-        return base.VisitPinReadExprNode(pinReadExprNode);
+        TcType pinType = pinTable[pinReadExprNode.To];
+        if (pinType == TcType.DPIN)
+        {
+            return $"{Visit(pinReadExprNode.To)} = digitalRead({Visit(pinReadExprNode.From)})";
+        }
+
+        return $"{Visit(pinReadExprNode.To)} = analogRead({Visit(pinReadExprNode.From)})";
     }
 
     public override string VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)
     {
-        return base.VisitPinWriteExprNode(pinWriteExprNode);
+        TcType pinType = pinTable[pinWriteExprNode.To];
+        if (pinType == TcType.DPIN)
+        {
+            return $"digitalWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
+        }
+     
+        return $"analogWrite({Visit(pinWriteExprNode.To)}, {Visit(pinWriteExprNode.From)})";
     }
 
     public override string VisitPlusAssignNode(PlusAssignNode plusAssignNode)
@@ -234,12 +262,12 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitRootNode(RootNode rootNode)
     {
-        string fuck = string.Empty;
+        string kød = string.Empty;
         foreach (var child in rootNode.Children)
         {
-            fuck += Visit(child);
+            kød += Visit(child);
         }
-        return fuck;
+        return kød;
     }
 
     public override string VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode)
@@ -290,6 +318,41 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitTypeNode(TypeNode typeNode)
     {
+        if (typeNode.Type == TcType.STRING)
+        {
+            //Could translate to char array
+            return "String";
+        }
         return typeNode.Type.ToString().ToLower();
+    }
+
+    public override string VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclaration)
+    {
+        return base.VisitArrayDeclarationNode(arrayDeclaration);
+    }
+
+    public override string VisitIncludeNode(IncludeNode includeNode)
+    {
+        return base.VisitIncludeNode(includeNode);
+    }
+
+    public override string VisitArrayElementsNode(ArrayElementsNode elements)
+    {
+        return base.VisitArrayElementsNode(elements);
+    }
+
+    public override string VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
+    {
+        return base.VisitArrayElemenetReferenceNode(arrayElementReferenceNode);
+    }
+
+    public override string VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
+    {
+        return base.VisitArrayAssignmentNode(arrayAssignmentNode);
+    }
+
+    public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
+    {
+        return $"-{Visit(negativeExpressionNode.Expression)}";
     }
 }

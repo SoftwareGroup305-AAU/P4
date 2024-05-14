@@ -298,9 +298,9 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
         return VisitChildren(typeNode);
     }
 
-    public virtual Result VisitArrayDeclarationNode(ArrayDeclarationNode arrayDecleration)
+    public virtual Result VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclaration)
     {
-        return VisitChildren(arrayDecleration);
+        return VisitChildren(arrayDeclaration);
     }
 
     public virtual Result VisitIncludeNode(IncludeNode includeNode)
