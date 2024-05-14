@@ -92,13 +92,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
         {
 
-            var declaredIdNode = declarationNode.Children[1] as IdentifierNode;
-            var declaredTypeNode = declarationNode.Children[0] as TypeNode;
+            var declaredIdNode = declarationNode.Identifier;
+            var declaredTypeNode = declarationNode.Type;
             try {
                 UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
-                if (declarationNode.Children.Count > 2)
+                if (declarationNode.Action is not null)
                     {
-                        var actionType = Visit(declarationNode.Children[2]);
+                        var actionType = Visit(declarationNode.Action);
                         CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
 
                     }
@@ -278,7 +278,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return id.Value;
         }
-
+        
         public override TcType VisitMinusAssignNode(MinusAssignNode minusAssignNode)
         {
             var idNode = minusAssignNode.Identifier;
@@ -352,10 +352,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             foreach (var stack in vTableStack)
             {
-                var type = stack.FirstOrDefault(x => x.Key == id);
-                if (!type.Equals(default(KeyValuePair<string, TcType>)))
+                var variable = stack.FirstOrDefault(x => x.Key == id);
+                if (!variable.Equals(default(KeyValuePair<string, TcType>)))
                 {
-                    return type;
+                    return variable;
                 }
             }
             throw new Exception($"Variable '{id}' not declared");

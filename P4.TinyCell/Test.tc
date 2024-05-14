@@ -1,0 +1,9 @@
+int a = 2+2;
+
+setup {
+
+}
+
+update {
+    
+}
