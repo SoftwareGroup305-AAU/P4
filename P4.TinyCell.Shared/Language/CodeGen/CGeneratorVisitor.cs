@@ -148,7 +148,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
             identifier = "loop";
         }
 
-        return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {statements}";
+        return $"{Visit(functionDefinitionNode.Type)} {identifier}{parameters} {statements}";
     }
 
     public override string VisitGreaterThanEqualExprNode(GreaterThanEqualExprNode greaterThanOrEqualExprNode)
