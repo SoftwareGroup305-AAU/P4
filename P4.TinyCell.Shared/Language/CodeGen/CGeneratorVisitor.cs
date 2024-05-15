@@ -311,7 +311,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode)
     {
         IEnumerable<string> statements = statementCollectionNode.Statements.Select(Visit);
-        return $"{{{string.Join(";", statements.Select(s => "\n\t" + s))}}}";
+        return $"{{{string.Join(";", statements.Select(s => "\n\t" + s))};}}";
     }
 
     public override string VisitStringNode(StringNode stringNode)
