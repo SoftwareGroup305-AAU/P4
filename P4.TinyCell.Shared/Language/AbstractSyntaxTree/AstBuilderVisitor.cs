@@ -501,7 +501,12 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         }
         if (context.identifier() is not null)
         {
-            return new IdentifierNode(context.identifier().GetText());
+            var identifier = (IdentifierNode)Visit(context.identifier());
+            if (context.arrayIndex() is not null)
+            {
+                return new ArrayElementReferenceNode((IdentifierNode)Visit(context.identifier()), Visit(context.arrayIndex()));
+            }
+            return identifier;
         }
         if (context.functionCall() is not null)
         {
@@ -510,10 +515,6 @@ public class AstBuilderVisitor : TinyCellBaseVisitor<AstNode>
         if (context.expression() is not null)
         {
             return Visit(context.expression());
-        }
-        if (context.arrayIndex() is not null)
-        {
-            return new ArrayElementReferenceNode((IdentifierNode)Visit(context.identifier()), Visit(context.arrayIndex()));
         }
         if (context.arrayContent() is not null)
         {

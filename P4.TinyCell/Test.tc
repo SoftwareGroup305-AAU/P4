@@ -20,7 +20,7 @@ setup{
     int i = 2;
     d[i] = 1;
 
-    int e[4] = {a,b,c};
+    int e[4] = {4,4,2};
 
     if (d[0] == 1) {
     }

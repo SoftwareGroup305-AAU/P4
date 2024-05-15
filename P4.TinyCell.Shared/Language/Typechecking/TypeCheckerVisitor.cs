@@ -1,17 +1,15 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
-using Antlr4.Runtime;
-using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
@@ -111,12 +109,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
             var declaredIdNode = declarationNode.Identifier;
             var declaredTypeNode = declarationNode.Type;
-            try {
+            try
+            {
                 UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
                 if (declarationNode.Action is not null)
-                    {
-                        var actionType = Visit(declarationNode.Action);
-                        CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
+                {
+                    var actionType = Visit(declarationNode.Action);
+                    CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
 
                 }
             }
@@ -297,7 +296,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return id.Value;
         }
-        
+
         public override TcType VisitMinusAssignNode(MinusAssignNode minusAssignNode)
         {
             var idNode = minusAssignNode.Identifier;
