@@ -321,7 +321,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitSubExprNode(SubExprNode subExprNode)
     {
-        return $"{Visit(subExprNode.Left)}-{Visit(subExprNode.Right)}";
+        return $"{Visit(subExprNode.Left)}- {Visit(subExprNode.Right)}";
     }
 
     public override string VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode)
