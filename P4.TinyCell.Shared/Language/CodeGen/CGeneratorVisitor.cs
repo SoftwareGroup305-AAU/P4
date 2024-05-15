@@ -141,7 +141,13 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
             statements = Visit(functionDefinitionNode.CompoundStatement);
         }
         pinTable.Pop();
-        
+
+        string identifier = Visit(functionDefinitionNode.Identifier);
+        if (identifier == "update")
+        {
+            identifier = "loop";
+        }
+
         return $"{Visit(functionDefinitionNode.Type)} {Visit(functionDefinitionNode.Identifier)}{parameters} {statements}";
     }
 
@@ -234,7 +240,12 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitParameterNode(ParameterNode parameterNode)
     {
-        return $"{Visit(parameterNode.TypeNode)} {Visit(parameterNode.Identifier)}";
+        string identifier = Visit(parameterNode.Identifier);
+        if (parameterNode.IsArray)
+        {
+            identifier += "[]";
+        }
+        return $"{Visit(parameterNode.TypeNode)} {identifier}";
     }
 
     public override string VisitPinInNode(PinInNode pinInNode)
