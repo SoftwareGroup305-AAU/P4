@@ -401,7 +401,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
     {
-        return $"-{Visit(negativeExpressionNode.Expression)}";
+        return $"-({Visit(negativeExpressionNode.Expression)})";
     }
 
     private void UpdatePinTable(KeyValuePair<string, TcType> variable)
