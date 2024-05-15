@@ -1,4 +1,7 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.IO;
+using System.Diagnostics;
+
 
 namespace P4.TinyCell.Shared.Utilities;
 
@@ -8,8 +11,14 @@ public class ProgramHelper
     {
         try
         {
+            string workingDirectory = Environment.CurrentDirectory;
+            string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
+
+            string jarPath = Path.Combine(projectDirectory, "P4.TinyCell.Shared", "Antlr.jar");
+            string grammarPath = Path.Combine(projectDirectory, "P4.TinyCell.Shared", "TinycellAntlr", "TinyCell.g4");
+            
             string javaCommand = "java";
-            string arguments = "-jar ../P4.TinyCell.Shared/Antlr.jar -Dlanguage=CSharp ../P4.TinyCell.Shared/TinycellAntlr/TinyCell.g4 -visitor -listener";
+            string arguments = $"-jar {jarPath} -Dlanguage=CSharp {grammarPath} -visitor -listener";
 
             Process process = new Process
             {

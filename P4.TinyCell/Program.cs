@@ -12,7 +12,7 @@ internal class Program
         ProgramHelper helper = new();
         helper.GenerateAntlr();
 
-        string fileContent = File.ReadAllText("Test.tc");
+        string fileContent = File.ReadAllText("P4.TinyCell/Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 
