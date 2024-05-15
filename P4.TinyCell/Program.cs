@@ -9,7 +9,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        //skibidi
+        //skibidi skibidi
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
 
