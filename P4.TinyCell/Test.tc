@@ -8,6 +8,7 @@ int func(int nums[], int num) {
 }
 
 int func2(int num) {
+    int num2 = 2;
     return num;
 }
 
@@ -26,6 +27,7 @@ setup{
     }
 
     while (1) {
+        int num2 = 2;
         break;
     }
 

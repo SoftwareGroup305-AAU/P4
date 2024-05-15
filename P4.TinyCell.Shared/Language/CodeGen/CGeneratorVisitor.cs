@@ -76,7 +76,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             UpdatePinTable(new KeyValuePair<string, TcType>(declarationNode.Identifier.Value, declarationNode.Type.Type));
         }
-        return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action}";
+        return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};";
     }
 
     public override string VisitDivAssignNode(DivAssignNode divAssignNode)
