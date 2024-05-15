@@ -9,10 +9,13 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        string workingDirectory = Environment.CurrentDirectory;
+        string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
+
         ProgramHelper helper = new();
         helper.GenerateAntlr();
 
-        string fileContent = File.ReadAllText("P4.TinyCell/Test.tc");
+        string fileContent = File.ReadAllText(projectDirectory + "/Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 
