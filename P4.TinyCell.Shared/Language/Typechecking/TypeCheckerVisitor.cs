@@ -133,7 +133,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var declaredTypeNode = declarationNode.Type;
             try
             {
-                UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
+                UpdateVtable(new Variable(declaredTypeNode.Type, declaredIdNode.Value, false));
                 if (declarationNode.Action is not null)
                 {
                     var actionType = Visit(declarationNode.Action);
@@ -154,7 +154,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var declaredTypeNode = arrayDeclarationNode.TypeNode;
             try
             {
-                UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type), true);
+                UpdateVtable(new Variable(declaredTypeNode.Type, declaredIdNode.Value, true));
                 var indexType = Visit(arrayDeclarationNode.Size);
                 CheckTypeMismatch(TcType.INT, indexType);
                 if (arrayDeclarationNode.Elements is not null)
@@ -603,13 +603,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// </summary>
         /// <param name="variable"></param>
         /// <exception cref="Exception"></exception>
-        private void UpdateVtable(KeyValuePair<string, TcType> variable, bool isArray = false)
+        private void UpdateVtable(Variable variable)
         {
-            if (vTableStack.First().Any(x => x.Id == variable.Key))
+            if (vTableStack.First().Any(x => x.Id == variable.Id))
             {
-                throw new Exception($"Variable '{variable.Key}' already declared");
+                throw new Exception($"Variable '{variable.Id}' already declared");
             }
-            vTableStack.First().Push(new Variable(variable.Value, variable.Key, isArray));
+            vTableStack.First().Push(variable);
         }
 
 
