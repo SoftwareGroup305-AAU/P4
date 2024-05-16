@@ -9,14 +9,10 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        //skibidi skibidi test
-        string workingDirectory = Environment.CurrentDirectory;
-        string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
+        // ProgramHelper helper = new();
+        // helper.GenerateAntlr();
 
-        ProgramHelper helper = new();
-        helper.GenerateAntlr();
-
-        string fileContent = File.ReadAllText(projectDirectory + "/Test.tc");
+        string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 
@@ -93,8 +89,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
+        // var typeChecker = new TypeCheckerVisitor();
+        // typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);

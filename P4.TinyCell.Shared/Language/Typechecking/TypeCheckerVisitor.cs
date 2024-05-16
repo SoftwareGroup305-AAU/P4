@@ -1,65 +1,45 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
-using Antlr4.Runtime;
-using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
-using System.ComponentModel;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.ParameterNodes;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.CompExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
 {
     public class TypeCheckerVisitor : AstBaseVisitor<TcType>
     {
         private List<Function> fTable = new();
-        private Stack<Stack<Variable>> vTableStack = new();
+        private Stack<Stack<KeyValuePair<string, TcType>>> vTableStack = new();
 
         private class Function
         {
             public TcType Type { get; set; }
             public string? Id { get; set; }
-            public List<Variable> Parameters { get; set; } = new();
+            public List<TcType> Parameters { get; set; } = new();
         }
-
-        private class Variable
-        {
-            public TcType Type { get; set; }
-            public string Id { get; set; }
-
-            public bool isArray { get; set; }
-
-            public Variable(TcType type, string id, bool isArray)
-            {
-                Type = type;
-                Id = id;
-                this.isArray = isArray;
-            }
-        }
-
 
         public override TcType VisitRootNode(RootNode rootNode)
         {
-            vTableStack.Push(new Stack<Variable>());
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             return base.VisitRootNode(rootNode);
         }
 
 
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
-            vTableStack.Push(new Stack<Variable>());
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             try
             {
                 var function = CreateFunction(functionDefinitionNode);
                 UpdateFtable(function);
-                UpdateVtable(function.Parameters);
+                UpdateVtable(function.Parameters.Select((p, i) => new KeyValuePair<string, TcType>(functionDefinitionNode.ParameterList.Parameters[i].Identifier.Value, p)).ToList());
                 if (functionDefinitionNode.CompoundStatement is not null)
                 {
                     Visit(functionDefinitionNode.CompoundStatement);
@@ -110,21 +90,19 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
         public override TcType VisitAssignNode(AssignNode assignNode)
         {
-            var idNode = assignNode.Identifier;
+            var idNode = assignNode.Children[0] as IdentifierNode;
             try
             {
-                var assignedType = Visit(assignNode.Expression);
-                var variable = LookupVariable(idNode.Value, vTableStack);
-                CheckTypeMismatch(variable.Type, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
-                return variable.Type;
+                var assignedType = Visit(assignNode.Children[1]);
+                var id = LookupVariable(idNode.Value, vTableStack);
+                CheckTypeMismatch(id.Value, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
+                return id.Value;
             }
             catch (Exception e)
             {
                 throw new Exception($"While assigning to '{idNode.Value}' -> {e.Message}");
             }
         }
-
-
 
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
         {
@@ -133,7 +111,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var declaredTypeNode = declarationNode.Type;
             try
             {
-                UpdateVtable(new Variable(declaredTypeNode.Type, declaredIdNode.Value, false));
+                UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
                 if (declarationNode.Action is not null)
                 {
                     var actionType = Visit(declarationNode.Action);
@@ -146,40 +124,6 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
             }
             return declaredTypeNode.Type;
-        }
-
-        public override TcType VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclarationNode)
-        {
-            var declaredIdNode = arrayDeclarationNode.Identifier;
-            var declaredTypeNode = arrayDeclarationNode.TypeNode;
-            try
-            {
-                UpdateVtable(new Variable(declaredTypeNode.Type, declaredIdNode.Value, true));
-                var indexType = Visit(arrayDeclarationNode.Size);
-                CheckTypeMismatch(TcType.INT, indexType);
-                if (arrayDeclarationNode.Elements is not null)
-                {
-                    CheckArrayElements(arrayDeclarationNode.Elements, declaredTypeNode.Type);
-                }
-                if (arrayDeclarationNode.FunctionCall is not null)
-                {
-                    Visit(arrayDeclarationNode.FunctionCall);
-                }
-            }
-            catch (Exception e)
-            {
-                throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
-            }
-            return declaredTypeNode.Type;
-        }
-
-        private void CheckArrayElements(ArrayElementsNode arrayElementsNode, TcType expectedType)
-        {
-            foreach (var element in arrayElementsNode.Elements)
-            {
-                var elementType = Visit(element);
-                CheckTypeMismatch(expectedType, elementType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
-            }
         }
 
         public override TcType VisitOrExprNode(OrExprNode orExprNode)
@@ -289,7 +233,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitIdentifierNode(IdentifierNode identifierNode)
         {
             var id = identifierNode.Value;
-            return LookupVariable(id, vTableStack).Type;
+            return LookupVariable(id, vTableStack).Value;
         }
 
         public override TcType VisitFunctionCallNode(FunctionCallNode functionCallNode)
@@ -302,7 +246,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
         public override TcType VisitForStatementNode(ForStatementNode forStatementNode)
         {
-            vTableStack.Push(new Stack<Variable>());
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             VisitChildren(forStatementNode);
             vTableStack.Pop();
             return default;
@@ -310,7 +254,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
         public override TcType VisitWhileStatementNode(WhileStatementNode whileStatementNode)
         {
-            vTableStack.Push(new Stack<Variable>());
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             VisitChildren(whileStatementNode);
             vTableStack.Pop();
             return default;
@@ -318,7 +262,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
         public override TcType VisitIfStatementNode(IfStatementNode ifStatementNode)
         {
-            vTableStack.Push(new Stack<Variable>());
+            vTableStack.Push(new Stack<KeyValuePair<string, TcType>>());
             VisitChildren(ifStatementNode);
             vTableStack.Pop();
             return default;
@@ -347,44 +291,44 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         public override TcType VisitPlusAssignNode(PlusAssignNode plusAssignNode)
         {
             var idNode = plusAssignNode.Identifier;
-            var variable = LookupVariable(idNode.Value, vTableStack);
+            var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(plusAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
-            return variable.Type;
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
+            return id.Value;
         }
 
         public override TcType VisitMinusAssignNode(MinusAssignNode minusAssignNode)
         {
             var idNode = minusAssignNode.Identifier;
-            var variable = LookupVariable(idNode.Value, vTableStack);
+            var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(minusAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
-            return variable.Type;
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
+            return id.Value;
         }
 
         public override TcType VisitMultAssignNode(MultAssignNode multAssignNode)
         {
             var idNode = multAssignNode.Identifier;
-            var variable = LookupVariable(idNode.Value, vTableStack);
+            var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(multAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
-            return variable.Type;
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
+            return id.Value;
         }
 
         public override TcType VisitDivAssignNode(DivAssignNode divAssignNode)
         {
             var idNode = divAssignNode.Identifier;
-            var variable = LookupVariable(idNode.Value, vTableStack);
+            var id = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(divAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
-            return variable.Type;
+            CheckAritmeticOperation(id.Value, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
+            return id.Value;
         }
 
 
         public override TcType VisitPinModeExprNode(PinModeExprNode pinModeExprNode)
         {
-            var variable = LookupVariable(pinModeExprNode.Identifier.Value, vTableStack);
-            if (variable.Type != TcType.APIN && variable.Type != TcType.DPIN)
+            var id = LookupVariable(pinModeExprNode.Identifier.Value, vTableStack);
+            if (id.Value != TcType.APIN && id.Value != TcType.DPIN)
             {
                 throw new Exception($"Variable '{pinModeExprNode.Identifier.Value}' is not a 'pin'");
             }
@@ -438,6 +382,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return default;
         }
 
+        public override TcType VisitArrayDeclarationNode(ArrayDeclarationNode arrayDeclarationNode)
+        {
+            return VisitChildren(arrayDeclarationNode);
+        }
+
         public override TcType VisitArrayElementsNode(ArrayElementsNode arrayElementsNode)
         {
             return VisitChildren(arrayElementsNode);
@@ -445,28 +394,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
         public override TcType VisitArrayElemenetReferenceNode(ArrayElementReferenceNode arrayElementReferenceNode)
         {
-            var identifier = LookupVariable(arrayElementReferenceNode.Identifier.Value, vTableStack);
-            if (identifier.isArray is false)
-            {
-                throw new Exception($"Variable '{arrayElementReferenceNode.Identifier.Value}' is not an array");
-            }
-            var indexType = Visit(arrayElementReferenceNode.Index);
-            CheckTypeMismatch(TcType.INT, indexType);
-            return identifier.Type;
+            return VisitChildren(arrayElementReferenceNode);
         }
 
         public override TcType VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
         {
-            var identifier = LookupVariable(arrayAssignmentNode.Identifier.Value, vTableStack);
-            if (identifier.isArray is false)
-            {
-                throw new Exception($"Variable '{arrayAssignmentNode.Identifier.Value}' is not an array");
-            }
-            var indexType = Visit(arrayAssignmentNode.Index);
-            CheckTypeMismatch(TcType.INT, indexType);
-            var assignedType = Visit(arrayAssignmentNode.Expression);
-            CheckTypeMismatch(identifier.Type, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
-            return identifier.Type;
+            return VisitChildren(arrayAssignmentNode);
         }
 
         public override TcType VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
@@ -474,12 +407,12 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return VisitChildren(negativeExpressionNode);
         }
 
-        private static Variable LookupVariable(string id, Stack<Stack<Variable>> vTableStack)
+        private static KeyValuePair<string, TcType> LookupVariable(string id, Stack<Stack<KeyValuePair<string, TcType>>> vTableStack)
         {
             foreach (var stack in vTableStack)
             {
-                var variable = stack.FirstOrDefault(x => x.Id == id);
-                if (variable is not null && !variable.Equals(default(Variable)))
+                var variable = stack.FirstOrDefault(x => x.Key == id);
+                if (!variable.Equals(default(KeyValuePair<string, TcType>)))
                 {
                     return variable;
                 }
@@ -521,7 +454,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// <param name="parameters">Declared function parameters</param>
         /// <param name="argumentList">called function argument node</param>
         /// <exception cref="Exception"></exception>
-        private void CheckFunctionArguments(List<Variable> parameters, ArgumentListNode argumentList)
+        private void CheckFunctionArguments(List<TcType> parameters, ArgumentListNode argumentList)
         {
             if (argumentList is not null)
             {
@@ -531,30 +464,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 }
                 for (int i = 0; i < argumentList.Arguments.Count(); i++)
                 {
-                    var parameter = parameters[i];
-                    if (argumentList.Arguments[i].Node is IdentifierNode identifierNode)
+                    var parameterType = Visit(argumentList.Arguments[i].Children[0]);
+                    if (parameterType != parameters[i])
                     {
-                        var variable = LookupVariable(identifierNode.Value, vTableStack);
-                        if (variable.isArray != parameter.isArray)
-                        {
-                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive variable of type {variable.Type}");
-                        }
-                        if (variable.Type != parameter.Type)
-                        {
-                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {variable.Type}");
-                        }
-                    }
-                    else
-                    {
-                        if (parameter.isArray is true)
-                        {
-                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive reference");
-                        }
-                        var argumentType = Visit(argumentList.Arguments[i].Node);
-                        if (argumentType != parameter.Type)
-                        {
-                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {argumentType}");
-                        }
+                        throw new Exception($"Function expects parameter {i + 1} to be of type {parameters[i]}, but got {parameterType}");
                     }
                 }
             }
@@ -587,13 +500,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// </summary>
         /// <param name="variables"></param>
         /// <exception cref="Exception"></exception>
-        private void UpdateVtable(List<Variable> variables)
+        private void UpdateVtable(List<KeyValuePair<string, TcType>> variables)
         {
             foreach (var variable in variables)
             {
-                if (vTableStack.First().Any(x => x.Id == variable.Id))
+                if (vTableStack.First().Any(x => x.Key == variable.Key))
                 {
-                    throw new Exception($"Variable '{variable.Id}' already declared");
+                    throw new Exception($"Variable '{variable.Key}' already declared");
                 }
                 vTableStack.First().Push(variable);
             }
@@ -603,11 +516,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         /// </summary>
         /// <param name="variable"></param>
         /// <exception cref="Exception"></exception>
-        private void UpdateVtable(Variable variable)
+        private void UpdateVtable(KeyValuePair<string, TcType> variable)
         {
-            if (vTableStack.First().Any(x => x.Id == variable.Id))
+            if (vTableStack.First().Any(x => x.Key == variable.Key))
             {
-                throw new Exception($"Variable '{variable.Id}' already declared");
+                throw new Exception($"Variable '{variable.Key}' already declared");
             }
             vTableStack.First().Push(variable);
         }
@@ -636,13 +549,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 Type = functionDefinitionNode.Type.Type,
                 Id = functionDefinitionNode.Identifier.Value,
-                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(InitParameter).ToList()
+                Parameters = functionDefinitionNode.ParameterList.Parameters.Select(p => p.TypeNode.Type).ToList()
             };
-        }
-
-        private static Variable InitParameter(ParameterNode parameterNode)
-        {
-            return new Variable(parameterNode.TypeNode.Type, parameterNode.Identifier.Value, parameterNode.IsArray);
         }
 
         /// <summary>
