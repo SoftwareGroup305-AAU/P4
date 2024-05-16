@@ -7,7 +7,7 @@ Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 document: (
 		include* generalDeclaration* setupDefinition updateDefinition
 	)
-	| functionDefinition+;
+	| include* functionDefinition+;
 
 include: INCLUDE tclib SEMI;
 
