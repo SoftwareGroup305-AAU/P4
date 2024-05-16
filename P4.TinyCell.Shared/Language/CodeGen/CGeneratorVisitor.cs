@@ -12,6 +12,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
+using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.CodeGen;
 public class CGeneratorVisitor : AstBaseVisitor<string>
@@ -308,6 +309,18 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         return code;
     }
 
+    public string VisitLibRootNode(RootNode rootNode)
+    {
+        pinTable.Push(new Stack<KeyValuePair<string, TcType>>());
+
+        string code = string.Empty;
+        foreach (var child in rootNode.Children)
+        {
+            code += $"{Visit(child)}\n";
+        }
+        return code;
+    }
+
     public override string VisitStatementCollectionNode(StatementCollectionNode statementCollectionNode)
     {
         IEnumerable<string> statements = statementCollectionNode.Statements.Select(Visit);
@@ -402,6 +415,16 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
     {
         return $"-({Visit(negativeExpressionNode.Expression)})";
+    }
+
+    public override string VisitIncludeNode(IncludeNode includeNode)
+    {
+        if (includeNode.FileName != "default.tcl")
+        {
+            AstNode includeAst = AstHelper.GetAstFromFile(includeNode.FileName);
+            return VisitLibRootNode((RootNode)includeAst);
+        }
+        return string.Empty;
     }
 
     private void UpdatePinTable(KeyValuePair<string, TcType> variable)

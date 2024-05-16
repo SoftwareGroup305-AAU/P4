@@ -1,4 +1,5 @@
-include stdlib.tcl;
+include default.tcl;
+include testlib.tcl;
 
 int num = -(-2)- -(-(-2));
 

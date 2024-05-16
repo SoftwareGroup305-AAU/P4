@@ -1,7 +1,6 @@
 ﻿using Antlr4.Runtime;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
-using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Utilities;
 
 
@@ -98,12 +97,12 @@ internal class Program
         CGeneratorVisitor cGeneratorVisitor = new();
         string ccode = cGeneratorVisitor.Visit(abcd);
 
-        using StreamWriter sw = File.CreateText("/home/benj1/Documents/GitHub/P4-main/Arduino.ino");
-        sw.Write(ccode);
+        //using StreamWriter sw = File.CreateText("/home/benj1/Documents/GitHub/P4-main/Arduino.ino");
+        //sw.Write(ccode);
         Console.WriteLine(ccode);
-        
 
-        
+
+
         //ASMGenVisitor asmGen = new(allocatedScopes);
         //asmGen.Visit(abcd);
 
