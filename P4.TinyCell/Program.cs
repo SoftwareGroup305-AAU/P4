@@ -97,8 +97,13 @@ internal class Program
 
         CGeneratorVisitor cGeneratorVisitor = new();
         string ccode = cGeneratorVisitor.Visit(abcd);
-        Console.WriteLine(ccode);
 
+        using StreamWriter sw = File.CreateText("/home/benj1/Documents/GitHub/P4-main/Arduino.ino");
+        sw.Write(ccode);
+        Console.WriteLine(ccode);
+        
+
+        
         //ASMGenVisitor asmGen = new(allocatedScopes);
         //asmGen.Visit(abcd);
 
