@@ -98,7 +98,12 @@ internal class Program
         CGeneratorVisitor cGeneratorVisitor = new();
         string ccode = cGeneratorVisitor.Visit(abcd);
 
-        using StreamWriter sw = File.CreateText("Arduino.ino");
+        if (!Directory.Exists("Arduino"))
+        {
+            Directory.CreateDirectory("Arduino");    
+        }
+
+        using StreamWriter sw = File.CreateText("Arduino/Arduino.ino");
         sw.Write(ccode);
         Console.WriteLine(ccode);
 
