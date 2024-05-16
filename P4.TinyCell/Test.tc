@@ -1,50 +1,14 @@
 include stdlib.tcl;
 
-int num = -(-2)- -(-(-2));
-
-int func(int nums[], int num) {
-    num = nums[1];
-    return num;
-}
-
-int func2(int num) {
-    int num2 = 2;
-    return num;
-}
+dpin led = 6;
 
 setup{
-    int d[5];
-    int e[5] = {1,2,3,4};
-    d[0] = 1;
-    d[2] = e[0];
-
-    int i = 2;
-    d[i] = 1;
-
-    e[4] = {4,4,2};
-
-    if (d[0]  == 1) {
-    }
-
-    while (1) {
-        int num2 = 2;
-        break;
-    }
-
-    func(d, i);
-    func2(d[0]);
+    set led to OUTPUT;
 }
 
 update{
-    print("fuck");
-
-    dpin led = 6;
-    apin pines = 1;
-    bool yes = true;
-    bool no;
-    write true to led;
-    read led to no;
-    write yes to led;
-    //write false to pines;
-    //read pines to no;
+    write HIGH to led;
+    delay(500);
+    write LOW to led;
+    delay(500);
 }
