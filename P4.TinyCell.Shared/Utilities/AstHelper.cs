@@ -6,7 +6,8 @@ public static class AstHelper
 {
     public static AstNode GetAstFromFile(string path)
     {
-        string fileContent = File.ReadAllText(path);
+        string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        string fileContent = File.ReadAllText(Path.Combine(exeDirectory, path));
         var antlrInputStream = new AntlrInputStream(fileContent);
         var lexer = new TinyCellLexer(antlrInputStream);
         var tokenStream = new CommonTokenStream(lexer);

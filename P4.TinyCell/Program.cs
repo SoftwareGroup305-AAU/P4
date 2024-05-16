@@ -9,11 +9,15 @@ internal class Program
 {
     private static void Main(string[] args)
     {
+        
+
+        string workingDirectory = Environment.CurrentDirectory;
+        string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
+        TcDirector.ParseArgs(args);
         // ProgramHelper helper = new();
         // helper.GenerateAntlr();
-
-        string fileContent = File.ReadAllText("Test.tc");
-
+        string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
+        
         var antlrInputStream = new AntlrInputStream(fileContent);
 
         var lexer = new TinyCellLexer(antlrInputStream);
