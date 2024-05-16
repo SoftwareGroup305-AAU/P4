@@ -31,14 +31,14 @@ namespace P4.TinyCell.Shared.Utilities
             {
                 ArgsConfiguration.sourceFile = Path.Combine(workingDirectory, sourcceFilePath);
             }
-            if (Path.IsPathRooted(outputFilePath))
-            {
+            // if (Path.IsPathRooted(outputFilePath))
+            // {
                 ArgsConfiguration.outputFile = outputFilePath;
-            }
-            else
-            {
-                ArgsConfiguration.outputFile = Path.Combine(workingDirectory, outputFilePath);
-            }
+            // }
+            // else
+            // {
+            //     ArgsConfiguration.outputFile = outputFilePath; //Path.Combine(workingDirectory, outputFilePath);
+            // }
         }
 
         private static void SanitizePaths(string[] args)
