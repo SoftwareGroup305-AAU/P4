@@ -5,9 +5,6 @@ namespace P4.TinyCell.Tests.IntegrationTests;
 
 public class LexerParser
 {
-    // Below are control flow tests with lexer and parser combined
-
-    // If control flow test
     [Fact]
     [Description("If control flow test")]
     public void IfControlTest()
@@ -100,8 +97,6 @@ public class LexerParser
         Assert.Equal("UpdateDefinitionContext", update.GetType().Name);
     }
 
-
-    // If-else control flow test
     [Fact]
     [Description("If-else control flow test")]
     public void IfElseControlTest()
@@ -210,7 +205,6 @@ public class LexerParser
         Assert.Equal("UpdateDefinitionContext", update.GetType().Name);
     }
 
-    // For loop control flow test
     [Fact]
     [Description("For loop control flow test")]
     public void ForLoopControlTest()
@@ -331,7 +325,6 @@ public class LexerParser
         Assert.Equal("UpdateDefinitionContext", update.GetType().Name);
     }
 
-    // While loop control flow test
     [Fact]
     [Description("While loop control flow test")]
     public void WhileLoopControlTest()
@@ -424,7 +417,6 @@ public class LexerParser
         Assert.Equal("UpdateDefinitionContext", update.GetType().Name);
     }
 
-    // Function call control flow test
     [Fact]
     [Description("Function call control flow test")]
     public void FunctionCallControlTest()
