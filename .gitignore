@@ -397,10 +397,12 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 *.idea
+
 # Custom rules - Ignore all bin and obj files
 **/bin/
 **/obj/
 Antlr/
+**/.Arduino-CLI
 
 #Project files
 .vscode/
