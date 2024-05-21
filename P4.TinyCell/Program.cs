@@ -4,6 +4,10 @@ using P4.TinyCell.Shared.Language.CodeGen;
 using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Utilities;
 
+// dotnet publish -c Release -r win-x64 --self-contained true
+// dotnet publish -c Release -r linux-x64 --self-contained true
+// dotnet publish -c Release -r osx-x64 --self-contained true
+// dotnet publish -c Release -r osx-arm64 --self-contained true
 
 internal class Program
 {
