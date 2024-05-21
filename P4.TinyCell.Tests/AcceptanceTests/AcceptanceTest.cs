@@ -20,7 +20,7 @@ public class AcceptanceTest
         }
     */
     // Step 4) Use the compiled P4.TinyCell executable to compile a simple program, in this case "Test.tc".
-    // Step 5) Assert that an Arduino folder is created with the transpiled ino file.
+    // Step 5) Assert that an Arduino folder is created with the transpiled ino file && Arduino-CLI is created and has downloaded and extracted the correct CLI based on OS.
     // Step 6) Assert that the ino file contains the expected output code.
     // Step 7) Use the Arduino CLI to compile the ino file with user defined flags. 
     // Step 8) Assert that the compilation was successful.
