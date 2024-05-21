@@ -25,15 +25,15 @@ namespace P4.TinyCell.Shared.Utilities
             var outputFilePath = args[2];
             if (Path.IsPathRooted(sourcceFilePath))
             {
-                ArgsConfiguration.sourceFile = sourcceFilePath;
+                ArgsConfiguration.SourceFile = sourcceFilePath;
             }
             else
             {
-                ArgsConfiguration.sourceFile = Path.Combine(workingDirectory, sourcceFilePath);
+                ArgsConfiguration.SourceFile = Path.Combine(workingDirectory, sourcceFilePath);
             }
             // if (Path.IsPathRooted(outputFilePath))
             // {
-                ArgsConfiguration.outputFile = outputFilePath;
+                ArgsConfiguration.OutputFile = outputFilePath;
             // }
             // else
             // {
