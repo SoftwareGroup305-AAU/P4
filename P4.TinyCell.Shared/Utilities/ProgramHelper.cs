@@ -2,6 +2,7 @@
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
 using System.Diagnostics;
+using System.IO.Compression;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
@@ -81,11 +82,13 @@ public class ProgramHelper
 
     private static bool IsCorrectAssetForCurrentOs(string fileName)
     {
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && fileName.Contains("Windows_64bit"))
+        Console.WriteLine($"Current OS: {RuntimeInformation.OSDescription}");
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && fileName.Contains("Windows_64bit.zip"))
             return true;
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileName.Contains("Linux_64bit"))
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileName.Contains("Linux_64bit.tar.gz"))
             return true;
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && fileName.Contains("macOS_64bit"))
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && fileName.Contains("macOS_64bit.tar.gz"))
             return true;
 
         return false;
@@ -105,10 +108,43 @@ public class ProgramHelper
             }
         }
 
-        ExtractTarGz(outputPath, Path.GetDirectoryName(outputPath));
+        if (Path.GetExtension(outputPath).Equals(".tar.gz", StringComparison.OrdinalIgnoreCase))
+            ExtractTarGz(outputPath, Path.GetDirectoryName(outputPath));
+        else if (Path.GetExtension(outputPath).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+            ExtractZip(outputPath, Path.GetDirectoryName(outputPath));
     }
 
-    public static void ExtractTarGz(string gzArchiveName, string destFolder)
+    public static string GetCliFileName()
+    {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            return "arduino-cli_latest.zip";
+        else
+            return "arduino-cli_latest.tar.gz";
+    }
+
+    public static void ExtractFile(string filePath, string extractTo)
+    {
+        string fileExtension = Path.GetExtension(filePath);
+        switch (fileExtension)
+        {
+            case ".zip":
+                ExtractZip(filePath, extractTo);
+                break;
+            case ".tar.gz":
+                ExtractTarGz(filePath, extractTo);
+                break;
+        }
+    }
+
+    private static void ExtractZip(string zipFilePath, string extractTo)
+    {
+        using (var zipArchive = ZipFile.OpenRead(zipFilePath))
+        {
+            zipArchive.ExtractToDirectory(extractTo, overwriteFiles: true);
+        }
+    }
+
+    private static void ExtractTarGz(string gzArchiveName, string destFolder)
     {
         using (Stream inStream = File.OpenRead(gzArchiveName))
         using (Stream gzipStream = new GZipInputStream(inStream))

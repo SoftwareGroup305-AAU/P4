@@ -85,13 +85,17 @@ internal class Program
                 Console.WriteLine("Created directory: Arduino-CLI");
             }
 
-            string cliFilePath = Path.Combine(arduinoCliDir, "arduino-cli.tar.gz");
+            string fileName = ProgramHelper.GetCliFileName();
+            string cliFilePath = Path.Combine(arduinoCliDir, fileName);
             if (!File.Exists(cliFilePath))
             {
                 Console.WriteLine("Arduino CLI not found, downloading...");
                 string downloadUrl = await ProgramHelper.FetchLatestArduinoCliDownloadUrlAsync();
                 await ProgramHelper.DownloadFileAsync(downloadUrl, cliFilePath);
                 Console.WriteLine("Arduino CLI downloaded successfully!");
+
+                ProgramHelper.ExtractFile(cliFilePath, arduinoCliDir);
+                Console.WriteLine("Arduino CLI extracted successfully!");
             }
             else
             {
