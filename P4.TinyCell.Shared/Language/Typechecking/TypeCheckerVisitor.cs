@@ -131,6 +131,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
 
             var declaredIdNode = declarationNode.Identifier;
             var declaredTypeNode = declarationNode.Type;
+            if (declaredTypeNode.Type == TcType.VOID)
+            {
+                throw new Exception($"Variable '{declaredIdNode.Value}' declared as 'void'");
+            }
             try
             {
                 UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
