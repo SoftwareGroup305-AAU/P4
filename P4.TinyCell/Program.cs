@@ -9,13 +9,10 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-
-
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
         TcDirector.ParseArgs(args);
-        // ProgramHelper helper = new();
-        // helper.GenerateAntlr();
+
         string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
 
         var antlrInputStream = new AntlrInputStream(fileContent);
@@ -64,8 +61,8 @@ internal class Program
         var typeChecker = new TypeCheckerVisitor();
         typeChecker.Visit(abcd);
 
-        //TestAstVisitor test = new();
-        //test.VisitRootNode((RootNode)abcd);
+        TestAstVisitor test = new();
+        test.VisitRootNode((RootNode)abcd);
 
         CGeneratorVisitor cGeneratorVisitor = new();
         string ccode = cGeneratorVisitor.Visit(abcd);
