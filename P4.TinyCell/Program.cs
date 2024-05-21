@@ -74,7 +74,7 @@ internal class Program
             Directory.CreateDirectory("Arduino");
         }
 
-        using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.outputFile}.ino");
+        using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
         sw.Write(ccode);
         Console.WriteLine(ccode);
     }
