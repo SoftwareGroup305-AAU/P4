@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\P4.TinyCell.Shared\P4.TinyCell.Shared.csproj" />
+    <ProjectReference Include="..\P4.TinyCell\P4.TinyCell.csproj" />
   </ItemGroup>
 
   <ItemGroup>

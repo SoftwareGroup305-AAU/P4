@@ -7,14 +7,14 @@ using P4.TinyCell.Shared.Utilities;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
         //TcDirector.ParseArgs(args);
 
         //string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
-        
+
         string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
@@ -69,13 +69,38 @@ internal class Program
         CGeneratorVisitor cGeneratorVisitor = new();
         string ccode = cGeneratorVisitor.Visit(abcd);
 
-        if (!Directory.Exists("Arduino"))
+        try
         {
-            Directory.CreateDirectory("Arduino");
-        }
+            string arduinoDir = "Arduino";
+            if (!Directory.Exists(arduinoDir))
+            {
+                Directory.CreateDirectory(arduinoDir);
+                Console.WriteLine("Created directory: Arduino");
+            }
 
-        using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
-        sw.Write(ccode);
-        Console.WriteLine(ccode);
+            string arduinoCliDir = "Arduino-CLI";
+            if (!Directory.Exists(arduinoCliDir))
+            {
+                Directory.CreateDirectory(arduinoCliDir);
+                Console.WriteLine("Created directory: Arduino-CLI");
+            }
+
+            string cliFilePath = Path.Combine(arduinoCliDir, "arduino-cli.tar.gz");
+            if (!File.Exists(cliFilePath))
+            {
+                Console.WriteLine("Arduino CLI not found, downloading...");
+                string downloadUrl = await ProgramHelper.FetchLatestArduinoCliDownloadUrlAsync();
+                await ProgramHelper.DownloadFileAsync(downloadUrl, cliFilePath);
+                Console.WriteLine("Arduino CLI downloaded successfully!");
+            }
+            else
+            {
+                Console.WriteLine("Arduino CLI already exists.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred: {ex.Message}");
+        }
     }
 }
