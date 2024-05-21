@@ -65,7 +65,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     Visit(functionDefinitionNode.CompoundStatement);
                 }
 
-                if (function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
+                if (functionDefinitionNode.CompoundStatement is not null && function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
                 {
                     throw new Exception("not all paths return a value");
                 }

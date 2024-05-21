@@ -11,9 +11,11 @@ internal class Program
     {
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
-        TcDirector.ParseArgs(args);
+        //TcDirector.ParseArgs(args);
 
-        string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
+        //string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
+        
+        string fileContent = File.ReadAllText("Test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 

@@ -1,3 +1,3 @@
 void print(string text);
 void delay(int ms);
-void millis();
+int millis();
