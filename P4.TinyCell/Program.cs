@@ -9,6 +9,8 @@ using P4.TinyCell.Shared.Utilities;
 // dotnet publish -c Release -r osx-x64 --self-contained true
 // dotnet publish -c Release -r osx-arm64 --self-contained true
 
+// dotnet add package SharpZipLib --version 1.3.3
+
 internal class Program
 {
     private static async Task Main(string[] args)
