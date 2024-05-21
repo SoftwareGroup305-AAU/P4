@@ -9,7 +9,7 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        
+
 
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
@@ -17,7 +17,7 @@ internal class Program
         // ProgramHelper helper = new();
         // helper.GenerateAntlr();
         string fileContent = File.ReadAllText(ArgsConfiguration.sourceFile);
-        
+
         var antlrInputStream = new AntlrInputStream(fileContent);
 
         var lexer = new TinyCellLexer(antlrInputStream);
@@ -41,38 +41,6 @@ internal class Program
 
         var tree = parser.document();
 
-        //LivenessAnalysisListener listener = new LivenessAnalysisListener();
-        //ParseTreeWalker.Default.Walk(listener, tree);
-        //listener.FixedPointAnalysis();
-        //var list = listener.scopes;
-        //var graphs = new Dictionary<string, Graph<string>>();
-        //var graphGenerator = new LivenessGraphGenerator();
-        //foreach (var scope in list)
-        //{
-        //    var graph = graphGenerator.generateGraph(scope.Value);
-        //    graphs.Add(scope.Key, graph);
-        //}
-        //var allocatedScopes = new Dictionary<string, Dictionary<string, string>>();
-        //var registerAllocator = new StaticRegisterAllocator();
-        //foreach (var scope in graphs)
-        //{
-        //    var graph = scope.Value;
-        //    var groupings = registerAllocator.AllocateRegisters(graph.adjacencyList, 3);
-        //    allocatedScopes.Add(scope.Key, groupings);
-        //}
-
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Registers:");
-
-        //foreach (var scope in allocatedScopes)
-        //{
-        //    Console.WriteLine(scope.Key);
-        //    foreach (var variable in scope.Value)
-        //    {
-        //        Console.WriteLine(variable.Key + " : " + variable.Value);
-        //    }
-        //}
-
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
 
@@ -93,8 +61,8 @@ internal class Program
 
         Console.WriteLine(abcd.ToString());
 
-        // var typeChecker = new TypeCheckerVisitor();
-        // typeChecker.Visit(abcd);
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
 
         //TestAstVisitor test = new();
         //test.VisitRootNode((RootNode)abcd);
@@ -104,19 +72,11 @@ internal class Program
 
         if (!Directory.Exists("Arduino"))
         {
-            Directory.CreateDirectory("Arduino");    
+            Directory.CreateDirectory("Arduino");
         }
 
         using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.outputFile}.ino");
         sw.Write(ccode);
         Console.WriteLine(ccode);
-
-
-
-        //ASMGenVisitor asmGen = new(allocatedScopes);
-        //asmGen.Visit(abcd);
-
-        //ASMGenerator codeGen = new ASMGenerator();
-        //codeGen.GenerateCode(abcd, allocatedScopes);
     }
 }

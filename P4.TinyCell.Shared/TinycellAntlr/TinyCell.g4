@@ -1,9 +1,5 @@
 grammar TinyCell;
 
-Bool: (TRUE | FALSE);
-
-Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
-
 document: (
 		include* generalDeclaration* setupDefinition updateDefinition
 	)
@@ -76,7 +72,9 @@ assignment:
 
 functionCall: identifier LPAR argumentList* RPAR;
 
-arrayContent: numeral | String | identifier;
+//arrayContent: numeral | String | Bool | identifier;
+
+arrayContent: negativeExpression;
 
 arrayIndex: IntNumeral | identifier;
 
@@ -175,6 +173,10 @@ pinVoltage: VOLHIGH | VOLLOW;
 pinStatus: PININ | PINOUT;
 
 numeral: FloatNumeral | IntNumeral;
+
+Bool: (TRUE | FALSE);
+
+Whitespace: [ \t\r\n]+ -> channel(HIDDEN);
 
 //Pin op
 VOLHIGH: 'HIGH';

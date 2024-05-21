@@ -396,7 +396,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var toType = Visit(pinWriteExprNode.To);
             if (toType == TcType.DPIN)
             {
-                if (pinWriteExprNode.From is not VoltageNode || pinWriteExprNode.From is not BoolNode)
+                if (pinWriteExprNode.From is not VoltageNode && pinWriteExprNode.From is not BoolNode)
                 {
                     throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage' or 'bool'");
                 }

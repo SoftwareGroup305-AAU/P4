@@ -1,50 +1,26 @@
 include default.tcl;
 
 int num = -(-2)- -(-(-2));
+dpin ledPin = 6;
 
-int func(int nums[], int num) {
-    num = nums[1];
-    return num;
+int func () {
+    return 1;
 }
 
-int func2(int num) {
-    int num2 = 2;
-    return num;
+void func2() {
+    return;
 }
 
 setup{
-    int d[5];
-    int e[5] = {1,2,3,4};
-    d[0] = 1;
-    d[2] = e[0];
-
-    int i = 2;
-    d[i] = 1;
-
-    e[4] = {4,4,2};
-
-    if (d[0]  == 1) {
-    }
-
-    while (1) {
-        int num2 = 2;
-        break;
-    }
-
-    func(d, i);
-    func2(d[0]);
+    set ledPin to OUTPUT;
+    int arr[9] = {-1,2,3,4,5,6,7,8,9};
+    bool bArr[3] = {true, false, false};
+    string str[2] = {"Hello", "World"};
 }
 
 update{
-    print("fuck");
-
-    dpin led = 6;
-    apin pines = 1;
-    bool yes = true;
-    bool no;
-    write true to led;
-    read led to no;
-    write yes to led;
-    //write false to pines;
-    //read pines to no;
+    write HIGH to ledPin;
+    delay(1000);
+    write LOW to ledPin;
+    delay(1000);
 }

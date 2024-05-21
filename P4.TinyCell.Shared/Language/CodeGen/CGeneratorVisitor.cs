@@ -131,10 +131,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
     {
         pinTable.Push(new Stack<KeyValuePair<string, TcType>>());
-        
+
         string parameters = Visit(functionDefinitionNode.ParameterList);
         string statements = string.Empty;
-        
+
         UpdatePinTable(functionDefinitionNode.ParameterList.Parameters.Where(p => p.TypeNode.Type == TcType.APIN || p.TypeNode.Type == TcType.DPIN).Select((p) => new KeyValuePair<string, TcType>(p.Identifier.Value, p.TypeNode.Type)).ToList());
 
         if (functionDefinitionNode.CompoundStatement is not null)
@@ -300,7 +300,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitRootNode(RootNode rootNode)
     {
         pinTable.Push(new Stack<KeyValuePair<string, TcType>>());
-        
+
         string code = "#include <Arduino.h> \n";
         foreach (var child in rootNode.Children)
         {
@@ -382,7 +382,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             return "byte";
         }
-        
+
         return typeNode.Type.ToString().ToLower();
     }
 
