@@ -125,14 +125,29 @@ public class ProgramHelper
     public static void ExtractFile(string filePath, string extractTo)
     {
         string fileExtension = Path.GetExtension(filePath);
-        switch (fileExtension)
+
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && fileExtension.Equals(".zip"))
         {
-            case ".zip":
-                ExtractZip(filePath, extractTo);
-                break;
-            case ".tar.gz":
-                ExtractTarGz(filePath, extractTo);
-                break;
+            ExtractZip(filePath, extractTo);
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileExtension.Equals(".tar.gz"))
+        {
+            var process = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "tar",
+                    Arguments = $"-xvf {filePath} -C {extractTo}",
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true
+                }
+            };
+        }
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && fileExtension.Equals(".tar.gz"))
+        {
+            ExtractTarGz(filePath, extractTo);
         }
     }
 
