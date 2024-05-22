@@ -51,7 +51,6 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return base.VisitRootNode(rootNode);
         }
 
-
         public override TcType VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
             vTableStack.Push(new Stack<Variable>());
@@ -202,6 +201,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return TcType.BOOL;
         }
 
+        public override TcType VisitNotExprNode(NotExprNode notExprNode)
+        {
+            var operand = Visit(notExprNode.Operand);
+            CheckComparisonTypes(operand, TcType.BOOL);
+            return TcType.BOOL;
+        }
+
         public override TcType VisitEqualExprNode(EqualExprNode equalExprNode)
         {
             var left = Visit(equalExprNode.Left);
@@ -256,6 +262,20 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var right = Visit(lessThanOrEqualExprNode.Right);
             CheckComparisonTypes(left, right);
             return TcType.BOOL;
+        }
+
+        public override TcType VisitUnaryMinusExprNode(UnaryMinusExprNode unaryMinusExprNode)
+        {
+            var operand = Visit(unaryMinusExprNode.Operand);
+            CheckUnaryTypes(operand, [TcType.INT, TcType.FLOAT]);
+            return operand;
+        }
+
+        public override TcType VisitUnaryPlusExprNode(UnaryPlusExprNode unaryPlusExprNode)
+        {
+            var operand = Visit(unaryPlusExprNode.Operand);
+            CheckUnaryTypes(operand, [TcType.INT, TcType.FLOAT]);
+            return operand;
         }
 
         public override TcType VisitDivExprNode(DivExprNode divExprNode)
@@ -616,8 +636,15 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             vTableStack.First().Push(new Variable(variable.Value, variable.Key, isArray));
         }
 
+        private static void CheckUnaryTypes(TcType operand, IEnumerable<TcType> expectedTypes)
+        {
+            if (!expectedTypes.Contains(operand))
+            {
+                throw new Exception($"Type mismatch: got {operand}, expected expected ({string.Join(", ", expectedTypes)})");
+            }
+        }
 
-        private static void CheckComparisonTypes(TcType left, TcType right, List<TcType> expectedTypes = null)
+        private static void CheckComparisonTypes(TcType left, TcType right, List<TcType>? expectedTypes = null)
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
