@@ -49,34 +49,34 @@ public class FullCompilationFlow
         Assert.Contains("return max(x, y);", cCode);
     }
 
-    // [Fact]
-    // [Description("Tests the full compilation flow for handling complex arithmetic and unary operators")]
-    // public void FullCompilationFlowAdvancedArithmetic()
-    // {
-    //     var input = @"
-    //     setup{
-    //         int num = -(-2) - -(-(-2));
-    //     }
-    //     update{
-    //     }
-    //     ";
+    [Fact]
+    [Description("Tests the full compilation flow for handling complex arithmetic and unary operators")]
+    public void FullCompilationFlowAdvancedArithmetic()
+    {
+        var input = @"
+        setup{
+            int num = -(-2) - -(-(-2));
+        }
+        update{
+        }
+        ";
 
-    //     var lexer = new TinyCellLexer(new AntlrInputStream(input));
-    //     var tokens = new CommonTokenStream(lexer);
+        var lexer = new TinyCellLexer(new AntlrInputStream(input));
+        var tokens = new CommonTokenStream(lexer);
 
-    //     var parser = new TinyCellParser(tokens);
-    //     var astBuilder = new AstBuilderVisitor();
-    //     var rootNode = astBuilder.Visit(parser.document());
+        var parser = new TinyCellParser(tokens);
+        var astBuilder = new AstBuilderVisitor();
+        var rootNode = astBuilder.Visit(parser.document());
 
-    //     var typeChecker = new TypeCheckerVisitor();
-    //     var typeCheckException = Record.Exception(() => typeChecker.Visit(rootNode));
-    //     Assert.Null(typeCheckException);
+        var typeChecker = new TypeCheckerVisitor();
+        var typeCheckException = Record.Exception(() => typeChecker.Visit(rootNode));
+        Assert.Null(typeCheckException);
 
-    //     var cGenerator = new CGeneratorVisitor();
-    //     var cCode = cGenerator.Visit(rootNode);
+        var cGenerator = new CGeneratorVisitor();
+        var cCode = cGenerator.Visit(rootNode);
 
-    //     Assert.Contains("int num = 2 - 2;", cCode);
-    // }
+        Assert.Contains("-(-(2))-", cCode);
+    }
 
     [Fact]
     [Description("Tests the full compilation flow for array handling and function interaction")]
@@ -157,39 +157,39 @@ public class FullCompilationFlow
         Assert.Contains("break;", cCode);
     }
 
-    // [Fact]
-    // [Description("Tests the full compilation flow for digital pin assignments and operations")]
-    // public void FullCompilationFlowDigitalPinOperations()
-    // {
-    //     var input = @"
-    //     setup{
-    //         dpin led = 6;
-    //         write true to led;
-    //         bool state = true;
-    //         read led to state;
-    //     }
-    //     update{
-    //         dpin led = 6;
-    //         write false to led;
-    //     }
-    //     ";
+    [Fact]
+    [Description("Tests the full compilation flow for digital pin assignments and operations")]
+    public void FullCompilationFlowDigitalPinOperations()
+    {
+        var input = @"
+        setup{
+            dpin led = 6;
+            write true to led;
+            bool state = true;
+            read led to state;
+        }
+        update{
+            dpin led = 6;
+            write false to led;
+        }
+        ";
 
-    //     var lexer = new TinyCellLexer(new AntlrInputStream(input));
-    //     var tokens = new CommonTokenStream(lexer);
+        var lexer = new TinyCellLexer(new AntlrInputStream(input));
+        var tokens = new CommonTokenStream(lexer);
 
-    //     var parser = new TinyCellParser(tokens);
-    //     var astBuilder = new AstBuilderVisitor();
-    //     var rootNode = astBuilder.Visit(parser.document());
+        var parser = new TinyCellParser(tokens);
+        var astBuilder = new AstBuilderVisitor();
+        var rootNode = astBuilder.Visit(parser.document());
 
-    //     // var typeChecker = new TypeCheckerVisitor();
-    //     // var typeCheckException = Record.Exception(() => typeChecker.Visit(rootNode));
-    //     // Assert.Null(typeCheckException);
+        var typeChecker = new TypeCheckerVisitor();
+        var typeCheckException = Record.Exception(() => typeChecker.Visit(rootNode));
+        Assert.Null(typeCheckException);
 
-    //     var cGenerator = new CGeneratorVisitor();
-    //     var cCode = cGenerator.Visit(rootNode);
+        var cGenerator = new CGeneratorVisitor();
+        var cCode = cGenerator.Visit(rootNode);
 
-    //     Assert.Contains("digitalWrite(6, HIGH);", cCode);
-    //     Assert.Contains("digitalRead(6);", cCode);
-    //     Assert.Contains("digitalWrite(6, LOW);", cCode);
-    // }
+        Assert.Contains("digitalWrite(led, false);", cCode);
+        Assert.Contains("digitalRead(led);", cCode);
+        Assert.Contains("digitalWrite(led, true);", cCode);
+    }
 }
