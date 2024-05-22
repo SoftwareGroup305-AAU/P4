@@ -126,15 +126,15 @@ public class ProgramHelper
     {
         string fileExtension = Path.GetExtension(filePath);
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && fileExtension.Equals(".zip"))
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && fileExtension.Contains(".zip"))
         {
             ExtractZip(filePath, extractTo);
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileExtension.Equals(".tar.gz"))
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileExtension.Contains(".tar.gz"))
         {
             ExtractTarGz(filePath, extractTo);
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && fileExtension.Equals(".tar.gz"))
+        else
         {
             ExtractTarGz(filePath, extractTo);
         }
