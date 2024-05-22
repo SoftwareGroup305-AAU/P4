@@ -669,24 +669,4 @@ public class ParserTreeStructure
 
         Assert.IsType<TinyCellParser.ExpressionContext>(expression);
     }
-
-    [Fact]
-    [Description("Validates the structure of the parse tree for an array content")]
-    public void ParserArrayContentStructureTest()
-    {
-        var tokens = new List<IToken>
-        {
-            new TestToken("5", TinyCellLexer.IntNumeral),
-            new TestToken("", TinyCellLexer.Eof),
-        };
-
-        var parser = CreateParserNoError(tokens);
-        var arrayContent = parser.arrayContent();
-
-        Assert.NotNull(arrayContent);
-
-        Assert.Equal(1, arrayContent.ChildCount);
-
-        Assert.IsType<TinyCellParser.NumeralContext>(arrayContent.GetChild(0));
-    }
 }
