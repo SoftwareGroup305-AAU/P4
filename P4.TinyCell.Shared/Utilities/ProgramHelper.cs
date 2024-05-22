@@ -132,18 +132,7 @@ public class ProgramHelper
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux) && fileExtension.Equals(".tar.gz"))
         {
-            var process = new Process
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "tar",
-                    Arguments = $"-xvf {filePath} -C {extractTo}",
-                    RedirectStandardOutput = true,
-                    RedirectStandardError = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true
-                }
-            };
+            ExtractTarGz(filePath, extractTo);
         }
         else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) && fileExtension.Equals(".tar.gz"))
         {

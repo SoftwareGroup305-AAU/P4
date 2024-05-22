@@ -84,6 +84,10 @@ internal class Program
                 Console.WriteLine("Created directory: Arduino");
             }
 
+            using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
+            sw.Write(ccode);
+            Console.WriteLine(ccode);
+
             string arduinoCliDir = "Arduino-CLI";
             if (!Directory.Exists(arduinoCliDir))
             {
