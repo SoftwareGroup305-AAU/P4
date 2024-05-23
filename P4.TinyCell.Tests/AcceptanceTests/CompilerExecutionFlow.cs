@@ -51,7 +51,21 @@ public class CompilerExecutionFlow
             CreateNoWindow = true
         };
 
-        Process process = Process.Start(startInfo);
+        Process process = new Process
+        {
+            StartInfo = startInfo
+        };
+
+        process.StartInfo.RedirectStandardOutput = true;
+        process.StartInfo.RedirectStandardError = true;
+        process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
+        process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+
+        process.Start();
+
+        process.BeginOutputReadLine();
+        process.BeginErrorReadLine();
+
         process.WaitForExit();
 
         Assert.True(Directory.Exists(arduinoFolder));
