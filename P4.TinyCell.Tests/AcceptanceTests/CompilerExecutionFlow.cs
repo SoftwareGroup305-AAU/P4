@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace P4.TinyCell.Tests.AcceptanceTests;
 
-public class AcceptanceTest
+public class CompilerExecutionFlow
 {
     [Fact]
     [Description("Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C code")]
-    public void CompilerExecution()
+    public void FullCompilerExecution()
     {
         string workingDirectory = Environment.CurrentDirectory;
         string netDirectory = new DirectoryInfo(workingDirectory).FullName;
