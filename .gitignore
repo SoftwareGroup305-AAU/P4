@@ -414,3 +414,5 @@ Antlr/
 **/*.atn
 **/TinyCell.*
 **/!TinyCell.g4
+P4.TinyCell/Arduino-CLI/arduino-cli
+P4.TinyCell/Arduino-CLI/arduino-cli_latest.tar.gz
