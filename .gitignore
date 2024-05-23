@@ -403,8 +403,9 @@ FodyWeavers.xsd
 **/obj/
 Antlr/
 .VSCodeCounter
-**/.Arduino
-**/.Arduino-CLI
+**/Arduino
+**/Arduino-CLI
+**/ArduinoCompiled/
 
 #Project files
 .vscode/

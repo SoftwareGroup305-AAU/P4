@@ -109,6 +109,12 @@ internal class Program
 
                 ProgramHelper.ExtractFile(cliFilePath, arduinoCliDir);
                 Console.WriteLine("Arduino CLI extracted successfully!");
+
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                {
+                    CLIRunner.AddExecutePermission("Arduino-CLI/arduino-cli");
+                    Console.WriteLine("Execute permission added to Arduino CLI.");
+                }
             }
             else
             {
@@ -133,9 +139,9 @@ internal class Program
         }
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
-            CLIRunner.ExecuteCommand("compile -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+            CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+            CLIRunner.ExecuteCommand("upload -p /dev/cu.usbmodem21301 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
         }
-        
+
     }
 }
