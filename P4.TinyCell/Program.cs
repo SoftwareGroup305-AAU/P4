@@ -122,8 +122,8 @@ internal class Program
 
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
         {
+            CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
             CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
-            CLIRunner.ExecuteCommand("compile -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
         }
         if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
         {
@@ -133,8 +133,8 @@ internal class Program
         }
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
         {
-            CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
             CLIRunner.ExecuteCommand("compile -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+            CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
         }
         
     }
