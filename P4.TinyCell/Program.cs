@@ -19,7 +19,7 @@ internal class Program
 
     private static async Task Main(string[] args)
     {
-        bool debug = false;
+        bool debug = true;
 
         string workingDirectory = Environment.CurrentDirectory;
 
@@ -128,7 +128,7 @@ internal class Program
                 ProgramHelper.ExtractFile(cliFilePath, arduinoCliDir);
                 Console.WriteLine("Arduino CLI extracted successfully!");
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     CLIRunner.AddExecutePermission("Arduino-CLI/arduino-cli");
                     Console.WriteLine("Execute permission added to Arduino CLI.");
@@ -143,27 +143,9 @@ internal class Program
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
-        
-        string fileNameA = "Arduino";
-        string board = "arduino:samd:mkrwifi1010";
-        string port = "/dev/ttyACM0";
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
-            CLIRunner.ExecuteCommand($"compile ./Arduino/{fileNameA} -b {board} --build-path ArduinoCompiled");
-            CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} {fileNameA} --input-dir ArduinoCompiled");
-            CLIRunner.ExecuteCommand($"monitor -p {port}");
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
-            CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
-            CLIRunner.ExecuteCommand("upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
-            CLIRunner.ExecuteCommand("cat -p /dev/ttyACM0");
-        }
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
-            CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
-            CLIRunner.ExecuteCommand("upload -p /dev/cu.usbmodem21301 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
-        }
+        CLIRunner.ExecuteCommand("");
+        CLIRunner runner = new CLIRunner();
+        runner.CLIEnv();
 
     }
 }
