@@ -1,33 +1,71 @@
-﻿namespace P4.TinyCell.Tests;
+﻿using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+
+namespace P4.TinyCell.Tests.AcceptanceTests;
 
 public class AcceptanceTest
 {
-    // Step 1) Compile the P4.TinyCell project.
-    // Step 2) There's already a reference to the P4.TinyCell project in the P4.TinyCell.Tests project, now we need to simulate a cli usage of the compiler.
-    // Step 3) Create a Test.tc file in TinyCell language with the following code:
-    /*
-        dpin ledPin = 13;
+    [Fact]
+    [Description("Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C code")]
+    public void CompilerExecution()
+    {
+        string workingDirectory = Environment.CurrentDirectory;
+        string netDirectory = new DirectoryInfo(workingDirectory).FullName;
 
-        setup {
-            set ledPin to OUTPUT;
-        }
+        Assert.True(Directory.Exists(netDirectory));
 
-        update {
-            write HIGH to ledPin;
-            delay(1000);
-            write LOW to ledPin;
-            delay(1000);
-        }
-    */
-    // Step 4) Use the compiled P4.TinyCell executable to compile a simple program, in this case "Test.tc".
-    // Step 5) Assert that an Arduino folder is created with the transpiled ino file && Arduino-CLI is created and has downloaded and extracted the correct CLI based on OS.
-    // Step 6) Assert that the ino file contains the expected output code.
-    // Step 7) Use the Arduino CLI to compile the ino file with user defined flags. 
-    // Step 8) Assert that the compilation was successful.
-    // Step 9) Use the Arduino CLI to upload the ino file to a connected Arduino board.
-    // Step 10) Assert that the upload was successful.
-    // Step 11) Use the Arduino CLI to monitor the serial output of the Arduino board.
-    // Step 12) Assert that the serial output matches the expected output.
+        string arduinoFolder = "Arduino";
+        string arduinoCliFolder = "Arduino-CLI";
 
+        string executableFileName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "tcc.exe" : "tcc";
 
+        string tccExecutablePath = Path.Combine(netDirectory, executableFileName);
+
+        string sourceFilePath = Path.Combine(netDirectory, "Test.tc");
+
+        string expectedOutputPath = Path.Combine(netDirectory, arduinoFolder);
+
+        File.WriteAllText(sourceFilePath, @"
+            include default.tcl;
+            dpin ledPin = 6;
+
+            setup {
+                set ledPin to OUTPUT;
+            }
+
+            update {
+                write HIGH to ledPin;
+                delay(1000);
+                write LOW to ledPin;
+                delay(1000);
+            }
+        ");
+
+        ProcessStartInfo startInfo = new ProcessStartInfo()
+        {
+            FileName = tccExecutablePath,
+            Arguments = $"\"{sourceFilePath}\" -o \"output\"",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+
+        Process process = Process.Start(startInfo);
+        process.WaitForExit();
+
+        Assert.True(Directory.Exists(arduinoFolder));
+        Assert.True(Directory.Exists(arduinoCliFolder));
+
+        Assert.True(File.Exists(Path.Combine(expectedOutputPath, "output.ino")));
+
+        string outputContent = File.ReadAllText(Path.Combine(expectedOutputPath, "output.ino"));
+        Assert.Contains("pinMode(ledPin, OUTPUT);", outputContent);
+        Assert.Contains("digitalWrite(ledPin, HIGH);", outputContent);
+
+        File.Delete(sourceFilePath);
+
+        Directory.Delete(arduinoFolder, recursive: true);
+        Directory.Delete(arduinoCliFolder, recursive: true);
+    }
 }
