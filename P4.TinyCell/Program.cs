@@ -1,4 +1,5 @@
-﻿using Antlr4.Runtime;
+﻿using System.Runtime.InteropServices;
+using Antlr4.Runtime;
 using P4.TinyCell;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
@@ -119,7 +120,22 @@ internal class Program
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
 
-        CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
-        CLIRunner.ExecuteCommand("upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
+            CLIRunner.ExecuteCommand("compile -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+        }
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+        {
+            CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+            CLIRunner.ExecuteCommand("upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
+            CLIRunner.ExecuteCommand("cat -p /dev/ttyACM0");
+        }
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+        {
+            CLIRunner.ExecuteCommand("upload -p COM3 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
+            CLIRunner.ExecuteCommand("compile -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+        }
+        
     }
 }

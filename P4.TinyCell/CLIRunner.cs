@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace P4.TinyCell;
 
@@ -6,7 +7,7 @@ public class CLIRunner
 {
     public static void ExecuteCommand(string command)
     {
-        var processInfo = new ProcessStartInfo("arduino-cli", command);
+        var processInfo = new ProcessStartInfo("Arduino-CLI/arduino-cli", command);
         processInfo.CreateNoWindow = true;
         processInfo.UseShellExecute = false;
         processInfo.RedirectStandardError = true;
