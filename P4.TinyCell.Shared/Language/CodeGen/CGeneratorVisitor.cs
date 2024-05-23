@@ -124,6 +124,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             identifier = "Serial.println";
         }
+        if (identifier == "initSerial")
+        {
+            identifier = "Serial.begin";
+        }
 
         return $"{identifier}{arguments}";
     }
