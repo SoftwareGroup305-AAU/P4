@@ -1,4 +1,5 @@
 ﻿using Antlr4.Runtime;
+using P4.TinyCell;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
 using P4.TinyCell.Shared.Language.Typechecking;
@@ -17,11 +18,11 @@ internal class Program
     {
         string workingDirectory = Environment.CurrentDirectory;
         string projectDirectory = new DirectoryInfo(workingDirectory).FullName;
-        // TcDirector.ParseArgs(args);
+        //TcDirector.ParseArgs(args);
 
         //string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
 
-        string fileContent = File.ReadAllText("Test.tc");
+        string fileContent = File.ReadAllText("test.tc");
 
         var antlrInputStream = new AntlrInputStream(fileContent);
 
@@ -84,7 +85,8 @@ internal class Program
                 Console.WriteLine("Created directory: Arduino");
             }
 
-            using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
+            //using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
+            using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
             sw.Write(ccode);
             Console.WriteLine(ccode);
 
@@ -116,5 +118,8 @@ internal class Program
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
+
+        CLIRunner.ExecuteCommand("compile ./Arduino/Arduino.ino -b arduino:samd:mkrwifi1010 --build-path ArduinoCompiled");
+        CLIRunner.ExecuteCommand("upload -p /dev/ttyACM0 --fqbn arduino:samd:mkrwifi1010 Arduino.ino --input-dir ArduinoCompiled");
     }
 }
