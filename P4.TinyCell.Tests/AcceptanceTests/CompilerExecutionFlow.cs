@@ -66,8 +66,6 @@ public class CompilerExecutionFlow
         process.BeginOutputReadLine();
         process.BeginErrorReadLine();
 
-        process.WaitForExit();
-
         Assert.True(Directory.Exists(arduinoFolder));
         Assert.True(Directory.Exists(arduinoCliFolder));
 
