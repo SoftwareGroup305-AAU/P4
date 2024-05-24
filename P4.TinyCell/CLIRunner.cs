@@ -38,25 +38,46 @@ public class CLIRunner
     public void CLIEnv()
     {
 
-        string board = "";
-        string port = "";
-        
-        string command = Console.ReadLine();
+        string board = String.Empty;
+        string port = String.Empty;
+
+        string command = "";
+        if (ArgsConfiguration.Action != String.Empty)
+        {
+            command = ArgsConfiguration.Action;
+            board = ArgsConfiguration.Board;
+            port = ArgsConfiguration.Port;
+
+            ArgsConfiguration.Action = String.Empty;
+        }
+        else
+        {
+            command = Console.ReadLine();    
+        }
         
         switch (command)
         {
             case "compile":
                 CompileTC();
-                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
-                board = Console.ReadLine();
+                if (board == "")
+                {
+                    Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
+                    board = Console.ReadLine();
+                }
                 CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
                 break;
             case "upload":
                 CompileTC();
-                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
-                board = Console.ReadLine();
-                Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
-                port = Console.ReadLine();
+                if (board == string.Empty)
+                {
+                    Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
+                    board = Console.ReadLine();
+                }
+                if (port == string.Empty)
+                {
+                    Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
+                    port = Console.ReadLine();
+                }
                 CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} ./Arduino/Arduino.ino --input-dir ArduinoCompiled");
                 break;
             case "monitor":
