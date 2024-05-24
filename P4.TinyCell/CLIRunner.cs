@@ -46,7 +46,35 @@ public class CLIRunner
         switch (command)
         {
             case "compile":
-                bool debug = true;
+                CompileTC();
+                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
+                board = Console.ReadLine();
+                CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
+                break;
+            case "upload":
+                CompileTC();
+                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
+                board = Console.ReadLine();
+                Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
+                port = Console.ReadLine();
+                CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} ./Arduino/Arduino.ino --input-dir ArduinoCompiled");
+                break;
+            case "monitor":
+                Console.WriteLine("tcc>> Which board (port) would you like to listen to?");
+                port = Console.ReadLine();
+                CLIRunner.ExecuteCommand($"monitor -p {port}");
+                break;
+            default:
+                ExecuteCommand(command);
+                break;
+        }
+
+        CLIEnv();
+    }
+
+    public void CompileTC()
+    {
+        bool debug = true;
 
         string workingDirectory = Environment.CurrentDirectory;
 
@@ -125,29 +153,6 @@ public class CLIRunner
                 {
                     Console.WriteLine($"An error occurred: {ex.Message}");
                 }
-
-                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
-                board = Console.ReadLine();
-                CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
-                break;
-            case "upload":
-                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
-                board = Console.ReadLine();
-                Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
-                port = Console.ReadLine();
-                CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} ./Arduino/Arduino.ino --input-dir ArduinoCompiled");
-                break;
-            case "monitor":
-                Console.WriteLine("tcc>> Which board (port) would you like to listen to?");
-                port = Console.ReadLine();
-                CLIRunner.ExecuteCommand($"monitor -p {port}");
-                break;
-            default:
-                ExecuteCommand(command);
-                break;
-        }
-
-        CLIEnv();
     }
     public static void ExecuteCommand(string command)
     {
