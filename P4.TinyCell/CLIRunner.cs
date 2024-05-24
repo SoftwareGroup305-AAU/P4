@@ -87,11 +87,11 @@ public class CLIRunner
         var process = Process.Start(processInfo);
 
         process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-            Console.WriteLine("tcc>> " + e.Data);
+            Console.WriteLine("tcc> " + e.Data);
         process.BeginOutputReadLine();
 
         process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
-            Console.WriteLine("tcc error>> " + e.Data);
+            Console.WriteLine("tcc error> " + e.Data);
         process.BeginErrorReadLine();
 
         process.WaitForExit();
