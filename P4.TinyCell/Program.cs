@@ -19,96 +19,8 @@ internal class Program
 
     private static async Task Main(string[] args)
     {
-        bool debug = true;
-
-        string workingDirectory = Environment.CurrentDirectory;
-
-        string fileContent;
-
-        if (debug)
-        {
-            fileContent = File.ReadAllText("Test.tc");
-        }
-        else
-        {
+        try{
             TcDirector.ParseArgs(args);
-            fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
-        }
-
-        var antlrInputStream = new AntlrInputStream(fileContent);
-
-        var lexer = new TinyCellLexer(antlrInputStream);
-
-        var tokenStream = new CommonTokenStream(lexer);
-
-        tokenStream.Fill();
-
-        var tokens = tokenStream.GetTokens();
-
-        foreach (var token in tokens)
-        {
-            int tokenType = token.Type - 1;
-            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
-            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
-        }
-
-        var parser = new TinyCellParser(tokenStream);
-
-        parser.AddErrorListener(new ParserHelper.NoErrorListener());
-
-        var tree = parser.document();
-
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Tokens:");
-
-        foreach (var token in tokens)
-        {
-            int tokenType = token.Type - 1;
-            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
-            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
-        }
-
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Parse Tree:");
-
-        ParserHelper.PrintTree(tree);
-
-        AstBuilderVisitor astBuilderVisitor = new();
-        AstNode abcd = astBuilderVisitor.Visit(tree);
-
-        Console.WriteLine(abcd.ToString());
-
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
-
-        TestAstVisitor test = new();
-        test.VisitRootNode((RootNode)abcd);
-
-        CGeneratorVisitor cGeneratorVisitor = new();
-        string ccode = cGeneratorVisitor.Visit(abcd);
-
-        try
-        {
-            string arduinoDir = "Arduino";
-            if (!Directory.Exists(arduinoDir))
-            {
-                Directory.CreateDirectory(arduinoDir);
-                Console.WriteLine("Created directory: Arduino");
-            }
-
-            if (debug)
-            {
-                using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
-                sw.Write(ccode);
-            }
-            else
-            {
-                using StreamWriter sw = File.CreateText($"Arduino/{ArgsConfiguration.OutputFile}.ino");
-                sw.Write(ccode);
-            }
-
-            Console.WriteLine(ccode);
-
             string arduinoCliDir = "Arduino-CLI";
             if (!Directory.Exists(arduinoCliDir))
             {
@@ -128,7 +40,7 @@ internal class Program
                 ProgramHelper.ExtractFile(cliFilePath, arduinoCliDir);
                 Console.WriteLine("Arduino CLI extracted successfully!");
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     CLIRunner.AddExecutePermission("Arduino-CLI/arduino-cli");
                     Console.WriteLine("Execute permission added to Arduino CLI.");

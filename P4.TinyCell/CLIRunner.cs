@@ -1,7 +1,11 @@
-using P4.TinyCell.Shared.Utilities;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-
+using Antlr4.Runtime;
+using P4.TinyCell;
+using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+using P4.TinyCell.Shared.Language.CodeGen;
+using P4.TinyCell.Shared.Language.Typechecking;
+using P4.TinyCell.Shared.Utilities;
 namespace P4.TinyCell;
 
 public class CLIRunner
@@ -42,29 +46,101 @@ public class CLIRunner
         switch (command)
         {
             case "compile":
+                bool debug = true;
+
+        string workingDirectory = Environment.CurrentDirectory;
+
+        string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
+
+        var antlrInputStream = new AntlrInputStream(fileContent);
+
+        var lexer = new TinyCellLexer(antlrInputStream);
+
+        var tokenStream = new CommonTokenStream(lexer);
+
+        tokenStream.Fill();
+
+        var tokens = tokenStream.GetTokens();
+
+        foreach (var token in tokens)
+        {
+            int tokenType = token.Type - 1;
+            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
+            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
+        }
+
+        var parser = new TinyCellParser(tokenStream);
+
+        parser.AddErrorListener(new ParserHelper.NoErrorListener());
+
+        var tree = parser.document();
+
+        Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Tokens:");
+
+        foreach (var token in tokens)
+        {
+            int tokenType = token.Type - 1;
+            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length ? TinyCellLexer.ruleNames[tokenType] : "Unknown";
+            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
+        }
+
+        Console.WriteLine("\n=================================================\n");
+        Console.WriteLine("Parse Tree:");
+
+        ParserHelper.PrintTree(tree);
+
+        AstBuilderVisitor astBuilderVisitor = new();
+        AstNode abcd = astBuilderVisitor.Visit(tree);
+
+        Console.WriteLine(abcd.ToString());
+
+        var typeChecker = new TypeCheckerVisitor();
+        typeChecker.Visit(abcd);
+
+        TestAstVisitor test = new();
+        test.VisitRootNode((RootNode)abcd);
+
+        CGeneratorVisitor cGeneratorVisitor = new();
+        string ccode = cGeneratorVisitor.Visit(abcd);
+
+                try
+                {
+                    string arduinoDir = "Arduino";
+                    if (!Directory.Exists(arduinoDir))
+                    {
+                        Directory.CreateDirectory(arduinoDir);
+                        Console.WriteLine("Created directory: Arduino");
+                    }
+
+                    using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
+                    sw.Write(ccode);
+
+                    if (debug)
+                    {
+                        Console.WriteLine(ccode);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occurred: {ex.Message}");
+                }
+
                 Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
                 board = Console.ReadLine();
-                CLIRunner.ExecuteCommand($"compile ./Arduino/{ArgsConfiguration.OutputFile} -b {board} --build-path ArduinoCompiled");
+                CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
                 break;
             case "upload":
-                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
+                Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
                 board = Console.ReadLine();
                 Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
                 port = Console.ReadLine();
-                CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} {ArgsConfiguration.OutputFile} --input-dir ArduinoCompiled");
+                CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} ./Arduino/Arduino.ino --input-dir ArduinoCompiled");
                 break;
             case "monitor":
                 Console.WriteLine("tcc>> Which board (port) would you like to listen to?");
                 port = Console.ReadLine();
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-                {
-                    CLIRunner.ExecuteCommand($"cat -p {port}");
-                }
-                else
-                {
-                    CLIRunner.ExecuteCommand($"monitor -p {port}");
-
-                }
+                CLIRunner.ExecuteCommand($"monitor -p {port}");
                 break;
             default:
                 ExecuteCommand(command);
@@ -83,7 +159,7 @@ public class CLIRunner
             RedirectStandardError = true,
             RedirectStandardOutput = true
         };
-
+        //processInfo.WorkingDirectory = Environment.CurrentDirectory+"/Arduino-CLI/";
         var process = Process.Start(processInfo);
 
         process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>

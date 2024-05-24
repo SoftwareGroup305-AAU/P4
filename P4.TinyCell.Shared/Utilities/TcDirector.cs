@@ -8,12 +8,12 @@ namespace P4.TinyCell.Shared.Utilities
         {
             if (args.Length < 3)
             {
-                Console.WriteLine("Too few arguments provided. Please provide a source file and an output file. Example: tc <source file> -o <output file>");
+                Console.WriteLine("Too few arguments provided. Please provide a source file and an output file. Example: tcc <source file>");
                 Environment.Exit(0);
             }
             if (args[1] != "-o")
             {
-                Console.WriteLine("Invalid argument provided. Please provide a source file and an output file. Example: tc <source file> -o <output file>");
+                Console.WriteLine("Invalid argument provided. Please provide a source file and an output file. Example: tcc <source file>");
                 foreach (var arg in args)
                 {
                     Console.WriteLine(arg);
@@ -33,7 +33,7 @@ namespace P4.TinyCell.Shared.Utilities
             }
             // if (Path.IsPathRooted(outputFilePath))
             // {
-                ArgsConfiguration.OutputFile = outputFilePath;
+               // ArgsConfiguration.OutputFile = outputFilePath;
             // }
             // else
             // {
