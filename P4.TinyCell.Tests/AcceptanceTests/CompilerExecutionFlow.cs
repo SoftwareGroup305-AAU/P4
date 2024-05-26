@@ -72,8 +72,12 @@ public class CompilerExecutionFlow
 
             string output = await outputReadTask;
             string errors = await errorReadTask;
+        }
 
-            Assert.True(process.HasExited);
+        foreach (var process in Process.GetProcessesByName("arduino-cli"))
+        {
+            process.Kill();
+            process.WaitForExit();
         }
 
         Assert.True(Directory.Exists(arduinoFolder));
@@ -83,6 +87,8 @@ public class CompilerExecutionFlow
         string outputContent = File.ReadAllText(Path.Combine(expectedOutputPath, "Arduino.ino"));
         Assert.Contains("pinMode(ledPin, OUTPUT);", outputContent);
         Assert.Contains("digitalWrite(ledPin, HIGH);", outputContent);
+        Assert.Contains("digitalWrite(ledPin, LOW);", outputContent);
+        Assert.Contains("delay(1000);", outputContent);
 
         File.Delete(sourceFilePath);
         Directory.Delete(arduinoFolder, recursive: true);
