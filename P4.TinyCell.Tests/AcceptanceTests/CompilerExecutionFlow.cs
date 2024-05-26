@@ -7,76 +7,84 @@ namespace P4.TinyCell.Tests.AcceptanceTests;
 public class CompilerExecutionFlow
 {
     [Fact]
-    [Description("Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C code")]
-    public void FullCompilerExecution()
+    [Description("Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C that includes manual command input.")]
+    public async Task FullCompilationExecution()
     {
         string workingDirectory = Environment.CurrentDirectory;
         string netDirectory = new DirectoryInfo(workingDirectory).FullName;
 
         Assert.True(Directory.Exists(netDirectory));
 
-        string arduinoFolder = "Arduino";
-        string arduinoCliFolder = "Arduino-CLI";
+        string arduinoFolder = Path.Combine(netDirectory, "Arduino");
+        string arduinoCliFolder = Path.Combine(netDirectory, "Arduino-CLI");
 
         string executableFileName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "tcc.exe" : "tcc";
-
         string tccExecutablePath = Path.Combine(netDirectory, executableFileName);
-
         string sourceFilePath = Path.Combine(netDirectory, "Test.tc");
-
         string expectedOutputPath = Path.Combine(netDirectory, arduinoFolder);
 
         File.WriteAllText(sourceFilePath, @"
-            include default.tcl;
-            dpin ledPin = 6;
+        include default.tcl;
+        dpin ledPin = 6;
 
-            setup {
-                set ledPin to OUTPUT;
-            }
+        setup {
+            set ledPin to OUTPUT;
+        }
 
-            update {
-                write HIGH to ledPin;
-                delay(1000);
-                write LOW to ledPin;
-                delay(1000);
-            }
-        ");
+        update {
+            write HIGH to ledPin;
+            delay(1000);
+            write LOW to ledPin;
+            delay(1000);
+        }
+    ");
 
-        ProcessStartInfo startInfo = new ProcessStartInfo()
+        ProcessStartInfo startInfo = new ProcessStartInfo
         {
             FileName = tccExecutablePath,
-            Arguments = $"\"{sourceFilePath}\" -o \"output\"",
+            Arguments = $"\"{sourceFilePath}\"",
             RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            RedirectStandardInput = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
 
-        Process process = new Process
+        using (Process process = new Process { StartInfo = startInfo })
         {
-            StartInfo = startInfo
-        };
+            process.Start();
 
-        process.StartInfo.RedirectStandardOutput = true;
-        process.StartInfo.RedirectStandardError = true;
-        process.OutputDataReceived += (sender, args) => Console.WriteLine(args.Data);
-        process.ErrorDataReceived += (sender, args) => Console.WriteLine(args.Data);
+            var outputReadTask = process.StandardOutput.ReadToEndAsync();
+            var errorReadTask = process.StandardError.ReadToEndAsync();
 
-        process.Start();
+            using (StreamWriter sw = process.StandardInput)
+            {
+                if (sw.BaseStream.CanWrite)
+                {
+                    await sw.WriteLineAsync("compile");
+                }
+            }
 
-        process.BeginOutputReadLine();
-        process.BeginErrorReadLine();
+            if (!process.WaitForExit(5000))
+            {
+                process.Kill();
+            }
+
+            string output = await outputReadTask;
+            string errors = await errorReadTask;
+
+            Assert.True(process.HasExited);
+        }
 
         Assert.True(Directory.Exists(arduinoFolder));
         Assert.True(Directory.Exists(arduinoCliFolder));
+        Assert.True(File.Exists(Path.Combine(expectedOutputPath, "Arduino.ino")));
 
-        Assert.True(File.Exists(Path.Combine(expectedOutputPath, "output.ino")));
-
-        string outputContent = File.ReadAllText(Path.Combine(expectedOutputPath, "output.ino"));
+        string outputContent = File.ReadAllText(Path.Combine(expectedOutputPath, "Arduino.ino"));
         Assert.Contains("pinMode(ledPin, OUTPUT);", outputContent);
         Assert.Contains("digitalWrite(ledPin, HIGH);", outputContent);
 
         File.Delete(sourceFilePath);
-
         Directory.Delete(arduinoFolder, recursive: true);
         Directory.Delete(arduinoCliFolder, recursive: true);
     }
