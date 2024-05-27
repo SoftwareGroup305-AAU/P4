@@ -74,7 +74,6 @@ public class CLIRunner
 
     public void CompileTC()
     {
-        bool debug = true;
 
         string workingDirectory = Environment.CurrentDirectory;
 
