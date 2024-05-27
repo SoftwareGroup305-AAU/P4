@@ -5,6 +5,7 @@ using P4.TinyCell;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
 using P4.TinyCell.Shared.Language.Typechecking;
+using System.Threading;
 using P4.TinyCell.Shared.Utilities;
 namespace P4.TinyCell;
 
@@ -50,6 +51,8 @@ public class CLIRunner
                 Console.WriteLine("tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
                 board = Console.ReadLine();
                 CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
+                Thread.Sleep(2500);
+                CLIRunner.ExecuteCommand("");
                 break;
             case "upload":
                 CompileTC();
@@ -58,6 +61,8 @@ public class CLIRunner
                 Console.WriteLine("tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
                 port = Console.ReadLine();
                 CLIRunner.ExecuteCommand($"upload -p {port} --fqbn {board} ./Arduino/Arduino.ino --input-dir ArduinoCompiled");
+                Thread.Sleep(2500);
+                CLIRunner.ExecuteCommand("");
                 break;
             case "monitor":
                 Console.WriteLine("tcc>> Which board (port) would you like to listen to?");
