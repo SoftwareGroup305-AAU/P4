@@ -42,7 +42,7 @@ public class CLIRunner
         string port = "";
         
         string command = Console.ReadLine();
-        
+        Console.WriteLine("\n");
         switch (command)
         {
             case "compile":
@@ -89,7 +89,7 @@ public class CLIRunner
         tokenStream.Fill();
 
         var tokens = tokenStream.GetTokens();
-
+#if DEBUG
         foreach (var token in tokens)
         {
             int tokenType = token.Type - 1;
@@ -97,12 +97,13 @@ public class CLIRunner
             Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
         }
 
+#endif
         var parser = new TinyCellParser(tokenStream);
 
         parser.AddErrorListener(new ParserHelper.NoErrorListener());
 
         var tree = parser.document();
-
+#if DEBUG
         Console.WriteLine("\n=================================================\n");
         Console.WriteLine("Tokens:");
 
@@ -117,12 +118,12 @@ public class CLIRunner
         Console.WriteLine("Parse Tree:");
 
         ParserHelper.PrintTree(tree);
-
+#endif
         AstBuilderVisitor astBuilderVisitor = new();
         AstNode abcd = astBuilderVisitor.Visit(tree);
-
+#if DEBUG
         Console.WriteLine(abcd.ToString());
-
+#endif
         var typeChecker = new TypeCheckerVisitor();
         typeChecker.Visit(abcd);
 
@@ -143,11 +144,9 @@ public class CLIRunner
 
                     using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
                     sw.Write(ccode);
-
-                    if (debug)
-                    {
-                        Console.WriteLine(ccode);
-                    }
+#if DEBUG
+                    Console.WriteLine(ccode);
+#endif
                 }
                 catch (Exception ex)
                 {

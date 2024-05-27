@@ -16,8 +16,9 @@ public class TestAstVisitor : AstBaseVisitor<AstNode>
 
     public override AstNode Visit(AstNode node)
     {
+#if DEBUG
         Console.WriteLine($"Visiting node: {node.GetType().Name}");
-
+#endif
         return base.Visit(node);
     }
 
