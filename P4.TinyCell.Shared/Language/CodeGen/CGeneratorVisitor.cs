@@ -15,6 +15,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 using P4.TinyCell.Shared.Utilities;
 
 namespace P4.TinyCell.Shared.Language.CodeGen;
+
 public class CGeneratorVisitor : AstBaseVisitor<string>
 {
     private Stack<Stack<KeyValuePair<string, TcType>>> pinTable = new();
@@ -75,8 +76,10 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         string action = declarationNode.Action is null ? string.Empty : $" = {Visit(declarationNode.Action)}";
         if (declarationNode.Type.Type == TcType.DPIN || declarationNode.Type.Type == TcType.APIN)
         {
-            UpdatePinTable(new KeyValuePair<string, TcType>(declarationNode.Identifier.Value, declarationNode.Type.Type));
+            UpdatePinTable(
+                new KeyValuePair<string, TcType>(declarationNode.Identifier.Value, declarationNode.Type.Type));
         }
+
         return $"{Visit(declarationNode.Type)} {Visit(declarationNode.Identifier)}{action};";
     }
 
@@ -113,17 +116,18 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitFunctionCallNode(FunctionCallNode functionCallNode)
     {
-
         string arguments = string.Empty;
         if (functionCallNode.ArgumentList is not null)
         {
             arguments = Visit(functionCallNode.ArgumentList);
         }
+
         string identifier = Visit(functionCallNode.Identifier);
         if (identifier == "print")
         {
             identifier = "Serial.println";
         }
+
         if (identifier == "initSerial")
         {
             identifier = "Serial.begin";
@@ -139,12 +143,15 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         string parameters = Visit(functionDefinitionNode.ParameterList);
         string statements = string.Empty;
 
-        UpdatePinTable(functionDefinitionNode.ParameterList.Parameters.Where(p => p.TypeNode.Type == TcType.APIN || p.TypeNode.Type == TcType.DPIN).Select((p) => new KeyValuePair<string, TcType>(p.Identifier.Value, p.TypeNode.Type)).ToList());
+        UpdatePinTable(functionDefinitionNode.ParameterList.Parameters
+            .Where(p => p.TypeNode.Type == TcType.APIN || p.TypeNode.Type == TcType.DPIN)
+            .Select((p) => new KeyValuePair<string, TcType>(p.Identifier.Value, p.TypeNode.Type)).ToList());
 
         if (functionDefinitionNode.CompoundStatement is not null)
         {
             statements = Visit(functionDefinitionNode.CompoundStatement);
         }
+
         pinTable.Pop();
 
         string identifier = Visit(functionDefinitionNode.Identifier);
@@ -174,7 +181,8 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
     public override string VisitIfStatementNode(IfStatementNode ifStatementNode)
     {
         pinTable.Push(new Stack<KeyValuePair<string, TcType>>());
-        string elseStatement = ifStatementNode.ElseExpr is null ? string.Empty : $" else {Visit(ifStatementNode.ElseExpr)}";
+        string elseStatement =
+            ifStatementNode.ElseExpr is null ? string.Empty : $" else {Visit(ifStatementNode.ElseExpr)}";
         string condition = Visit(ifStatementNode.Condition);
         string trueExpr = Visit(ifStatementNode.TrueExpr);
         pinTable.Pop();
@@ -250,6 +258,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             identifier += "[]";
         }
+
         return $"{Visit(parameterNode.TypeNode)} {identifier}";
     }
 
@@ -297,7 +306,9 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitReturnNode(ReturnNode returnNode)
     {
-        string returnExpression = returnNode.ReturnExpression is null ? string.Empty : $" {Visit(returnNode.ReturnExpression)}";
+        string returnExpression = returnNode.ReturnExpression is null
+            ? string.Empty
+            : $" {Visit(returnNode.ReturnExpression)}";
         return $"return{returnExpression};";
     }
 
@@ -310,6 +321,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             code += $"{Visit(child)}\n";
         }
+
         return code;
     }
 
@@ -322,6 +334,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             code += $"{Visit(child)}\n";
         }
+
         return code;
     }
 
@@ -382,6 +395,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             return "String";
         }
+
         if (typeNode.Type == TcType.APIN || typeNode.Type == TcType.DPIN)
         {
             return "byte";
@@ -397,7 +411,9 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             elements = $" = {{{Visit(arrayDeclaration.Elements)}}}";
         }
-        return $"{Visit(arrayDeclaration.TypeNode)} {Visit(arrayDeclaration.Identifier)}[{Visit(arrayDeclaration.Size)}]{elements}";
+
+        return
+            $"{Visit(arrayDeclaration.TypeNode)} {Visit(arrayDeclaration.Identifier)}[{Visit(arrayDeclaration.Size)}]{elements}";
     }
 
     public override string VisitArrayElementsNode(ArrayElementsNode arrayElementsNode)
@@ -413,7 +429,8 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
 
     public override string VisitArrayAssignmentNode(ArrayAssignmentNode arrayAssignmentNode)
     {
-        return $"{Visit(arrayAssignmentNode.Identifier)}[{Visit(arrayAssignmentNode.Index)}] = {Visit(arrayAssignmentNode.Expression)}";
+        return
+            $"{Visit(arrayAssignmentNode.Identifier)}[{Visit(arrayAssignmentNode.Index)}] = {Visit(arrayAssignmentNode.Expression)}";
     }
 
     public override string VisitNegativeExpressionNode(NegativeExpressionNode negativeExpressionNode)
@@ -428,6 +445,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
             AstNode includeAst = AstHelper.GetAstFromFile(includeNode.FileName);
             return VisitLibRootNode((RootNode)includeAst);
         }
+
         return string.Empty;
     }
 
@@ -437,6 +455,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             throw new Exception($"Variable '{variable.Key}' already declared");
         }
+
         pinTable.First().Push(variable);
     }
 
@@ -448,6 +467,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
             {
                 throw new Exception($"Variable '{variable.Key}' already declared");
             }
+
             pinTable.First().Push(variable);
         }
     }
@@ -462,6 +482,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
                 return variable.Value;
             }
         }
+
         throw new Exception($"Variable '{id}' not declared");
     }
 }

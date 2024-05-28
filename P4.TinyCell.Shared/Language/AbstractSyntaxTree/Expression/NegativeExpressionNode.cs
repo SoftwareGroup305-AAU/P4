@@ -1,7 +1,8 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
+
 public class NegativeExpressionNode : AstNode
 {
-    public AstNode Expression {  get; set; }
+    public AstNode Expression { get; set; }
 
     public NegativeExpressionNode(AstNode expression)
     {

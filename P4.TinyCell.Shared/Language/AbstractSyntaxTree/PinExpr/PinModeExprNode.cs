@@ -1,6 +1,7 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
+
 public class PinModeExprNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }

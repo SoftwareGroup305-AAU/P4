@@ -5,7 +5,6 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerTokens
 {
-
     [Fact]
     [Description("Can handle an empty string.")]
     public void LexerEmptyStringTest()

@@ -1,10 +1,12 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+
 public class FunctionCallNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }
     public ArgumentListNode? ArgumentList { get; set; }
+
     public FunctionCallNode(IdentifierNode identifier, ArgumentListNode? argumentList)
     {
         Identifier = identifier;

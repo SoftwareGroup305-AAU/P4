@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
+
 public class ArgumentListNode : AstNode
 {
     public ArgumentNode[] Arguments { get; }

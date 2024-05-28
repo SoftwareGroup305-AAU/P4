@@ -1,10 +1,5 @@
-﻿using System.Diagnostics;
-using System.Runtime.InteropServices;
-using Antlr4.Runtime;
+﻿using System.Runtime.InteropServices;
 using P4.TinyCell;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
-using P4.TinyCell.Shared.Language.CodeGen;
-using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Utilities;
 
 // dotnet publish -c Release -r win-x64 --self-contained true
@@ -16,10 +11,10 @@ using P4.TinyCell.Shared.Utilities;
 
 internal class Program
 {
-
     private static async Task Main(string[] args)
     {
-        try{
+        try
+        {
             TcDirector.ParseArgs(args);
             string arduinoCliDir = "Arduino-CLI";
             if (!Directory.Exists(arduinoCliDir))
@@ -40,7 +35,8 @@ internal class Program
                 ProgramHelper.ExtractFile(cliFilePath, arduinoCliDir);
                 Console.WriteLine("Arduino CLI extracted successfully!");
 
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) || RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX) ||
+                    RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
                     CLIRunner.AddExecutePermission("Arduino-CLI/arduino-cli");
                     Console.WriteLine("Execute permission added to Arduino CLI.");
@@ -55,9 +51,9 @@ internal class Program
         {
             Console.WriteLine($"An error occurred: {ex.Message}");
         }
+
         CLIRunner.ExecuteCommand("");
         CLIRunner runner = new CLIRunner();
         runner.CLIEnv();
-
     }
 }

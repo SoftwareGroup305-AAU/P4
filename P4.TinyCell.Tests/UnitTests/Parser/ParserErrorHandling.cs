@@ -1,6 +1,7 @@
 ﻿using Antlr4.Runtime;
 using System.ComponentModel;
 using static P4.TinyCell.Tests.Utility;
+
 namespace P4.TinyCell.Tests.UnitTests.Parser;
 
 public class ParserErrorHandling

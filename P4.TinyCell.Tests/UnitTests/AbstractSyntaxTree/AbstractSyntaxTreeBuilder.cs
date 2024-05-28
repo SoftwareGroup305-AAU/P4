@@ -15,7 +15,8 @@ namespace P4.TinyCell.Tests.UnitTests.AbstractSyntaxTree;
 public class AbstractSyntaxTreeBuilder
 {
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs an AddExprNode from an additive expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs an AddExprNode from an additive expression")]
     public void VisitAddExprNode()
     {
         var input = "1 + 2";
@@ -35,7 +36,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a SubExprNode from a subtraction expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a SubExprNode from a subtraction expression")]
     public void VisitSubExprNode()
     {
         var input = "1 - 2";
@@ -55,7 +57,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a AndExprNode from an and expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a AndExprNode from an and expression")]
     public void VisitAndExprNode()
     {
         var input = "true && false";
@@ -75,7 +78,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a OrExprNode from an or expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a OrExprNode from an or expression")]
     public void VisitOrExprNode()
     {
         var input = "true || false";
@@ -95,7 +99,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a DivExprNode from a division expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a DivExprNode from a division expression")]
     public void VisitDivExprNode()
     {
         var input = "10 / 2";
@@ -115,7 +120,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a ModExprNode from a modulo expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a ModExprNode from a modulo expression")]
     public void VisitModExprNode()
     {
         var input = "10 % 3";
@@ -135,7 +141,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a MultExprNode from a multiplication expression")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a MultExprNode from a multiplication expression")]
     public void VisitMultExprNode()
     {
         var input = "10 * 2";
@@ -155,7 +162,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a FunctionDefinitionNode from a function definition")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a FunctionDefinitionNode from a function definition")]
     public void VisitFunctionDefinition()
     {
         var input = "int add(int a, int b) { return a + b; }";
@@ -176,7 +184,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a DeclarationNode from a declaration")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a DeclarationNode from a declaration")]
     public void VisitDeclaration()
     {
         var input = "int x = 5;";
@@ -195,7 +204,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a ParameterListNode from a parameter list")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a ParameterListNode from a parameter list")]
     public void VisitParameterList()
     {
         var input = "int a, int b";
@@ -214,7 +224,8 @@ public class AbstractSyntaxTreeBuilder
     }
 
     [Fact]
-    [Description("Verifies that the AstBuilderVisitor correctly visits and constructs a ParameterNode from a parameter")]
+    [Description(
+        "Verifies that the AstBuilderVisitor correctly visits and constructs a ParameterNode from a parameter")]
     public void VisitParameter()
     {
         var input = "int a";

@@ -24,26 +24,30 @@ namespace P4.TinyCell.Shared.Utilities
 
         public class NoErrorListener : BaseErrorListener
         {
-            public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+            public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol,
+                int line, int charPositionInLine, string msg, RecognitionException e)
             {
                 throw new Exception($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
             }
 
-            public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+            public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact,
+                BitSet ambigAlts, ATNConfigSet configs)
             {
 #if DEBUG
                 Console.WriteLine($"Ambiguity at {startIndex}:{stopIndex}");
 #endif
             }
 
-            public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+            public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex,
+                BitSet conflictingAlts, ATNConfigSet configs)
             {
-#if DEBUG 
+#if DEBUG
                 Console.WriteLine($"Attempting full context at {startIndex}:{stopIndex}");
 #endif
             }
 
-            public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+            public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex,
+                int prediction, ATNConfigSet configs)
             {
                 Console.WriteLine($"Context sensitivity at {startIndex}:{stopIndex}");
             }

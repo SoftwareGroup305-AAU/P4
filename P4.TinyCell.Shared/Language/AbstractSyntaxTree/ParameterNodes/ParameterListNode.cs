@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.ParameterNodes;
+
 public class ParameterListNode : AstNode
 {
     public ParameterNode[] Parameters { get; }

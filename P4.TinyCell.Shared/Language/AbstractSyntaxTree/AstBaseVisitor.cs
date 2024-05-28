@@ -13,6 +13,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+
 public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
 {
     public virtual Result Visit(AstNode node)
@@ -215,7 +216,6 @@ public partial class AstBaseVisitor<Result> : IAstVisitor<Result>
     public virtual Result VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
     {
         return VisitChildren(pinReadExprNode);
-        throw new NotImplementedException();
     }
 
     public virtual Result VisitPinWriteExprNode(PinWriteExprNode pinWriteExprNode)

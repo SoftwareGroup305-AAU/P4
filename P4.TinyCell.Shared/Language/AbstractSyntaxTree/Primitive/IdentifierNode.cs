@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
+
 public class IdentifierNode(string value) : AstNode
 {
     public string Value { get; set; } = value;

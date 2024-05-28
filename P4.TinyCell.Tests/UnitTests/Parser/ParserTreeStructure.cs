@@ -315,21 +315,21 @@ public class ParserTreeStructure
     public void ParserArithmeticOperatorsStructureTest()
     {
         var tokens = new List<IToken>
-            {
-                new TestToken("x", TinyCellLexer.Identifier),
-                new TestToken("=", TinyCellLexer.ASSIGN),
-                new TestToken("5", TinyCellLexer.IntNumeral),
-                new TestToken("+", TinyCellLexer.PLUS),
-                new TestToken("5", TinyCellLexer.IntNumeral),
-                new TestToken("-", TinyCellLexer.MINUS),
-                new TestToken("5", TinyCellLexer.IntNumeral),
-                new TestToken("*", TinyCellLexer.MULT),
-                new TestToken("5", TinyCellLexer.IntNumeral),
-                new TestToken("/", TinyCellLexer.DIV),
-                new TestToken("5", TinyCellLexer.IntNumeral),
-                new TestToken(";", TinyCellLexer.SEMI),
-                new TestToken("", TinyCellLexer.Eof),
-            };
+        {
+            new TestToken("x", TinyCellLexer.Identifier),
+            new TestToken("=", TinyCellLexer.ASSIGN),
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken("+", TinyCellLexer.PLUS),
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken("-", TinyCellLexer.MINUS),
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken("*", TinyCellLexer.MULT),
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken("/", TinyCellLexer.DIV),
+            new TestToken("5", TinyCellLexer.IntNumeral),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("", TinyCellLexer.Eof),
+        };
 
         var parser = CreateParserNoError(tokens);
         var expression = parser.expression();

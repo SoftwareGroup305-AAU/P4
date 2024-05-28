@@ -8,7 +8,8 @@
         /// <param name="interferenceGraph">Inteference graph</param>
         /// <param name="numRegisters">Number of available registers</param>
         /// <returns></returns>
-        public Dictionary<string, string> AllocateRegisters(Dictionary<string, HashSet<string>> interferenceGraph, int numRegisters)
+        public Dictionary<string, string> AllocateRegisters(Dictionary<string, HashSet<string>> interferenceGraph,
+            int numRegisters)
         {
             Dictionary<string, string> allocationGroupings = [];
             Stack<KeyValuePair<string, HashSet<string>>> stack = [];
@@ -26,13 +27,13 @@
                         RemoveVertex(vertexEntry, interferenceGraph);
                     }
                 }
+
                 if (!somepushed)
                 {
                     var vertex = interferenceGraph.First();
                     stack.Push(vertex);
                     RemoveVertex(vertex, interferenceGraph);
                 }
-
             }
 
             // Select
@@ -67,9 +68,10 @@
             }
 
             return allocationGroupings;
-
         }
-        private void RemoveVertex(KeyValuePair<string, HashSet<string>> vertex, Dictionary<string, HashSet<string>> interferenceGraph)
+
+        private void RemoveVertex(KeyValuePair<string, HashSet<string>> vertex,
+            Dictionary<string, HashSet<string>> interferenceGraph)
         {
             interferenceGraph.Remove(vertex.Key);
             foreach (var neighbor in vertex.Value)
@@ -88,9 +90,8 @@
                     return color;
                 }
             }
+
             return null; // No available color
         }
     }
-
-
 }

@@ -1,6 +1,7 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+
 public class ArrayElementReferenceNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }

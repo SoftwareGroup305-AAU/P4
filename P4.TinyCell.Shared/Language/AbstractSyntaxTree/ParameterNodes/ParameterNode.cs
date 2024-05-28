@@ -2,6 +2,7 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.ParameterNodes;
+
 public class ParameterNode : AstNode
 {
     public TypeNode TypeNode { get; set; }

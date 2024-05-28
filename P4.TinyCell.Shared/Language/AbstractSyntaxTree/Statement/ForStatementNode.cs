@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+
 public class ForStatementNode : AstNode
 {
     public AstNode Variable { get; set; }

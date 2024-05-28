@@ -5,7 +5,6 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerFunctionCalls
 {
-
     [Fact]
     [Description("Can handle function calls")]
     public void LexerFunctionCall()

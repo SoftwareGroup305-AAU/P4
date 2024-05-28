@@ -9,7 +9,8 @@ namespace P4.TinyCell.Tests.IntegrationTests;
 public class FullCompilationFlow
 {
     [Fact]
-    [Description("Tests the full compilation flow from lexical analysis to C code generation for a complete function with various constructs")]
+    [Description(
+        "Tests the full compilation flow from lexical analysis to C code generation for a complete function with various constructs")]
     public void FullCompilationFlowGeneral()
     {
         var input = @"

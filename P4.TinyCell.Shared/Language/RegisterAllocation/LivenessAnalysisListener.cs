@@ -16,7 +16,6 @@
 //         private Stack<string> scopeStack;
 
 
-
 //         private bool isAssigned;
 
 //         public LivenessAnalysisListener()
@@ -536,3 +535,4 @@
 //     }
 
 // }
+

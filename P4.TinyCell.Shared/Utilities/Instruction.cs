@@ -1,6 +1,5 @@
 namespace P4.TinyCell.Shared.Utilities
 {
-    
     /// <summary>
     /// Represents an instruction in the liveliness analysis./// </summary>
     /// <typeparam name="T">The type of <see cref="ParserRuleContext"/> instruction  </typeparam>
@@ -53,7 +52,6 @@ namespace P4.TinyCell.Shared.Utilities
         public void addSucc(IInstruction instruction)
         {
             succ.Add(instruction);
-
         }
 
         public HashSet<IInstruction> getSucc()
@@ -103,8 +101,8 @@ namespace P4.TinyCell.Shared.Utilities
 
             return clone;
         }
-
     }
+
     /// <summary>
     /// Interface to generalize instruction to generic
     /// </summary>

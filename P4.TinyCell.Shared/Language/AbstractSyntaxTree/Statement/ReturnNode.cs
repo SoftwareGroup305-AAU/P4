@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+
 public class ReturnNode : AstNode
 {
     public AstNode? ReturnExpression { get; set; }
@@ -8,6 +9,7 @@ public class ReturnNode : AstNode
         ReturnExpression = returnExpression;
         AddChild(returnExpression);
     }
+
     public ReturnNode()
     {
     }

@@ -63,22 +63,26 @@ public static class Utility
 
     public class NoErrorListener : BaseErrorListener
     {
-        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line, int charPositionInLine, string msg, RecognitionException e)
+        public override void SyntaxError(TextWriter output, IRecognizer recognizer, IToken offendingSymbol, int line,
+            int charPositionInLine, string msg, RecognitionException e)
         {
             Assert.Fail($"Syntax error at line {line}:{charPositionInLine} at {offendingSymbol.Text}");
         }
 
-        public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact, BitSet ambigAlts, ATNConfigSet configs)
+        public override void ReportAmbiguity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, bool exact,
+            BitSet ambigAlts, ATNConfigSet configs)
         {
             Assert.Fail($"Ambiguity at {startIndex}:{stopIndex}");
         }
 
-        public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex, BitSet conflictingAlts, ATNConfigSet configs)
+        public override void ReportAttemptingFullContext(Parser recognizer, DFA dfa, int startIndex, int stopIndex,
+            BitSet conflictingAlts, ATNConfigSet configs)
         {
             Assert.Fail($"Attempting full context at {startIndex}:{stopIndex}");
         }
 
-        public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex, int prediction, ATNConfigSet configs)
+        public override void ReportContextSensitivity(Parser recognizer, DFA dfa, int startIndex, int stopIndex,
+            int prediction, ATNConfigSet configs)
         {
             Assert.Fail($"Context sensitivity at {startIndex}:{stopIndex}");
         }

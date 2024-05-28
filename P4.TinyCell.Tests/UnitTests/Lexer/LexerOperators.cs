@@ -5,7 +5,6 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerOperators
 {
-
     [Fact]
     [Description("Can handle arithmetic operators")]
     public void LexerArithmeticOperators()

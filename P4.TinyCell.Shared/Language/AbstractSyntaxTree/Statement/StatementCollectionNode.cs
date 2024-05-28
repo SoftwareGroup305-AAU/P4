@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+
 public class StatementCollectionNode : AstNode
 {
     public AstNode[] Statements { get; set; }

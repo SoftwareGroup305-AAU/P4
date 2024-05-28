@@ -1,6 +1,7 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
+
 public abstract class AssignmentBaseNode : AstNode
 {
     public IdentifierNode Identifier { get; set; }

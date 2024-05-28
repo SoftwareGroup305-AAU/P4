@@ -1,5 +1,3 @@
-using Antlr4.Runtime.Misc;
-
 namespace P4.TinyCell.Shared.Utilities
 {
     public static class TcDirector
@@ -8,10 +6,11 @@ namespace P4.TinyCell.Shared.Utilities
         {
             if (args.Length < 1)
             {
-                Console.WriteLine("Too few arguments provided. Please provide a source file and an output file. Example: tcc <source file>");
+                Console.WriteLine(
+                    "Too few arguments provided. Please provide a source file and an output file. Example: tcc <source file>");
                 Environment.Exit(0);
             }
-            
+
             string workingDirectory = Environment.CurrentDirectory;
             var sourcceFilePath = args[0];
 
@@ -25,13 +24,12 @@ namespace P4.TinyCell.Shared.Utilities
             }
             // if (Path.IsPathRooted(outputFilePath))
             // {
-               // ArgsConfiguration.OutputFile = outputFilePath;
+            // ArgsConfiguration.OutputFile = outputFilePath;
             // }
             // else
             // {
             //     ArgsConfiguration.outputFile = outputFilePath; //Path.Combine(workingDirectory, outputFilePath);
             // }
         }
-        
     }
 }

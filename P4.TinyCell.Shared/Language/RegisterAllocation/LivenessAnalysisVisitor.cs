@@ -31,6 +31,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 res.UnionWith(child.Accept(this));
             }
+
             return res;
         }
 
@@ -53,6 +54,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 instruction.addGen(gen);
                 instruction.addKill(gen);
             }
+
             return gens;
         }
 
@@ -66,8 +68,10 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 instruction.addGen(gen);
                 instruction.addKill(gen);
             }
+
             return gens;
         }
+
         public override HashSet<string> VisitDeclarationNode(DeclarationNode declarationNode)
         {
             declarationNode.Identifier.Value = CheckPrevId(declarationNode.Identifier.Value);
@@ -97,6 +101,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     break;
                 }
             }
+
             HashSet<string> res = [identifierNode.Value];
             return res;
         }
@@ -150,7 +155,6 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
         }
 
 
-
         public override HashSet<string> VisitFunctionDefinitionNode(FunctionDefinitionNode functionDefinitionNode)
         {
             Scopes.Add(functionDefinitionNode.Identifier.Value, new List<IInstruction>());
@@ -170,6 +174,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             if (ifStatementNode.TrueExpr.Children.Count > 0)
             {
                 toBeRenamed.Push(new Dictionary<string, int>());
@@ -188,13 +193,14 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     toBeRenamed.Pop();
                 }
                 else
-               
+
                 {
                     prevInstructions.Clear();
                     prevInstructions.Add(instruction);
                     prevInstructions.AddRange(lastInstructions);
                 }
             }
+
             parentInstructions.Pop();
             return new HashSet<string>();
         }
@@ -210,6 +216,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             if (forStatementNode.CompoundStatement.Children.Count > 0)
             {
                 Visit(forStatementNode.Variable);
@@ -223,6 +230,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 prevInstructions.AddRange(lastInstructions);
                 toBeRenamed.Pop();
             }
+
             parentInstructions.Pop();
             return new HashSet<string>();
         }
@@ -236,6 +244,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             return new HashSet<string>();
         }
 
@@ -249,6 +258,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             if (whileStatementNode.CompoundStatement.Children.Count > 0)
             {
                 toBeRenamed.Push(new Dictionary<string, int>());
@@ -259,6 +269,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 prevInstructions.AddRange(lastInstructions);
                 toBeRenamed.Pop();
             }
+
             parentInstructions.Pop();
             return new HashSet<string>();
         }
@@ -272,12 +283,12 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             return new HashSet<string>();
         }
 
         private string CheckPrevId(string id)
         {
-
             if (currentVariables.Peek().Contains(id))
             {
                 return RenameId(id);
@@ -288,6 +299,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 return id;
             }
         }
+
         private string RenameId(string id)
         {
             foreach (var stack in toBeRenamed)
@@ -298,6 +310,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     return id += $"_{toBeRenamed.Peek()[id]}";
                 }
             }
+
             toBeRenamed.Peek().Add(id, 0);
             return id += $"_{toBeRenamed.Peek()[id]}";
         }
@@ -315,6 +328,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 prevInstructions.ForEach(prevInstruction => prevInstruction.addSucc(instruction));
                 prevInstructions.Clear();
             }
+
             prevInstructions.Add(instruction);
             Scopes.Last().Value.Add(instruction);
         }
@@ -330,11 +344,13 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                 {
                     continue;
                 }
+
                 InitializeFirstOut(scopeInstructions);
                 List<IInstruction> instructionsCopy;
                 do
                 {
-                    instructionsCopy = scopeInstructions.Select(instruction => (IInstruction)instruction.Clone()).ToList();
+                    instructionsCopy = scopeInstructions.Select(instruction => (IInstruction)instruction.Clone())
+                        .ToList();
                     for (int i = scopeInstructions.Count - 1; i >= 0; i--)
                     {
                         var instruction = scopeInstructions[i];
@@ -376,9 +392,8 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     return false;
                 }
             }
+
             return true;
-
-
         }
 
         private bool areInstructionsEqual(IInstruction instruction1, IInstruction instruction2)
@@ -387,10 +402,12 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 return false;
             }
+
             if (!instruction1.getOuts().SetEquals(instruction2.getOuts()))
             {
                 return false;
             }
+
             return true;
         }
 
@@ -407,6 +424,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instructionOuts.UnionWith(succ.getIns());
             }
+
             instruction.setOuts(instructionOuts);
         }
 
@@ -427,6 +445,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 assignmentNode.Identifier.Value += $"_{toBeRenamed.Peek()[assignmentNode.Identifier.Value]}";
             }
+
             var id = assignmentNode.Identifier.Value;
             var instruction = new Instruction<AssignmentBaseNode>(assignmentNode);
             instruction.addKill(id);
@@ -435,6 +454,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(identifier);
             }
+
             AddInstruction(instruction);
             return new HashSet<string>();
         }
@@ -449,12 +469,13 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
             {
                 instruction.addGen(gen);
             }
+
             foreach (var kill in kills)
             {
                 instruction.addKill(kill);
             }
+
             return new HashSet<string>();
         }
-
     }
 }

@@ -4,6 +4,7 @@ public abstract class PrimitveExprNode<T> : AstNode
 {
     public T? Value { get; set; }
     public TcType Type { get; set; }
+
     public PrimitveExprNode(T value)
     {
         Value = value;

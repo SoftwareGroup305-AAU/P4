@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
+
 public class WhileStatementNode : AstNode
 {
     public AstNode Condition { get; set; }

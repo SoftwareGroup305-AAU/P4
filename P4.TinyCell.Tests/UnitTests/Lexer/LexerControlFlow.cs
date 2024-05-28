@@ -5,7 +5,6 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerControlFlow
 {
-
     [Fact]
     [Description("Can handle if statements")]
     public void LexerIfStatement()

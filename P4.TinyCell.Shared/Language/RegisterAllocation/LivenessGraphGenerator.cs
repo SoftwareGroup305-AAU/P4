@@ -19,8 +19,8 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     {
                         graph.adjacencyList.Add(variable, new HashSet<string>());
                     }
-
                 }
+
                 foreach (var variable in kill)
                 {
                     if (!graph.adjacencyList.ContainsKey(variable))
@@ -28,6 +28,7 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                         graph.adjacencyList.Add(variable, new HashSet<string>());
                     }
                 }
+
                 HashSet<string> outs = instruction.getOuts();
 
                 foreach (string x in kill)
@@ -41,10 +42,8 @@ namespace P4.TinyCell.Shared.Language.RegisterAllocation
                     }
                 }
             }
+
             return graph;
         }
-
-
-
     }
 }

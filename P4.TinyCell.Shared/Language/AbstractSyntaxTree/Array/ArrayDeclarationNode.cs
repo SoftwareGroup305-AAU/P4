@@ -3,6 +3,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+
 public class ArrayDeclarationNode : AstNode
 {
     public TypeNode TypeNode { get; set; }
@@ -22,7 +23,8 @@ public class ArrayDeclarationNode : AstNode
         AddChild(size);
     }
 
-    public ArrayDeclarationNode(TypeNode typeNode, IdentifierNode identifier, AstNode size, ArrayElementsNode arrayElements)
+    public ArrayDeclarationNode(TypeNode typeNode, IdentifierNode identifier, AstNode size,
+        ArrayElementsNode arrayElements)
     {
         TypeNode = typeNode;
         Size = size;

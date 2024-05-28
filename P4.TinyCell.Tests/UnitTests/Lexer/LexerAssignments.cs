@@ -5,7 +5,6 @@ namespace P4.TinyCell.Tests.UnitTests.Lexer;
 
 public class LexerAssignments
 {
-
     [Fact]
     [Description("Can handle a numeral assignment")]
     public void LexerNumeralAssignment()

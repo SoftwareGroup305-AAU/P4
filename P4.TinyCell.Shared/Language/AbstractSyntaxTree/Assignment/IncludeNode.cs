@@ -1,6 +1,5 @@
-﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
+﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 
-namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 public class IncludeNode(string fileName) : AstNode
 {
     public string FileName { get; set; } = fileName;

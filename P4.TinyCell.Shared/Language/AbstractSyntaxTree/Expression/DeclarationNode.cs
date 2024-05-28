@@ -2,11 +2,12 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
+
 public class DeclarationNode : AstNode
 {
-    public TypeNode Type {get; set;}
-    public IdentifierNode Identifier {get; set;}
-    public AstNode? Action {get; set;}
+    public TypeNode Type { get; set; }
+    public IdentifierNode Identifier { get; set; }
+    public AstNode? Action { get; set; }
 
     public DeclarationNode(TypeNode type, IdentifierNode identifier)
     {

@@ -308,7 +308,8 @@ public class CodegenExpressions
         var typeNode = new TypeNode(TcType.INT);
         var identifierNode = new IdentifierNode("e");
         var sizeNode = new IntNode(5);
-        var elementsNode = new ArrayElementsNode(new AstNode[] { new IntNode(1), new IntNode(2), new IntNode(3), new IntNode(4) });
+        var elementsNode = new ArrayElementsNode(new AstNode[]
+            { new IntNode(1), new IntNode(2), new IntNode(3), new IntNode(4) });
         var arrayDeclarationNode = new ArrayDeclarationNode(typeNode, identifierNode, sizeNode, elementsNode);
 
         var cGenerator = new CGeneratorVisitor();

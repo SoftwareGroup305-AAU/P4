@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
+
 public class TypeNode(TcType type) : AstNode
 {
     public TcType Type { get; set; } = type;

@@ -1,4 +1,5 @@
 ﻿namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
+
 public class ArrayElementsNode : AstNode
 {
     public AstNode[] Elements { get; set; }

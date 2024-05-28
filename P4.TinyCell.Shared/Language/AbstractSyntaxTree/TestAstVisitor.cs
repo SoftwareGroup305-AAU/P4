@@ -1,6 +1,7 @@
 ﻿using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
 
 namespace P4.TinyCell.Shared.Language.AbstractSyntaxTree;
+
 public class TestAstVisitor : AstBaseVisitor<AstNode>
 {
     public override AstNode VisitRootNode(RootNode rootNode)
@@ -11,6 +12,7 @@ public class TestAstVisitor : AstBaseVisitor<AstNode>
             AstNode childNode = Visit(child);
             document.AddChild(childNode);
         }
+
         return document;
     }
 

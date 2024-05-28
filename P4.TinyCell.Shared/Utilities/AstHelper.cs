@@ -2,6 +2,7 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 
 namespace P4.TinyCell.Shared.Utilities;
+
 public static class AstHelper
 {
     public static AstNode GetAstFromFile(string path)

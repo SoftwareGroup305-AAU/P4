@@ -12,6 +12,7 @@
         {
             adjacencyList = new Dictionary<T, HashSet<T>>();
         }
+
         /// <summary>
         /// Add a vertex to the graph
         /// </summary>
@@ -23,6 +24,7 @@
                 adjacencyList[vertex] = new HashSet<T>();
             }
         }
+
         /// <summary>
         /// Add an edge between two vertices
         /// </summary>
@@ -38,6 +40,7 @@
             adjacencyList[source].Add(destination);
             adjacencyList[destination].Add(source);
         }
+
         /// <summary>
         /// Prints the graph
         /// </summary>
@@ -51,9 +54,9 @@
                 {
                     Console.Write($"{neighbor} ");
                 }
+
                 Console.WriteLine();
             }
         }
-
     }
 }

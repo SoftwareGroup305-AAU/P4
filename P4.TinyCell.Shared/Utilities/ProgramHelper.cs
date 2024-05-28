@@ -1,12 +1,9 @@
-﻿using ICSharpCode.SharpZipLib.Core;
-using ICSharpCode.SharpZipLib.GZip;
-using ICSharpCode.SharpZipLib.Tar;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO.Compression;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.JavaScript;
 using System.Text.Json;
-
+using ICSharpCode.SharpZipLib.GZip;
+using ICSharpCode.SharpZipLib.Tar;
 
 namespace P4.TinyCell.Shared.Utilities;
 
@@ -59,7 +56,8 @@ public class ProgramHelper
         }
     }
 
-    private static readonly string ArduinoCliReleasesUrl = "https://api.github.com/repos/arduino/arduino-cli/releases/latest";
+    private static readonly string ArduinoCliReleasesUrl =
+        "https://api.github.com/repos/arduino/arduino-cli/releases/latest";
 
     public static async Task<string> FetchLatestArduinoCliDownloadUrlAsync()
     {
@@ -76,6 +74,7 @@ public class ProgramHelper
                     return asset.GetProperty("browser_download_url").GetString();
                 }
             }
+
             throw new InvalidOperationException("Compatible Arduino CLI asset not found for the current OS.");
         }
     }

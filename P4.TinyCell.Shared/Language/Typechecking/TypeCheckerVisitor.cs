@@ -1,6 +1,5 @@
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Function;
-using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Types;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Primitive;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Expression;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.NumExpr;
@@ -9,10 +8,8 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Statement;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Assignment;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.PinExpr;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.UnaryExpr;
-using Antlr4.Runtime;
 using P4.TinyCell.Shared.Utilities;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.Array;
-using System.ComponentModel;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree.ParameterNodes;
 
 namespace P4.TinyCell.Shared.Language.Typechecking
@@ -64,7 +61,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     Visit(functionDefinitionNode.CompoundStatement);
                 }
 
-                if (functionDefinitionNode.CompoundStatement is not null && function.Type != TcType.VOID && !AllPathsReturn(functionDefinitionNode.CompoundStatement))
+                if (functionDefinitionNode.CompoundStatement is not null && function.Type != TcType.VOID &&
+                    !AllPathsReturn(functionDefinitionNode.CompoundStatement))
                 {
                     throw new Exception("not all paths return a value");
                 }
@@ -73,6 +71,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"In function '{functionDefinitionNode.Identifier.Value}' -> {e.Message}");
             }
+
             vTableStack.Pop();
             return default;
         }
@@ -83,6 +82,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 return true;
             }
+
             foreach (var child in expression.Children)
             {
                 if (ContainsIdentifier(child))
@@ -90,6 +90,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -99,11 +100,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 return TcType.VOID;
             }
+
             var returnType = Visit(returnNode.Children[0]);
             if (returnType != fTable.Last().Type)
             {
                 throw new Exception($"Type mismatch: Expected return statement of type {fTable.Last().Type}");
             }
+
             return returnType;
         }
 
@@ -114,7 +117,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 var assignedType = Visit(assignNode.Expression);
                 var variable = LookupVariable(idNode.Value, vTableStack);
-                CheckTypeMismatch(variable.Type, assignedType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
+                CheckTypeMismatch(variable.Type, assignedType,
+                    new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
                 return variable.Type;
             }
             catch (Exception e)
@@ -124,30 +128,30 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         }
 
 
-
         public override TcType VisitDeclarationNode(DeclarationNode declarationNode)
         {
-
             var declaredIdNode = declarationNode.Identifier;
             var declaredTypeNode = declarationNode.Type;
             if (declaredTypeNode.Type == TcType.VOID)
             {
                 throw new Exception($"Variable '{declaredIdNode.Value}' declared as 'void'");
             }
+
             try
             {
                 UpdateVtable(new KeyValuePair<string, TcType>(declaredIdNode.Value, declaredTypeNode.Type));
                 if (declarationNode.Action is not null)
                 {
                     var actionType = Visit(declarationNode.Action);
-                    CheckTypeMismatch(declaredTypeNode.Type, actionType, new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
-
+                    CheckTypeMismatch(declaredTypeNode.Type, actionType,
+                        new List<TcType> { TcType.APIN, TcType.DPIN, TcType.INT });
                 }
             }
             catch (Exception e)
             {
                 throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
             }
+
             return declaredTypeNode.Type;
         }
 
@@ -164,6 +168,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     CheckArrayElements(arrayDeclarationNode.Elements, declaredTypeNode.Type);
                 }
+
                 if (arrayDeclarationNode.FunctionCall is not null)
                 {
                     Visit(arrayDeclarationNode.FunctionCall);
@@ -173,6 +178,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"While declaring '{declaredIdNode.Value}' -> {e.Message}");
             }
+
             return declaredTypeNode.Type;
         }
 
@@ -373,7 +379,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var idNode = plusAssignNode.Identifier;
             var variable = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(plusAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
+            CheckAritmeticOperation(variable.Type, assignedTypeNode,
+                new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return variable.Type;
         }
 
@@ -382,7 +389,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var idNode = minusAssignNode.Identifier;
             var variable = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(minusAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
+            CheckAritmeticOperation(variable.Type, assignedTypeNode,
+                new List<TcType> { TcType.INT, TcType.DPIN, TcType.APIN });
             return variable.Type;
         }
 
@@ -391,7 +399,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var idNode = multAssignNode.Identifier;
             var variable = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(multAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
+            CheckAritmeticOperation(variable.Type, assignedTypeNode,
+                new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
             return variable.Type;
         }
 
@@ -400,7 +409,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             var idNode = divAssignNode.Identifier;
             var variable = LookupVariable(idNode.Value, vTableStack);
             var assignedTypeNode = Visit(divAssignNode.Expression);
-            CheckAritmeticOperation(variable.Type, assignedTypeNode, new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
+            CheckAritmeticOperation(variable.Type, assignedTypeNode,
+                new List<TcType> { TcType.INT, TcType.APIN, TcType.DPIN });
             return variable.Type;
         }
 
@@ -412,6 +422,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Variable '{pinModeExprNode.Identifier.Value}' is not a 'pin'");
             }
+
             return default;
         }
 
@@ -422,20 +433,26 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 if (pinWriteExprNode.From is not VoltageNode && pinWriteExprNode.From is not BoolNode)
                 {
-                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is a 'digital pin' and expects a 'voltage' or 'bool'");
+                    throw new Exception(
+                        $"Variable '{pinWriteExprNode.To /*.Value*/}' is a 'digital pin' and expects a 'voltage' or 'bool'");
                 }
+
                 return default;
             }
+
             if (toType == TcType.APIN)
             {
                 var valueType = Visit(pinWriteExprNode.From);
                 if (valueType != TcType.INT)
                 {
-                    throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is an 'analog pin' and expects an 'int'");
+                    throw new Exception(
+                        $"Variable '{pinWriteExprNode.To /*.Value*/}' is an 'analog pin' and expects an 'int'");
                 }
+
                 return default;
             }
-            throw new Exception($"Variable '{pinWriteExprNode.To/*.Value*/}' is not a 'pin'");
+
+            throw new Exception($"Variable '{pinWriteExprNode.To /*.Value*/}' is not a 'pin'");
         }
 
         public override TcType VisitPinReadExprNode(PinReadExprNode pinReadExprNode)
@@ -447,11 +464,13 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.BOOL, TcType.DPIN });
                 return default;
             }
+
             if (fromType == TcType.APIN)
             {
                 CheckComparisonTypes(toType, fromType, new List<TcType> { TcType.INT, TcType.APIN });
                 return default;
             }
+
             throw new Exception($"Variable '{pinReadExprNode.To}' is not a pin");
         }
 
@@ -474,6 +493,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Variable '{arrayElementReferenceNode.Identifier.Value}' is not an array");
             }
+
             var indexType = Visit(arrayElementReferenceNode.Index);
             CheckTypeMismatch(TcType.INT, indexType);
             return identifier.Type;
@@ -486,6 +506,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Variable '{arrayAssignmentNode.Identifier.Value}' is not an array");
             }
+
             var indexType = Visit(arrayAssignmentNode.Index);
             CheckTypeMismatch(TcType.INT, indexType);
             var assignedType = Visit(arrayAssignmentNode.Expression);
@@ -508,6 +529,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     return variable;
                 }
             }
+
             throw new Exception($"Variable '{id}' not declared");
         }
 
@@ -519,6 +541,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     return;
                 }
+
                 throw new Exception($"Type mismatch: expected {expectedType}, but got {actualType}");
             }
         }
@@ -536,6 +559,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Function '{id}' not declared");
             }
+
             return function;
         }
 
@@ -551,8 +575,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 if (argumentList.Arguments.Count() != parameters.Count)
                 {
-                    throw new Exception($"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
+                    throw new Exception(
+                        $"Function expects {parameters.Count} parameters, but got {argumentList.Arguments.Count()}");
                 }
+
                 for (int i = 0; i < argumentList.Arguments.Count(); i++)
                 {
                     var parameter = parameters[i];
@@ -561,23 +587,29 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                         var variable = LookupVariable(identifierNode.Value, vTableStack);
                         if (variable.isArray != parameter.isArray)
                         {
-                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive variable of type {variable.Type}");
+                            throw new Exception(
+                                $"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive variable of type {variable.Type}");
                         }
+
                         if (variable.Type != parameter.Type)
                         {
-                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {variable.Type}");
+                            throw new Exception(
+                                $"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {variable.Type}");
                         }
                     }
                     else
                     {
                         if (parameter.isArray is true)
                         {
-                            throw new Exception($"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive reference");
+                            throw new Exception(
+                                $"Function expects parameter {i + 1} to be an array of type {parameter.Type}, but got primitive reference");
                         }
+
                         var argumentType = Visit(argumentList.Arguments[i].Node);
                         if (argumentType != parameter.Type)
                         {
-                            throw new Exception($"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {argumentType}");
+                            throw new Exception(
+                                $"Function expects parameter {i + 1} to be of type {parameter.Type}, but got {argumentType}");
                         }
                     }
                 }
@@ -589,9 +621,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             if (!expectedTypes.Contains(left) || !expectedTypes.Contains(right))
             {
-                throw new Exception($"Type mismatch: expected {string.Join(", ", expectedTypes)}, but got {left} and {right}");
+                throw new Exception(
+                    $"Type mismatch: expected {string.Join(", ", expectedTypes)}, but got {left} and {right}");
             }
         }
+
         /// <summary>
         /// Updates the function table with a new function
         /// </summary>
@@ -603,6 +637,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Function '{function.Id}' has already been declared");
             }
+
             fTable.Add(function);
         }
 
@@ -619,9 +654,11 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                 {
                     throw new Exception($"Variable '{variable.Id}' already declared");
                 }
+
                 vTableStack.First().Push(variable);
             }
         }
+
         /// <summary>
         /// Updates the variable table with a single variable
         /// </summary>
@@ -633,6 +670,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception($"Variable '{variable.Key}' already declared");
             }
+
             vTableStack.First().Push(new Variable(variable.Value, variable.Key, isArray));
         }
 
@@ -640,7 +678,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             if (!expectedTypes.Contains(operand))
             {
-                throw new Exception($"Type mismatch: got {operand}, expected expected ({string.Join(", ", expectedTypes)})");
+                throw new Exception(
+                    $"Type mismatch: got {operand}, expected expected ({string.Join(", ", expectedTypes)})");
             }
         }
 
@@ -648,8 +687,10 @@ namespace P4.TinyCell.Shared.Language.Typechecking
         {
             if (expectedTypes is not null && (!expectedTypes.Contains(left) || !expectedTypes.Contains(right)))
             {
-                throw new Exception($"Type mismatch: comparison between {left} and {right}, expected ({string.Join(", ", expectedTypes)})");
+                throw new Exception(
+                    $"Type mismatch: comparison between {left} and {right}, expected ({string.Join(", ", expectedTypes)})");
             }
+
             if (left != right && expectedTypes is null)
             {
                 throw new Exception($"Type mismatch: comparison between {left} and {right}");
@@ -697,7 +738,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                         return AllPathsReturn(ifStatementNode.ElseExpr);
                     }
                 }
-                else if (statement is WhileStatementNode whileStatementNode && !ContainsIdentifier(whileStatementNode.Condition))
+                else if (statement is WhileStatementNode whileStatementNode &&
+                         !ContainsIdentifier(whileStatementNode.Condition))
                 {
                     if (EvaluateCondition(whileStatementNode.Condition) == 1)
                     {
@@ -711,6 +753,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                         }
                     }
                 }
+
                 if (statement is ForStatementNode forStatementNode && !ContainsIdentifier(forStatementNode.Condition))
                 {
                     if (EvaluateCondition(forStatementNode.Condition) == 1)
@@ -730,6 +773,7 @@ namespace P4.TinyCell.Shared.Language.Typechecking
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -745,10 +789,8 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             {
                 throw new Exception("Condition must evaluate to a boolean value");
             }
+
             return EvaluateConditionHelper(condition);
-
-
-
         }
 
         /// <summary>
@@ -762,20 +804,47 @@ namespace P4.TinyCell.Shared.Language.Typechecking
             return condition switch
             {
                 IntNode intNode => intNode.Value,
-                OrExprNode orExprNode => EvaluateConditionHelper(orExprNode.Left) | EvaluateConditionHelper(orExprNode.Right),
-                AndExprNode andExprNode => EvaluateConditionHelper(andExprNode.Left) & EvaluateConditionHelper(andExprNode.Right),
+                OrExprNode orExprNode => EvaluateConditionHelper(orExprNode.Left) |
+                                         EvaluateConditionHelper(orExprNode.Right),
+                AndExprNode andExprNode => EvaluateConditionHelper(andExprNode.Left) &
+                                           EvaluateConditionHelper(andExprNode.Right),
                 NotExprNode notExprNode => ~EvaluateConditionHelper(notExprNode.Operand),
-                EqualExprNode equalExprNode => EvaluateConditionHelper(equalExprNode.Left) == EvaluateConditionHelper(equalExprNode.Right) ? 1 : 0,
-                NotEqualExprNode notEqualExprNode => EvaluateConditionHelper(notEqualExprNode.Left) != EvaluateConditionHelper(notEqualExprNode.Right) ? 1 : 0,
-                LessThanExprNode lessThanExprNode => EvaluateConditionHelper(lessThanExprNode.Left) < EvaluateConditionHelper(lessThanExprNode.Right) ? 1 : 0,
-                GreaterThanExprNode greaterThanExprNode => EvaluateConditionHelper(greaterThanExprNode.Left) > EvaluateConditionHelper(greaterThanExprNode.Right) ? 1 : 0,
-                GreaterThanEqualExprNode greaterThanOrEqualExprNode => EvaluateConditionHelper(greaterThanOrEqualExprNode.Left) >= EvaluateConditionHelper(greaterThanOrEqualExprNode.Right) ? 1 : 0,
-                LessThanEqualExprNode lessThanOrEqualExprNode => EvaluateConditionHelper(lessThanOrEqualExprNode.Left) <= EvaluateConditionHelper(lessThanOrEqualExprNode.Right) ? 1 : 0,
-                AddExprNode addExprNode => EvaluateConditionHelper(addExprNode.Left) + EvaluateConditionHelper(addExprNode.Right),
-                SubExprNode subExprNode => EvaluateConditionHelper(subExprNode.Left) - EvaluateConditionHelper(subExprNode.Right),
-                MultExprNode multExprNode => EvaluateConditionHelper(multExprNode.Left) * EvaluateConditionHelper(multExprNode.Right),
-                DivExprNode divExprNode => EvaluateConditionHelper(divExprNode.Left) / EvaluateConditionHelper(divExprNode.Right),
-                ModExprNode modExprNode => EvaluateConditionHelper(modExprNode.Left) % EvaluateConditionHelper(modExprNode.Right),
+                EqualExprNode equalExprNode => EvaluateConditionHelper(equalExprNode.Left) ==
+                                               EvaluateConditionHelper(equalExprNode.Right)
+                    ? 1
+                    : 0,
+                NotEqualExprNode notEqualExprNode => EvaluateConditionHelper(notEqualExprNode.Left) !=
+                                                     EvaluateConditionHelper(notEqualExprNode.Right)
+                    ? 1
+                    : 0,
+                LessThanExprNode lessThanExprNode => EvaluateConditionHelper(lessThanExprNode.Left) <
+                                                     EvaluateConditionHelper(lessThanExprNode.Right)
+                    ? 1
+                    : 0,
+                GreaterThanExprNode greaterThanExprNode => EvaluateConditionHelper(greaterThanExprNode.Left) >
+                                                           EvaluateConditionHelper(greaterThanExprNode.Right)
+                    ? 1
+                    : 0,
+                GreaterThanEqualExprNode greaterThanOrEqualExprNode =>
+                    EvaluateConditionHelper(greaterThanOrEqualExprNode.Left) >=
+                    EvaluateConditionHelper(greaterThanOrEqualExprNode.Right)
+                        ? 1
+                        : 0,
+                LessThanEqualExprNode lessThanOrEqualExprNode =>
+                    EvaluateConditionHelper(lessThanOrEqualExprNode.Left) <=
+                    EvaluateConditionHelper(lessThanOrEqualExprNode.Right)
+                        ? 1
+                        : 0,
+                AddExprNode addExprNode => EvaluateConditionHelper(addExprNode.Left) +
+                                           EvaluateConditionHelper(addExprNode.Right),
+                SubExprNode subExprNode => EvaluateConditionHelper(subExprNode.Left) -
+                                           EvaluateConditionHelper(subExprNode.Right),
+                MultExprNode multExprNode => EvaluateConditionHelper(multExprNode.Left) *
+                                             EvaluateConditionHelper(multExprNode.Right),
+                DivExprNode divExprNode => EvaluateConditionHelper(divExprNode.Left) /
+                                           EvaluateConditionHelper(divExprNode.Right),
+                ModExprNode modExprNode => EvaluateConditionHelper(modExprNode.Left) %
+                                           EvaluateConditionHelper(modExprNode.Right),
                 BoolNode boolNode => boolNode.Value ? 1 : 0,
                 _ => throw new Exception("Invalid condition")
             };

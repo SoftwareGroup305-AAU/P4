@@ -7,7 +7,8 @@ namespace P4.TinyCell.Tests.AcceptanceTests;
 public class CompilerExecutionFlow
 {
     [Fact]
-    [Description("Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C that includes manual command input.")]
+    [Description(
+        "Tests the full compilation flow from executing the TinyCell compiler to generating Arduino C that includes manual command input.")]
     public async Task FullCompilationExecution()
     {
         string workingDirectory = Environment.CurrentDirectory;

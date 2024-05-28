@@ -79,18 +79,18 @@ public class ParserRules
     public void ParserSetupDefinitionRule()
     {
         var tokens = new List<IToken>
-    {
-        new TestToken("setup", TinyCellLexer.SETUP),
-        new TestToken("{", TinyCellLexer.LCURLY),
-        new TestToken("int", TinyCellLexer.INT),
-        new TestToken("myVar", TinyCellLexer.Identifier),
-        new TestToken(";", TinyCellLexer.SEMI),
-        new TestToken("}", TinyCellLexer.RCURLY),
-        new TestToken("update", TinyCellLexer.UPDATE),
-        new TestToken("{", TinyCellLexer.LCURLY),
-        new TestToken("}", TinyCellLexer.RCURLY),
-        new TestToken("", TinyCellLexer.Eof),
-    };
+        {
+            new TestToken("setup", TinyCellLexer.SETUP),
+            new TestToken("{", TinyCellLexer.LCURLY),
+            new TestToken("int", TinyCellLexer.INT),
+            new TestToken("myVar", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("}", TinyCellLexer.RCURLY),
+            new TestToken("update", TinyCellLexer.UPDATE),
+            new TestToken("{", TinyCellLexer.LCURLY),
+            new TestToken("}", TinyCellLexer.RCURLY),
+            new TestToken("", TinyCellLexer.Eof),
+        };
 
         var parser = CreateParserNoError(tokens);
         var doc = parser.document();
@@ -108,18 +108,18 @@ public class ParserRules
     public void ParserUpdateDefinitionRule()
     {
         var tokens = new List<IToken>
-    {
-        new TestToken("setup", TinyCellLexer.SETUP),
-        new TestToken("{", TinyCellLexer.LCURLY),
-        new TestToken("}", TinyCellLexer.RCURLY),
-        new TestToken("update", TinyCellLexer.UPDATE),
-        new TestToken("{", TinyCellLexer.LCURLY),
-        new TestToken("int", TinyCellLexer.INT),
-        new TestToken("myVar", TinyCellLexer.Identifier),
-        new TestToken(";", TinyCellLexer.SEMI),
-        new TestToken("}", TinyCellLexer.RCURLY),
-        new TestToken("", TinyCellLexer.Eof),
-    };
+        {
+            new TestToken("setup", TinyCellLexer.SETUP),
+            new TestToken("{", TinyCellLexer.LCURLY),
+            new TestToken("}", TinyCellLexer.RCURLY),
+            new TestToken("update", TinyCellLexer.UPDATE),
+            new TestToken("{", TinyCellLexer.LCURLY),
+            new TestToken("int", TinyCellLexer.INT),
+            new TestToken("myVar", TinyCellLexer.Identifier),
+            new TestToken(";", TinyCellLexer.SEMI),
+            new TestToken("}", TinyCellLexer.RCURLY),
+            new TestToken("", TinyCellLexer.Eof),
+        };
 
         var parser = CreateParserNoError(tokens);
         var doc = parser.document();
