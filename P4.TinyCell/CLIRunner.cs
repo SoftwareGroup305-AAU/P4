@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Antlr4.Runtime;
@@ -5,6 +6,7 @@ using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
 using P4.TinyCell.Shared.Language.Typechecking;
 using P4.TinyCell.Shared.Utilities;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace P4.TinyCell;
 
@@ -78,7 +80,7 @@ public class CLIRunner
 
         CLIEnv();
     }
-    public void FindLibs(string fc)
+    public string FindLibs(string fc)
     {
         string includePattern = @"include\s[A-Za-z0-9]+\;";
         MatchCollection matches;
@@ -89,118 +91,167 @@ public class CLIRunner
         for (int i = 0; i < matches.Count; i++)
         {
             //don't blame me :(
-            matchStrings.Add(matches[i].ToString().Insert(matches[i].ToString().Length - 1, ".h"));
+            matchStrings.Add(matches[i].ToString().Insert(matches[i].ToString().Length - 1, ".h").Replace("include ", "").Replace(";", ""));
         }
+        return IncludeLibs(matchStrings);
     }
-   
-    public void CompileTC()
+    //C:\Users\Benjamin Høj\Documents\Arduino\libraries
+    public string IncludeLibs(List<string> libraries)
     {
-        string workingDirectory = Environment.CurrentDirectory;
-
-        string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
-        FindLibs(fileContent);
-        var antlrInputStream = new AntlrInputStream(fileContent);
-
-        var lexer = new TinyCellLexer(antlrInputStream);
-
-        var tokenStream = new CommonTokenStream(lexer);
-
-        tokenStream.Fill();
-
-        var tokens = tokenStream.GetTokens();
-#if DEBUG
-        foreach (var token in tokens)
+        string includeDirs = "";
+        //Assumes default install could not find correct username??
+        string libLocation = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) + "Users\\" + Environment.UserName + " Høj" + "\\Documents\\Arduino\\libraries";
+        for (int i = 0; i < libraries.Count; i++)
         {
-            int tokenType = token.Type - 1;
-            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length
-                ? TinyCellLexer.ruleNames[tokenType]
-                : "Unknown";
-            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
+            var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
+            //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
+            includeDirs += "\n#include \"" + files.First() + "\"\n";
         }
+        return includeDirs;
+        //Console.WriteLine(file)
+    }
+    public string UpdateIncludes(string includes)
+    {
+        string[] includeFiles = includes.TrimEnd().TrimStart().Replace("\"", "").Replace("#include ", "").Split('\n');
+        //THIS PATTERN IS NOT DONE
+        string headerPatterns = @"([A-Za-z]+\(\);)|[ A-Za-z_*1-9]+\s[A-Za-z]+\([^)]*\);";
 
-#endif
-        var parser = new TinyCellParser(tokenStream);
-
-        parser.AddErrorListener(new ParserHelper.NoErrorListener());
-
-        var tree = parser.document();
-#if DEBUG
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Tokens:");
-
-        foreach (var token in tokens)
+        MatchCollection matches;
+        List<string> matchContent = new List<string>();
+        foreach (var file in includeFiles)
         {
-            int tokenType = token.Type - 1;
-            string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length
-                ? TinyCellLexer.ruleNames[tokenType]
-                : "Unknown";
-            Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
-        }
+            string headerContents = File.ReadAllText(file);
+            matches = Regex.Matches(headerContents, headerPatterns, RegexOptions.Multiline);
 
-        Console.WriteLine("\n=================================================\n");
-        Console.WriteLine("Parse Tree:");
-
-        ParserHelper.PrintTree(tree);
-#endif
-        AstBuilderVisitor astBuilderVisitor = new();
-        AstNode abcd = astBuilderVisitor.Visit(tree);
-#if DEBUG
-        Console.WriteLine(abcd.ToString());
-#endif
-        var typeChecker = new TypeCheckerVisitor();
-        typeChecker.Visit(abcd);
-
-        TestAstVisitor test = new();
-        test.VisitRootNode((RootNode)abcd);
-
-        CGeneratorVisitor cGeneratorVisitor = new();
-        string ccode = cGeneratorVisitor.Visit(abcd);
-
-        try
-        {
-            string arduinoDir = "Arduino";
-            if (!Directory.Exists(arduinoDir))
+            for (int i = 0; i < matches.Count; i++)
             {
-                Directory.CreateDirectory(arduinoDir);
-                Console.WriteLine("Created directory: Arduino");
+                matchContent.Add(matches[i].Value+"\n");
+                //don't blame me :(
+                Console.WriteLine(matchContent[i]);
             }
+        }
+        //defaults + all found
+        string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();" + matchContent.Where(s => !s.Equals(""));
+        File.CreateText("default.tcl");
+        return "";
+    }
+        
+public void CompileTC()
+{
+    string workingDirectory = Environment.CurrentDirectory;
 
-            using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
-            sw.Write(ccode);
+    string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
+    string includes = FindLibs(fileContent);
+    string defaultTCLIncludes = UpdateIncludes(includes);
+
+    string replacePattern = @"include\s[A-Za-z0-9]+\;";
+
+    Regex defaultRegex = new Regex(replacePattern);
+    fileContent = defaultRegex.Replace(fileContent, "");
+
+    var antlrInputStream = new AntlrInputStream(fileContent);
+
+    var lexer = new TinyCellLexer(antlrInputStream);
+
+    var tokenStream = new CommonTokenStream(lexer);
+
+    tokenStream.Fill();
+
+    var tokens = tokenStream.GetTokens();
 #if DEBUG
-            Console.WriteLine(ccode);
-#endif
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"An error occurred: {ex.Message}");
-        }
-    }
-
-    public static void ExecuteCommand(string command)
+    foreach (var token in tokens)
     {
-        Console.WriteLine("\n");
-        var processInfo = new ProcessStartInfo("Arduino-CLI/arduino-cli", command)
-        {
-            CreateNoWindow = true,
-            UseShellExecute = false,
-            RedirectStandardError = true,
-            RedirectStandardOutput = true
-        };
-        //processInfo.WorkingDirectory = Environment.CurrentDirectory+"/Arduino-CLI/";
-        var process = Process.Start(processInfo);
-
-        process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
-            Console.WriteLine("tcc> " + e.Data);
-        process.BeginOutputReadLine();
-
-        process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
-            Console.WriteLine("tcc error> " + e.Data);
-        process.BeginErrorReadLine();
-
-        process.WaitForExit();
-
-        process.Close();
-        Console.WriteLine("\n");
+        int tokenType = token.Type - 1;
+        string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length
+            ? TinyCellLexer.ruleNames[tokenType]
+            : "Unknown";
+        Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
     }
+
+#endif
+    var parser = new TinyCellParser(tokenStream);
+
+    parser.AddErrorListener(new ParserHelper.NoErrorListener());
+
+    var tree = parser.document();
+#if DEBUG
+    Console.WriteLine("\n=================================================\n");
+    Console.WriteLine("Tokens:");
+
+    foreach (var token in tokens)
+    {
+        int tokenType = token.Type - 1;
+        string ruleName = tokenType >= 0 && tokenType < TinyCellLexer.ruleNames.Length
+            ? TinyCellLexer.ruleNames[tokenType]
+            : "Unknown";
+        Console.WriteLine(token + " | " + ruleName + " | " + token.Text);
+    }
+
+    Console.WriteLine("\n=================================================\n");
+    Console.WriteLine("Parse Tree:");
+
+    ParserHelper.PrintTree(tree);
+#endif
+    AstBuilderVisitor astBuilderVisitor = new();
+    AstNode abcd = astBuilderVisitor.Visit(tree);
+#if DEBUG
+    Console.WriteLine(abcd.ToString());
+#endif
+    var typeChecker = new TypeCheckerVisitor();
+    typeChecker.Visit(abcd);
+
+    TestAstVisitor test = new();
+    test.VisitRootNode((RootNode)abcd);
+
+    CGeneratorVisitor cGeneratorVisitor = new();
+
+    string ccode = cGeneratorVisitor.Visit(abcd);
+    ccode = ccode.Insert(20, includes);
+    try
+    {
+        string arduinoDir = "Arduino";
+        if (!Directory.Exists(arduinoDir))
+        {
+            Directory.CreateDirectory(arduinoDir);
+            Console.WriteLine("Created directory: Arduino");
+        }
+
+        using StreamWriter sw = File.CreateText($"Arduino/Arduino.ino");
+        sw.Write(ccode);
+#if DEBUG
+        Console.WriteLine(ccode);
+#endif
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"An error occurred: {ex.Message}");
+    }
+}
+
+public static void ExecuteCommand(string command)
+{
+    Console.WriteLine("\n");
+    var processInfo = new ProcessStartInfo("Arduino-CLI/arduino-cli", command)
+    {
+        CreateNoWindow = true,
+        UseShellExecute = false,
+        RedirectStandardError = true,
+        RedirectStandardOutput = true
+    };
+    //processInfo.WorkingDirectory = Environment.CurrentDirectory+"/Arduino-CLI/";
+    var process = Process.Start(processInfo);
+
+    process.OutputDataReceived += (object sender, DataReceivedEventArgs e) =>
+        Console.WriteLine("tcc> " + e.Data);
+    process.BeginOutputReadLine();
+
+    process.ErrorDataReceived += (object sender, DataReceivedEventArgs e) =>
+        Console.WriteLine("tcc error> " + e.Data);
+    process.BeginErrorReadLine();
+
+    process.WaitForExit();
+
+    process.Close();
+    Console.WriteLine("\n");
+}
 }
