@@ -1,4 +1,7 @@
 include default.tcl;
+include Wifi101;
+include abehjerne;
+include kage;
 
 int num = -(-2)- -(-(-2));
 dpin ledPin = 6;

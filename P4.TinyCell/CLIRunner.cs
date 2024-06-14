@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Antlr4.Runtime;
 using P4.TinyCell.Shared.Language.AbstractSyntaxTree;
 using P4.TinyCell.Shared.Language.CodeGen;
@@ -77,13 +78,27 @@ public class CLIRunner
 
         CLIEnv();
     }
+    public void FindLibs(string fc)
+    {
+        string includePattern = @"include\s[A-Za-z0-9]+\;";
+        MatchCollection matches;
 
+        Regex defaultRegex = new Regex(includePattern);
+        matches = defaultRegex.Matches(fc);
+        List<string> matchStrings = new List<string>();
+        for (int i = 0; i < matches.Count; i++)
+        {
+            //don't blame me :(
+            matchStrings.Add(matches[i].ToString().Insert(matches[i].ToString().Length - 1, ".h"));
+        }
+    }
+   
     public void CompileTC()
     {
         string workingDirectory = Environment.CurrentDirectory;
 
         string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
-
+        FindLibs(fileContent);
         var antlrInputStream = new AntlrInputStream(fileContent);
 
         var lexer = new TinyCellLexer(antlrInputStream);
