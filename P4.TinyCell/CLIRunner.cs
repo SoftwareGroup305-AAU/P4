@@ -80,7 +80,7 @@ public class CLIRunner
 
         CLIEnv();
     }
-    public string FindLibs(string fc)
+    public Task<string> FindLibs(string fc)
     {
         string includePattern = @"include\s[A-Za-z0-9]+\;";
         MatchCollection matches;
@@ -93,7 +93,7 @@ public class CLIRunner
             //don't blame me :(
             matchStrings.Add(matches[i].ToString().Insert(matches[i].ToString().Length - 1, ".h").Replace("include ", "").Replace(";", ""));
         }
-        return IncludeLibs(matchStrings);
+        return Task.FromResult(IncludeLibs(matchStrings));
     }
     //C:\Users\Benjamin Høj\Documents\Arduino\libraries
     public string IncludeLibs(List<string> libraries)
@@ -108,9 +108,10 @@ public class CLIRunner
             includeDirs += "\n#include \"" + files.First() + "\"\n";
         }
         return includeDirs;
+       // return includeDirs;
         //Console.WriteLine(file)
     }
-    public string UpdateIncludes(string includes)
+    static Task<string> UpdateIncludes(string includes)
     {
         string[] includeFiles = includes.TrimEnd().TrimStart().Replace("\"", "").Replace("#include ", "").Split('\n');
         //THIS PATTERN IS NOT DONE
@@ -132,18 +133,19 @@ public class CLIRunner
         }
         //defaults + all found
         string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();" + matchContent.Where(s => !s.Equals(""));
-        File.CreateText("default.tcl");
-        return "";
+        File.WriteAllTextAsync("default.tcl", include);
+        
+        return Task.FromResult(include);
     }
         
-public void CompileTC()
+public async void CompileTC()
 {
     string workingDirectory = Environment.CurrentDirectory;
 
     string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
-    string includes = FindLibs(fileContent);
-    string defaultTCLIncludes = UpdateIncludes(includes);
-
+    string includes = await FindLibs(fileContent);
+    //string defaultTCLIncludes =
+    await UpdateIncludes(includes);
     string replacePattern = @"include\s[A-Za-z0-9]+\;";
 
     Regex defaultRegex = new Regex(replacePattern);
