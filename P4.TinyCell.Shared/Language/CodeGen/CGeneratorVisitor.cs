@@ -132,7 +132,7 @@ public class CGeneratorVisitor : AstBaseVisitor<string>
         {
             identifier = "Serial.begin";
         }
-
+        
         return $"{identifier}{arguments}";
     }
 

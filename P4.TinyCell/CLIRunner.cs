@@ -95,12 +95,15 @@ public class CLIRunner
         }
         return Task.FromResult(IncludeLibs(matchStrings));
     }
-    //C:\Users\Benjamin Høj\Documents\Arduino\libraries
+    //C:\Users\Benjamin Hï¿½j\Documents\Arduino\libraries
     public string IncludeLibs(List<string> libraries)
     {
         string includeDirs = "";
         //Assumes default install could not find correct username??
-        string libLocation = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) + "Users\\" + Environment.UserName + " Høj" + "\\Documents\\Arduino\\libraries";
+        Console.WriteLine();
+        //string libLocation = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) + "Users\\" + Environment.UserName + "\\Documents\\Arduino\\libraries";
+        //Works on linux
+        string libLocation = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Arduino/libraries";
         for (int i = 0; i < libraries.Count; i++)
         {
             var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
@@ -111,7 +114,7 @@ public class CLIRunner
        // return includeDirs;
         //Console.WriteLine(file)
     }
-    static Task<string> UpdateIncludes(string includes)
+    private static async Task UpdateIncludes(string includes)
     {
         string[] includeFiles = includes.TrimEnd().TrimStart().Replace("\"", "").Replace("#include ", "").Split('\n');
         //THIS PATTERN IS NOT DONE
@@ -126,16 +129,16 @@ public class CLIRunner
 
             for (int i = 0; i < matches.Count; i++)
             {
-                matchContent.Add(matches[i].Value+"\n");
+                matchContent.Add(matches[i].Value.Trim()+"\r\n");
                 //don't blame me :(
                 Console.WriteLine(matchContent[i]);
             }
         }
         //defaults + all found
-        string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();" + matchContent.Where(s => !s.Equals(""));
-        File.WriteAllTextAsync("default.tcl", include);
-        
-        return Task.FromResult(include);
+        string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();\r\n";
+        include += string.Join("", matchContent.Where(s => !string.IsNullOrEmpty(s)));
+
+        await File.WriteAllTextAsync("default.tcl", include);
     }
         
 public async void CompileTC()

@@ -1,29 +1,28 @@
 include default.tcl;
-include Wifi101;
-include abehjerne;
-include kage;
+include Stepper;
 
-int num = -(-2)- -(-(-2));
-dpin ledPin = 6;
+int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
+// for your motor
 
-int func () {
-    return 1;
-}
-
-void func2() {
-    return;
-}
+// initialize the stepper library on pins 8 through 11:
+//Stepper myStepper(stepsPerRevolution, 8, 9, 10, 11);
 
 setup{
-    set ledPin to OUTPUT;
-    int arr[9] = {-1,2,3,4,5,6,7,8,9};
-    bool bArr[3] = {true, false, false};
-    string str[2] = {"Hello", "World"};
+  // set the speed at 60 rpm:
+  //myStepper.setSpeed(60);
+  // initialize the serial port:
+  initSerial(9600);
+  stepMotor(10);
 }
 
 update{
-    write HIGH to ledPin;
-    delay(1000);
-    write LOW to ledPin;
-    delay(1000);
+  // step one revolution  in one direction:
+  print("clockwise");
+  //myStepper.step(stepsPerRevolution);
+  delay(500);
+
+  // step one revolution in the other direction:
+  print("counterclockwise");
+  //myStepper.step(-stepsPerRevolution);
+  delay(500);
 }
