@@ -47,19 +47,20 @@ public class CLIRunner
         switch (command)
         {
             case "compile":
-                CompileTC();
+                
                 Console.WriteLine(
                     "tcc>> What board would you like to target? (Unsure? Use a board that appears under the 'board list' command)\n");
                 board = Console.ReadLine();
+                CompileTC(board);
                 CLIRunner.ExecuteCommand($"compile ./Arduino/Arduino.ino -b {board} --build-path ArduinoCompiled");
                 Thread.Sleep(2500);
                 CLIRunner.ExecuteCommand("");
                 break;
             case "upload":
-                CompileTC();
                 Console.WriteLine(
                     "tcc>> What board would you like to target? (Unsure? Use the FQBN that appears under the 'board list' command)\n");
                 board = Console.ReadLine();
+                CompileTC(board);
                 Console.WriteLine(
                     "tcc>> Which port would you like to target? (Unsure? Use one that is connected to your board)\n");
                 port = Console.ReadLine();
@@ -80,8 +81,8 @@ public class CLIRunner
 
         CLIEnv();
     }
-    public Task<string> FindLibs(string fc)
-    {
+    public Task<string> FindLibs(string fc, string board)
+    { //todo add 
         string includePattern = @"include\s[A-Za-z0-9]+\;";
         MatchCollection matches;
 
@@ -93,22 +94,72 @@ public class CLIRunner
             //don't blame me :(
             matchStrings.Add(matches[i].ToString().Insert(matches[i].ToString().Length - 1, ".h").Replace("include ", "").Replace(";", ""));
         }
-        return Task.FromResult(IncludeLibs(matchStrings));
+        return Task.FromResult(IncludeLibs(matchStrings, board));
     }
-    //C:\Users\Benjamin H�j\Documents\Arduino\libraries
-    public string IncludeLibs(List<string> libraries)
+    //C:\Users\Benjamin H�j\Documents\Arduino\libraries 
+    public string IncludeLibs(List<string> libraries, string board)
     {
         string includeDirs = "";
         //Assumes default install could not find correct username??
         Console.WriteLine();
-        //string libLocation = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) + "Users\\" + Environment.UserName + "\\Documents\\Arduino\\libraries";
+
         //Works on linux
-        string libLocation = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Arduino/libraries";
+        string libLocation = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/.arduino15/libraries";//First pass For standard installed
         for (int i = 0; i < libraries.Count; i++)
         {
             var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
             //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
             includeDirs += "\n#include \"" + files.First() + "\"\n";
+            if (files.Count() != 0)
+            {
+                Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
+                i--; //Decrement incase we remove an index
+            }
+            if (files.Count() != 0)
+            {
+                libraries.RemoveAt(i);
+                i--; //Decrement incase we remove an index
+            }
+        }
+        
+        //second pass for other standard libs .arduino15/ WE MIGHT NOT NEED THIS PASS
+        libLocation = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + $"/.arduino15/packages/arduino/hardware/{board.Split(":")[1]}/1.8.14/libraries";//second pass for other standard installed
+        for (int i = 0; i < libraries.Count; i++)
+        {
+            var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
+            //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
+            
+            includeDirs += "\n#include \"" + files.First() + "\"\n";
+            if (files.Count() != 0)
+            {
+                Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
+                i--; //Decrement incase we remove an index
+            }
+            if (files.Count() != 0)
+            {
+                libraries.RemoveAt(i);
+                i--; //Decrement incase we remove an index
+            }
+        }
+        //third pass for custom installed
+        //might be for windows
+        //string libLocation = Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile)) + "Users\\" + Environment.UserName + "\\Documents\\Arduino\\libraries";
+        libLocation = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + "/Arduino/libraries";
+        for (int i = 0; i < libraries.Count; i++)
+        {
+            var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
+            //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
+            includeDirs += "\n#include \"" + files.First() + "\"\n";
+            if (files.Count() != 0)
+            {
+                Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
+                i--; //Decrement incase we remove an index
+            }
+            if (files.Count() != 0)
+            {
+                libraries.RemoveAt(i);
+                i--; //Decrement incase we remove an index
+            }
         }
         return includeDirs;
        // return includeDirs;
@@ -134,19 +185,39 @@ public class CLIRunner
                 Console.WriteLine(matchContent[i]);
             }
         }
+        
         //defaults + all found
         string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();\r\n";
+        include = await EnsureCompatability(include);
         include += string.Join("", matchContent.Where(s => !string.IsNullOrEmpty(s)));
 
         await File.WriteAllTextAsync("default.tcl", include);
     }
+
+    /*Converts datatypes*/
+    private static async Task<string> EnsureCompatability(string include)
+    {
+        include.Replace("void", "");//This can be nothing, cause some weird library authors thinks func(void); is okay to do :(
+        include.Replace("word", "int"); //An int of at least 16 bits
+        include.Replace("unsigned int", "int");   
+        include.Replace("byte", "int");//Not the same
+        include.Replace("double", "float");//Not the same
+        include.Replace("unsigned long", "int");
+        include.Replace("long", "int");//Not the same
+        include.Replace("short", "int");//This should not be that common they seem to actually be the same according to the docs?
+        include.Replace("size_t", "int");//Not the same
+        include.Replace("unsigned char", "string");//A one byte char
+        include.Replace("char", "string");//Not the same but should actually be valid
         
-public async void CompileTC()
+        return include;
+    }
+        
+public async void CompileTC(string board)
 {
     string workingDirectory = Environment.CurrentDirectory;
 
     string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
-    string includes = await FindLibs(fileContent);
+    string includes = await FindLibs(fileContent, board);
     //string defaultTCLIncludes =
     await UpdateIncludes(includes);
     string replacePattern = @"include\s[A-Za-z0-9]+\;";
