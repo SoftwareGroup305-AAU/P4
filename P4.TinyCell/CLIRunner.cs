@@ -96,7 +96,6 @@ public class CLIRunner
         }
         return Task.FromResult(IncludeLibs(matchStrings, board));
     }
-    //C:\Users\Benjamin H�j\Documents\Arduino\libraries 
     public string IncludeLibs(List<string> libraries, string board)
     {
         string includeDirs = "";
@@ -110,10 +109,9 @@ public class CLIRunner
             var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
             //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
             includeDirs += "\n#include \"" + files.First() + "\"\n";
-            if (files.Count() != 0)
+            if (files.Count() == 0)
             {
                 Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
-                i--; //Decrement incase we remove an index
             }
             if (files.Count() != 0)
             {
@@ -130,10 +128,9 @@ public class CLIRunner
             //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
             
             includeDirs += "\n#include \"" + files.First() + "\"\n";
-            if (files.Count() != 0)
+            if (files.Count() == 0)
             {
                 Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
-                i--; //Decrement incase we remove an index
             }
             if (files.Count() != 0)
             {
@@ -150,10 +147,9 @@ public class CLIRunner
             var files = Directory.EnumerateFiles(libLocation, "*.h", SearchOption.AllDirectories).Where(file => Path.GetFileName(file).Equals(libraries[i], StringComparison.OrdinalIgnoreCase));
             //TODO: REPORT AN ERROR IF NO MATCH IS FOUND -> THE LIBRARY IS NOT INSTALLED
             includeDirs += "\n#include \"" + files.First() + "\"\n";
-            if (files.Count() != 0)
+            if (files.Count() == 0)
             {
                 Console.WriteLine($"tcc > ERROR: The library {libraries[i]} is not installed!");
-                i--; //Decrement incase we remove an index
             }
             if (files.Count() != 0)
             {
@@ -165,50 +161,67 @@ public class CLIRunner
        // return includeDirs;
         //Console.WriteLine(file)
     }
-    private static async Task UpdateIncludes(string includes)
+    //I'm working in here, at line 191 is the issue, it originally was matchContent.Add( matches[i].Value.Trim()+"\r\n");
+    private static async Task<List<string>> UpdateIncludes(string includes)
     {
         string[] includeFiles = includes.TrimEnd().TrimStart().Replace("\"", "").Replace("#include ", "").Split('\n');
         //THIS PATTERN IS NOT DONE
         string headerPatterns = @"([A-Za-z]+\(\);)|[ A-Za-z_*1-9]+\s[A-Za-z]+\([^)]*\);";
-
+        string classPattern = @"class [a-zA-Z0-9_]+";
         MatchCollection matches;
+        MatchCollection ClassMatches;
         List<string> matchContent = new List<string>();
+        List<string> ClassContent = new List<string>();
+
+        int counter = 0;
         foreach (var file in includeFiles)
         {
             string headerContents = File.ReadAllText(file);
             matches = Regex.Matches(headerContents, headerPatterns, RegexOptions.Multiline);
-
+            
+            ClassMatches = Regex.Matches(headerContents, classPattern, RegexOptions.Multiline);
+            for (int i = 0; i < ClassMatches.Count; i++)
+            {
+                ClassContent.Add(ClassMatches[i].Value.Replace("class ", "").Trim()+"\r\n");
+                Console.WriteLine(ClassContent[i]);
+            }
             for (int i = 0; i < matches.Count; i++)
             {
-                matchContent.Add(matches[i].Value.Trim()+"\r\n");
-                //don't blame me :(
-                Console.WriteLine(matchContent[i]);
+                int insertAt = matches[i].Value.IndexOf(" ");
+                matchContent.Add( matches[i].Value.Trim().Insert(insertAt, ClassContent[counter].ToLower() + ".")+"\r\n");
             }
+
+            counter++;
         }
         
         //defaults + all found
         string include = "void print(string text);\r\nvoid initSerial(int BaudRate);\r\nvoid delay(int ms);\r\nint millis();\r\n";
-        include = await EnsureCompatability(include);
+        
         include += string.Join("", matchContent.Where(s => !string.IsNullOrEmpty(s)));
-
+        include = await EnsureCompatability(include);
         await File.WriteAllTextAsync("default.tcl", include);
+        return ClassContent;
     }
 
     /*Converts datatypes*/
     private static async Task<string> EnsureCompatability(string include)
     {
-        include.Replace("void", "");//This can be nothing, cause some weird library authors thinks func(void); is okay to do :(
-        include.Replace("word", "int"); //An int of at least 16 bits
-        include.Replace("unsigned int", "int");   
-        include.Replace("byte", "int");//Not the same
-        include.Replace("double", "float");//Not the same
-        include.Replace("unsigned long", "int");
-        include.Replace("long", "int");//Not the same
-        include.Replace("short", "int");//This should not be that common they seem to actually be the same according to the docs?
-        include.Replace("size_t", "int");//Not the same
-        include.Replace("unsigned char", "string");//A one byte char
-        include.Replace("char", "string");//Not the same but should actually be valid
-        
+        //testing
+        include = include.Replace(";\r\nStepper(int number_of_steps, int motor_pin_1, int motor_pin_2);\r\nStepper(int number_of_steps, int motor_pin_1, int motor_pin_2,\n                                 int motor_pin_3, int motor_pin_4);\r\nStepper(int number_of_steps, int motor_pin_1, int motor_pin_2,\n                                 int motor_pin_3, int motor_pin_4,\n                                 int motor_pin_5);",";");
+        //works
+        include = include.Replace("(void)", "()");//This can be nothing, cause some weird library authors thinks func(void); is okay to do :(
+        include = include.Replace("word", "int"); //An int of at least 16 bits
+        include = include.Replace("unsigned int", "int");   
+        include = include.Replace("byte", "int");//Not the same
+        include = include.Replace("double", "float");//Not the same
+        include = include.Replace("unsigned long", "int");
+        include = include.Replace("long", "int");//Not the same
+        include = include.Replace("short", "int");//This should not be that common they seem to actually be the same according to the docs?
+        include = include.Replace("size_t", "int");//Not the same
+        include = include.Replace("unsigned char", "string");//A one byte char
+        include = include.Replace("char", "string");//Not the same but should actually be valid
+
+
         return include;
     }
         
@@ -218,8 +231,9 @@ public async void CompileTC(string board)
 
     string fileContent = File.ReadAllText(ArgsConfiguration.SourceFile);
     string includes = await FindLibs(fileContent, board);
-    //string defaultTCLIncludes =
-    await UpdateIncludes(includes);
+    
+    List<string> classList = await UpdateIncludes(includes);
+    
     string replacePattern = @"include\s[A-Za-z0-9]+\;";
 
     Regex defaultRegex = new Regex(replacePattern);
